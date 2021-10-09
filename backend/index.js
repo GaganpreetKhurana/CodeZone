@@ -1,15 +1,18 @@
-const express = require('express');
+const express = require("express");
 const port = 8000;
-const app =express();
-app.get('/',function(req,res){
-    return res.send("Welcome to Backend of CodeZone");
-});
+// const passportJWT=require('./config/passport-jwt');
+const app = express();
+// app.use(express.urlencoded());
+// app.get("/", function (req, res) {
+//   console.log("request received");
+//   return res.status(401).json({ message: "Welcome to CodeZone from Backend" });
+// });
+app.use("/", require("./routes"));
 
-app.listen(port,function(err){
-    if(err){
-        console.log("Error in running server");
-    }
-    else{
-        console.log("Server running successfully");
-    }
-})
+app.listen(port, function (err) {
+  if (err) {
+    console.log("Error in running server");
+  } else {
+    console.log("Server running successfully");
+  }
+});
