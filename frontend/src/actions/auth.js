@@ -8,7 +8,7 @@ import {
   AUTHENTICATE_USER,
   LOG_OUT,
   CLEAR_AUTH_STATE,
-} from './actionTypes';
+} from "./actionTypes";
 
 //login
 export function startLogin() {
@@ -36,26 +36,26 @@ function getFormBody(params) {
   for (let property in params) {
     let encodedKey = encodeURIComponent(property);
     let encodedValue = encodeURIComponent(params[property]);
-    FormBody.push(encodedKey + '=' + encodedValue);
+    FormBody.push(encodedKey + "=" + encodedValue);
   }
-  return FormBody.join('&');
+  return FormBody.join("&");
 }
 
 export function login(email, password) {
   return (dispatch) => {
     dispatch(startLogin());
-    const url = '/api/users/login';
+    const url = "/api/users/login";
     fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       body: getFormBody({ email, password }),
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          localStorage.setItem('token', data.data.token);
+          localStorage.setItem("token", data.data.token);
           dispatch(loginSuccess(data.data.user));
           return;
         }
@@ -86,11 +86,11 @@ export function signupSuccess(user) {
 export function signup(email, password, confirmpassword, name) {
   return (dispatch) => {
     dispatch(startsignup());
-    const url = '/api/v1/users/signup';
+    const url = "/api/users/signup";
     fetch(url, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
+        "Content-Type": "application/x-www-form-urlencoded",
       },
       body: getFormBody({
         email,
@@ -101,8 +101,9 @@ export function signup(email, password, confirmpassword, name) {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data);
         if (data.success) {
-          //localStorage.setItem('token', data.data.token);
+          localStorage.setItem("token", data.data.token);
           dispatch(signupSuccess(data.data.user));
           return;
         }
@@ -124,8 +125,8 @@ export function logoutUser() {
     type: LOG_OUT,
   };
 }
-export function clearAuth(){
+export function clearAuth() {
   return {
-    type:CLEAR_AUTH_STATE,
+    type: CLEAR_AUTH_STATE,
   };
 }

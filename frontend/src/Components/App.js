@@ -4,7 +4,9 @@ import Page404 from "./Page404";
 import Nav from "./Nav";
 import Login from "./Login";
 import SignUp from "./SignUp";
-import * as jwtDecode from "jwt-decode";
+// @ts-ignore
+//to decode the token
+import jwt_decode from "jwt-decode";
 import { authenticateUser } from "../actions/auth";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -13,7 +15,8 @@ class App extends React.Component {
     //check if token already present else wwe would place it
     const token = localStorage.getItem("token");
     if (token) {
-      const user = jwtDecode(token);
+      const user = jwt_decode(token);
+      console.log("user", user);
       this.props.dispatch(
         authenticateUser({
           email: user.email,
