@@ -1,29 +1,37 @@
 import React from "react";
 import { connect } from "react-redux";
-import Home from "./Home";
-import { home } from "../actions/home";
-import axios from "axios";
+import Page404 from "./Page404";
+import Nav from "./Nav";
+import Login from "./Login";
+import SignUp from "./SignUp";
+import * as jwtDecode from "jwt-decode";
+import { authenticateUser } from "../actions/auth";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class App extends React.Component {
   componentDidMount() {
     //check if token already present else wwe would place it
     const token = localStorage.getItem("token");
-    const url = "/api";
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
-    // axios.get(url).then((response) => console.log(response));
-
-    console.log("function called");
+    if (token) {
+      const user = jwtDecode(token);
+      this.props.dispatch(
+        authenticateUser({
+          email: user.email,
+          _id: user._id,
+          name: user.name,
+        })
+      );
+    }
   }
-
-render() {
-    const { auth } = this.props;
+  render() {
     return (
       <Router>
-        <Route exact path="/" component={Home} />
+        <Nav />
+        <Switch>
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={SignUp} />
+          <Route component={Page404} />
+        </Switch>
       </Router>
     );
   }
