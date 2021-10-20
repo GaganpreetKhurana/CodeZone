@@ -11,7 +11,7 @@ const {
 } = require("../actions/actionTypes");
 
 const initialAuthState = {
-  user: {},
+  user: {},//name email sid _id role of user can be found in this sent by backend at time of login and signup
   error: null,
   isLoggedIn: false,
   inProgress: false,

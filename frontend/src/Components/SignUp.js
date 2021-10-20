@@ -1,28 +1,52 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import React, { Component } from "react";
+import { Redirect } from "react-router-dom";
 
-import { connect } from 'react-redux';
-import { signup, clearAuth } from '../actions/auth';
+import { connect } from "react-redux";
+import { signup, clearAuth } from "../actions/auth";
 
 class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
-      name: '',
-      confirmPassword: '',
+      email: "",
+      password: "",
+      name: "",
+      confirmPassword: "",
+      role: "Student",
+      SID: "",
     };
   }
-  //to clear the error if it comes on reload or whenever the user shifts fro this page
+  //to clear the error if it comes on reload or whenever the user shifts from this page
   componentWillUnmount() {
     this.props.dispatch(clearAuth());
   }
   handleSubmitForm = (e) => {
     e.preventDefault();
-    const { email, password, confirmPassword, name } = this.state;
-    if (email && confirmPassword && name && password) {
-      this.props.dispatch(signup(email, password, confirmPassword, name));
+    const { email, password, confirmPassword, name, role, SID } = this.state;
+    if (
+      role === "Teacher" &&
+      email &&
+      confirmPassword &&
+      name &&
+      password &&
+      role
+    ) {
+      var teacherSID = "t-" + name;
+      this.props.dispatch(
+        signup(email, password, confirmPassword, name, role, teacherSID)
+      );
+    }
+    if (
+      email &&
+      confirmPassword &&
+      name &&
+      password &&
+      role === "Student" &&
+      SID
+    ) {
+      this.props.dispatch(
+        signup(email, password, confirmPassword, name, role, SID)
+      );
     }
   };
   handleEmail = (e) => {
@@ -43,6 +67,18 @@ class Signup extends Component {
   handleCPassword = (e) => {
     this.setState({
       confirmPassword: e.target.value,
+    });
+  };
+  handleRole = (e) => {
+    console.log(this.state);
+    this.setState({
+      role: e.target.value,
+    });
+  };
+
+  handleSID = (e) => {
+    this.setState({
+      SID: e.target.value,
     });
   };
   render() {
@@ -86,6 +122,35 @@ class Signup extends Component {
             onChange={this.handleCPassword}
           />
         </div>
+        <div>
+          Login as -
+          <input
+            type="radio"
+            value="Student"
+            name="role"
+            onChange={this.handleRole}
+            checked={this.state.role === "Student"}
+          />{" "}
+          Student
+          <input
+            type="radio"
+            value="Teacher"
+            name="role"
+            onChange={this.handleRole}
+            checked={this.state.role === "Teacher"}
+          />{" "}
+          Teacher
+        </div>
+        {this.state.role === "Student" && (
+          <div className="field">
+            <input
+              type="text"
+              placeholder="SID"
+              required
+              onChange={this.handleSID}
+            />
+          </div>
+        )}
         <div className="field">
           <button onClick={this.handleSubmitForm} disabled={inProgress}>
             SignUp
