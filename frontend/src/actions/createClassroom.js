@@ -53,7 +53,7 @@ export function startCreateClassroom() {
         .then((data) => {
           console.log(data);
           if (data.success) {
-            dispatch(classroomCreationSuccess(data.code));//classroom code sent back
+            dispatch(classroomCreationSuccess(data.data.code));//classroom code sent back
             return;
           }
           dispatch(classroomCreationFailed(data.message));
