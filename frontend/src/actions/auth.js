@@ -83,7 +83,7 @@ export function signupSuccess(user) {
   };
 }
 
-export function signup(email, password, confirmpassword, name) {
+export function signup(email, password, confirmpassword, name,role,SID) {
   return (dispatch) => {
     dispatch(startsignup());
     const url = "/api/users/signup";
@@ -97,6 +97,8 @@ export function signup(email, password, confirmpassword, name) {
         password,
         confirm_password: confirmpassword,
         name,
+        role,
+        SID
       }),
     })
       .then((response) => response.json())

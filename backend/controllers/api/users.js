@@ -48,6 +48,8 @@ module.exports.login = async function (req, res) {
         email: user.email,
         name: user.name,
         id: user._id,
+        SID:user.SID,
+        role:user.role
       },
     },
   });

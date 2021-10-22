@@ -1,4 +1,6 @@
 const {
+  CREATE_CLASS_START,
+  CREATE_CLASS_FAILURE,
   LOGIN_START,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
@@ -11,7 +13,7 @@ const {
 } = require("../actions/actionTypes");
 
 const initialAuthState = {
-  user: {},
+  user: {},//name email sid _id role of user can be found in this sent by backend at time of login and signup
   error: null,
   isLoggedIn: false,
   inProgress: false,
@@ -25,6 +27,7 @@ export default function auth(state = initialAuthState, action) {
         error: null,
       };
 
+    case CREATE_CLASS_START:
     case LOGIN_START:
     case SIGNUP_START:
       return {
@@ -40,6 +43,7 @@ export default function auth(state = initialAuthState, action) {
         error: null,
         isLoggedIn: true,
       };
+    case CREATE_CLASS_FAILURE:
     case LOGIN_FAILURE:
     case SIGNUP_FAILURE:
       return {

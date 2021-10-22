@@ -4,6 +4,10 @@ import Page404 from "./Page404";
 import Nav from "./Nav";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import Home from "./Home";
+import TeacherDashboard from "./TeacherDashboard";
+import StudentDashboard from "./StudentDashboard";
+
 // @ts-ignore
 //to decode the token
 import jwt_decode from "jwt-decode";
@@ -22,15 +26,26 @@ class App extends React.Component {
           email: user.email,
           _id: user._id,
           name: user.name,
+          role: user.role,
+          SID: user.SID,
         })
       );
     }
   }
   render() {
+    const { auth } = this.props;
+    //elselogin or signup page or 404 page or main homepage of app would be added
     return (
       <Router>
         <Nav />
         <Switch>
+          {auth.isLoggedIn && auth.user.role === "Student" && (
+            <Route path="/" component={StudentDashboard} />
+          )}
+          {auth.isLoggedIn && auth.user.role === "Teacher" && (
+            <Route path="/" component={TeacherDashboard} />
+          )}
+          <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
           <Route component={Page404} />
