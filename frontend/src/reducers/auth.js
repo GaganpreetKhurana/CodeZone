@@ -1,6 +1,7 @@
 const {
   CREATE_CLASS_START,
   CREATE_CLASS_FAILURE,
+  CREATE_CLASS_SUCCESS,
   LOGIN_START,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
@@ -43,6 +44,12 @@ export default function auth(state = initialAuthState, action) {
         error: null,
         isLoggedIn: true,
       };
+    case CREATE_CLASS_SUCCESS:
+      return {
+        ...state,
+        inProgress: false,
+        error: null,
+      }
     case CREATE_CLASS_FAILURE:
     case LOGIN_FAILURE:
     case SIGNUP_FAILURE:

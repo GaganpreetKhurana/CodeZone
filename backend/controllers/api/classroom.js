@@ -67,32 +67,41 @@ module.exports.create = async function (req, res) {
   }
 };
 
-
 //to join an existing classroom using the code provided
-module.exports.join =async function (req,res){
+module.exports.join = async function (req, res) {
   let classCode = req.body.code;
   let user_id = req.user._id;
-  //find user 
+  //find user
   let user = await User.findById(user_id);
   //find class
-  if(!classCode){
+  if (!classCode) {
     return res.status(422).json({
       message: "Please enter valid classcode to join!!",
-    }); 
+    });
   }
   let classroom = await Classes.findOne({ code: classCode });
 
-  if(user && classroom){
-  //add user._id in students[] present in found class
+  if (user && classroom) {
+    //check if user has already joined it or not
+    //add user._id in students[] present in found class
 
-  //add class._id in user's classesJoined array
-    if(user.role==='Teacher'){
+    //add class._id in user's classesJoined array
+    if (user.role === "Teacher") {
+      if (classroom.teachers.includes(user_id)) {
+        return res.status(422).json({
+          message: "Classroom already joined",
+        });
+      }
       classroom.teachers.push(user_id);
       classroom.save();
       user.classesJoined.push(classroom._id);
       user.save();
-    }
-    else{
+    } else {
+      if (classroom.students.includes(user_id)) {
+        return res.status(422).json({
+          message: "Classroom already joined",
+        });
+      }
       classroom.students.push(user_id);
       classroom.save();
       user.classesJoined.push(classroom._id);
@@ -105,5 +114,5 @@ module.exports.join =async function (req,res){
   }
   return res.status(422).json({
     message: "Error in joining classroom",
-  }); 
-}
+  });
+};
