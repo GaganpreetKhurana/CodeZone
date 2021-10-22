@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { clearAuth } from "../actions/auth";
-import { createClassroom } from "../actions/createClassroom";
+import { createClassroom, clearClassCode } from "../actions/createClassroom";
 
 class CreateClassPopUp extends Component {
   constructor(props) {
@@ -41,6 +41,7 @@ class CreateClassPopUp extends Component {
   };
   handleClick = () => {
     this.props.toggle();
+    this.props.dispatch(clearClassCode());
   };
   render() {
     return (

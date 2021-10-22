@@ -2,6 +2,7 @@ import {
     CREATE_CLASS_START,
     CREATE_CLASS_SUCCESS,
     CREATE_CLASS_FAILURE,
+    CLEAR_CLASS_CODE
   } from "./actionTypes";
 
 //create Classroom
@@ -55,5 +56,11 @@ export function startCreateClassroom() {
           }
           dispatch(classroomCreationFailed(data.message));
         });
+    };
+  }
+//to clear state that is remove class code
+  export function clearClassCode() {
+    return {
+      type: CLEAR_CLASS_CODE,
     };
   }
