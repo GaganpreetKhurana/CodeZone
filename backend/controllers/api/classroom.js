@@ -1,7 +1,7 @@
 const Classes = require("../../models/class");
 const User = require("../../models/user");
 
-//to create a new classroom
+//to generate unique code for classroom
 async function createClassCode() {
   var result = "";
   var characters =
@@ -12,6 +12,8 @@ async function createClassCode() {
   }
   return result;
 }
+
+//to create a new classroom
 module.exports.create = async function (req, res) {
   let codeGenerated = false,
     code;
@@ -64,3 +66,44 @@ module.exports.create = async function (req, res) {
     }
   }
 };
+
+
+//to join an existing classroom using the code provided
+module.exports.join =async function (req,res){
+  let classCode = req.body.code;
+  let user_id = req.user._id;
+  //find user 
+  let user = await User.findById(user_id);
+  //find class
+  if(!classCode){
+    return res.status(422).json({
+      message: "Please enter valid classcode to join!!",
+    }); 
+  }
+  let classroom = await Classes.findOne({ code: classCode });
+
+  if(user && classroom){
+  //add user._id in students[] present in found class
+
+  //add class._id in user's classesJoined array
+    if(user.role==='Teacher'){
+      classroom.teachers.push(user_id);
+      classroom.save();
+      user.classesJoined.push(classroom._id);
+      user.save();
+    }
+    else{
+      classroom.students.push(user_id);
+      classroom.save();
+      user.classesJoined.push(classroom._id);
+      user.save();
+    }
+    return res.status(200).json({
+      message: "Classroom joined successfully",
+      success: true,
+    });
+  }
+  return res.status(422).json({
+    message: "Error in joining classroom",
+  }); 
+}

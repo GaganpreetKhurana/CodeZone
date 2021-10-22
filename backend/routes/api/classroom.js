@@ -5,6 +5,6 @@ const classroom = require("../../controllers/api/classroom");
 const auth = require("../../config/authenticate");
 
 router.post("/create",auth.authenticateToken, classroom.create);
-// router.post('/join',passport.authenticate('jwt',{session:false}), classroom.join);
+router.post('/join',auth.authenticateToken, classroom.join);
 
 module.exports = router;
