@@ -44,6 +44,9 @@ class CreateClassPopUp extends Component {
     this.props.dispatch(clearClassCode());
   };
   render() {
+    const { inProgress, error } = this.props.auth;
+    const { code } = this.props.createClassroom;
+
     return (
       <div className="popup-box">
         <div className="box">
@@ -54,6 +57,13 @@ class CreateClassPopUp extends Component {
           <form className="login-form">
             <span className="login-signup-header">Create Classroom</span>
             {error && <div className="alert error-dailog">{error}</div>}
+            {code && (
+              <div className="alert success-dailog">
+                <p>Classroom creation successfull!!</p>
+                <p> Share this code with students &nbsp;</p>
+                <b>{code}</b>
+              </div>
+            )}
             <div className="field">
               <input
                 type="text"
@@ -91,6 +101,7 @@ class CreateClassPopUp extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    createClassroom: state.createClassroom,
   };
 }
 export default connect(mapStateToProps)(CreateClassPopUp);

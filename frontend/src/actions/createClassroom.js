@@ -40,6 +40,7 @@ export function startCreateClassroom() {
     return (dispatch) => {
       dispatch(startCreateClassroom());
       const url = "/api/classroom/create";
+      console.log("request sent");
       fetch(url, {
         method: "POST",
         headers: {
@@ -50,6 +51,7 @@ export function startCreateClassroom() {
       })
         .then((response) => response.json())
         .then((data) => {
+          console.log(data);
           if (data.success) {
             dispatch(classroomCreationSuccess(data.code));//classroom code sent back
             return;
@@ -58,6 +60,7 @@ export function startCreateClassroom() {
         });
     };
   }
+
 //to clear state that is remove class code
   export function clearClassCode() {
     return {

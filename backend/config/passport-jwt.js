@@ -8,6 +8,8 @@ let opts = {
 };
 passport.use(
   new JWTStrategy(opts, function (jwtPayLoad, done) {
+    console.log("Indide passport-jwt function");
+    console.log(jwtPayLoad);
     User.findById(jwtPayLoad._id, function (err, user) {
       if (err) {
         console.log("error in finding user from jwt");
