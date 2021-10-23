@@ -1,5 +1,6 @@
 import {
     FETCH_USER_CLASS_DETAILS,
+    CLEAR_USER_CLASS_DETAILS
   } from "./actionTypes";
 
 function userDetails(userDetails){
@@ -24,4 +25,10 @@ export function fetchUserClassDetails(){
             }
           });
       };
+}
+
+export function clearUserClassDetails(){
+  return {
+    type:CLEAR_USER_CLASS_DETAILS
+  }
 }
