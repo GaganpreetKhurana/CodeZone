@@ -29,6 +29,15 @@ module.exports.create = async function (req, res) {
       codeGenerated = true;
     }
   }
+  let classExistWithSameSubjectName = await Classes.findOne({
+    subject: req.body.subject,
+  });
+  if (classExistWithSameSubjectName) {
+    return res.status(422).json({
+      message:
+        "Classroom with same subject name already exists plz change subject name and try again!!",
+    });
+  }
   //find user by id and check role of user should be 'Teacher' only then create the classroom
   //else give error back not authorized to create classroom
   let user = await User.findById(req.user._id);
@@ -118,23 +127,44 @@ module.exports.join = async function (req, res) {
 };
 
 //to get user class details
-module.exports.details = async function(req,res){
+module.exports.details = async function (req, res) {
   let user_id = req.user._id;
-  let userDetails = await User.findById(user_id).select('classesCreated classesJoined').populate('classesJoined','batch code creator description students teachers subject').populate({
-    path:'classesJoined',populate:{path:'creator students teachers' , select:'SID name email role'}}).populate('classesCreated','batch code creator description students teachers subject').populate({
-      path:'classesCreated',populate:{path:'creator students teachers' , select:'SID name email role'}}).exec();
-  if(userDetails){
+  let userDetails = await User.findById(user_id)
+    .select("classesCreated classesJoined")
+    .populate(
+      "classesJoined",
+      "batch code creator description students teachers subject"
+    )
+    .populate({
+      path: "classesJoined",
+      populate: {
+        path: "creator students teachers",
+        select: "SID name email role",
+      },
+    })
+    .populate(
+      "classesCreated",
+      "batch code creator description students teachers subject"
+    )
+    .populate({
+      path: "classesCreated",
+      populate: {
+        path: "creator students teachers",
+        select: "SID name email role",
+      },
+    })
+    .exec();
+  if (userDetails) {
     console.log(userDetails);
     return res.status(200).json({
       message: "Classroom joined successfully",
       data: userDetails,
       success: true,
     });
-  }
-  else{
+  } else {
     return res.status(422).json({
       message: "User Details not fetched",
       success: false,
     });
   }
-}
+};
