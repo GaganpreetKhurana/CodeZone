@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { fetchUserClassDetails } from "../actions/classroom";
+import { fetchUserClassDetails,clearUserClassDetails } from "../actions/classroom";
 import { Link } from 'react-router-dom';
 
 class TeacherDashboard extends Component {
   componentDidMount() {
     this.props.dispatch(fetchUserClassDetails());
+  }
+  componentWillUnmount() {
+    this.props.dispatch(clearUserClassDetails());
   }
   render() {
     //create the details of the classes joined and created by the user
