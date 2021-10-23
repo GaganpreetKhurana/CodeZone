@@ -186,3 +186,9 @@ body {
     border: 1px solid #999;
     font-size: 20px;
   }
+  .classroom{
+    border: 2px solid black;
+    width: 300px;
+    display: inline-block;
+    margin : 10px;
+  }

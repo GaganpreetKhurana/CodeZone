@@ -9,10 +9,24 @@ class StudentDashboard extends Component {
   }
   render() {
     //create the details of the classes joined by the user
-    const { classesCreated,classesJoined } = this.props.classroom;
+    const { classesJoined } = this.props.classroom;
     return (
       <div>
-        Student Dashboard
+        <b>Student Dashboard</b><br>
+        </br><br></br>
+        <b>Classes Joined</b><br></br>
+        {classesJoined.map((classroom) => (
+          <div className='classroom' key={classroom._id}>
+            Subject - {classroom.subject}<br></br>
+            Batch  - {classroom.batch}<br></br>
+            Description - {classroom.description}<br></br>
+            Classroom code - {classroom.code}<br></br>
+            CreatedBy - {classroom.creator.name}<br></br>
+            Students Enrolled - {classroom.students.length}<br></br>
+            <div className="field"><button> Enter Classroom</button></div>
+
+          </div>
+        ))}
       </div>
     );
   }

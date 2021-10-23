@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { clearAuth } from "../actions/auth";
 import { joinClassroom, clearClassCode} from "../actions/createClassroom";
+import { fetchUserClassDetails } from "../actions/classroom";
 
 class JoinClassPopUp extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class JoinClassPopUp extends Component {
   handleClick = () => {
     this.props.toggle();
     this.props.dispatch(clearClassCode());
+    this.props.dispatch(fetchUserClassDetails());
   };
   handleCode = (e) => {
     this.setState({
