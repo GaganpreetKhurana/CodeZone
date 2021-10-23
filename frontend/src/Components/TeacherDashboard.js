@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { fetchUserClassDetails } from "../actions/classroom";
-
+import { Link } from 'react-router-dom';
 
 class TeacherDashboard extends Component {
   componentDidMount() {
@@ -23,7 +23,7 @@ class TeacherDashboard extends Component {
             Classroom code - {classroom.code}<br></br>
             CreatedBy - {classroom.creator.name}<br></br>
             Students Enrolled - {classroom.students.length}<br></br>
-            <div className="field"><button> Enter Classroom</button></div>
+            <div className="field"><Link to={`/classroom/${classroom._id}`}><button> Enter Classroom</button></Link></div>
 
           </div>
         ))}
@@ -36,8 +36,7 @@ class TeacherDashboard extends Component {
             Description - {classroom.description}<br></br>
             Classroom code - {classroom.code}<br></br>
             Students Enrolled - {classroom.students.length}<br></br>
-            <div className="field"><button> Enter Classroom</button></div>
-
+            <div className="field"><Link to={`/classroom/${classroom._id}`}><button> Enter Classroom</button></Link></div>
           </div>
         ))}
       </div>

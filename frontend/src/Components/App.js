@@ -7,6 +7,7 @@ import SignUp from "./SignUp";
 import Home from "./Home";
 import TeacherDashboard from "./TeacherDashboard";
 import StudentDashboard from "./StudentDashboard";
+import Classroom from "./Classroom";
 
 // @ts-ignore
 //to decode the token
@@ -39,14 +40,15 @@ class App extends React.Component {
         <Nav />
         <Switch>
           {auth.isLoggedIn && auth.user.role === "Student" && (
-            <Route path="/" component={StudentDashboard} />
+            <Route exact path="/" component={StudentDashboard} />
           )}
           {auth.isLoggedIn && auth.user.role === "Teacher" && (
-            <Route path="/" component={TeacherDashboard} />
+            <Route exact path="/" component={TeacherDashboard} />
           )}
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/signup" component={SignUp} />
+          <Route path="/classroom/:classroomID" component={Classroom}/>
           <Route component={Page404} />
         </Switch>
       </Router>
