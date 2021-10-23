@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { clearAuth } from "../actions/auth";
 import { createClassroom, clearClassCode } from "../actions/createClassroom";
+import { fetchUserClassDetails } from "../actions/classroom";
 
 class CreateClassPopUp extends Component {
   constructor(props) {
@@ -42,6 +43,7 @@ class CreateClassPopUp extends Component {
   handleClick = () => {
     this.props.toggle();
     this.props.dispatch(clearClassCode());
+    this.props.dispatch(fetchUserClassDetails());
   };
   render() {
     const { inProgress, error } = this.props.auth;

@@ -1,7 +1,7 @@
 const Classes = require("../../models/class");
 const User = require("../../models/user");
 
-//to create a new classroom
+//to generate unique code for classroom
 async function createClassCode() {
   var result = "";
   var characters =
@@ -12,6 +12,8 @@ async function createClassCode() {
   }
   return result;
 }
+
+//to create a new classroom
 module.exports.create = async function (req, res) {
   let codeGenerated = false,
     code;
@@ -26,6 +28,15 @@ module.exports.create = async function (req, res) {
     } else {
       codeGenerated = true;
     }
+  }
+  let classExistWithSameSubjectName = await Classes.findOne({
+    subject: req.body.subject,
+  });
+  if (classExistWithSameSubjectName) {
+    return res.status(422).json({
+      message:
+        "Classroom with same subject name already exists plz change subject name and try again!!",
+    });
   }
   //find user by id and check role of user should be 'Teacher' only then create the classroom
   //else give error back not authorized to create classroom
@@ -62,5 +73,98 @@ module.exports.create = async function (req, res) {
         message: "Error in creating classroom",
       });
     }
+  }
+};
+
+//to join an existing classroom using the code provided
+module.exports.join = async function (req, res) {
+  let classCode = req.body.code;
+  let user_id = req.user._id;
+  //find user
+  let user = await User.findById(user_id);
+  //find class
+  if (!classCode) {
+    return res.status(422).json({
+      message: "Please enter valid classcode to join!!",
+    });
+  }
+  let classroom = await Classes.findOne({ code: classCode });
+
+  if (user && classroom) {
+    //check if user has already joined it or not
+    //add user._id in students[] present in found class
+
+    //add class._id in user's classesJoined array
+    if (user.role === "Teacher") {
+      if (classroom.teachers.includes(user_id)) {
+        return res.status(422).json({
+          message: "Classroom already joined",
+        });
+      }
+      classroom.teachers.push(user_id);
+      classroom.save();
+      user.classesJoined.push(classroom._id);
+      user.save();
+    } else {
+      if (classroom.students.includes(user_id)) {
+        return res.status(422).json({
+          message: "Classroom already joined",
+        });
+      }
+      classroom.students.push(user_id);
+      classroom.save();
+      user.classesJoined.push(classroom._id);
+      user.save();
+    }
+    return res.status(200).json({
+      message: "Classroom joined successfully",
+      success: true,
+    });
+  }
+  return res.status(422).json({
+    message: "Error in joining classroom",
+  });
+};
+
+//to get user class details
+module.exports.details = async function (req, res) {
+  let user_id = req.user._id;
+  let userDetails = await User.findById(user_id)
+    .select("classesCreated classesJoined")
+    .populate(
+      "classesJoined",
+      "batch code creator description students teachers subject"
+    )
+    .populate({
+      path: "classesJoined",
+      populate: {
+        path: "creator students teachers",
+        select: "SID name email role",
+      },
+    })
+    .populate(
+      "classesCreated",
+      "batch code creator description students teachers subject"
+    )
+    .populate({
+      path: "classesCreated",
+      populate: {
+        path: "creator students teachers",
+        select: "SID name email role",
+      },
+    })
+    .exec();
+  if (userDetails) {
+    console.log(userDetails);
+    return res.status(200).json({
+      message: "Classroom joined successfully",
+      data: userDetails,
+      success: true,
+    });
+  } else {
+    return res.status(422).json({
+      message: "User Details not fetched",
+      success: false,
+    });
   }
 };
