@@ -18,9 +18,7 @@ export function fetchUserClassDetails(){
         })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
             if (data.success) {
-                console.log(data.data);
               dispatch(userDetails(data.data));
               return;
             }

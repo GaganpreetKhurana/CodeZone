@@ -1,11 +1,26 @@
-import React from "react";
+import React, { Component } from 'react';
+import { connect } from "react-redux";
+import { fetchUserClassDetails } from "../actions/classroom";
 
-function TeacherDashboard(props) {
-  return (
-    <div>
-      <h1> Teacher Dashboard</h1>
-    </div>
-  );
+
+class TeacherDashboard extends Component {
+  componentDidMount() {
+    this.props.dispatch(fetchUserClassDetails());
+  }
+  render() {
+    //create the details of the classes joined and created by the user
+    const { classesCreated,classesJoined } = this.props.classroom;
+    return (
+      <div>
+        TeacherDashboard
+      </div>
+    );
+  }
+}
+function mapStateToProps(state) {
+  return {
+    classroom: state.classroom,
+  };
 }
 
-export default TeacherDashboard;
+export default connect(mapStateToProps)(TeacherDashboard);

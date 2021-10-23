@@ -20,7 +20,6 @@ class App extends React.Component {
     const token = localStorage.getItem("token");
     if (token) {
       const user = jwt_decode(token);
-      console.log("user", user);
       this.props.dispatch(
         authenticateUser({
           email: user.email,

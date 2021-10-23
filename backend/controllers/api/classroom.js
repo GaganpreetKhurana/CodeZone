@@ -120,9 +120,9 @@ module.exports.join = async function (req, res) {
 //to get user class details
 module.exports.details = async function(req,res){
   let user_id = req.user._id;
-  let userDetails = await User.findById(user_id).populate('classesJoined').populate({
-    path:'classesJoined',populate:{path:'creator students teachers'}
-  }).exec();
+  let userDetails = await User.findById(user_id).select('classesCreated classesJoined').populate('classesJoined','batch code creator description students teachers subject').populate({
+    path:'classesJoined',populate:{path:'creator students teachers' , select:'SID name email role'}}).populate('classesCreated','batch code creator description students teachers subject').populate({
+      path:'classesCreated',populate:{path:'creator students teachers' , select:'SID name email role'}}).exec();
   if(userDetails){
     console.log(userDetails);
     return res.status(200).json({

@@ -81,7 +81,6 @@ export function joinClassroom(code) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data.success) {
           dispatch(classroomCreationSuccess(data.message));
           return;

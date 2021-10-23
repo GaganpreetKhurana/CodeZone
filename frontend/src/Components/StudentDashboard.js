@@ -5,12 +5,11 @@ import { fetchUserClassDetails } from "../actions/classroom";
 
 class StudentDashboard extends Component {
   componentDidMount() {
-    console.log("user detials req sent");
     this.props.dispatch(fetchUserClassDetails());
   }
   render() {
-    const { userDetails } = this.props.classroom;
-    console.log(userDetails);
+    //create the details of the classes joined by the user
+    const { classesCreated,classesJoined } = this.props.classroom;
     return (
       <div>
         Student Dashboard
