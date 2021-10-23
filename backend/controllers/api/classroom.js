@@ -116,3 +116,25 @@ module.exports.join = async function (req, res) {
     message: "Error in joining classroom",
   });
 };
+
+//to get user class details
+module.exports.details = async function(req,res){
+  let user_id = req.user._id;
+  let userDetails = await User.findById(user_id).populate('classesJoined').populate({
+    path:'classesJoined',populate:{path:'creator students teachers'}
+  }).exec();
+  if(userDetails){
+    console.log(userDetails);
+    return res.status(200).json({
+      message: "Classroom joined successfully",
+      data: userDetails,
+      success: true,
+    });
+  }
+  else{
+    return res.status(422).json({
+      message: "User Details not fetched",
+      success: false,
+    });
+  }
+}

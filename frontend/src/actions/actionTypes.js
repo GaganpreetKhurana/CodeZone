@@ -21,3 +21,6 @@ export const CLEAR_CLASS_CODE = 'CLEAR_CLASS_CODE';
 
 //join classroom 
 export const JOIN_CLASSROOM ='JOIN_CLASSROOM'
+
+//fetch user details
+export const FETCH_USER_CLASS_DETAILS = 'FETCH_USER_CLASS_DETAILS'

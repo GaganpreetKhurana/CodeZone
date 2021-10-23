@@ -11,6 +11,7 @@ class Login extends Component {
       password: "",
     };
   }
+  
   //to clear the error if it comes on reload or whenever the user shifts from this page
   componentWillUnmount() {
     this.props.dispatch(clearAuth());
