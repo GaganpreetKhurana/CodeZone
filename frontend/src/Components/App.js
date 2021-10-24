@@ -44,11 +44,11 @@ class App extends React.Component {
   render() {
     const { darkMode } = this.state;
     const theme = createTheme({
-      palette: {
-          mode: darkMode ? "dark" : "light",
-          primary: red,
-          secondary: yellow
-      },
+    palette: {
+        mode: darkMode ? "dark" : "light",
+        primary: red,
+        secondary: yellow
+    }
     });
     const { auth } = this.props;
     //elselogin or signup page or 404 page or main homepage of app would be added
@@ -57,8 +57,7 @@ class App extends React.Component {
         <Paper>
           <Router>
             <Nav darkModehandler={this.themeSwitcher}/>
-            <h1>hELLO</h1>
-            <Button checked ={darkMode} onClick = {() => this.setState({darkMode: !darkMode}) } >Theme Switcher</Button>
+            <Button checked ={darkMode} onClick = {() => this.setState({darkMode: !darkMode}) } >Theme Switch</Button>
             <Switch>
               {auth.isLoggedIn && auth.user.role === "Student" && (
                 <Route exact path="/" component={StudentDashboard} />
