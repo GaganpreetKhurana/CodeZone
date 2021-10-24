@@ -5,6 +5,7 @@
   <li>Clone the above repository.</li>
   <li>Move to backend folder cd backend</li>
   <li>Use command npm install to download the dependencies. </li>
+  <li>Install setup and link mongodb to the database [Documentation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/) </li>
   <li>Give command nodemon index.js that will start the backend server.</li>
   <li>On any browser visit localhost:8000 you will see the content there</li>
 </ul>

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { fetchUserClassDetails,clearUserClassDetails } from "../actions/classroom";
-import { Link } from 'react-router-dom';
+import StudentClassCards from './StudentClassCards';
+import TeacherClassCards from './TeacherClassCards';
+import Typography from '@mui/material/Typography';
+import { Grid } from '@mui/material';
 
 class TeacherDashboard extends Component {
   componentDidMount() {
@@ -16,32 +19,24 @@ class TeacherDashboard extends Component {
 
     return (
       <div>
-        <b>TeacherDashboard</b><br></br><br></br>
-        <b>Classes Joined</b><br></br>
-        {classesJoined.map((classroom) => (
-          <div className='classroom' key={classroom._id}>
-            Subject - {classroom.subject}<br></br>
-            Batch  - {classroom.batch}<br></br>
-            Description - {classroom.description}<br></br>
-            Classroom code - {classroom.code}<br></br>
-            CreatedBy - {classroom.creator.name}<br></br>
-            Students Enrolled - {classroom.students.length}<br></br>
-            <div className="field"><Link to={`/classroom/${classroom._id}`}><button> Enter Classroom</button></Link></div>
-
-          </div>
-        ))}
-        <br></br>
-        <b>Classes Created</b><br></br>
+        <Grid container justifyContent="center">
+            <Typography variant="h4">DASHBOARD</Typography>
+        </Grid>
+        <Grid>
+        <Typography variant="h5">Created Classes</Typography>
         {classesCreated.map((classroom) => (
-          <div className='classroom' key={classroom._id}>
-            Subject - {classroom.subject}<br></br>
-            Batch  - {classroom.batch}<br></br>
-            Description - {classroom.description}<br></br>
-            Classroom code - {classroom.code}<br></br>
-            Students Enrolled - {classroom.students.length}<br></br>
-            <div className="field"><Link to={`/classroom/${classroom._id}`}><button> Enter Classroom</button></Link></div>
+          <div>
+            <TeacherClassCards classroom={classroom}/>
           </div>
         ))}
+        </Grid>
+        <Grid><Typography variant="h5">Joined Classes</Typography>
+        {classesJoined.map((classroom) => (
+          <div>
+            <StudentClassCards classroom={classroom}/>
+          </div>
+        ))}
+        </Grid>
       </div>
     );
   }
