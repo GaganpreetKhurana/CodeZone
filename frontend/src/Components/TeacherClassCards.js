@@ -13,6 +13,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
 import { Paper,Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
@@ -24,7 +25,7 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function ClassCards(props) {
+export default function TeacherClassCards(props) {
   const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -69,11 +70,7 @@ export default function ClassCards(props) {
         <Paper elevation={7}>
           <CardContent>
           <Typography paragraph>
-            CreatedBy - {props.classroom.creator.name}
-          </Typography>
-          <Typography paragraph>
             Students Enrolled - {props.classroom.students.length}
-            Classroom code - {props.classroom.code}
           </Typography>
           <Typography paragraph>
             Classroom code - {props.classroom.code}
