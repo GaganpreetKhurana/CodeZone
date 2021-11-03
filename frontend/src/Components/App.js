@@ -11,8 +11,7 @@ import Classroom from "./Classroom";
 import { Paper} from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { red, yellow } from '@mui/material/colors';
-import {ThemeProvider} from '@mui/material';
-
+import {ThemeProvider,CssBaseline} from '@mui/material';
 
 // @ts-ignore
 //to decode the token
@@ -52,6 +51,7 @@ class App extends React.Component {
     //elselogin or signup page or 404 page or main homepage of app would be added
     return (
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Paper>
           <Router>
             <Nav/>
