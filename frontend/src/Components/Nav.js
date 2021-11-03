@@ -32,7 +32,6 @@ class Nav extends React.Component {
 
   render() {
     const { auth } = this.props;
-    const { darkModetheme } = this.props;
 
     return (
       <div>

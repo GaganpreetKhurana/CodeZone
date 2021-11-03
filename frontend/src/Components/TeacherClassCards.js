@@ -13,6 +13,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
 import { Paper,Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import {Grid} from "@mui/material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -33,7 +34,8 @@ export default function TeacherClassCards(props) {
   };
 
   return (
-    <Paper elevation={1}>
+    <Grid   container   direction="row"   justifyContent="space-evenly"   alignItems="center" >
+    <Paper elevation={6}>
     <Card sx={{ minWidth: 345 }}>
       <CardHeader
         avatar={
@@ -80,5 +82,6 @@ export default function TeacherClassCards(props) {
       </Collapse>
     </Card>
     </Paper>
+    </Grid>
   );
 }

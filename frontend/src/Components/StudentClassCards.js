@@ -8,11 +8,11 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
 import { Paper,Button } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import {Grid} from "@mui/material";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -33,20 +33,17 @@ export default function StudentClassCards(props) {
   };
 
   return (
-    <Paper elevation={1}>
+    <Grid   container   direction="row"   justifyContent="space-evenly"   alignItems="center" >
+    <Paper elevation={6}>
     <Card sx={{ minWidth: 345 }}>
       <CardHeader
         avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {props.classroom.subject}
-          </Avatar>
+          <Avatar> {props.classroom.subject} </Avatar>
         }
         action={
-        <div>
             <Link to={`/classroom/${props.classroom._id}`}>
                 <Button style={{maxWidth: '120px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}} variant="contained" endIcon={<SendIcon />}>Enter</Button>
             </Link>
-        </div>
         }
         title={props.classroom.subject}
         subheader={props.classroom.batch} 
@@ -67,7 +64,7 @@ export default function StudentClassCards(props) {
         </ExpandMore>
       </CardActions>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <Paper elevation={7}>
+        <Paper elevation={3}>
           <CardContent>
           <Typography paragraph>
             CreatedBy - {props.classroom.creator.name}
@@ -83,5 +80,6 @@ export default function StudentClassCards(props) {
       </Collapse>
     </Card>
     </Paper>
+    </Grid>
   );
 }

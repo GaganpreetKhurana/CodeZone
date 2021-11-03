@@ -19,23 +19,26 @@ class TeacherDashboard extends Component {
 
     return (
       <div>
+        <Grid container direction="column" justifyContent="space-between" alignItems="center" >
         <Grid container justifyContent="center">
             <Typography variant="h4">DASHBOARD</Typography>
         </Grid>
-        <Grid>
         <Typography variant="h5">Created Classes</Typography>
+        <Grid container direction="row" justifyContent="space-evenly" alignItems="center">
         {classesCreated.map((classroom) => (
           <div>
             <TeacherClassCards classroom={classroom}/>
           </div>
         ))}
         </Grid>
-        <Grid><Typography variant="h5">Joined Classes</Typography>
+        <Typography variant="h5">Joined Classes</Typography>
+        <Grid container direction="row" justifyContent="space-evenly" alignItems="center">
         {classesJoined.map((classroom) => (
           <div>
             <StudentClassCards classroom={classroom}/>
           </div>
         ))}
+        </Grid>
         </Grid>
       </div>
     );
