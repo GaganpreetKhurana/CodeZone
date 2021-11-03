@@ -3,7 +3,7 @@ const {
 } = require("../actions/actionTypes");
 
 const initialThemeState = {
-  darkMode: false,
+  darkMode: true,
 };
 
 export default function theme(state = initialThemeState, action) {
@@ -11,7 +11,7 @@ export default function theme(state = initialThemeState, action) {
     case SWITCH_THEME:
       return {
         ...state,
-        darkMode: !darkMode,
+        darkMode: !state.darkMode,
       };
     default:
       return state;

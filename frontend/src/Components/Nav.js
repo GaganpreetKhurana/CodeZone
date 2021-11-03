@@ -1,7 +1,9 @@
+import { Button } from "@mui/material";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../actions/auth";
+import { switchTheme } from "../actions/theme";
 import CreateClassPopUp from "./CreateClassPopUp";
 import JoinClassPopUp from "./JoinClassPopUp";
 
@@ -24,9 +26,13 @@ class Nav extends React.Component {
       join: !this.state.join,
     });
   };
+  switchTheme = () => {
+    this.props.dispatch(switchTheme());
+  };
 
   render() {
     const { auth } = this.props;
+    const { darkModetheme } = this.props;
 
     return (
       <div>
@@ -37,6 +43,7 @@ class Nav extends React.Component {
             <Link to="/">
               <span className="main-logo">CODEZONE</span>
             </Link>
+            <Button onClick={this.switchTheme}>Switch Theme</Button>
           </div>
           {auth.isLoggedIn &&
             auth.user.role === "Teacher" && (<div>
@@ -90,6 +97,7 @@ class Nav extends React.Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    darkModetheme: state.theme
   };
 }
 

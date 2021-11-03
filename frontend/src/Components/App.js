@@ -8,7 +8,7 @@ import Home from "./Home";
 import TeacherDashboard from "./TeacherDashboard";
 import StudentDashboard from "./StudentDashboard";
 import Classroom from "./Classroom";
-import { Paper,Button} from '@mui/material';
+import { Paper} from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { red, yellow } from '@mui/material/colors';
 import {ThemeProvider} from '@mui/material';
@@ -21,8 +21,6 @@ import { authenticateUser } from "../actions/auth";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 class App extends React.Component {
-
-  state = {darkMode: true};
 
   componentDidMount() {
     //check if token already present else wwe would place it
@@ -42,10 +40,10 @@ class App extends React.Component {
   }
 
   render() {
-    const { darkMode } = this.state;
+    const { darkModetheme } = this.props;
     const theme = createTheme({
     palette: {
-        mode: darkMode ? "dark" : "light",
+        mode: darkModetheme.darkMode ? "dark" : "light",
         primary: red,
         secondary: yellow
     }
@@ -56,8 +54,7 @@ class App extends React.Component {
       <ThemeProvider theme={theme}>
         <Paper>
           <Router>
-            <Nav darkModehandler={this.themeSwitcher}/>
-            <Button checked ={darkMode} onClick = {() => this.setState({darkMode: !darkMode}) } >Theme Switch</Button>
+            <Nav/>
             <Switch>
               {auth.isLoggedIn && auth.user.role === "Student" && (
                 <Route exact path="/" component={StudentDashboard} />
@@ -81,6 +78,7 @@ class App extends React.Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    darkModetheme: state.theme
   };
 }
 
