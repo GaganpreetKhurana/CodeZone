@@ -2,10 +2,9 @@ import React, {Component} from "react";
 import {Redirect} from "react-router-dom";
 
 import {connect} from "react-redux";
-import {signup, clearAuth} from "../actions/auth";
+import {clearAuth, signup} from "../actions/auth";
 
 //Material UI
-
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -18,14 +17,13 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {createTheme, ThemeProvider} from '@mui/material/styles';
 
 //Copyright
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="localhost:8000">
+            <Link color="inherit" href="localhost:3000">
                 CodeZone
             </Link>{' '}
             {new Date().getFullYear()}
