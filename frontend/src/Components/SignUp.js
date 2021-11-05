@@ -222,7 +222,7 @@ class Signup extends Component {
                         </Button>
                         <Grid container justifyContent="flex-start">
                             <Grid item>
-                                <Link href="/signin" variant="body2">
+                                <Link href="/login" variant="body2">
                                     Already have an account? Sign in
                                 </Link>
                             </Grid>

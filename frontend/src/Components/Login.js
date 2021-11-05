@@ -19,8 +19,20 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
-const theme = createTheme();
 
+//Copyright
+function Copyright(props) {
+    return (
+        <Typography variant="body2" color="text.secondary" align="center" {...props}>
+            {'Copyright © '}
+            <Link color="inherit" href="localhost:8000">
+                CodeZone
+            </Link>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -58,8 +70,7 @@ class Login extends Component {
             return <Redirect to = "/" / > ;
         }
         return (
-
-                    <Container component="main" maxWidth="xs">
+                <Container component="main" maxWidth="xs">
                         <CssBaseline />
                         <Box
                             sx={{
@@ -126,16 +137,16 @@ class Login extends Component {
                                 </Grid>
                             </Box>
                         </Box>
+                        <Copyright sx={{mt: 5}}/>
                     </Container>
-
-                );
-        }
-    }
-
-    function mapStateToProps(state) {
-        return {
-            auth: state.auth,
+            );
         };
     }
 
-    export default connect(mapStateToProps)(Login);
+function mapStateToProps(state) {
+    return {
+        auth: state.auth,
+    };
+}
+
+export default connect(mapStateToProps)(Login);
