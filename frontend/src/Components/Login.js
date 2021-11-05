@@ -2,13 +2,13 @@ import React, {Component} from "react";
 import {Redirect} from "react-router-dom";
 import {clearAuth, login} from "../actions/auth";
 import {connect} from "react-redux";
+import { Link } from "react-router-dom";
 
 // Material UI
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -21,9 +21,10 @@ function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
-            <Link color="inherit" href="localhost:3000">
+            <Link to="/" color="inherit">
                 CodeZone
-            </Link>{' '}
+            </Link>
+            {' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -119,7 +120,7 @@ class Login extends Component {
                         </Button>
                         <Grid container>
                             <Grid item>
-                                <Link href="/signup" variant="body2">
+                                <Link to="/signup" variant="body2">
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
