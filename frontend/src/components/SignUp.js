@@ -144,7 +144,7 @@ class Signup extends Component {
                                     fullWidth
                                     id="name"
                                     label="Name"
-                                    place
+                                    placeholder = "Full Name"
                                     autoFocus
                                     onChange={this.handleName}
                                 />
@@ -189,7 +189,6 @@ class Signup extends Component {
                                     control={<Checkbox value='true' color="primary"/>}
                                     label="Student"
                                     onChange={this.handleRole}
-                                    helperText="Check if you are a student"
                                 />
                             </Grid>
                             {this.state.role === true && (
