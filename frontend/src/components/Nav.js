@@ -6,6 +6,7 @@ import { logoutUser } from "../actions/auth";
 import { switchTheme } from "../actions/theme";
 import CreateClassPopUp from "./CreateClassPopUp";
 import JoinClassPopUp from "./JoinClassPopUp";
+import logo from "../static/logo.png";
 
 class Nav extends React.Component {
   state = {
@@ -40,7 +41,9 @@ class Nav extends React.Component {
           <div className="left-div">
             {/*on clicking the logo it will take to the homepage */}
             <Link to="/">
-              <span className="main-logo">CODEZONE</span>
+            <div className="logo"><img src={logo} alt="logo" width="45px" height="auto"  /></div>
+              <span className="main-logo">
+              CODEZONE</span>
             </Link>
             <Button onClick={this.switchTheme}>Switch Theme</Button>
           </div>

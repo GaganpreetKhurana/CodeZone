@@ -17,6 +17,14 @@ body {
     font-size: 45px;
     font-weight: '80%';
   }
+  .logo{
+    width: 45px;
+    height:45px;
+    display: inline-block;
+  }
+  .left-div{
+    box-sizing: border-box;
+  }
   .main-logo:hover {
     text-decoration: none;
     cursor: pointer;
