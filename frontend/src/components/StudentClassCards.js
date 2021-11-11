@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Link } from 'react-router-dom';
-import { Paper,Button } from '@mui/material';
+import { Paper,Button,Container } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import {Grid} from "@mui/material";
 
@@ -33,8 +33,9 @@ export default function StudentClassCards(props) {
   };
 
   return (
-    <Grid   container   direction="row"   justifyContent="space-evenly"   alignItems="center" >
-    <Paper elevation={6}>
+    <Container>
+    <Grid item sx={{ borderRadius: '50%' }} m={4} item xs={12} sm={4} md={4}>
+    <Paper elevation={4}>
     <Card sx={{ minWidth: 345 }}>
       <CardHeader
         avatar={
@@ -80,6 +81,6 @@ export default function StudentClassCards(props) {
       </Collapse>
     </Card>
     </Paper>
-    </Grid>
+    </Grid></Container>
   );
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { fetchUserClassDetails,clearUserClassDetails } from "../actions/classroom";
-import { Grid } from '@mui/material';
+import { Grid , Container} from '@mui/material';
 import StudentClassCards from './StudentClassCards';
 import Typography from '@mui/material/Typography';
 
@@ -20,12 +20,14 @@ class StudentDashboard extends Component {
     return (
         <div>
           <Grid container direction="column" justifyContent="space-between" alignItems="center" >
-          <Grid container justifyContent="center">
+          <Container>
+          <Grid m={5} item container justifyContent="center">
             <Typography variant="h4">
                 DASHBOARD
             </Typography>
           </Grid>
-          <Grid container direction="row" justifyContent="space-evenly" alignItems="center">
+          </Container>
+          <Grid item container direction="row" justifyContent="space-evenly" alignItems="center">
           {classesJoined.map((classroom) => (
               <div>
                 <StudentClassCards classroom={classroom}/>

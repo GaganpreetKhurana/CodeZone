@@ -34,8 +34,8 @@ export default function TeacherClassCards(props) {
   };
 
   return (
-    <Grid   container   direction="row"   justifyContent="space-evenly"   alignItems="center" >
-    <Paper elevation={6}>
+    <Grid item sx={{ borderRadius: '50%' }} m={4} item xs={12} sm={4} md={4}>
+    <Paper elevation={4}>
     <Card sx={{ minWidth: 345 }}>
       <CardHeader
         avatar={
