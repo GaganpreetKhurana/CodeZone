@@ -46,7 +46,7 @@ export default function TeacherClassCards(props) {
         action={
         <div>
             <Link to={`/classroom/${props.classroom._id}`}>
-                <Button style={{maxWidth: '120px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}} variant="contained" endIcon={<SendIcon />}>Enter</Button>
+                <Button style={{maxWidth: '120px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}} endIcon={<SendIcon />}>Enter</Button>
             </Link>
         </div>
         }

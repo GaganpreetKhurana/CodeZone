@@ -1,12 +1,15 @@
-import { Button } from "@mui/material";
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../actions/auth";
 import { switchTheme } from "../actions/theme";
 import logo from "../static/logo.png";
+
+//Material ui
+import { Button, Grid } from "@mui/material";
 import JoinClassDialog from "./JoinClassDialog";
 import CreateClassDialog from "./CreateClassDialog";
+import ModeNightIcon from '@mui/icons-material/ModeNight';
 
 class Nav extends React.Component {
   state = {
@@ -45,12 +48,14 @@ class Nav extends React.Component {
               <span className="main-logo">
               CODEZONE</span>
             </Link>
-            <Button onClick={this.switchTheme}>Switch Theme</Button>
           </div>
           {auth.isLoggedIn &&
             auth.user.role === "Teacher" && (<div>
-            <JoinClassDialog/>
-            <CreateClassDialog/> </div>
+            <Grid container direction="row" justifyContent="space-evenly" alignItems="center">
+              <JoinClassDialog/>
+              <CreateClassDialog/>
+            </Grid>
+             </div>
             )}
           {auth.isLoggedIn && auth.user.role === "Student" && (
             <JoinClassDialog/>
@@ -82,6 +87,7 @@ class Nav extends React.Component {
                     <Link to="/signup">Register</Link>
                   </li>
                 )}
+                <Button  onClick={this.switchTheme}><ModeNightIcon/></Button>
               </ul>
             </div>
           </div>
