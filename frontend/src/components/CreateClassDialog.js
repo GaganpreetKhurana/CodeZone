@@ -3,6 +3,13 @@ import { connect } from "react-redux";
 import { clearAuth } from "../actions/auth";
 import { createClassroom, clearClassCode } from "../actions/createClassroom";
 import { fetchUserClassDetails } from "../actions/classroom";
+//
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
 
 class CreateClassPopUp extends Component {
   constructor(props) {
@@ -13,6 +20,21 @@ class CreateClassPopUp extends Component {
       description: "",
     };
   }
+
+  state = {
+      dialogOpen:true
+  }
+
+  dialogOpen = () => {
+    this.setState({ open: true });
+  };
+
+  dialogClose = () => {
+    this.setState({ open: false });
+    this.props.dispatch(clearClassCode());
+    this.props.dispatch(fetchUserClassDetails());
+  };
+
   //to clear the error if it comes on reload or whenever the user shifts from this page
   componentWillUnmount() {
     this.props.dispatch(clearAuth());
@@ -50,14 +72,13 @@ class CreateClassPopUp extends Component {
     const { code } = this.props.createClassroom;
 
     return (
-      <div className="popup-box">
-        <div className="box">
-          <span className="close-icon" onClick={this.handleClick}>
-            x
-          </span>
-          {/* create new classroom form visible only to teachers */}
-          <form className="login-form">
-            <span className="login-signup-header">Create Classroom</span>
+        <div>
+        <Button variant="contained" onClick={this.dialogOpen}>
+            Create
+        </Button>
+        <Dialog open={this.state.open} onClose={this.dialogClose}>
+        <DialogTitle>
+            Create Classroom
             {error && <div className="alert error-dailog">{error}</div>}
             {code && (
               <div className="alert success-dailog">
@@ -66,37 +87,45 @@ class CreateClassPopUp extends Component {
                 <b>{code}</b>
               </div>
             )}
-            <div className="field">
-              <input
+        </DialogTitle>
+        <DialogContent>
+        </DialogContent>
+        <DialogActions>
+            <TextField
+                autoFocus
+                margin="dense"
                 type="text"
                 placeholder="Subject"
                 required
                 onChange={this.handleSubject}
-              />
-            </div>
-            <div className="field">
-              <input
+                fullWidth
+                variant="standard"
+            />
+            <TextField
+                autoFocus
+                margin="dense"
                 type="text"
                 placeholder="Batch"
                 required
                 onChange={this.handleBatch}
-              />
-            </div>
-            <div className="field">
-              <input
+                fullWidth
+                variant="standard"
+            />
+            <TextField
+                autoFocus
+                margin="dense"
                 type="text"
                 placeholder="Brief Description"
                 onChange={this.handleDescription}
-              />
-            </div>
-            <div className="field">
-              <button onClick={this.handleSubmitForm} disabled={inProgress}>
-                Create
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+                fullWidth
+                variant="standard"
+            />
+            <Button onClick={this.handleSubmitForm} disabled={inProgress}>
+            Create
+            </Button>
+        </DialogActions>
+      </Dialog>     
+    </div>
     );
   }
 }
