@@ -4,9 +4,9 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../actions/auth";
 import { switchTheme } from "../actions/theme";
-import CreateClassPopUp from "./CreateClassPopUp";
-import JoinClassPopUp from "./JoinClassPopUp";
 import logo from "../static/logo.png";
+import JoinClassDialog from "./JoinClassDialog";
+import CreateClassDialog from "./CreateClassDialog";
 
 class Nav extends React.Component {
   state = {
@@ -49,17 +49,12 @@ class Nav extends React.Component {
           </div>
           {auth.isLoggedIn &&
             auth.user.role === "Teacher" && (<div>
-            <button onClick={this.toggleJoinButton}>Join</button>
-            <button onClick={this.toggleCreateButton}>Create</button> </div>)}
+            <JoinClassDialog/>
+            <CreateClassDialog/> </div>
+            )}
           {auth.isLoggedIn && auth.user.role === "Student" && (
-            <button onClick={this.toggleJoinButton}>Join</button>
+            <JoinClassDialog/>
           )}
-          {this.state.create ? (
-            <CreateClassPopUp toggle={this.toggleCreateButton} />
-          ) : null}
-          {this.state.join ? (
-            <JoinClassPopUp toggle={this.toggleJoinButton} />
-          ) : null}
           <div className="right-nav">
             {auth.isLoggedIn && (
               <div className="user">

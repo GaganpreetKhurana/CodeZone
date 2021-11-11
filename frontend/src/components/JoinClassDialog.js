@@ -4,6 +4,15 @@ import { clearAuth } from "../actions/auth";
 import { joinClassroom, clearClassCode} from "../actions/createClassroom";
 import { fetchUserClassDetails } from "../actions/classroom";
 
+//
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 class JoinClassPopUp extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +20,21 @@ class JoinClassPopUp extends Component {
       code: "",
     };
   }
+
+  state = {
+      dialogOpen:true
+  }
+
+  dialogOpen = () => {
+    this.setState({ open: true });
+  };
+
+  dialogClose = () => {
+    this.setState({ open: false });
+    this.props.dispatch(clearClassCode());
+    this.props.dispatch(fetchUserClassDetails());
+  };
+
   //to clear the error if it comes on reload or whenever the user shifts from this page
   componentWillUnmount() {
     this.props.dispatch(clearAuth());
@@ -22,47 +46,53 @@ class JoinClassPopUp extends Component {
       this.props.dispatch(joinClassroom(code));
     }
   };
-  handleClick = () => {
-    this.props.toggle();
-    this.props.dispatch(clearClassCode());
-    this.props.dispatch(fetchUserClassDetails());
-  };
+
   handleCode = (e) => {
     this.setState({
       code: e.target.value,
     });
   };
+
   render() {
     const { inProgress, error } = this.props.auth;
     const { code } = this.props.createClassroom;
     return (
-      <div className="popup-box">
-        <div className="box">
-            <span className="close-icon" onClick={this.handleClick}>x</span>
-            <form className="login-form">
-            <span className="login-signup-header">Create Classroom</span>
+    <div>
+    <Button variant="contained" onClick={this.dialogOpen}>
+        Join
+    </Button>
+      <Dialog open={this.state.open} onClose={this.dialogClose}>
+        <DialogTitle>
+            Enter ClassRoom Code
             {error && <div className="alert error-dailog">{error}</div>}
             {code && (
               <div className="alert success-dailog">
                 <p>Classroom joined successfully!!</p>
               </div>
             )}
-            <div className="field">
-              <input
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+                Join a new classroom using private code
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+            <TextField
+                autoFocus
+                margin="dense"
                 type="text"
                 placeholder="Enter ClassRoom Code"
                 required
                 onChange={this.handleCode}
-              />
-            </div>
-            <div className="field">
-              <button onClick={this.handleSubmitForm} disabled={inProgress}>
+                fullWidth
+                variant="standard"
+            />
+            <Button onClick={this.handleSubmitForm} disabled={inProgress}>
                 Join Classroom
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
+            </Button>
+        </DialogActions>
+      </Dialog> 
+    </div>
     );
   }
 }
