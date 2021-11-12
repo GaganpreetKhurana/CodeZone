@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
 class CreateClassPopUp extends Component {
@@ -78,17 +79,19 @@ class CreateClassPopUp extends Component {
         </Button>
         <Dialog open={this.state.open} onClose={this.dialogClose}>
         <DialogTitle>
-            Create Classroom
             {error && <div className="alert error-dailog">{error}</div>}
             {code && (
               <div className="alert success-dailog">
-                <p>Classroom creation successfull!!</p>
+                <p>Classroom created successfully!!</p>
                 <p> Share this code with students &nbsp;</p>
                 <b>{code}</b>
               </div>
             )}
         </DialogTitle>
         <DialogContent>
+          <DialogContentText>
+                Create a new classroom
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
             <TextField

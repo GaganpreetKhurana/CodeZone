@@ -19,15 +19,15 @@ class StudentDashboard extends Component {
     const { classesJoined } = this.props.classroom;
     return (
         <div>
-          <Grid container direction="column" justifyContent="space-between" alignItems="center" >
+          <Grid container direction="column"  >
           <Container>
           <Grid m={5} item container justifyContent="center">
             <Typography variant="h4">
-                DASHBOARD
+                CLASSES
             </Typography>
           </Grid>
           </Container>
-          <Grid item container direction="row" justifyContent="space-evenly" alignItems="center">
+          <Grid item container direction="row">
           {classesJoined.map((classroom) => (
               <div>
                 <StudentClassCards classroom={classroom}/>

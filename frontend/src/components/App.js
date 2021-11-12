@@ -62,10 +62,13 @@ class App extends React.Component {
               {auth.isLoggedIn && auth.user.role === "Teacher" && (
                 <Route exact path="/" component={TeacherDashboard} />
               )}
+              {auth.isLoggedIn && (
+                <Route path="/classroom/:classroomID" component={Classroom}/>
+              )}
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
               <Route path="/signup" component={SignUp} />
-              <Route path="/classroom/:classroomID" component={Classroom}/>
+              {!auth.isLoggedIn && (<Route path="/classroom/:classroomID" component={Home}/>)}
               <Route component={Page404} />
             </Switch>
           </Router>
