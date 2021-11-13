@@ -200,3 +200,233 @@ body {
     display: inline-block;
     margin : 10px;
   }
+  .class-dashboard{
+    width:100%;
+    height:auto;
+    min-height:90vh;
+    display: flex;
+    flex-wrap:nowrap;
+    box-sizing: border-box;
+  }
+  .students-list{
+    width: 20%;
+    min-width:240px;
+    height:auto;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* background-color:red; */
+  }
+  .notice-board{
+    width: 30%;
+    min-width:300px;
+    height:auto;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* background-color:red; */
+  }
+  .discussion-portal{
+    width:50%;
+    min-width:350px;
+    height:auto;
+    box-sizing: border-box;
+    /* background-color:yellow; */
+
+  }
+  .students-enrolled{
+    box-sizing: border-box;
+    border: 2px solid black;
+    margin-top:50px;
+    margin-left: 15px;
+    margin-right: 15px; 
+    min-width:170px;
+    height:70vh;
+    max-height:80vh;
+  }
+/* CREATEPOST */
+.create-post {
+  margin-top: 10px;
+  box-shadow: 0 0 1px 1px grey;
+  background: white;
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+.create-post > div {
+  padding: 6px;
+  border-top: 1px solid #b6b5b5;
+  display: flex;
+  justify-content: flex-end;
+}
+.create-post textarea {
+  height: 70px;
+  padding: 10px;
+  width: 95%;
+  box-sizing: border-box;
+  font-size: 15px;
+  border: none;
+  resize: none;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+#add-post-btn {
+  width: 112px;
+  height: 32px;
+  left: 111.5px;
+  top: 0px;
+  background: lightgrey;
+  border-radius: 3px;
+  color: black;
+  font-size: 16px;
+}
+#add-post-btn:focus,
+.create-post textarea:focus {
+  outline: none;
+}
+#add-post-btn:hover {
+  cursor: pointer;
+}
+
+/* Post Item */
+.post-wrapper {
+  border: 1px solid #e0e0e0;
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin-top: 20px;
+  background: #fff;
+  box-shadow: 0 0 1px 1px grey;
+}
+.post-header {
+  padding: 10px 10px;
+}
+.post-avatar {
+  display: flex;
+}
+.post-avatar > div {
+  display: flex;
+  flex-direction: column;
+  padding-left: 12px;
+}
+.post-avatar img {
+  height: 40px;
+}
+.post-avatar .post-author {
+  color: #616161;
+  /* font-family: Open Sans; */
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+}
+.post-avatar .post-time {
+  /* font-family: Open Sans; */
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: #757575;
+}
+.post-content {
+  /* font-family: Open Sans; */
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 20px;
+  color: #424242;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.post-actions {
+  padding: 5px;
+  display: flex;
+  border: 1px solid #e0e0e0;
+  padding: 5px 10px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: #616161;
+  border-right: none;
+  border-left: none;
+}
+.post-actions img {
+  height: 18px;
+}
+.post-actions img:hover {
+  cursor: pointer;
+}
+.post-like {
+  display: flex;
+  align-items: center;
+}
+.post-comments-icon {
+  margin-left: 15px;
+  display: flex;
+  align-items: center;
+}
+.post-like span,
+.post-comments-icon span {
+  margin-left: 7px;
+}
+.post-comment-box {
+  padding: 10px 10px;
+}
+.post-comment-box input {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  height: 35px;
+  margin: 0 auto;
+  width: 100%;
+  font-size: 15px;
+  box-sizing: border-box;
+  padding: 5px;
+}
+.post-comment-box input:focus {
+  outline: none;
+}
+.post-comments-list {
+  padding: 5px 10px;
+  position: relative;
+}
+.post-comment-item {
+  background: #f2f2f2;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 14px;
+  box-shadow: 0 0 1px 1px lightgrey;
+}
+.post-comment-header {
+  display: flex;
+}
+.post-comment-header .post-comment-author {
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: #757575;
+}
+.post-comment-header .post-comment-time {
+  font-size: 12px;
+  line-height: 16px;
+  color: #646363;
+  margin-left: 8px;
+}
+.post-comment-header .post-comment-likes {
+  font-size: 12px;
+  line-height: 16px;
+  color: #616161;
+  margin-left: 8px;
+}
+.post-comment-content {
+  margin-top: 7px;
+}
+.post-comments-list .comment-like {
+  position: absolute;
+  right: 21px;
+  top: 13px;
+}
+.post-comments-list .comment-like img {
+  height: 20px;
+}
+.post-comments-list .comment-like img:hover {
+  cursor: pointer;
+}
