@@ -63,7 +63,6 @@ class JoinClassPopUp extends Component {
     </Button>
       <Dialog open={this.state.open} onClose={this.dialogClose}>
         <DialogTitle>
-            Enter ClassRoom Code
             {error && <div className="alert error-dailog">{error}</div>}
             {code && (
               <div className="alert success-dailog">
