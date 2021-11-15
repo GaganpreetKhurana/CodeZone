@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-const classSchema = new mongoose.Schema(
-  {
+const classSchema = new mongoose.Schema({
     description: { type: String },
     subject: { type: String, required: true },
     batch: { type: String, required: true },
@@ -8,8 +7,7 @@ const classSchema = new mongoose.Schema(
     creator: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     students: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  },
-  { timestamps: true }
-);
+    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Posts" }],
+}, { timestamps: true });
 const Class = mongoose.model("Class", classSchema);
 module.exports = Class;
