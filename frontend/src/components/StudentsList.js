@@ -11,7 +11,25 @@ class StudentsList extends React.Component {
                     <p>Students List</p>
                 </div>
                 <div className="student-block">
-                    {/* iterate over students list here */}
+                    {/* iterate over teachers and then  students list here */}
+                    <div className="student-name">
+                        <p>Teacher 1</p>
+                        <img
+                        
+                        style={{ width: 25, height: 25 }}
+                        src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
+                        alt="comments-icon"
+                    />
+                    </div>
+                    <div className="student-name">
+                        <p>Teacher 2</p>
+                        <img
+                        
+                        style={{ width: 25, height: 25 }}
+                        src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
+                        alt="comments-icon"
+                    />
+                    </div>
                     <div className="student-name">
                         <p>18103001 ABCDEFG</p>
                         <img
