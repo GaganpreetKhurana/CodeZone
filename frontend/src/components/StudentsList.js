@@ -60,7 +60,7 @@ class StudentsList extends React.Component {
                     </div>
                 </div>
             </div>
-            {/* <ChatBox/> */}
+            <ChatBox/>
       </div>
     );
   }
