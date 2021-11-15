@@ -44,9 +44,7 @@ class Nav extends React.Component {
           <div className="left-div">
             {/*on clicking the logo it will take to the homepage */}
             <Link to="/">
-            <div className="logo"><img src={logo} alt="logo" width="45px" height="auto"  /></div>
-              <span className="main-logo">
-              CODEZONE</span>
+            <div className="logo"><img src={logo} alt="logo" width="250px" height="auto"  /></div>
             </Link>
           </div>
           {auth.isLoggedIn &&
