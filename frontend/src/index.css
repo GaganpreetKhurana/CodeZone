@@ -208,13 +208,12 @@ body {
     flex-wrap:nowrap;
     box-sizing: border-box;
   }
-  /* left students list */
+  /*students list */
   .students-list{
     width: 24%;
     min-width:260px;
     height:auto;
     box-sizing: border-box;
-    /* background-color:red; */
   }
   .students-enrolled{
     box-sizing: border-box;
@@ -269,23 +268,51 @@ body {
     }
   }
 
-  /* right notice board */
+  /* notice board */
   .notice-board{
     width: 26%;
     min-width:300px;
     height:auto;
     box-sizing: border-box;
-    overflow-y: auto;
-    overflow-x: hidden;
-    /* background-color:red; */
+    padding-top: 50px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
+  .announcements{
+    width:100%;
+    max-height:150px;
+    min-height:100px;
+    border:1px solid black;
+    border-radius: 10px;
+    overflow-x:hidden;
+    overflow-y: auto;
+  }
+  .notice-header{
+    display: inline-block;
+    padding-left:10px;
+    width:inherit;
+    height:40px;
+    font-size: 25px;
+    font-weight: 350;
+  }
+  .horizontal{
+    width: 100%;
+    height: 1px;
+    border-bottom:0.4px solid black;
+  }
+  .row{
+    display: inline-block;
+    padding-left:10px;
+    width:inherit;
+    height:auto;
+    font-size: 16px;
+  }
+  /* discussion portal */
   .discussion-portal{
     width:50%;
     min-width:350px;
     height:auto;
     box-sizing: border-box;
-    /* background-color:yellow; */
-
   }
   /* chat box */
   #user-chat-box .chat-header{
