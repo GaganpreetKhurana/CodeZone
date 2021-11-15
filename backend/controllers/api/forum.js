@@ -123,3 +123,100 @@ module.exports.update = async function(req, res) {
         });
     }
 }
+
+
+// to like a post
+module.exports.like = async function(req, res) {
+    // get subject
+    let subject = await Classes.findOne({
+        subject: req.body.subject,
+    });
+
+
+    let post = await Post.findById(req.body.post_id);
+    if (!post) {
+        return res.status(404).json({
+            message: "Post not found!",
+        });
+    }
+
+    if (subject.students.includes(req.user._id)) {
+
+        // user enrolled in subject
+
+        //like the post
+        if (post.likes.includes(req.user._id)) {
+            return res.status(401).json({
+                message: "Already liked!",
+            });
+        } else {
+            post.likes.push(req.user._id);
+            post.save();
+
+            return res.status(201).json({
+                message: "Post liked successfully",
+                success: true,
+                data: {
+                    data: post.data,
+                    likes: post.likes,
+                    comments: post.comments,
+                    time: post.updatedAt,
+                    id: post._id,
+                },
+            })
+        }
+
+    } else {
+        return res.status(401).json({
+            message: "User is not in class!",
+        });
+    }
+}
+
+// to dislike a post
+module.exports.dislike = async function(req, res) {
+    // get subject
+    let subject = await Classes.findOne({
+        subject: req.body.subject,
+    });
+
+
+    let post = await Post.findById(req.body.post_id);
+    if (!post) {
+        return res.status(404).json({
+            message: "Post not found!",
+        });
+    }
+
+    if (subject.students.includes(req.user._id)) {
+
+        // user enrolled in subject
+
+        //dislike the post
+        if (!post.likes.includes(req.user._id)) {
+            return res.status(401).json({
+                message: "Not liked already!",
+            });
+        } else {
+            post.likes.pop(req.user._id);
+            post.save();
+
+            return res.status(201).json({
+                message: "Post disliked successfully",
+                success: true,
+                data: {
+                    data: post.data,
+                    likes: post.likes,
+                    comments: post.comments,
+                    time: post.updatedAt,
+                    id: post._id,
+                },
+            })
+        }
+
+    } else {
+        return res.status(401).json({
+            message: "User is not in class!",
+        });
+    }
+}
