@@ -16,7 +16,7 @@ module.exports.create = async function(req, res) {
     // user
     let user = await User.findById(req.user._id);
 
-    if (subject.students.includes(user._id)) {
+    if (subject.students.includes(user._id) || subject.teachers.includes(req.user._id)) {
 
         // user enrolled in subject
 
@@ -140,7 +140,7 @@ module.exports.like = async function(req, res) {
         });
     }
 
-    if (subject.students.includes(req.user._id)) {
+    if (subject.students.includes(req.user._id) || subject.teachers.includes(req.user._id)) {
 
         // user enrolled in subject
 
@@ -188,7 +188,7 @@ module.exports.dislike = async function(req, res) {
         });
     }
 
-    if (subject.students.includes(req.user._id)) {
+    if (subject.students.includes(req.user._id) || subject.teachers.includes(req.user._id)) {
 
         // user enrolled in subject
 
@@ -248,7 +248,7 @@ module.exports.createComment = async function(req, res) {
     let user = await User.findById(req.user._id);
 
 
-    if (subject.students.includes(user._id)) {
+    if (subject.students.includes(user._id) || subject.teachers.includes(req.user._id)) {
 
         // user enrolled in subject
 
@@ -376,7 +376,7 @@ module.exports.likeComment = async function(req, res) {
         });
     }
 
-    if (subject.students.includes(req.user._id)) {
+    if (subject.students.includes(req.user._id) || subject.teachers.includes(req.user._id)) {
 
         // user enrolled in subject
 
@@ -428,7 +428,7 @@ module.exports.dislikeComment = async function(req, res) {
         });
     }
 
-    if (subject.students.includes(req.user._id)) {
+    if (subject.students.includes(req.user._id) || subject.teachers.includes(req.user._id)) {
 
         // user enrolled in subject
 

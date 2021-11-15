@@ -167,3 +167,112 @@ module.exports.details = async function(req, res) {
         });
     }
 };
+
+// To get discussion forum
+module.exports.forum = async function(req, res) {
+    let user_id = req.user._id;
+
+    // get subject
+    let subject = await Classes.findOne({
+        subject: req.body.subject,
+    });
+
+    if (!subject) {
+        return res.status(404).json({
+            message: "Subject not found!",
+        });
+    }
+
+    if (subject.students.includes(user_id) || subject.teachers.includes(req.user._id)) {
+        return res.status(200).json({
+            success: true,
+            data: await Classes.findOne({
+                    subject: req.body.subject,
+                })
+                .populate(
+                    "posts",
+                    "data updatedAt user comments likes")
+                .populate({
+                    path: "posts",
+                    populate: {
+                        path: "user",
+                        select: "name role",
+                    }
+                })
+                .populate({
+                    path: "posts",
+                    populate: {
+                        path: "comments",
+                        select: "data updatedAt user",
+                    }
+                })
+                .populate({
+                    path: "posts",
+                    populate: {
+                        path: "likes",
+                        select: "user",
+                    }
+                })
+                .populate({
+                    path: "posts",
+                    populate: {
+                        path: "likes",
+                        populate: {
+                            path: "_id",
+                            select: "name",
+                        }
+                    }
+                })
+                .populate({
+                    path: "posts",
+                    populate: {
+                        path: "comments",
+                        populate: {
+                            path: "user",
+                            select: "name role",
+                        }
+                    }
+                })
+                .populate({
+                    path: "posts",
+                    populate: {
+                        path: "comments",
+                        populate: {
+                            path: "user",
+                            select: "name role",
+                        }
+                    }
+                })
+                .populate({
+                    path: "posts",
+                    populate: {
+                        path: "comments",
+                        populate: {
+                            path: "likes",
+                            select: "users",
+                        }
+                    }
+                })
+                .populate({
+                    path: "posts",
+                    populate: {
+                        path: "comments",
+                        populate: {
+                            path: "likes",
+                            populate: {
+                                path: "_id",
+                                select: "name",
+                            }
+                        }
+                    }
+                })
+
+        })
+    } else {
+        return res.status(401).json({
+            success: false,
+            message: "Student not enrolled in this class!",
+        })
+    }
+
+};
