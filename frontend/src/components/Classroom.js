@@ -2,6 +2,11 @@ import React, { Component } from "react";
 import DiscussionPortal from "./DiscussionPortal";
 import StudentsList from "./StudentsList";
 import NoticeBoard from "./NoticeBoard";
+//import ChatBox from "./ChatBox";
+
+//Material UI
+import { Grid} from '@mui/material';
+
 
 class Classroom extends Component {
   componentDidMount() {
@@ -24,17 +29,21 @@ class Classroom extends Component {
     }
   }
   render() {
-    const { match } = this.props;
+    //const { match } = this.props;
     // return <div>{match.params.classroomID}</div>;
     return (
-      <div className="class-dashboard">
+      <Grid 
+        spacing={2}
+        container
+        direction="row"
+        justifyContent="space-evenly"
+        alignItems="center"
+      >
         <StudentsList/>
         <DiscussionPortal/>
-        <NoticeBoard/>
-
-
-        
-      </div>
+        <NoticeBoard/>  
+        {/* <ChatBox/> */}
+      </Grid>
     )
   }
 }
