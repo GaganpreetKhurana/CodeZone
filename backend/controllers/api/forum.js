@@ -4,7 +4,6 @@ const Post = require("../../models/posts");
 const Comment = require("../../models/comments");
 const Posts = require("../../models/posts");
 
-
 //to create a new post
 module.exports.create = async function(req, res) {
 
@@ -63,18 +62,31 @@ module.exports.delete = async function(req, res) {
         subject: req.body.subject,
     });
 
+    if (!subject) {
+        return res.status(404).json({
+            message: "Subject not found!",
+        });
+    }
+
     let post = await Post.findById(req.body.post_id);
     if (!post) {
         return res.status(404).json({
             message: "Post not found!",
         });
     }
-    if (req.user._id == post.user._id) {
+    if (req.user._id == post.user._id || subject.teachers.includes(req.user._id)) {
 
         // user created the post
 
         subject.posts.pop(post._id);
         subject.save();
+
+        for (let index = post.comments.length - 1; index > -1; index--) {
+            console.log(post.comments[index]);
+
+            Comment.findByIdAndDelete(post.comments[index]._id);
+        }
+        console.log("comments deleted!");
         Post.findByIdAndDelete(post._id).exec();
 
         return res.status(200).json({
@@ -292,6 +304,16 @@ module.exports.createComment = async function(req, res) {
 //to delete a comment
 module.exports.deleteComment = async function(req, res) {
 
+    // get subject
+    let subject = await Classes.findOne({
+        subject: req.body.subject,
+    });
+
+    if (!subject) {
+        return res.status(404).json({
+            message: "Subject not found!",
+        });
+    }
 
     let post = await Post.findById(req.body.post_id);
     if (!post) {
@@ -305,7 +327,7 @@ module.exports.deleteComment = async function(req, res) {
             message: "Comment not found!",
         });
     }
-    if (req.user._id == comment.user._id) {
+    if (req.user._id == comment.user._id || subject.teachers.includes(req.user._id)) {
 
         // user created the comment
 
