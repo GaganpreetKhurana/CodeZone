@@ -27,7 +27,6 @@ const Div = styled('div')(({ theme }) => ({
 
 class StudentsList extends React.Component {
   render() {
-
     return (
         <Grid item m={2} xs={3}>
             <Paper elevation={4}>
@@ -52,9 +51,9 @@ class StudentsList extends React.Component {
                 </ListItemAvatar>
                 <ListItemText primary={`Student sid ${value}`} />
                 </ListItemButton>
+                <Divider />
                 </ListItem>
             ))}
-            <Divider />
             </List>
             </CardContent>
             </Card>
