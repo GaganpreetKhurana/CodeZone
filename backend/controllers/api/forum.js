@@ -137,7 +137,7 @@ module.exports.update = async function(req, res) {
 }
 
 
-// to like a post
+// to like/dislike a post
 module.exports.like = async function(req, res) {
     // get subject
     let subject = await Classes.findOne({
@@ -158,9 +158,20 @@ module.exports.like = async function(req, res) {
 
         //like the post
         if (post.likes.includes(req.user._id)) {
-            return res.status(401).json({
-                message: "Already liked!",
-            });
+            post.likes.pop(req.user._id);
+            post.save();
+
+            return res.status(201).json({
+                message: "Post disliked successfully",
+                success: true,
+                data: {
+                    data: post.data,
+                    likes: post.likes,
+                    comments: post.comments,
+                    time: post.updatedAt,
+                    id: post._id,
+                },
+            })
         } else {
             post.likes.push(req.user._id);
             post.save();
@@ -185,53 +196,6 @@ module.exports.like = async function(req, res) {
     }
 }
 
-// to dislike a post
-module.exports.dislike = async function(req, res) {
-    // get subject
-    let subject = await Classes.findOne({
-        subject: req.body.subject,
-    });
-
-
-    let post = await Post.findById(req.body.post_id);
-    if (!post) {
-        return res.status(404).json({
-            message: "Post not found!",
-        });
-    }
-
-    if (subject.students.includes(req.user._id) || subject.teachers.includes(req.user._id)) {
-
-        // user enrolled in subject
-
-        //dislike the post
-        if (!post.likes.includes(req.user._id)) {
-            return res.status(401).json({
-                message: "Not liked already!",
-            });
-        } else {
-            post.likes.pop(req.user._id);
-            post.save();
-
-            return res.status(201).json({
-                message: "Post disliked successfully",
-                success: true,
-                data: {
-                    data: post.data,
-                    likes: post.likes,
-                    comments: post.comments,
-                    time: post.updatedAt,
-                    id: post._id,
-                },
-            })
-        }
-
-    } else {
-        return res.status(401).json({
-            message: "User is not in class!",
-        });
-    }
-}
 
 
 
@@ -384,7 +348,7 @@ module.exports.updateComment = async function(req, res) {
 }
 
 
-// to like a comment
+// to like/dislike a comment
 module.exports.likeComment = async function(req, res) {
     // get subject
     let subject = await Classes.findOne({
@@ -404,15 +368,11 @@ module.exports.likeComment = async function(req, res) {
 
         //like the post
         if (comment.likes.includes(req.user._id)) {
-            return res.status(401).json({
-                message: "Already liked!",
-            });
-        } else {
-            comment.likes.push(req.user._id);
+            comment.likes.pop(req.user._id);
             comment.save();
 
             return res.status(201).json({
-                message: "Comment liked successfully",
+                message: "Comment disliked successfully",
                 success: true,
                 data: {
                     data: comment.data,
@@ -422,49 +382,12 @@ module.exports.likeComment = async function(req, res) {
                     id: comment._id,
                 },
             })
-        }
-
-    } else {
-        return res.status(401).json({
-            message: "User is not in class!",
-        });
-    }
-}
-
-// to dislike a comment
-module.exports.dislikeComment = async function(req, res) {
-    // get subject
-    let subject = await Classes.findOne({
-        subject: req.body.subject,
-    });
-
-    if (!subject) {
-        return res.status(404).json({
-            message: "Subject not found!",
-        });
-    }
-    let comment = await Comment.findById(req.body.comment_id);
-    if (!comment) {
-        return res.status(404).json({
-            message: "Post not found!",
-        });
-    }
-
-    if (subject.students.includes(req.user._id) || subject.teachers.includes(req.user._id)) {
-
-        // user enrolled in subject
-
-        //dislike the comment
-        if (!comment.likes.includes(req.user._id)) {
-            return res.status(401).json({
-                message: "Not liked already!",
-            });
         } else {
-            comment.likes.pop(req.user._id);
+            comment.likes.push(req.user._id);
             comment.save();
 
             return res.status(201).json({
-                message: "Comment disliked successfully",
+                message: "Comment liked successfully",
                 success: true,
                 data: {
                     data: comment.data,
