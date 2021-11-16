@@ -9,14 +9,31 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import CommentIcon from '@mui/icons-material/Comment';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { styled } from '@mui/material/styles';
+
+const Div = styled('div')(({ theme }) => ({
+  ...theme.typography.button,
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(2),
+  textAlign: "center",
+}));
+
 class DiscussionPortal extends React.Component {
   render() {
 
     return (
-        <Grid item xs={4}> 
-          <div className="discussion-portal">
-            <div className="posts-list">  
-
+        <Grid item xs={4} m={2} > 
+        <Grid item xs={4} m={2} > 
           <Paper elevation={4} component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
               <InputBase
               sx={{ ml: 1, flex: 1 }}
@@ -28,8 +45,40 @@ class DiscussionPortal extends React.Component {
               <PostAddIcon />
               </IconButton>
           </Paper>
-
-              {/* displaying old posts of classroom */}
+        </Grid>
+        <Grid item xs={4} m={2} > 
+        </Grid>
+          {/* displaying old posts of classroom */}
+          <Paper elevation={4}>
+            <Card sx={{ minWidth: 0 }}>
+            <Div>Student List</Div>
+            <CardContent>
+            {/* iterate over teachers and then  students list here */}
+            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            {[1, 2, 3].map((value) => (
+                <ListItem
+                key={value}
+                disableGutters
+                secondaryAction={
+                    <IconButton>
+                    <CommentIcon />
+                    </IconButton>
+                }
+                >
+                <ListItemButton>
+                <ListItemAvatar>
+                    <Avatar><AccountCircleIcon /></Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={`Student sid ${value}`} />
+                </ListItemButton>
+                <Divider />
+                </ListItem>
+            ))}
+            </List>
+            </CardContent>
+            </Card>
+        </Paper>
+             
               <div className="post-wrapper">
                 <div className="post-header">
                     <div className="post-avatar">
@@ -112,9 +161,7 @@ class DiscussionPortal extends React.Component {
                     </div>
                     
                   </div>
-                </div>
-            </div>
-          </div>      
+                </div>   
         </Grid>
     );
   }
