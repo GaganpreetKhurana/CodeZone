@@ -213,16 +213,16 @@ module.exports.forum = async function(req, res) {
                         select: "user",
                     }
                 })
-                .populate({
-                    path: "posts",
-                    populate: {
-                        path: "likes",
-                        populate: {
-                            path: "_id",
-                            select: "name",
-                        }
-                    }
-                })
+                // .populate({
+                //     path: "posts",
+                //     populate: {
+                //         path: "likes",
+                //         populate: {
+                //             path: "_id",
+                //             select: "name",
+                //         }
+                //     }
+                // })
                 .populate({
                     path: "posts",
                     populate: {
@@ -253,19 +253,19 @@ module.exports.forum = async function(req, res) {
                         }
                     }
                 })
-                .populate({
-                    path: "posts",
-                    populate: {
-                        path: "comments",
-                        populate: {
-                            path: "likes",
-                            populate: {
-                                path: "_id",
-                                select: "name",
-                            }
-                        }
-                    }
-                })
+                // .populate({
+                //     path: "posts",
+                //     populate: {
+                //         path: "comments",
+                //         populate: {
+                //             path: "likes",
+                //             populate: {
+                //                 path: "_id",
+                //                 select: "name",
+                //             }
+                //         }
+                //     }
+                // })
 
         })
     } else {
