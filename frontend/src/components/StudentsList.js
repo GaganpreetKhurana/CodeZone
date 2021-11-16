@@ -16,6 +16,7 @@ import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { styled } from '@mui/material/styles';
+import Divider from '@mui/material/Divider';
 
 const Div = styled('div')(({ theme }) => ({
   ...theme.typography.button,
@@ -53,6 +54,7 @@ class StudentsList extends React.Component {
                 </ListItemButton>
                 </ListItem>
             ))}
+            <Divider />
             </List>
             </CardContent>
             </Card>
