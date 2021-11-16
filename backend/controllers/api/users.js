@@ -1,5 +1,6 @@
 const User = require("../../models/user");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
 //for the user to sign up
 module.exports.signup = async function(req, res) {
@@ -34,7 +35,7 @@ module.exports.signup = async function(req, res) {
 //to login the user
 module.exports.login = async function(req, res) {
     let user = await User.findOne({ email: req.body.email });
-    if (!user || user.password != req.body.password) {
+    if (!user || !bcrypt.compare(req.body.password, user.password)) {
         return res.json(422, {
             message: "Invalid Email / Password",
         });
