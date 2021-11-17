@@ -38,7 +38,6 @@ class StudentsList extends React.Component {
             {[1, 2, 3].map((value) => (
                 <ListItem
                 key={value}
-                disableGutters
                 secondaryAction={
                     <IconButton>
                     <CommentIcon />
