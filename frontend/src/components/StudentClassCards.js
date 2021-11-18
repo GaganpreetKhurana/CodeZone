@@ -34,7 +34,7 @@ export default function StudentClassCards(props) {
 
   return (
     <Container>
-    <Grid item sx={{ borderRadius: '50%' }} m={4} item xs={12} sm={4} md={4}>
+    <Grid item sx={{ borderRadius: '50%' }} m={4} xs={12} sm={4} md={4}>
     <Paper elevation={4}>
     <Card sx={{ minWidth: 345 }}>
       <CardHeader

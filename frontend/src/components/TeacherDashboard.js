@@ -14,7 +14,7 @@ class TeacherDashboard extends Component {
   }
   render() {
     //create the details of the classes joined and created by the user
-    const { classesCreated,classesJoined } = this.props.classroom;
+    const { classesCreated,/*classesJoined*/ } = this.props.classroom;
 
     return (
       <div>

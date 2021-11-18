@@ -1,67 +1,63 @@
 import React from "react";
 import { connect } from "react-redux";
-import ChatBox from "./ChatBox";
+
+//Material UI
+import { Grid} from '@mui/material';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import CommentIcon from '@mui/icons-material/Comment';
+import IconButton from '@mui/material/IconButton';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import { Paper} from '@mui/material';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { styled } from '@mui/material/styles';
+import Divider from '@mui/material/Divider';
+
+const Div = styled('div')(({ theme }) => ({
+  ...theme.typography.button,
+  backgroundColor: theme.palette.background.paper,
+  padding: theme.spacing(2),
+  textAlign: "center",
+}));
 
 class StudentsList extends React.Component {
   render() {
-
     return (
-        <div className="students-list">
-            <div className="students-enrolled">
-                <div class="header">
-                    <p>Students List</p>
-                </div>
-                <div className="student-block">
-                    {/* iterate over teachers and then  students list here */}
-                    <div className="student-name">
-                        <p>Teacher 1</p>
-                        <img
-                        
-                        style={{ width: 25, height: 25 }}
-                        src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
-                        alt="comments-icon"
-                    />
-                    </div>
-                    <div className="student-name">
-                        <p>Teacher 2</p>
-                        <img
-                        
-                        style={{ width: 25, height: 25 }}
-                        src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
-                        alt="comments-icon"
-                    />
-                    </div>
-                    <div className="student-name">
-                        <p>18103001 ABCDEFG</p>
-                        <img
-                        
-                        style={{ width: 25, height: 25 }}
-                        src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
-                        alt="comments-icon"
-                    />
-                    </div>
-                    <div className="student-name">
-                        <p>18103002 ABCDEFG</p>
-                        <img
-                        
-                        style={{ width: 25, height: 25 }}
-                        src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
-                        alt="comments-icon"
-                    />
-                    </div>
-                    <div className="student-name">
-                        <p>18103003 ABCDEFG</p>
-                        <img
-                        
-                        style={{ width: 25, height: 25 }}
-                        src="https://cdn-icons-png.flaticon.com/512/1380/1380338.png"
-                        alt="comments-icon"
-                    />
-                    </div>
-                </div>
-            </div>
-            <ChatBox/>
-      </div>
+        <Grid item m={2} xs={3}>
+            <Paper elevation={4}>
+            <Card sx={{ minWidth: 0 }}>
+            <Div>Student List</Div>
+            <CardContent>
+            {/* iterate over teachers and then  students list here */}
+            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            {[1, 2, 3].map((value) => (
+                <ListItem
+                key={value}
+                secondaryAction={
+                    <IconButton>
+                    <CommentIcon />
+                    </IconButton>
+                }
+                >
+                <ListItemButton>
+                <ListItemAvatar>
+                    <Avatar><AccountCircleIcon /></Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={`Student sid ${value}`} />
+                </ListItemButton>
+                <Divider />
+                </ListItem>
+            ))}
+            </List>
+            </CardContent>
+            </Card>
+        </Paper>
+        </Grid>
     );
   }
 }
