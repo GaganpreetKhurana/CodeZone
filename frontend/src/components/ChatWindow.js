@@ -8,6 +8,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
 import ChatBox from './ChatBox';
+import IconButton from '@mui/material/IconButton';
+import CommentIcon from '@mui/icons-material/Comment';
 
 function PaperComponent(props) {
   return (
@@ -36,9 +38,9 @@ export default function DraggableDialog() {
 
   return (
     <div>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open draggable dialog
-      </Button>
+      <IconButton variant="outlined" onClick={handleClickOpen}>
+        <CommentIcon />
+      </IconButton>
       <Dialog
         open={open}
         onClose={handleClose}
