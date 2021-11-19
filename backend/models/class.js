@@ -8,7 +8,7 @@ const classSchema = new mongoose.Schema({
     students: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Posts" }],
-    labs: [{type: mongoose.Schema.Types.ObjectId,ref:"Lab"}],
+    labsCreated: [{type: mongoose.Schema.Types.ObjectId,ref:"Lab"}],
 }, { timestamps: true });
 const Class = mongoose.model("Class", classSchema);
 module.exports = Class;
