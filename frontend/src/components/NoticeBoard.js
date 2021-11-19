@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import CreateLabDialog from "./CreateLabDialog";
+import JoinLabDialog from "./JoinLabDialog";
 
 //Material UI
 import { Grid } from "@mui/material";
@@ -38,10 +39,7 @@ class NoticeBoard extends React.Component {
                 Online Class Link
               </Button>
               {auth.user.role === "Teacher" && <CreateLabDialog  classroomId={classroomId} />}
-              {/* <Button fullWidth variant="contained" sx={{mt: 3, mb: 2}}>Create New Lab Link</Button>} */}
-              <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Join Online Lab
-              </Button>
+              <JoinLabDialog classroomId={classroomId} />
             </CardContent>
           </Card>
         </Paper>

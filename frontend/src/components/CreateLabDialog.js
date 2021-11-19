@@ -47,7 +47,6 @@ class CreateLabDialog extends Component {
     const { classroomId} = this.props;
     const { description, question, input, output, language, maxMarks } = this.state;
     if (description && classroomId) {
-      console.log(description, question, input, output, language, maxMarks,classroomId);
       this.props.dispatch(createNewLab(description, question, input, output, language, maxMarks,classroomId));
     }
   };
@@ -86,21 +85,21 @@ class CreateLabDialog extends Component {
   };
   render() {
     const { inProgress, error } = this.props.auth;
-
+    const { code } = this.props.createClassroom;
     return (
         <div>
-        <Button variant="contained" fullWidth onClick={this.dialogOpen} >
+        <Button variant="contained" sx={{ mt: 3, mb: 2 }} fullWidth onClick={this.dialogOpen} >
           Create New Lab Link
         </Button>
         <Dialog open={this.state.open} onClose={this.dialogClose}>
         <DialogTitle>
         Create New Lab
             {error && <div className="alert error-dailog">{error}</div>}
-            {/* {!error && (
+            {code && (
               <div className="alert success-dailog">
-                <p>Lab created successfully!!</p>
+                <p>Lab Created Successfully!!</p>
               </div>
-            )} */}
+            )}
         </DialogTitle>
         <DialogContent>
             <TextField

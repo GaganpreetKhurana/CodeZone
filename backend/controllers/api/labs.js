@@ -48,16 +48,14 @@ module.exports.createLab = async function(req, res) {
 
 //to fetch existing lab details
 module.exports.fetchExistingLabDetails = async function(req,res){
-    console.log("params",req.params.classroomId);
     let classExistWithClassId = await Classes.findOne({
         _id: req.params.classroomId,
     }).select("labsCreated")
     .populate(
         "labsCreated",
-        "creator question input output maxMarks description language"
+        "creator question input output maxMarks description language createdAt"
     ).exec();
     if (classExistWithClassId) {
-        console.log("classExistWithClassId",classExistWithClassId);
         return res.status(200).json({
             message: "Classroom joined successfully",
             data: classExistWithClassId.labsCreated,
