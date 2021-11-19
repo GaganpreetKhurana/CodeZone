@@ -1,7 +1,7 @@
 const Classes = require("../../models/class");
 const User = require("../../models/user");
-
-//to generate unique code for classroom
+const sanitizer = require('sanitizer')
+    //to generate unique code for classroom
 async function createClassCode() {
     var result = "";
     var characters =
@@ -84,7 +84,7 @@ module.exports.join = async function(req, res) {
     //find class
     if (!classCode) {
         return res.status(422).json({
-            message: "Please enter valid classcode to join!!",
+            message: "Please enter valid class Code to join!!",
         });
     }
     let classroom = await Classes.findOne({ code: classCode });
@@ -168,13 +168,12 @@ module.exports.details = async function(req, res) {
 };
 
 // To get discussion forum
-module.exports.forum = async function(req, res) {
+module.exports.dashboard = async function(req, res) {
     let user_id = req.user._id;
 
     // get subject
-    let subject = await Classes.findOne({
-        subject: req.body.subject,
-    });
+    let subject = await Classes.findById(
+        sanitizer.escape(req.params.classroom_id));
 
     if (!subject) {
         return res.status(404).json({
@@ -185,12 +184,13 @@ module.exports.forum = async function(req, res) {
     if (subject.students.includes(user_id) || subject.teachers.includes(req.user._id)) {
         return res.status(200).json({
             success: true,
-            data: await Classes.findOne({
-                    subject: req.body.subject,
-                })
+            data: await Classes.findById(
+                    sanitizer.escape(req.params.classroom_id))
+                .select("teachers students posts announcements code ClassMeetLink")
+                .populate("teachers students", "name SID id")
                 .populate(
                     "posts",
-                    "data updatedAt user comments likes")
+                    "content updatedAt user comments likes")
                 .populate({
                     path: "posts",
                     populate: {
@@ -202,7 +202,7 @@ module.exports.forum = async function(req, res) {
                     path: "posts",
                     populate: {
                         path: "comments",
-                        select: "data updatedAt user",
+                        select: "content updatedAt user",
                     }
                 })
                 .populate({
@@ -212,16 +212,6 @@ module.exports.forum = async function(req, res) {
                         select: "user",
                     }
                 })
-                // .populate({
-                //     path: "posts",
-                //     populate: {
-                //         path: "likes",
-                //         populate: {
-                //             path: "_id",
-                //             select: "name",
-                //         }
-                //     }
-                // })
                 .populate({
                     path: "posts",
                     populate: {
@@ -230,17 +220,20 @@ module.exports.forum = async function(req, res) {
                             path: "user",
                             select: "name role",
                         }
-                    }
+                    },
+
                 })
                 .populate({
-                    path: "posts",
+                    path: "announcements",
                     populate: {
-                        path: "comments",
-                        populate: {
-                            path: "user",
-                            select: "name role",
-                        }
+                        path: "creator",
+                        select: "name"
+                    },
+                    select: "content createdAt creator",
+                    options: {
+                        sort: { createdAt: -1 }
                     }
+
                 })
                 .populate({
                     path: "posts",
@@ -249,23 +242,15 @@ module.exports.forum = async function(req, res) {
                         populate: {
                             path: "likes",
                             select: "users",
+                        },
+                        options: {
+                            sort: { createdAt: -1 }
                         }
+                    },
+                    options: {
+                        sort: { createdAt: -1 }
                     }
                 })
-                // .populate({
-                //     path: "posts",
-                //     populate: {
-                //         path: "comments",
-                //         populate: {
-                //             path: "likes",
-                //             populate: {
-                //                 path: "_id",
-                //                 select: "name",
-                //             }
-                //         }
-                //     }
-                // })
-
         })
     } else {
         return res.status(401).json({
@@ -275,3 +260,35 @@ module.exports.forum = async function(req, res) {
     }
 
 };
+
+
+//to update Class Meet Link
+module.exports.link = async function(req, res) {
+
+    // get subject
+    let subject = await Classes.findById(req.body.classroom_id);
+    if (!subject) {
+        return res.status(404).json({
+            message: "Subject not found!",
+        });
+    }
+
+
+
+    if (subject.teachers.includes(req.user._id)) {
+
+        // user is a teacher for this subject
+        subject.ClassMeetLink = req.body.content;
+        subject.save();
+
+        return res.status(200).json({
+            message: "Meet Link Updated!",
+            success: true,
+        });
+    } else {
+        return res.status(401).json({
+            message: "User is not a teacher in this class!",
+        });
+    }
+
+}
