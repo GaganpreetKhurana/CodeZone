@@ -1,7 +1,7 @@
 const Announcement = require("../../models/announcement");
 const Classes = require("../../models/class");
 
-//to create a new post
+//to create a new announcement
 module.exports.create = async function(req, res) {
 
     // get subject
@@ -15,9 +15,9 @@ module.exports.create = async function(req, res) {
 
     if (subject.teachers.includes(req.user._id)) {
 
-        // user enrolled in subject
+        // user is teacher for this subject
 
-        //create post object
+        //create announcement object
         let newAnnouncement = await Announcement.create({
             creator: req.user._id,
             content: req.body.content,
@@ -63,7 +63,7 @@ module.exports.delete = async function(req, res) {
         });
     }
 
-    // get subject
+    // get announcement
     let announcement = await Announcement.findById(req.body.announcement_id);
     if (!announcement) {
         return res.status(404).json({
@@ -74,7 +74,7 @@ module.exports.delete = async function(req, res) {
 
     if (subject.teachers.includes(req.user._id)) {
 
-        // user enrolled in subject
+        // user is a teacher for this subject
 
         subject.announcements.pop(announcement)
         subject.save();
@@ -87,6 +87,49 @@ module.exports.delete = async function(req, res) {
     } else {
         return res.status(401).json({
             message: "User is not a teacher in this class!",
+        });
+    }
+
+}
+
+//to update an announcement
+module.exports.update = async function(req, res) {
+
+    // get subject
+    let subject = await Classes.findById(req.body.classroom_id);
+    if (!subject) {
+        return res.status(404).json({
+            message: "Subject not found!",
+        });
+    }
+
+    // get announcement
+    let announcement = await Announcement.findById(req.body.announcement_id);
+    if (!announcement) {
+        return res.status(404).json({
+            message: "Announcement not found!",
+        });
+    }
+
+
+    if (subject.teachers.includes(req.user._id) && announcement.user._id == req.user._id) {
+
+        // user is a teacher for this subject
+        announcement.content = req.subject.content;
+        announcement.save();
+
+        return res.status(200).json({
+            message: "Announcement Updated!",
+            success: true,
+        });
+    } else {
+        if (!subject.teachers.includes(req.user._id)) {
+            return res.status(401).json({
+                message: "User is not a teacher in this class!",
+            });
+        }
+        return res.status(401).json({
+            message: "User did not create this announcement!",
         });
     }
 
