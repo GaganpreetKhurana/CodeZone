@@ -72,8 +72,6 @@ module.exports.fetchExistingLabDetails = async function(req,res){
 
 //create editor for user
 module.exports.createEditor = async function(req,res){
-    // console.log(req.params.userId);
-    // console.log(req.params.labId);
 
     let userId = req.params.userId;
     let labId = req.params.labId;
@@ -94,7 +92,6 @@ module.exports.createEditor = async function(req,res){
             //check if this exist then return the details present in it 
             //only if userId === req.user._id or if userId has role ===teacher
             if(userId === req.user._id || user.role === "Teacher") {
-                console.log(codeEditorExist);
                 return res.status(200).json({
                     message: "Code Editor",
                     data: {editor:codeEditorExist,lab},
