@@ -54,7 +54,7 @@ module.exports.create = async function(req, res) {
             code: code,
         });
         if (classroom) {
-            //add thi user in teachers array of that class as well
+            //add this user in teachers array of that class as well
             classroom.teachers.push(req.user._id);
             classroom.save();
 
