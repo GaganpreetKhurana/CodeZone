@@ -72,8 +72,11 @@ module.exports.fetchExistingLabDetails = async function(req,res){
 
 //create editor for user
 module.exports.createEditor = async function(req,res){
+    // console.log(req.params.userId);
+    // console.log(req.params.labId);
+
     let userId = req.params.userId;
-    let labId = req.parama.labId;
+    let labId = req.params.labId;
     //checking user should exist
     let user = await User.findById(userId);
     //checking lab should exist 
@@ -94,7 +97,7 @@ module.exports.createEditor = async function(req,res){
                 console.log(codeEditorExist);
                 return res.status(200).json({
                     message: "Code Editor",
-                    data: {codeEditorExist,lab},
+                    data: {editor:codeEditorExist,lab},
                     success: true,
                 });
             }
@@ -120,7 +123,7 @@ module.exports.createEditor = async function(req,res){
                 lab.save();
                 return res.status(200).json({
                     message: "Code Editor",
-                    data: {newEditor,lab},
+                    data: {editor:newEditor,lab},
                     success: true,
                 });
             }

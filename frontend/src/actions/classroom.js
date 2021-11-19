@@ -44,7 +44,7 @@ function labDetails(labDetails){
 }
 export function fetchClassLabDetails(classroomId){
   return (dispatch) => {
-    const url = `/api/classroom//fetchExistingLabDetails/${classroomId}`;
+    const url = `/api/classroom/fetchExistingLabDetails/${classroomId}`;
     fetch(url, {
       headers: {
          Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -70,9 +70,16 @@ export function clearLabDetails(){
 
 
 //create new code editor for user 
+function codeEditorDetails({editor,lab}){
+  return {
+      type : CREATE_CODE_EDITOR,
+      codeEditorDetails: editor,
+      labDetails: lab,
+  }
+}
 export function createNewCodeEditor(userId, labId){
   return (dispatch) => {
-    const url = `/api/classroom//fetchExistingLabDetails/${classroomId}`;
+    const url = `/api/classroom/createEditor/${userId}/${labId}`;
     fetch(url, {
       headers: {
          Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -81,8 +88,7 @@ export function createNewCodeEditor(userId, labId){
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          console.log(data.data);
-          dispatch(labDetails(data.data));
+          dispatch(codeEditorDetails(data.data));
           return;
         }
       });
