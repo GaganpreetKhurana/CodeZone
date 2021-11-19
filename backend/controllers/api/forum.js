@@ -31,9 +31,9 @@ module.exports.create = async function(req, res) {
 
         // if object created
         if (newPost) {
-            newPost.save();
+            newPost = await newPost.save();
             subject.posts.push(newPost._id);
-            subject.save();
+            subject = await subject.save();
 
             return res.status(201).json({
                 message: "Post created successfully",
@@ -133,12 +133,12 @@ module.exports.delete = async function(req, res) {
         // user created the post
 
         subject.posts.pop(post._id);
-        subject.save();
+        subject = await subject.save();
 
         for (let index = post.comments.length - 1; index > -1; index--) {
             console.log(post.comments[index]);
 
-            Comment.findByIdAndDelete(post.comments[index]._id);
+            Comment.findByIdAndDelete(post.comments[index]._id).exec();
         }
         console.log("comments deleted!");
         Post.findByIdAndDelete(post._id).exec();
@@ -223,7 +223,7 @@ module.exports.update = async function(req, res) {
 
         // user created the post
         post.content = req.body.content;
-        post.save();
+        post = await post.save();
 
 
         return res.status(200).json({
@@ -314,7 +314,7 @@ module.exports.like = async function(req, res) {
         //like the post
         if (post.likes.includes(req.user._id)) {
             post.likes.pop(req.user._id);
-            post.save();
+            post = await post.save();
 
             return res.status(201).json({
                 message: "Post disliked successfully",
@@ -376,7 +376,7 @@ module.exports.like = async function(req, res) {
             })
         } else {
             post.likes.push(req.user._id);
-            post.save();
+            post = await post.save();
 
             return res.status(201).json({
                 message: "Post liked successfully",
@@ -486,9 +486,9 @@ module.exports.createComment = async function(req, res) {
 
         // if object created
         if (newComment) {
-            newComment.save();
+            newComment = await newComment.save();
             post.comments.push(newComment._id);
-            post.save();
+            post = await post.save();
 
             return res.status(201).json({
                 message: "Comment created successfully",
@@ -598,8 +598,8 @@ module.exports.deleteComment = async function(req, res) {
 
         // user created the comment
 
-        post.comments.pop(post._id);
-        post.save();
+        post = await post.comments.pop(post._id);
+        post = await post.save();
         Comment.findByIdAndDelete(post._id).exec();
 
         return res.status(200).json({
@@ -694,7 +694,7 @@ module.exports.updateComment = async function(req, res) {
 
         // user created the comment
         comment.content = req.body.content;
-        comment.save();
+        comment = await comment.save();
 
 
         return res.status(200).json({
@@ -793,7 +793,7 @@ module.exports.likeComment = async function(req, res) {
         //like the post
         if (comment.likes.includes(req.user._id)) {
             comment.likes.pop(req.user._id);
-            comment.save();
+            comment = await comment.save();
 
             return res.status(201).json({
                 message: "Comment disliked successfully",
@@ -855,7 +855,7 @@ module.exports.likeComment = async function(req, res) {
             })
         } else {
             comment.likes.push(req.user._id);
-            comment.save();
+            comment = await comment.save();
 
             return res.status(201).json({
                 message: "Comment liked successfully",
