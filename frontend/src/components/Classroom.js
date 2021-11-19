@@ -29,7 +29,7 @@ class Classroom extends Component {
     }
   }
   render() {
-    //const { match } = this.props;
+    const { match } = this.props;
     // return <div>{match.params.classroomID}</div>;
     return (
       <Grid 
@@ -39,9 +39,9 @@ class Classroom extends Component {
         justifyContent="space-evenly"
         alignItems="center"
       >
-        <StudentsList/>
+        <StudentsList />
         <DiscussionPortal/>
-        <NoticeBoard/>  
+        <NoticeBoard classroomId={match.params.classroomID}/>  
         {/* <ChatBox/> */}
       </Grid>
     )
