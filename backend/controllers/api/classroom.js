@@ -154,7 +154,6 @@ module.exports.details = async function(req, res) {
         })
         .exec();
     if (userDetails) {
-        console.log("hello", userDetails);
         return res.status(200).json({
             message: "Classroom joined successfully",
             data: userDetails,

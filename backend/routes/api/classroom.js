@@ -11,5 +11,6 @@ router.get("/discussionForum", auth.authenticateToken, classroom.forum);
 
 // create new lab
 router.post("/createLab", auth.authenticateToken, labs.createLab);
+router.get("/fetchExistingLabDetails/:classroomId", auth.authenticateToken, labs.fetchExistingLabDetails);
 
 module.exports = router;
