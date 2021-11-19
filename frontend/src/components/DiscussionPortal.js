@@ -109,7 +109,6 @@ class DiscussionPortal extends React.Component {
               />
             </ListItem>
           </List>
-
           </CardContent>
           </Card>
         </Paper>

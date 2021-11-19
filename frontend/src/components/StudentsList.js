@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import ChatWindow from "./ChatWindow";
 
 //Material UI
 import { Grid} from '@mui/material';
@@ -39,9 +40,8 @@ class StudentsList extends React.Component {
                 <ListItem
                 key={value}
                 secondaryAction={
-                    <IconButton>
-                    <CommentIcon />
-                    </IconButton>
+                    <ChatWindow>
+                    </ChatWindow>
                 }
                 >
                 <ListItemButton>
