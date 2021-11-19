@@ -2,9 +2,11 @@ const Announcement = require("../../models/announcement");
 const Classes = require("../../models/class");
 const sanitizer = require('sanitizer')
 
+
 //to create a new announcement
 module.exports.create = async function(req, res) {
 
+    console.log(req.body.classroom_id);
     // get subject
     let subject = await Classes.findById(req.body.classroom_id);
     if (!subject) {
@@ -28,9 +30,9 @@ module.exports.create = async function(req, res) {
 
         // if object created
         if (newAnnouncement) {
-            newAnnouncement.save()
+            newAnnouncement = await newAnnouncement.save()
             subject.announcements.push(newAnnouncement)
-            subject.save();
+            subject = await subject.save();
 
             return res.status(201).json({
                 message: "Announcement created successfully",
@@ -43,6 +45,9 @@ module.exports.create = async function(req, res) {
                         populate: {
                             path: "creator",
                             select: "name",
+                        },
+                        options: {
+                            sort: { createdAt: -1 }
                         }
                     }),
             });
@@ -64,9 +69,9 @@ module.exports.create = async function(req, res) {
 //to delete an announcement
 module.exports.delete = async function(req, res) {
 
-
+    console.log(req.params.announcement_id);
     // get announcement
-    let announcement = await Announcement.findById(sanitizer.escape(req.param.announcement_id));
+    let announcement = await Announcement.findById(sanitizer.escape(req.params.announcement_id));
     if (!announcement) {
         return res.status(404).json({
             success: false,
@@ -88,7 +93,7 @@ module.exports.delete = async function(req, res) {
         // user is a teacher for this subject
 
         subject.announcements.pop(announcement)
-        subject.save();
+        subject = await subject.save();
         Announcement.findByIdAndDelete(announcement._id).exec();
 
         return res.status(200).json({
@@ -102,6 +107,9 @@ module.exports.delete = async function(req, res) {
                     populate: {
                         path: "creator",
                         select: "name",
+                    },
+                    options: {
+                        sort: { createdAt: -1 }
                     }
                 })
         });
@@ -137,11 +145,11 @@ module.exports.update = async function(req, res) {
     }
 
 
-    if (subject.teachers.includes(req.user._id) && announcement.user._id == req.user._id) {
+    if (subject.teachers.includes(req.user._id) && announcement.creator._id == req.user._id) {
 
         // user is a teacher for this subject
-        announcement.content = req.subject.content;
-        announcement.save();
+        announcement.content = req.body.content;
+        announcement = await announcement.save();
 
         return res.status(200).json({
             message: "Announcement Updated!",
@@ -154,6 +162,9 @@ module.exports.update = async function(req, res) {
                     populate: {
                         path: "creator",
                         select: "name",
+                    },
+                    options: {
+                        sort: { createdAt: -1 }
                     }
                 })
         });
