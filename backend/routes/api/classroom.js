@@ -11,5 +11,6 @@ router.get("/classroomDetails/:classroom_id", auth.authenticateToken, classroom.
 router.post("/link", auth.authenticateToken, classroom.link);
 router.post("/createLab", auth.authenticateToken, labs.createLab);
 router.get("/fetchExistingLabDetails/:classroomId", auth.authenticateToken, labs.fetchExistingLabDetails);
+router.get("/createEditor/:userId/:labId",auth.authenticateToken,labs.createEditor)
 
 module.exports = router;

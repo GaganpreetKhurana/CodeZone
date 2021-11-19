@@ -1,17 +1,19 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link } from 'react-router-dom';
 import { clearAuth } from "../actions/auth";
-import { joinClassroom, clearClassCode} from "../actions/createClassroom";
-import { clearLabDetails, fetchUserClassDetails ,fetchClassLabDetails } from "../actions/classroom";
+import { clearLabDetails ,fetchClassLabDetails, createNewCodeEditor } from "../actions/classroom";
 
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 
 class JoinLabDialog extends Component {
   state = {
@@ -24,8 +26,6 @@ class JoinLabDialog extends Component {
 
   dialogClose = () => {
     this.setState({ open: false });
-    this.props.dispatch(clearClassCode());
-    this.props.dispatch(fetchUserClassDetails());
   };
 
   //to clear the error if it comes on reload or whenever the user shifts from this page
@@ -42,6 +42,7 @@ class JoinLabDialog extends Component {
   }
   
   render() {
+    const { user } =this.props.auth;
     const { labDetails } = this.props.labDetails;
     console.log("labDetails",labDetails);
     return (
@@ -50,23 +51,41 @@ class JoinLabDialog extends Component {
         Join Lab
     </Button>
       <Dialog open={this.state.open} onClose={this.dialogClose}>
-        <DialogTitle>
-            Existing Lab Details
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-          </DialogContentText>
-        </DialogContent>
+        {labDetails.length === 0 && <DialogTitle>No Existing Lab For this class yet!!</DialogTitle>}
+        {labDetails.length !== 0 && <DialogTitle>Existing Lab Details</DialogTitle>}
         <DialogActions>
-        <Grid item container direction="row">
-          {labDetails.map((lab) => (
-              <div>
-                <Typography variant="h6">
-                    {lab.description}
-                </Typography>
-              </div>
-            ))}
-        </Grid>
+            <TableContainer>
+              <Table sx={{ minWidth: 450 }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center">Description</TableCell>
+                    <TableCell align="center">Created On</TableCell>
+                    <TableCell align="center">Marks</TableCell>
+                    <TableCell align="center">Link to Join</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {labDetails.map((row) => (
+                    <TableRow
+                      key={row._id}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row" align="center">{row.description}</TableCell>
+                      <TableCell align="center">{row.createdAt.slice(0, 10)}</TableCell>
+                      <TableCell align="center">{row.maxMarks ==="" ? '-' : row.maxMarks}</TableCell>
+                      <TableCell align="center">
+                        <Link to={`/code-editor/${user._id}/${row._id}`} onClick={()=>{
+                          //fetch this code-editor's details using row_id
+                          this.props.dispatch(createNewCodeEditor(user._id,row._id));
+                        }}>
+                          Link  
+                        </Link>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
         </DialogActions>
       </Dialog> 
     </div>

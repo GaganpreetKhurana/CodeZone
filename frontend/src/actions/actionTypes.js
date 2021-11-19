@@ -34,3 +34,5 @@ export const SWITCH_THEME = 'SWITCH_THEME'
 //to fetch lab details
 export const FETCH_LAB_DETAILS = 'FETCH_LAB_DETAILS'
 export const CLEAR_LAB_DETAILS = 'CLEAR_LAB_DETAILS'
+//to create new code editor
+export const CREATE_CODE_EDITOR = 'CREATE_CODE_EDITOR'
