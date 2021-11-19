@@ -191,7 +191,7 @@ module.exports.dashboard = async function(req, res) {
                 .populate("teachers students", "name SID id")
                 .populate(
                     "posts",
-                    "data updatedAt user comments likes")
+                    "content updatedAt user comments likes")
                 .populate({
                     path: "posts",
                     populate: {
@@ -203,7 +203,7 @@ module.exports.dashboard = async function(req, res) {
                     path: "posts",
                     populate: {
                         path: "comments",
-                        select: "data updatedAt user",
+                        select: "content updatedAt user",
                     }
                 })
                 .populate({
