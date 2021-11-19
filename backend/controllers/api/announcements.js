@@ -52,47 +52,42 @@ module.exports.create = async function(req, res) {
     }
 }
 
-//to delete a post
+//to delete an announcement
 module.exports.delete = async function(req, res) {
 
-    let subject = await Classes.findOne({
-        subject: req.body.subject,
-    });
-
+    // get subject
+    let subject = await Classes.findById(req.body.classroom_id);
     if (!subject) {
         return res.status(404).json({
             message: "Subject not found!",
         });
     }
 
-    let post = await Post.findById(req.body.post_id);
-    if (!post) {
+    // get subject
+    let announcement = await Announcement.findById(req.body.announcement_id);
+    if (!announcement) {
         return res.status(404).json({
-            message: "Post not found!",
+            message: "Announcement not found!",
         });
     }
-    if (req.user._id == post.user._id || subject.teachers.includes(req.user._id)) {
 
-        // user created the post
 
-        subject.posts.pop(post._id);
+    if (subject.teachers.includes(req.user._id)) {
+
+        // user enrolled in subject
+
+        subject.announcements.pop(announcement)
         subject.save();
-
-        for (let index = post.comments.length - 1; index > -1; index--) {
-            console.log(post.comments[index]);
-
-            Comment.findByIdAndDelete(post.comments[index]._id);
-        }
-        console.log("comments deleted!");
-        Post.findByIdAndDelete(post._id).exec();
+        Announcement.findByIdAndDelete(announcement._id).exec();
 
         return res.status(200).json({
-            message: "Post deleted!",
+            message: "Announcement deleted!",
             success: true,
         });
     } else {
         return res.status(401).json({
-            message: "User did not create the post!",
+            message: "User is not a teacher in this class!",
         });
     }
+
 }
