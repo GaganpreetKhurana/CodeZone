@@ -24,8 +24,13 @@ export const JOIN_CLASSROOM ='JOIN_CLASSROOM'
 
 //fetch user details
 export const FETCH_USER_CLASS_DETAILS = 'FETCH_USER_CLASS_DETAILS'
+
 //clear user class details
 export const CLEAR_USER_CLASS_DETAILS='CLEAR_USER_CLASS_DETAILS'
 
 //theme
 export const SWITCH_THEME = 'SWITCH_THEME'
+
+//to fetch lab details
+export const FETCH_LAB_DETAILS = 'FETCH_LAB_DETAILS'
+export const CLEAR_LAB_DETAILS = 'CLEAR_LAB_DETAILS'

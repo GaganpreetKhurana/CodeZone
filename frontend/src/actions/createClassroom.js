@@ -89,3 +89,27 @@ export function joinClassroom(code) {
       });
   };
 }
+
+//create new lab
+export function createNewLab(description, question, input, output, language, maxMarks, classroomId) {
+  return (dispatch) => {
+    dispatch(startCreateClassroom());
+    const url = "/api/classroom/createLab";
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: getFormBody({ description, question, input, output, language, maxMarks, classroomId }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch(classroomCreationSuccess(data.data.code));
+          return;
+        }
+        dispatch(classroomCreationFailed(data.message));
+      });
+  };
+}
