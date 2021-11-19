@@ -27,6 +27,7 @@ module.exports.create = async function(req, res) {
         let newPost = await Post.create({
             user: req.user._id,
             content: req.body.content,
+            class: subject,
         });
 
         // if object created
@@ -224,7 +225,7 @@ module.exports.update = async function(req, res) {
         // user created the post
         post.content = req.body.content;
         post = await post.save();
-
+        console.log(post);
 
         return res.status(200).json({
             message: "Post update successfully",
@@ -598,15 +599,15 @@ module.exports.deleteComment = async function(req, res) {
 
         // user created the comment
 
-        post = await post.comments.pop(post._id);
+        post.comments.pop(post._id);
         post = await post.save();
-        Comment.findByIdAndDelete(post._id).exec();
+        Comment.findByIdAndDelete(comment._id).exec();
 
         return res.status(200).json({
             message: "Comment deleted!",
             success: true,
             data: await Classes.findById(
-                    subject.classroom_id)
+                    subject._id)
                 .select("posts")
                 .populate(
                     "posts",
@@ -861,7 +862,7 @@ module.exports.likeComment = async function(req, res) {
                 message: "Comment liked successfully",
                 success: true,
                 data: await Classes.findById(
-                        req.body.classroom_id)
+                        subject._id)
                     .select("posts")
                     .populate(
                         "posts",
