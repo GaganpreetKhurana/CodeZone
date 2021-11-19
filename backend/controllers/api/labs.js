@@ -29,6 +29,7 @@ module.exports.createLab = async function(req, res) {
         //add the lab_id in class.labsCreated
         if(lab){
             classExistWithClassId.labsCreated.push(lab);
+            classExistWithClassId.save();
             return res.status(200).json({
                 message: "Lab created successfully",
                 success: true,
@@ -42,5 +43,28 @@ module.exports.createLab = async function(req, res) {
                 message: "Error in creating lab",
             });
         }
+    }
+}
+
+//to fetch existing lab details
+module.exports.fetchExistingLabDetails = async function(req,res){
+    let classExistWithClassId = await Classes.findOne({
+        _id: req.params.classroomId,
+    }).select("labsCreated")
+    .populate(
+        "labsCreated",
+        "creator question input output maxMarks description language createdAt"
+    ).exec();
+    if (classExistWithClassId) {
+        return res.status(200).json({
+            message: "Classroom joined successfully",
+            data: classExistWithClassId.labsCreated,
+            success: true,
+        });
+        
+    }else{
+        return res.json(422, {
+            message: "Error in Fetching Lab Details",
+        }); 
     }
 }

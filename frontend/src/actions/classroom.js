@@ -1,6 +1,8 @@
 import {
     FETCH_USER_CLASS_DETAILS,
-    CLEAR_USER_CLASS_DETAILS
+    CLEAR_USER_CLASS_DETAILS,
+    FETCH_LAB_DETAILS,
+    CLEAR_LAB_DETAILS
   } from "./actionTypes";
 
 function userDetails(userDetails){
@@ -30,5 +32,37 @@ export function fetchUserClassDetails(){
 export function clearUserClassDetails(){
   return {
     type:CLEAR_USER_CLASS_DETAILS
+  }
+}
+//fetch lab details
+function labDetails(labDetails){
+  return {
+      type : FETCH_LAB_DETAILS,
+      labDetails: labDetails
+  }
+}
+export function fetchClassLabDetails(classroomId){
+  return (dispatch) => {
+    const url = `/api/classroom//fetchExistingLabDetails/${classroomId}`;
+    fetch(url, {
+      headers: {
+         Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          console.log(data.data);
+          dispatch(labDetails(data.data));
+          return;
+        }
+      });
+  };
+
+}
+//clear lab details
+export function clearLabDetails(){
+  return {
+    type: CLEAR_LAB_DETAILS
   }
 }
