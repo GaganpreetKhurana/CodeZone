@@ -220,10 +220,17 @@ module.exports.dashboard = async function(req, res) {
                         populate: {
                             path: "user",
                             select: "name role",
-                        },
-                        sort: { createdAt: "descending" },
+                        }
                     },
 
+                })
+                .populate({
+                    path: "announcements",
+                    populate: {
+                        path: "creator",
+                        select: "name"
+                    },
+                    select: "content createdAt creator"
                 })
                 .populate({
                     path: "posts",
