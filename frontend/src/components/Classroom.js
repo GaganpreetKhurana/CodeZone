@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import DiscussionPortal from "./DiscussionPortal";
 import StudentsList from "./StudentsList";
 import NoticeBoard from "./NoticeBoard";
-//import ChatBox from "./ChatBox";
+import ChatBox from "./ChatBox";
 
 //Material UI
 import { Grid} from '@mui/material';
@@ -42,7 +42,7 @@ class Classroom extends Component {
         <StudentsList />
         <DiscussionPortal/>
         <NoticeBoard classroomId={match.params.classroomID}/>  
-        {/* <ChatBox/> */}
+        <ChatBox/>
       </Grid>
     )
   }
