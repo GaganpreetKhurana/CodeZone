@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
@@ -24,9 +23,6 @@ function PaperComponent(props) {
 
 export default function DraggableDialog() {
   const [open, setOpen] = React.useState(false);
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState('sm');
-
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,8 +45,6 @@ export default function DraggableDialog() {
         disableBackdropClick
         disableEnforceFocus
         hideBackdrop
-        fullWidth={fullWidth}
-        maxWidth={maxWidth}
         PaperProps={{
             sx: {
             width: "50%",

@@ -12,9 +12,11 @@
         "bcrypt": "^5.0.1",
         "bcryptjs": "^2.4.3",
         "express": "^4.17.1",
+        "install": "^0.13.0",
         "jsonwebtoken": "^8.5.1",
         "mongoose": "^6.0.5",
         "nodemon": "^2.0.12",
+        "npm": "^8.1.4",
         "passport": "^0.5.0",
         "passport-jwt": "^4.0.0",
         "sanitizer": "^0.1.3"
