@@ -7,10 +7,10 @@ const auth = require("../../config/authenticate");
 router.post("/create", auth.authenticateToken, classroom.create);
 router.post("/join", auth.authenticateToken, classroom.join);
 router.get("/details", auth.authenticateToken, classroom.details);
-router.get("/discussionForum", auth.authenticateToken, classroom.forum);
-
-// create new lab
+router.get("/classroomDetails/:classroom_id", auth.authenticateToken, classroom.dashboard);
+router.post("/link", auth.authenticateToken, classroom.link);
 router.post("/createLab", auth.authenticateToken, labs.createLab);
 router.get("/fetchExistingLabDetails/:classroomId", auth.authenticateToken, labs.fetchExistingLabDetails);
+router.get("/createEditor/:userId/:labId",auth.authenticateToken,labs.createEditor)
 
 module.exports = router;

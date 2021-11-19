@@ -2,7 +2,8 @@ import {
     FETCH_USER_CLASS_DETAILS,
     CLEAR_USER_CLASS_DETAILS,
     FETCH_LAB_DETAILS,
-    CLEAR_LAB_DETAILS
+    CLEAR_LAB_DETAILS,
+    CREATE_CODE_EDITOR
   } from "./actionTypes";
 
 function userDetails(userDetails){
@@ -43,7 +44,7 @@ function labDetails(labDetails){
 }
 export function fetchClassLabDetails(classroomId){
   return (dispatch) => {
-    const url = `/api/classroom//fetchExistingLabDetails/${classroomId}`;
+    const url = `/api/classroom/fetchExistingLabDetails/${classroomId}`;
     fetch(url, {
       headers: {
          Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -58,11 +59,38 @@ export function fetchClassLabDetails(classroomId){
         }
       });
   };
-
 }
+
 //clear lab details
 export function clearLabDetails(){
   return {
     type: CLEAR_LAB_DETAILS
   }
+}
+
+
+//create new code editor for user 
+function codeEditorDetails({editor,lab}){
+  return {
+      type : CREATE_CODE_EDITOR,
+      codeEditorDetails: editor,
+      labDetails: lab,
+  }
+}
+export function createNewCodeEditor(userId, labId){
+  return (dispatch) => {
+    const url = `/api/classroom/createEditor/${userId}/${labId}`;
+    fetch(url, {
+      headers: {
+         Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch(codeEditorDetails(data.data));
+          return;
+        }
+      });
+  };
 }

@@ -7,7 +7,7 @@ const labSchema = new mongoose.Schema({
     description: { type: String},
     language: { type: String },
     maxMarks: {type:String},
-    codeEditor: [{type:String}],
+    codeEditor: [{ type: mongoose.Schema.Types.ObjectId, ref: "codeEditor" }],
 }, { timestamps: true });
 const Lab = mongoose.model("Lab", labSchema);
 module.exports = Lab;
