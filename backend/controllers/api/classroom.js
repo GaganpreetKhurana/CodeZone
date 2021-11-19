@@ -187,7 +187,7 @@ module.exports.dashboard = async function(req, res) {
             success: true,
             data: await Classes.findById(
                     sanitizer.escape(req.params.classroom_id))
-                .select("teachers students posts announcements code")
+                .select("teachers students posts announcements code ClassMeetLink")
                 .populate("teachers students", "name SID id")
                 .populate(
                     "posts",
@@ -261,3 +261,35 @@ module.exports.dashboard = async function(req, res) {
     }
 
 };
+
+
+//to update Class Meet Link
+module.exports.link = async function(req, res) {
+
+    // get subject
+    let subject = await Classes.findById(req.body.classroom_id);
+    if (!subject) {
+        return res.status(404).json({
+            message: "Subject not found!",
+        });
+    }
+
+
+
+    if (subject.teachers.includes(req.user._id)) {
+
+        // user is a teacher for this subject
+        subject.ClassMeetLink = req.body.content;
+        subject.save();
+
+        return res.status(200).json({
+            message: "Meet Link Updated!",
+            success: true,
+        });
+    } else {
+        return res.status(401).json({
+            message: "User is not a teacher in this class!",
+        });
+    }
+
+}

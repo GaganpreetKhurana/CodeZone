@@ -11,7 +11,8 @@ const classSchema = new mongoose.Schema({
     teachers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Posts" }],
     labsCreated: [{ type: mongoose.Schema.Types.ObjectId, ref: "Lab" }],
-    announcements: [{ type: mongoose.Schema.Types.ObjectId, ref: "Announcements" }]
+    announcements: [{ type: mongoose.Schema.Types.ObjectId, ref: "Announcements" }],
+    ClassMeetLink: { type: String },
 }, { timestamps: true });
 
 const Class = mongoose.model("Class", classSchema);
