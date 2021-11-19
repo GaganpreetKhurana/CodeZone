@@ -10,6 +10,7 @@ module.exports.createLab = async function(req, res) {
     let classExistWithClassId = await Classes.findOne({
         _id: req.body.classroomId,
     });
+    console.log("classExistWithClassId",classExistWithClassId);
     if (user.role === "Student" || !classExistWithClassId) {
         return res.json(422, {
             message: "Not Authorized to create a new Lab",
@@ -26,6 +27,7 @@ module.exports.createLab = async function(req, res) {
             language: req.body.language,
             maxMarks: req.body.maxMarks,
         });
+        console.log("lab",lab);
         //add the lab_id in class.labsCreated
         if(lab){
             classExistWithClassId.labsCreated.push(lab);
