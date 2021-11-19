@@ -1,5 +1,6 @@
 const Announcement = require("../../models/announcement");
 const Classes = require("../../models/class");
+const sanitizer = require('sanitizer')
 
 //to create a new announcement
 module.exports.create = async function(req, res) {
