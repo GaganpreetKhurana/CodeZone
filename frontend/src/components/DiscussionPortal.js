@@ -20,7 +20,6 @@ import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import ChatButton from "./ChatButton";
 
 
 class DiscussionPortal extends React.Component {
@@ -110,7 +109,6 @@ class DiscussionPortal extends React.Component {
               />
             </ListItem>
           </List>
-          <ChatButton/>
           </CardContent>
           </Card>
         </Paper>
