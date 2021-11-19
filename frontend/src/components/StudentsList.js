@@ -31,10 +31,10 @@ class StudentsList extends React.Component {
         <Grid item m={2} xs={3}>
             <Paper elevation={4}>
             <Card sx={{ minWidth: 0 }}>
-            <Div>Student List</Div>
+            <Div >Student List</Div>
             <CardContent>
             {/* iterate over teachers and then  students list here */}
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            <List sx={{ width: '100%', maxWidth: 360}}>
             {[1, 2, 3].map((value) => (
                 <ListItem
                 key={value}

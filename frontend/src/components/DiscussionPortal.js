@@ -14,24 +14,13 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import CommentIcon from '@mui/icons-material/Comment';
 import Card from '@mui/material/Card';
-import {Button,Container } from '@mui/material';
 import CardContent from '@mui/material/CardContent';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { styled } from '@mui/material/styles';
-import { Link } from 'react-router-dom';
 import CardHeader from '@mui/material/CardHeader';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ListItemIcon from '@mui/material/ListItemIcon';
 
-const Div = styled('div')(({ theme }) => ({
-  ...theme.typography.button,
-  backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(2),
-  textAlign: "center",
-}));
 
 class DiscussionPortal extends React.Component {
   render() {
@@ -89,7 +78,39 @@ class DiscussionPortal extends React.Component {
               <CommentIcon />
               </IconButton>
             </Paper>
-            </CardContent>
+
+            {/*Comments posted*/}
+            <List sx={{ width: '100%'}}>
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar alt="Student 2" src="" />
+              </ListItemAvatar>
+              <ListItemText
+                primary="Student 2"
+                secondary={
+                  <React.Fragment>
+                    {"This is a sample comment"}
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+            <Divider variant="inset" component="li" />
+                        <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar alt="Student 3" src="" />
+              </ListItemAvatar>
+              <ListItemText
+                primary="Student 3"
+                secondary={
+                  <React.Fragment>
+                    {"This is a sample comment 2"}
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+          </List>
+
+          </CardContent>
           </Card>
         </Paper>
         </Grid>
