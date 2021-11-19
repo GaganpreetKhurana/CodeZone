@@ -3,6 +3,14 @@ import { connect } from "react-redux";
 import { clearAuth } from "../actions/auth";
 import { joinClassroom, clearClassCode} from "../actions/createClassroom";
 import { clearLabDetails, fetchUserClassDetails ,fetchClassLabDetails } from "../actions/classroom";
+import TextEditor from "./TextEditor"
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom"
+import { v4 as uuidV4 } from "uuid"
 
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -55,6 +63,7 @@ class JoinLabDialog extends Component {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
+            {/*TODO: Need to properly make a link here*/}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

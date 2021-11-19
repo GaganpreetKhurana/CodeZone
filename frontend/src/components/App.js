@@ -12,6 +12,7 @@ import { Paper} from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { blue, deepOrange } from '@mui/material/colors';
 import {ThemeProvider,CssBaseline} from '@mui/material';
+import CodeEditorScreen from "./CodeEditorScreen";
 
 // @ts-ignore
 //to decode the token
@@ -68,6 +69,7 @@ class App extends React.Component {
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
               <Route path="/signup" component={SignUp} />
+              <Route path="/CodeEditorScreen" component={CodeEditorScreen} />
               {!auth.isLoggedIn && (<Route path="/classroom/:classroomID" component={Home}/>)}
               <Route component={Page404} />
             </Switch>
