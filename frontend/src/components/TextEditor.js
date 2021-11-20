@@ -131,6 +131,7 @@ export default function TextEditor(props) {
     q.disable()
     //this would be the text shown untill it beomes enabled
     q.setText("Loading...")
+
     setQuill(q)
   }, [])
   return (
