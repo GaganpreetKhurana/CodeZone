@@ -45,3 +45,22 @@ export function createPost(content,classroom_id) {
         });
     };
   }
+  export function likePost(post_id) {
+    return (dispatch) => {
+      const url = `/api/forum/like/post:${post_id}`;
+        console.log("request sent");
+      fetch(url, {
+        headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+  
+          if (data.success) {
+            console.log(data.data);
+            dispatch(addPost(data.data));
+          }
+        });
+    };
+  }

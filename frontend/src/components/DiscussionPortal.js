@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createPost } from '../actions/posts';
+import { createPost,likePost } from '../actions/posts';
 //Material UI
 import { Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
@@ -41,7 +41,10 @@ class DiscussionPortal extends React.Component {
     }
     
   };
-
+  handleOnLikePostClick = (post_id) =>
+    ()=>{
+      this.props.dispatch(likePost(post_id));
+    }
   handleChange = (e) => {
     this.setState({
       content: e.target.value,
@@ -97,8 +100,8 @@ class DiscussionPortal extends React.Component {
                         </IconButton>
                     </ListItemIcon>
                     <ListItemIcon>
-                        <IconButton>
-                        {post.likes.length}<FavoriteIcon />
+                        <IconButton color="secondary">
+                        {post.likes.length}<FavoriteIcon onClick={this.handleOnLikePostClick(post._id)} />
                         </IconButton>
                     </ListItemIcon>
                   </ListItem>
