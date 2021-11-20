@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createPost,likePost } from '../actions/posts';
+import { createPost,likePost, createComment,likeComment} from '../actions/posts';
 //Material UI
 import { Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
@@ -27,9 +27,10 @@ class DiscussionPortal extends React.Component {
     super(props);
     this.state = {
       content: '',
+      contentComment:'',
     };
   }
-
+//posts
   handleOnClick = () => {
     // dispatch action
     const {classroomId} = this.props;
@@ -41,18 +42,50 @@ class DiscussionPortal extends React.Component {
     }
     
   };
+  
   handleOnLikePostClick = (post_id) =>
     ()=>{
       this.props.dispatch(likePost(post_id));
     }
+  
   handleChange = (e) => {
     this.setState({
       content: e.target.value,
     });
   };
+  
+  //comment
+  checkColor = (likes) =>{
+    let {user} = this.props.auth;
+    let likedByUser = likes.filter(({_id})=> _id ===user._id )
+    if(likedByUser.length>0){
+      return "secondary";
+    }
+  }
+  handleChangeComment = (e) => {
+    this.setState({
+      contentComment: e.target.value,
+    });
+  };
+  handleOnLikeCommentClick = (comment_id) =>
+    ()=>{
+      this.props.dispatch(likeComment(comment_id));
+    }
+  handleOnClickComment = () => {
+    // dispatch action
+    const {classroomId} = this.props;
+    if(this.state.contentComment && classroomId){
+      this.props.dispatch(createComment(this.state.contentComment,classroomId));
+      this.setState({
+        contentComment: '',
+      });
+    }
+    
+  };
   render() {
     const {posts} = this.props.classroom;
-    console.log(posts);
+    const {user} = this.props.auth;
+    let b;
     return (
         <Grid item xs={4} m={2} > 
         <Grid item xs={4} m={2} > 
@@ -100,7 +133,7 @@ class DiscussionPortal extends React.Component {
                         </IconButton>
                     </ListItemIcon>
                     <ListItemIcon>
-                        <IconButton color="secondary">
+                        <IconButton color={this.checkColor(post.likes)}>
                         {post.likes.length}<FavoriteIcon onClick={this.handleOnLikePostClick(post._id)} />
                         </IconButton>
                     </ListItemIcon>
@@ -110,6 +143,8 @@ class DiscussionPortal extends React.Component {
                 <Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
                 <InputBase
                 sx={{ ml: 1, flex: 1 }}
+                value={this.state.contentComment}
+                onChange={this.handleChangeComment}
                 placeholder="Start typing a comment"
                 inputProps={{ 'aria-label': 'search google maps' }}
                 />
