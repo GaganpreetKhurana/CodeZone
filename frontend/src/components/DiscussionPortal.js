@@ -86,7 +86,9 @@ class DiscussionPortal extends React.Component {
     const {posts} = this.props.classroom;
     
     return (
-        <Grid item xs={4} m={2} > 
+        <Grid item xs={4} m={2} 
+          style={{maxHeight: '100vh', overflow: 'auto'}}
+        > 
         <Grid item xs={4} m={2} > 
           <Paper elevation={4} component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
               <InputBase
