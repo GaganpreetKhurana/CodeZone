@@ -14,5 +14,4 @@ router.get('/delete/comment::comment_id', auth.authenticateToken, forum.deleteCo
 router.post('/update/comment', auth.authenticateToken, forum.updateComment);
 router.get('/like/comment::comment_id', auth.authenticateToken, forum.likeComment);
 
-
 module.exports = router;

@@ -4,8 +4,8 @@ import { connect } from "react-redux";
 class CodeEditor extends React.Component {
     render(){
         const {codeEditorDetails,editorLabDetails} = this.props.labDetails;
-        console.log(codeEditorDetails);
-        console.log(editorLabDetails);
+        console.log("codeEditorDetails",codeEditorDetails.code);
+        console.log("editorLabDetails",editorLabDetails);
         return (<h1>Code Editor</h1>);
     }
 

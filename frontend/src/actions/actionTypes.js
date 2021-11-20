@@ -39,3 +39,17 @@ export const FETCH_LAB_DETAILS = 'FETCH_LAB_DETAILS'
 export const CLEAR_LAB_DETAILS = 'CLEAR_LAB_DETAILS'
 //to create new code editor
 export const CREATE_CODE_EDITOR = 'CREATE_CODE_EDITOR'
+
+//posts
+export const UPDATE_POSTS = 'UPDATE_POSTS';
+//add posts
+export const ADD_POST = 'ADD_POST';
+
+//ADD COMMENT
+export const ADD_COMMENT = 'ADD_COMMENT';
+
+//liking a post
+export const UPDATE_POST_LIKE = 'UPDATE_POST_LIKE';
+
+//liking a comment
+export const UPDATE_COMMENT_LIKE = 'UPDATE_COMMENT_LIKE';

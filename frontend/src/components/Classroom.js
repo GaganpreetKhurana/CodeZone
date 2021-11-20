@@ -15,6 +15,7 @@ class Classroom extends Component {
     const { match } = this.props;
 
     if (match.params.classroomID) {
+      this.props.dispatch(fetchClassroomDetails(match.params.classroomID));
       this.timer = setInterval(() => {
       this.props.dispatch(fetchClassroomDetails(match.params.classroomID));
     }, 5000);
@@ -30,6 +31,7 @@ class Classroom extends Component {
     } = this.props;
     if (prevParams && currentParams && currentParams !== prevParams) {
       //fetch new classroom  details
+      this.props.dispatch(fetchClassroomDetails(currentParams.classroomID));
     }
   }
   componentWillUnmount() {
@@ -47,8 +49,8 @@ class Classroom extends Component {
         justifyContent="space-evenly"
         alignItems="center"
       >
-        <StudentsList />
-        <DiscussionPortal/>
+        <StudentsList  />
+        <DiscussionPortal classroomId={match.params.classroomID}/>
         <NoticeBoard classroomId={match.params.classroomID}/>  
         <ChatWindow/>
       </Grid>

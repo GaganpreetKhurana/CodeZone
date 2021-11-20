@@ -2,7 +2,12 @@ const {
   FETCH_USER_CLASS_DETAILS,
   CLEAR_USER_CLASS_DETAILS,
   FECTH_CURRENT_CLASSROOM_DETAILS,
-  CLEAR_CURRENT_CLASSROOM_DETAILS
+  CLEAR_CURRENT_CLASSROOM_DETAILS,
+  UPDATE_POSTS,
+  ADD_POST,
+  ADD_COMMENT,
+  UPDATE_POST_LIKE,
+  UPDATE_COMMENT_LIKE,
 } = require("../actions/actionTypes");
 
 const initialClassroomState = {
@@ -33,6 +38,12 @@ export default function auth(state = initialClassroomState, action) {
         students: action.students,
         teachers: action.teachers,
         announcements: action.announcements,
+        posts: action.posts
+      }
+    case ADD_POST:
+    case ADD_COMMENT:
+      return{
+        ...state,
         posts: action.posts
       }
     case CLEAR_CURRENT_CLASSROOM_DETAILS:

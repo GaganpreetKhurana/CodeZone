@@ -21,7 +21,7 @@ function PaperComponent(props) {
   );
 }
 
-export default function DraggableDialog() {
+export default function DraggableDialog(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -31,10 +31,19 @@ export default function DraggableDialog() {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const {self,other} = props;
+  let disable;
+  if(self && other){
+  if(self._id === other._id){
+    disable = true;
+  }
+  else{
+    disable = false;
+  }
+  }
   return (
     <div>
-      <IconButton variant="outlined" onClick={handleClickOpen}>
+      <IconButton variant="outlined" onClick={handleClickOpen} disabled={disable}>
         <CommentIcon />
       </IconButton>
       <Dialog
@@ -48,10 +57,11 @@ export default function DraggableDialog() {
         PaperProps={{
             sx: {
             width: "50%",
-            minHeight: 300
+            maxHeight: 400,
+            maxWidth: 500,
             }
         }}
-        style={{ position: 'bottom' }}
+        style={{ position: 'left' }}
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
           Chat Window
