@@ -41,7 +41,6 @@ export default function DraggableDialog(props) {
     disable = false;
   }
   }
-  console.log(props,"selfother");
   return (
     <div>
       <IconButton variant="outlined" onClick={handleClickOpen} disabled={disable}>

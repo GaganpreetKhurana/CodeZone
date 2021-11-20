@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-
+import { createPost } from '../actions/posts';
 //Material UI
 import { Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
@@ -23,8 +23,29 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 
 
 class DiscussionPortal extends React.Component {
-  render() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      content: '',
+    };
+  }
 
+  handleOnClick = () => {
+    // dispatch action
+    const {classroomId} = this.props;
+    if(this.state.content && classroomId){
+      this.props.dispatch(createPost(this.state.content,classroomId));
+    }
+    
+  };
+
+  handleChange = (e) => {
+    this.setState({
+      content: e.target.value,
+    });
+  };
+  render() {
+    
     return (
         <Grid item xs={4} m={2} > 
         <Grid item xs={4} m={2} > 
@@ -33,10 +54,12 @@ class DiscussionPortal extends React.Component {
               sx={{ ml: 1, flex: 1 }}
               placeholder="Post A Classroom Query or Notification"
               inputProps={{ 'aria-label': 'search google maps' }}
+              value={this.state.content}
+              onChange={this.handleChange}
               />
               <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
               <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
-              <PostAddIcon />
+              <PostAddIcon onClick={this.handleOnClick} />
               </IconButton>
           </Paper>
         </Grid>

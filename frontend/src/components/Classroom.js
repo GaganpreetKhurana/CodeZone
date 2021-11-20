@@ -50,7 +50,7 @@ class Classroom extends Component {
         alignItems="center"
       >
         <StudentsList  />
-        <DiscussionPortal/>
+        <DiscussionPortal classroomId={match.params.classroomID}/>
         <NoticeBoard classroomId={match.params.classroomID}/>  
         <ChatWindow/>
       </Grid>

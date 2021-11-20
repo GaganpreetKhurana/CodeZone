@@ -55,7 +55,6 @@ export function fetchClassLabDetails(classroomId){
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          console.log(data.data);
           dispatch(labDetails(data.data));
           return;
         }
@@ -118,7 +117,6 @@ export function fetchClassroomDetails(classroom_id){
         .then((response) => response.json())
         .then((data) => {
           if (data.success) {
-            console.log("Classroom details",data.data);
             dispatch(classroomDetails(data.data));
             return;
           }
