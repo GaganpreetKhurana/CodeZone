@@ -22,6 +22,10 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { Menu,Fade,MenuItem,Button } from "@mui/material";
+import MenuIcon from '@mui/icons-material/Menu';
 
 class DiscussionPortal extends React.Component {
   constructor(props) {
@@ -29,8 +33,40 @@ class DiscussionPortal extends React.Component {
     this.state = {
       content: '',
       contentComment:'',
+      anchorEl : null,
+      open: false
+
     };
+    this.setAnchorEl = this.setAnchorEl.bind(this)
+    this.handleCommentClick = this.handleCommentClick.bind(this)
+    this.handleCommentClose = this.handleCommentClose.bind(this)
   }
+
+  handleCommentClick(event) {
+      this.setAnchorEl(event.currentTarget);
+  }
+  setAnchorEl(value){
+      this.setState({
+          anchorEl: value,
+          open: !this.state.open
+      })
+  }
+  handleCommentClose() {
+      this.setAnchorEl(null);
+  }
+
+  commentMenu(){
+    return(
+    <Menu id="fade-menu" anchorEl={this.state.anchorEl} open={this.state.open} onClose={this.handleCommentClose}>
+          <MenuItem onClick={this.handleCommentClose}><IconButton><DeleteIcon fontSize="small" /></IconButton></MenuItem>
+          <MenuItem onClick={this.handleCommentClose}><IconButton><EditIcon fontSize="small" /></IconButton></MenuItem>
+      </Menu>
+      )
+  }
+
+
+
+
 //posts
   handleOnClick = () => {
     // dispatch action
@@ -135,7 +171,7 @@ class DiscussionPortal extends React.Component {
                           direction="row"
                           justifyContent="space-evenly"
                           > 
-                    <Grid item xs ={3} m={0.5}> 
+                    <Grid item xs ={2} m={0.5}> 
                     <ListItemIcon>
                         <IconButton>
                             <Typography variant="caption" display="block" gutterBottom>
@@ -145,7 +181,7 @@ class DiscussionPortal extends React.Component {
                         </IconButton>
                     </ListItemIcon>
                     </Grid>
-                    <Grid item xs ={3} m={0.5}> 
+                    <Grid item xs ={2} m={0.5}> 
                     <ListItemIcon>
                         <IconButton color={this.checkColor(post.likes)}>
                           <Typography variant="caption" display="block" gutterBottom>
@@ -153,6 +189,16 @@ class DiscussionPortal extends React.Component {
                           </Typography>
                           <FavoriteIcon fontSize="small" onClick={this.handleOnLikePostClick(post._id)} />
                         </IconButton>
+                    </ListItemIcon>
+                    </Grid>
+                    <Grid item xs ={2} m={0.5}> 
+                    <ListItemIcon>
+                        <IconButton><DeleteIcon fontSize="small" /></IconButton>
+                    </ListItemIcon>
+                    </Grid>
+                    <Grid item xs ={2} m={0.5}> 
+                    <ListItemIcon>
+                        <IconButton><EditIcon fontSize="small" /></IconButton>
                     </ListItemIcon>
                     </Grid>
                     </Grid>
@@ -182,7 +228,6 @@ class DiscussionPortal extends React.Component {
                       {/*Need to display the profile picture here */}
                       <Avatar alt="Student 2" src="" />
                     </ListItemAvatar>
-                    
                     <ListItemText
                       primary={
                         <Grid spacing={2}
@@ -194,21 +239,37 @@ class DiscussionPortal extends React.Component {
                             {comment.user.name}
                           </Typography>
                           </Grid>
-                          <Grid item xs ={3} m={0.5}>
+                          <Grid item xs ={2.5} m={0.5}>
                           <Typography variant="caption" display="block" gutterBottom>
                             {`${post.createdAt.slice(0,10)}`}
                           </Typography>
                           </Grid>
-                          <Grid item xs ={3} m={0.5}>
+                          <Grid item xs ={2} m={0.5}>
                           <Typography variant="caption" display="block" gutterBottom>
                             {`${post.createdAt.slice(11, 19)}`}
                           </Typography>
+                          </Grid>
+                          <Grid item xs ={1} m={0.5}>
+                            <IconButton size="small">
+                          <Typography variant="caption" display="block" gutterBottom>
+                            <MenuIcon fontSize="small"  aria-owns={this.state.open ? 'fade-menu' : undefined} aria-haspopup="true" onClick={this.handleCommentClick}/>
+                            {this.commentMenu()}
+                          </Typography>
+                            </IconButton>
+                          </Grid>
+                          <Grid item xs ={0.5} m={0.5}>
+                            <IconButton size="small" fontSize="small" color={this.checkColor(comment.likes)}>
+                            <Typography variant="caption" color={this.checkColor(comment.likes)} display="block" gutterBottom>
+                            {post.likes.length}
+                            </Typography>
+                            <FavoriteIcon fontSize="small" color={this.checkColor(comment.likes)} onClick={this.handleOnLikeCommentClick(comment._id)} />
+                            </IconButton>
                           </Grid>
                         </Grid>
                         }
                       secondary={
                         <React.Fragment>
-                          {comment.content}
+                            {comment.content}
                         </React.Fragment>
                       }
                     />
