@@ -7,6 +7,7 @@
   <li>Use command npm install to download the dependencies. </li>
   <li>Install setup and link mongodb to the database [Documentation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/) </li>
   <li>Give command nodemon index.js that will start the backend server.</li>
+  <li>Open New Terminal and give command nodemon server.js to run code editor server.</li>
   <li>On any browser visit localhost:8000 you will see the content there</li>
 </ul>
 
