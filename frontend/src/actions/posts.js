@@ -86,7 +86,7 @@ export function createComment(content,post_id) {
   
           if (data.success) {
             console.log("comment",data.data);
-            // dispatch(addComment(data.data));
+            dispatch(addComment(data.data));
           }
         });
     };

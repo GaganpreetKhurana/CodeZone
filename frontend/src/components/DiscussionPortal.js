@@ -84,8 +84,7 @@ class DiscussionPortal extends React.Component {
   };
   render() {
     const {posts} = this.props.classroom;
-    const {user} = this.props.auth;
-    let b;
+    
     return (
         <Grid item xs={4} m={2} > 
         <Grid item xs={4} m={2} > 
@@ -106,7 +105,7 @@ class DiscussionPortal extends React.Component {
         {/* displaying old posts of classroom */}   
         {!posts.length && <p>No Posts exist for this classroom</p>}
         <Paper elevation={4}>
-        {posts.length && 
+        {posts.length>0 && 
           posts.map((post) => (
              
             <Card>
@@ -155,35 +154,25 @@ class DiscussionPortal extends React.Component {
               </Paper>
 
               {/*Comments posted*/}
-              <List sx={{ width: '100%'}}>
-              <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar alt="Student 2" src="" />
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Student 2"
-                  secondary={
-                    <React.Fragment>
-                      {"This is a sample comment"}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-              <Divider variant="inset" component="li" />
-                          <ListItem alignItems="flex-start">
-                <ListItemAvatar>
-                  <Avatar alt="Student 3" src="" />
-                </ListItemAvatar>
-                <ListItemText
-                  primary="Student 3"
-                  secondary={
-                    <React.Fragment>
-                      {"This is a sample comment 2"}
-                    </React.Fragment>
-                  }
-                />
-              </ListItem>
-            </List>
+              {post.comments.length>0 && 
+                post.comments.map((comment) => (
+                  <List sx={{ width: '100%'}}>
+                  <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                      <Avatar alt="Student 2" src="" />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={comment.user.name}
+                      secondary={
+                        <React.Fragment>
+                          {comment.content}
+                        </React.Fragment>
+                      }
+                    />
+                  </ListItem>
+                  <Divider variant="inset" component="li" />            
+                </List>
+                ))}
             </CardContent>
             </Card>
           ))  
