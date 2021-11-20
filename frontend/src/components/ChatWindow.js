@@ -61,7 +61,10 @@ export default function DraggableDialog(props) {
             maxWidth: 500,
             }
         }}
-        style={{ position: 'left' }}
+        style={{
+          top: '45%', // Position however you like
+          left: '65%',
+        }}
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
           Chat Window
