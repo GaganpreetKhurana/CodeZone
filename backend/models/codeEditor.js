@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const codeEditorSchema = new mongoose.Schema({
-    content: { type: String },
+    content: Object,
     code: {type:String},
     lab: { type: mongoose.Schema.Types.ObjectId, ref: "Lab" },
     customInput: { type: String },

@@ -10,6 +10,7 @@ class CodeEditor extends React.Component {
     }
 
 }
+
 function mapStateToProps(state) {
     return {
       labDetails: state.labDetails

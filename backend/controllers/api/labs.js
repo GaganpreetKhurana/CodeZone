@@ -109,6 +109,7 @@ module.exports.createEditor = async function(req,res){
             let newEditor = await codeEditor.create({
                 code: uniqueCode,
                 lab: labId,
+                content: '',
                 customInput:lab.input,
                 customOutput:lab.output,
                 languageSelected:lab.language,
