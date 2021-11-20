@@ -39,7 +39,7 @@ export function createPost(content,classroom_id) {
         .then((data) => {
   
           if (data.success) {
-              console.log(data.data);
+            console.log(data.data);
             dispatch(addPost(data.data));
           }
         });
