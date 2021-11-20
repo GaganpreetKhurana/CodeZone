@@ -1,12 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import TextEditor from "./TextEditor";
+import LanguageSelector from "./LanguageSelector";
 //Material UI
 import { Grid} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Paper} from '@mui/material';
 import { styled } from '@mui/material/styles';
+
+import Fab from '@mui/material/Fab';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 
 const Div = styled('div')(({ theme }) => ({
   ...theme.typography.button,
@@ -19,6 +23,7 @@ class CodeEditorScreen extends React.Component {
   render() {
     return (
         <div>
+          <Div>Classroom Lab</Div>
             <Grid
                 spacing={2}
                 container
@@ -27,6 +32,7 @@ class CodeEditorScreen extends React.Component {
                 alignItems="center">
 
                 <Grid item xs={6} m={2} > 
+                    <LanguageSelector/>
                     <TextEditor/>
                 </Grid>
 
@@ -59,7 +65,10 @@ class CodeEditorScreen extends React.Component {
                         </Card>
                         </Paper>
                     </Grid>
-
+                    <Fab variant="extended">
+                      <PlayCircleIcon sx={{ mr: 1 }} color="primary" />
+                      Execute Code
+                    </Fab>
                 </Grid>
             </Grid>
             </Grid>

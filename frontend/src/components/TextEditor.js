@@ -92,7 +92,19 @@ export default function TextEditor() {
       modules: { toolbar: TOOLBAR_OPTIONS },
     })
     q.disable()
-    q.setText("Loading...")
+
+    q.setText(`
+// Your First C++ Program
+
+#include <iostream>
+
+int main() {
+    std::cout << "Hello World!";
+    return 0;
+}    
+Loading the socket connection ...
+
+`)
     setQuill(q)
   }, [])
   return (
