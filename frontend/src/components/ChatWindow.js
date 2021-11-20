@@ -48,10 +48,11 @@ export default function DraggableDialog() {
         PaperProps={{
             sx: {
             width: "50%",
-            minHeight: 300
+            maxHeight: 400,
+            maxWidth: 500,
             }
         }}
-        style={{ position: 'bottom' }}
+        style={{ position: 'left' }}
       >
         <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
           Chat Window

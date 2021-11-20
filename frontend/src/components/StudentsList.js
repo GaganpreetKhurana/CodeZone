@@ -26,17 +26,18 @@ const Div = styled('div')(({ theme }) => ({
 
 class StudentsList extends React.Component {
   render() {
+    let {students, teachers} = this.props.classroom;
     return (
         <Grid item m={2} xs={3}>
             <Paper elevation={4}>
             <Card sx={{ minWidth: 0 }}>
-            <Div >Student List</Div>
+            <Div >Enrolled List</Div>
             <CardContent>
             {/* iterate over teachers and then  students list here */}
             <List sx={{ width: '100%', maxWidth: 360}}>
-            {[1, 2, 3].map((value) => (
+            {teachers.map((value) => (
                 <ListItem
-                key={value}
+                key={value._id}
                 secondaryAction={
                     <ChatWindow>
                     </ChatWindow>
@@ -46,7 +47,24 @@ class StudentsList extends React.Component {
                 <ListItemAvatar>
                     <Avatar><AccountCircleIcon /></Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={`Student sid ${value}`} />
+                <ListItemText primary={value.name} />
+                </ListItemButton>
+                <Divider />
+                </ListItem>
+            ))}
+            {students.map((value) => (
+                <ListItem
+                key={value._id}
+                secondaryAction={
+                    <ChatWindow>
+                    </ChatWindow>
+                }
+                >
+                <ListItemButton>
+                <ListItemAvatar>
+                    <Avatar><AccountCircleIcon /></Avatar>
+                </ListItemAvatar>
+                <ListItemText primary={`${value.name}-${value.SID}`} />
                 </ListItemButton>
                 <Divider />
                 </ListItem>
@@ -63,7 +81,8 @@ class StudentsList extends React.Component {
 function mapStateToProps(state) {
     return {
       auth: state.auth,
-      darkModetheme: state.theme
+      darkModetheme: state.theme,
+      classroom: state.classroom,
     };
   }
 export default connect(mapStateToProps)(StudentsList);
