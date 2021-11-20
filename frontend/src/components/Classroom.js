@@ -47,12 +47,10 @@ class Classroom extends Component {
         container
         direction="row"
         justifyContent="space-evenly"
-        alignItems="center"
       >
         <StudentsList  />
         <DiscussionPortal classroomId={match.params.classroomID}/>
         <NoticeBoard classroomId={match.params.classroomID}/>  
-        <ChatWindow/>
       </Grid>
     )
   }

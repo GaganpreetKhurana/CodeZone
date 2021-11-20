@@ -20,7 +20,8 @@ import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ListItemIcon from '@mui/material/ListItemIcon';
-
+import { Box } from "@mui/system";
+import { Typography } from "@mui/material";
 
 class DiscussionPortal extends React.Component {
   constructor(props) {
@@ -86,7 +87,9 @@ class DiscussionPortal extends React.Component {
     const {posts} = this.props.classroom;
     
     return (
-        <Grid item xs={4} m={2} > 
+        <Grid item xs={4} m={2} 
+          style={{maxHeight: '100vh', overflow: 'auto'}}
+        > 
         <Grid item xs={4} m={2} > 
           <Paper elevation={4} component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
               <InputBase
@@ -102,12 +105,13 @@ class DiscussionPortal extends React.Component {
               </IconButton>
           </Paper>
         </Grid>
-        {/* displaying old posts of classroom */}   
+
+        {/* displaying old posts of classroom */}  
         {!posts.length && <p>No Posts exist for this classroom</p>}
         <Paper elevation={4}>
         {posts.length>0 && 
           posts.map((post) => (
-             
+            <Box m={2} pt={3}>
             <Card>
               <CardHeader
                 avatar={
@@ -124,18 +128,34 @@ class DiscussionPortal extends React.Component {
               <ListItem>
               {post.content}
               </ListItem>
-              <Divider />
+              <Divider />   
                   <ListItem>
+                    <Grid spacing={2}
+                          container
+                          direction="row"
+                          justifyContent="space-evenly"
+                          > 
+                    <Grid item xs ={3} m={0.5}> 
                     <ListItemIcon>
                         <IconButton>
-                             {post.comments.length}<CommentIcon />
+                            <Typography variant="caption" display="block" gutterBottom>
+                              {post.comments.length}
+                            </Typography>
+                             <CommentIcon fontSize="small"/>
                         </IconButton>
                     </ListItemIcon>
+                    </Grid>
+                    <Grid item xs ={3} m={0.5}> 
                     <ListItemIcon>
                         <IconButton color={this.checkColor(post.likes)}>
-                        {post.likes.length}<FavoriteIcon onClick={this.handleOnLikePostClick(post._id)} />
+                          <Typography variant="caption" display="block" gutterBottom>
+                          {post.likes.length}
+                          </Typography>
+                          <FavoriteIcon fontSize="small" onClick={this.handleOnLikePostClick(post._id)} />
                         </IconButton>
                     </ListItemIcon>
+                    </Grid>
+                    </Grid>
                   </ListItem>
               <Divider />
               <CardContent>
@@ -159,10 +179,33 @@ class DiscussionPortal extends React.Component {
                   <List sx={{ width: '100%'}}>
                   <ListItem alignItems="flex-start">
                     <ListItemAvatar>
+                      {/*Need to display the profile picture here */}
                       <Avatar alt="Student 2" src="" />
                     </ListItemAvatar>
+                    
                     <ListItemText
-                      primary={comment.user.name}
+                      primary={
+                        <Grid spacing={2}
+                          container
+                          direction="row"
+                          >
+                          <Grid item xs = {3} m={0.5}>
+                          <Typography variant="caption" display="block" gutterBottom>
+                            {comment.user.name}
+                          </Typography>
+                          </Grid>
+                          <Grid item xs ={3} m={0.5}>
+                          <Typography variant="caption" display="block" gutterBottom>
+                            {`${post.createdAt.slice(0,10)}`}
+                          </Typography>
+                          </Grid>
+                          <Grid item xs ={3} m={0.5}>
+                          <Typography variant="caption" display="block" gutterBottom>
+                            {`${post.createdAt.slice(11, 19)}`}
+                          </Typography>
+                          </Grid>
+                        </Grid>
+                        }
                       secondary={
                         <React.Fragment>
                           {comment.content}
@@ -174,7 +217,7 @@ class DiscussionPortal extends React.Component {
                 </List>
                 ))}
             </CardContent>
-            </Card>
+            </Card></Box>
           ))  
         }
         </Paper> 
