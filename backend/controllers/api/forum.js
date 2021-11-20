@@ -6,7 +6,6 @@ const sanitizer = require('sanitizer')
 
 //to create a new post
 module.exports.create = async function(req, res) {
-    console.log("hiiiii");
     // get subject
     let subject = await Classes.findById(req.body.classroom_id);
     if (!subject) {

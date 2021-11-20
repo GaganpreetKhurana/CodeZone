@@ -12,6 +12,7 @@ import {
   export default function auth(state = initialClassState, action) {
     switch (action.type) {
       case ADD_POST:
+      case ADD_COMMENT:
         return {
           ...state,
           posts: action.posts,

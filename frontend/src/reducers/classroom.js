@@ -41,6 +41,7 @@ export default function auth(state = initialClassroomState, action) {
         posts: action.posts
       }
     case ADD_POST:
+    case ADD_COMMENT:
       return{
         ...state,
         posts: action.posts

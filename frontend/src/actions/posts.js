@@ -26,7 +26,6 @@ function getFormBody(params) {
 export function createPost(content,classroom_id) {
     return (dispatch) => {
       const url = '/api/forum/create/post';
-        console.log("request sent");
       fetch(url, {
         method: 'POST',
         headers: {
@@ -39,7 +38,6 @@ export function createPost(content,classroom_id) {
         .then((data) => {
   
           if (data.success) {
-            console.log(data.data);
             dispatch(addPost(data.data));
           }
         });
@@ -48,7 +46,6 @@ export function createPost(content,classroom_id) {
   export function likePost(post_id) {
     return (dispatch) => {
       const url = `/api/forum/like/post:${post_id}`;
-        console.log("request sent");
       fetch(url, {
         headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -58,8 +55,56 @@ export function createPost(content,classroom_id) {
         .then((data) => {
   
           if (data.success) {
-            console.log(data.data);
             dispatch(addPost(data.data));
+          }
+        });
+    };
+  }
+
+  //comment
+  export function addComment({posts}) {
+    return {
+      type: ADD_COMMENT,
+      posts,
+    };
+  }
+
+export function createComment(content,post_id) {
+    return (dispatch) => {
+      const url = '/api/forum/create/comment';
+        console.log("request sent");
+      fetch(url, {
+        method: 'POST',
+        headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: getFormBody({ content,post_id }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+  
+          if (data.success) {
+            console.log("comment",data.data);
+            // dispatch(addComment(data.data));
+          }
+        });
+    };
+  }
+  export function likeComment(comment_id) {
+    return (dispatch) => {
+      const url = `/api/forum/like/comment:${comment_id}`;
+      fetch(url, {
+        headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+  
+          if (data.success) {
+            console.log("comment",data.data);
+            // dispatch(addComment(data.data));
           }
         });
     };

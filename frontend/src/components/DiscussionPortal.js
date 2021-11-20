@@ -71,11 +71,11 @@ class DiscussionPortal extends React.Component {
     ()=>{
       this.props.dispatch(likeComment(comment_id));
     }
-  handleOnClickComment = () => {
+  handleOnClickComment = (post_id) => 
+   ()=>{
     // dispatch action
-    const {classroomId} = this.props;
-    if(this.state.contentComment && classroomId){
-      this.props.dispatch(createComment(this.state.contentComment,classroomId));
+    if(this.state.contentComment && post_id){
+      this.props.dispatch(createComment(this.state.contentComment,post_id));
       this.setState({
         contentComment: '',
       });
@@ -150,7 +150,7 @@ class DiscussionPortal extends React.Component {
                 />
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
                 <IconButton color="primary" sx={{ p: '10px' }} aria-label="directions">
-                <CommentIcon />
+                <CommentIcon onClick={this.handleOnClickComment(post._id)}/>
                 </IconButton>
               </Paper>
 
