@@ -29,6 +29,7 @@ class ChatBox extends React.Component {
     return (
 		<div>
 			<Paper elevation={4}>
+            {/* Map senders message to the first block and receieved to the second block*/}
             <Card sx={{ minWidth: 0 }}>
             <Div >Chatting with Student 1</Div>
             <CardContent>
@@ -48,9 +49,6 @@ class ChatBox extends React.Component {
             </ListItem>
             <Divider variant="inset" component="li" />
                         <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar alt="Student 3" src="" />
-              </ListItemAvatar>
               <ListItemText
                 primary="Student 3"
                 secondary={
@@ -59,6 +57,9 @@ class ChatBox extends React.Component {
                   </React.Fragment>
                 }
               />
+               <ListItemAvatar>
+                <Avatar alt="Student 3" src="" />
+              </ListItemAvatar>
             </ListItem>
             </List>
 

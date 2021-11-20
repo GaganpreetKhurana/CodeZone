@@ -66,9 +66,6 @@ export default function DraggableDialog(props) {
           left: '65%',
         }}
       >
-        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
-          Chat Window
-        </DialogTitle>
         <DialogContent>
             <ChatBox/>
         </DialogContent>
