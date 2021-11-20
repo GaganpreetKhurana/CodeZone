@@ -21,7 +21,7 @@ function PaperComponent(props) {
   );
 }
 
-export default function DraggableDialog() {
+export default function DraggableDialog(props) {
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -31,10 +31,20 @@ export default function DraggableDialog() {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const {self,other} = props;
+  let disable;
+  if(self && other){
+  if(self._id === other._id){
+    disable = true;
+  }
+  else{
+    disable = false;
+  }
+  }
+  console.log(props,"selfother");
   return (
     <div>
-      <IconButton variant="outlined" onClick={handleClickOpen}>
+      <IconButton variant="outlined" onClick={handleClickOpen} disabled={disable}>
         <CommentIcon />
       </IconButton>
       <Dialog

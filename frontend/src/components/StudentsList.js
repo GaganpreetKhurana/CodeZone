@@ -26,6 +26,7 @@ const Div = styled('div')(({ theme }) => ({
 
 class StudentsList extends React.Component {
   render() {
+    let {user} = this.props.auth;
     let {students, teachers} = this.props.classroom;
     return (
         <Grid item m={2} xs={3}>
@@ -39,7 +40,7 @@ class StudentsList extends React.Component {
                 <ListItem
                 key={value._id}
                 secondaryAction={
-                    <ChatWindow>
+                    <ChatWindow self={user} other={value}>
                     </ChatWindow>
                 }
                 >
@@ -56,7 +57,7 @@ class StudentsList extends React.Component {
                 <ListItem
                 key={value._id}
                 secondaryAction={
-                    <ChatWindow>
+                    <ChatWindow self={user} other={value}>
                     </ChatWindow>
                 }
                 >
