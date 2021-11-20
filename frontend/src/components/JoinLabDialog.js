@@ -43,6 +43,7 @@ class JoinLabDialog extends Component {
   
   render() {
     const { user } =this.props.auth;
+    console.log("userDetails",user);
     const { labDetails } = this.props.labDetails;
     return (
     <div>

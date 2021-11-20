@@ -17,6 +17,11 @@ const Div = styled('div')(({ theme }) => ({
 
 class CodeEditorScreen extends React.Component {
   render() {
+    const { userId,labId } = this.props.match.params;
+    console.log(userId,labId);
+    const {codeEditorDetails,editorLabDetails} = this.props.labDetails;
+        // console.log("codeEditorDetails",codeEditorDetails.code);
+        // console.log("editorLabDetails",editorLabDetails);
     return (
         <div>
             <Grid
@@ -26,8 +31,8 @@ class CodeEditorScreen extends React.Component {
                 justifyContent="space-evenly"
                 alignItems="center">
 
-                <Grid item xs={6} m={2} > 
-                    <TextEditor/>
+                <Grid item xs={6} m={2} >
+                <TextEditor documentId={`${userId}+${labId}`}/>     
                 </Grid>
 
                 <Grid item xs={4} m={2} > 
@@ -71,7 +76,8 @@ class CodeEditorScreen extends React.Component {
 function mapStateToProps(state) {
     return {
       auth: state.auth,
-      darkModetheme: state.theme
+      darkModetheme: state.theme,
+      labDetails: state.labDetails
     };
   }
 export default connect(mapStateToProps)(CodeEditorScreen);
