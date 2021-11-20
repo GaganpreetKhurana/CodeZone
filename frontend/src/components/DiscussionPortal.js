@@ -20,6 +20,7 @@ import Avatar from '@mui/material/Avatar';
 import CardHeader from '@mui/material/CardHeader';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ListItemIcon from '@mui/material/ListItemIcon';
+import { Box } from "@mui/system";
 
 
 class DiscussionPortal extends React.Component {
@@ -104,12 +105,13 @@ class DiscussionPortal extends React.Component {
               </IconButton>
           </Paper>
         </Grid>
-        {/* displaying old posts of classroom */}   
+
+        {/* displaying old posts of classroom */}  
         {!posts.length && <p>No Posts exist for this classroom</p>}
         <Paper elevation={4}>
         {posts.length>0 && 
           posts.map((post) => (
-             
+            <Box m={2} pt={3}>
             <Card>
               <CardHeader
                 avatar={
@@ -130,12 +132,12 @@ class DiscussionPortal extends React.Component {
                   <ListItem>
                     <ListItemIcon>
                         <IconButton>
-                             {post.comments.length}<CommentIcon />
+                             {post.comments.length}<CommentIcon fontSize="small"/>
                         </IconButton>
                     </ListItemIcon>
                     <ListItemIcon>
                         <IconButton color={this.checkColor(post.likes)}>
-                        {post.likes.length}<FavoriteIcon onClick={this.handleOnLikePostClick(post._id)} />
+                        {post.likes.length}<FavoriteIcon fontSize="small" onClick={this.handleOnLikePostClick(post._id)} />
                         </IconButton>
                     </ListItemIcon>
                   </ListItem>
@@ -176,7 +178,7 @@ class DiscussionPortal extends React.Component {
                 </List>
                 ))}
             </CardContent>
-            </Card>
+            </Card></Box>
           ))  
         }
         </Paper> 
