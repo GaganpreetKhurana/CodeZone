@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import DiscussionPortal from "./DiscussionPortal";
 import StudentsList from "./StudentsList";
 import NoticeBoard from "./NoticeBoard";
@@ -6,6 +7,7 @@ import ChatWindow from "./ChatWindow";
 
 //Material UI
 import { Grid} from '@mui/material';
+import { fetchClassroomDetails, clearClassroomDetails } from "../actions/classroom";
 
 
 class Classroom extends Component {
@@ -13,7 +15,9 @@ class Classroom extends Component {
     const { match } = this.props;
 
     if (match.params.classroomID) {
-      // dispatch an action to fetch classroom details
+      this.timer = setInterval(() => {
+      this.props.dispatch(fetchClassroomDetails(match.params.classroomID));
+    }, 5000);
     }
   }
 
@@ -27,6 +31,10 @@ class Classroom extends Component {
     if (prevParams && currentParams && currentParams !== prevParams) {
       //fetch new classroom  details
     }
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
+    this.props.dispatch(clearClassroomDetails());
   }
   render() {
     const { match } = this.props;
@@ -47,5 +55,11 @@ class Classroom extends Component {
     )
   }
 }
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+    createClassroom: state.createClassroom,
+  };
+}
+export default connect(mapStateToProps)(Classroom);
 
-export default Classroom;

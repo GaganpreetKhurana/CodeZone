@@ -3,7 +3,9 @@ import {
     CLEAR_USER_CLASS_DETAILS,
     FETCH_LAB_DETAILS,
     CLEAR_LAB_DETAILS,
-    CREATE_CODE_EDITOR
+    CREATE_CODE_EDITOR,
+    FECTH_CURRENT_CLASSROOM_DETAILS,
+    CLEAR_CURRENT_CLASSROOM_DETAILS
   } from "./actionTypes";
 
 function userDetails(userDetails){
@@ -93,4 +95,39 @@ export function createNewCodeEditor(userId, labId){
         }
       });
   };
+}
+
+//fetching classroom details posts/announcementd/studentlist etc
+function classroomDetails(details){
+  return {
+      type : FECTH_CURRENT_CLASSROOM_DETAILS,
+      students: details.students,
+      teachers: details.teachers,
+      announcements: details.announcements,
+      posts: details.posts
+  }
+}
+export function fetchClassroomDetails(classroom_id){
+  return (dispatch) => {
+      const url = `/api/classroom/classroomDetails/${classroom_id}`;
+      fetch(url, {
+        headers: {
+           Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            console.log("Classroom details",data.data);
+            dispatch(classroomDetails(data.data));
+            return;
+          }
+        });
+    };
+}
+
+export function clearClassroomDetails(){
+  return {
+      type : CLEAR_CURRENT_CLASSROOM_DETAILS,
+  }
 }
