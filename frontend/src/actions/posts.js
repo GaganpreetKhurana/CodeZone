@@ -85,7 +85,6 @@ export function createComment(content,post_id) {
         .then((data) => {
   
           if (data.success) {
-            console.log("comment",data.data);
             dispatch(addComment(data.data));
           }
         });
@@ -103,8 +102,7 @@ export function createComment(content,post_id) {
         .then((data) => {
   
           if (data.success) {
-            console.log("comment",data.data);
-            // dispatch(addComment(data.data));
+            dispatch(addComment(data.data));
           }
         });
     };

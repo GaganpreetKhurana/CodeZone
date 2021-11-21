@@ -56,9 +56,9 @@ export default function DraggableDialog(props) {
         hideBackdrop
         PaperProps={{
             sx: {
-            width: "50%",
-            maxHeight: 400,
-            maxWidth: 500,
+            width: "100%",
+            maxHeight: 700,
+            maxWidth: 700,
             }
         }}
         style={{
