@@ -19,7 +19,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Fab from '@mui/material/Fab';
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 
 export default function CodeEditorSideBar(props) {
@@ -63,8 +63,12 @@ export default function CodeEditorSideBar(props) {
                 <ListItem
                 key={value._id}
                 secondaryAction={
-                    <ChatWindow self={user} other={value}>
-                    </ChatWindow>
+                  <div>
+                    <Grid container direction="row" justifyContent="space-evenly" alignItems="center">
+                        <ChatWindow self={user} other={value}/>
+                        <VisibilityIcon/>
+                    </Grid>
+                  </div>
                 }
                 >
                 <ListItemButton>
