@@ -22,7 +22,13 @@ module.exports.signup = async function(req, res) {
             success: true,
             data: {
                 token: jwt.sign(user1.toJSON(), "CODEZONE", { expiresIn: "100000000" }),
-                user: user1,
+                user: {
+                    email: user1.email,
+                    name: user1.name,
+                    id: user1._id,
+                    SID: user1.SID,
+                    role: user1.role
+                },
             },
         });
     } else {

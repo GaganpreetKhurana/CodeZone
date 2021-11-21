@@ -22,13 +22,11 @@ const Div = styled('div')(({ theme }) => ({
 class CodeEditorScreen extends React.Component {
   render() {
     const { userId,labId } = this.props.match.params;
-    console.log(userId,labId);
-    const {codeEditorDetails,editorLabDetails} = this.props.labDetails;
-        // console.log("codeEditorDetails",codeEditorDetails.code);
-        // console.log("editorLabDetails",editorLabDetails);
+    const {editorLabDetails} = this.props.labDetails;
+    // const {codeEditorDetails} = this.props.labDetails;
     return (
         <div>
-          <Div>Classroom Lab</Div>
+          <Div>{editorLabDetails.description}</Div>
             <Grid
                 spacing={2}
                 container
@@ -38,12 +36,11 @@ class CodeEditorScreen extends React.Component {
 
                 <Grid item xs={6} m={2} >
                 <LanguageSelector/>
-                {(!user.Id && !labId) && <p> Error !! Please Refresh the Page</p>}
-                {(user.Id && labId) && <TextEditor documentId={`${userId}+${labId}`}/> }   
+                {(!userId && !labId) && <p> Error !! Please Refresh the Page</p>}
+                {(userId && labId) && <TextEditor documentId={`${userId}+${labId}`}/> }   
                 </Grid>
 
                 <Grid item xs={4} m={2} > 
-
                     <Grid
                     spacing={2}
                     container
@@ -53,17 +50,16 @@ class CodeEditorScreen extends React.Component {
 
                     <Grid item xs={8} m={2} > 
                         <Paper elevation={4}>
-                        <Card sx={{ minWidth: 300 }}>
+                        <Card sx={{ minWidth: 300, minHeight:150 }}>
                         <Div >Code Input</Div>
                         <CardContent>
-                        
                         </CardContent>
                         </Card>
                         </Paper>
                     </Grid>
                     <Grid item xs={8} m={2} > 
                         <Paper elevation={4}>
-                        <Card sx={{ minWidth: 300 }}>
+                        <Card sx={{ minWidth: 300, minHeight:150 }}>
                         <Div >Code Output</Div>
                         <CardContent>
                         

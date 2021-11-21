@@ -24,7 +24,7 @@ import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Menu,Fade,MenuItem,Button } from "@mui/material";
+import { Menu,MenuItem } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 
 class DiscussionPortal extends React.Component {
@@ -94,7 +94,7 @@ class DiscussionPortal extends React.Component {
   //comment
   checkColor = (likes) =>{
     let {user} = this.props.auth;
-    let likedByUser = likes.filter(({_id})=> _id ===user._id )
+    let likedByUser = likes.filter(({_id})=> _id ===user.id )
     if(likedByUser.length>0){
       return "secondary";
     }
@@ -121,13 +121,13 @@ class DiscussionPortal extends React.Component {
   };
   render() {
     const {posts} = this.props.classroom;
-    
+    let {user} = this.props.auth;
     return (
         <Grid item xs={4} m={2} 
           style={{maxHeight: '100vh', overflow: 'auto'}}
         > 
         <Grid item xs={4} m={2} > 
-          <Paper elevation={4} component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
+          <Paper elevation={4} component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 350 }}>
               <InputBase
               sx={{ ml: 1, flex: 1 }}
               placeholder="Post A Classroom Query or Notification"
@@ -190,22 +190,28 @@ class DiscussionPortal extends React.Component {
                           <FavoriteIcon fontSize="small" onClick={this.handleOnLikePostClick(post._id)} />
                         </IconButton>
                     </ListItemIcon>
+                    
                     </Grid>
+                    {/* edit and delete option of post available only to correct user */}
+                    {post.user._id === user.id && 
                     <Grid item xs ={2} m={0.5}> 
                     <ListItemIcon>
                         <IconButton><DeleteIcon fontSize="small" /></IconButton>
                     </ListItemIcon>
                     </Grid>
+                    }
+                    {post.user._id === user.id && 
                     <Grid item xs ={2} m={0.5}> 
                     <ListItemIcon>
                         <IconButton><EditIcon fontSize="small" /></IconButton>
                     </ListItemIcon>
                     </Grid>
+                    }
                     </Grid>
                   </ListItem>
               <Divider />
               <CardContent>
-                <Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
+                <Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 350 }}>
                 <InputBase
                 sx={{ ml: 1, flex: 1 }}
                 value={this.state.contentComment}
@@ -240,15 +246,16 @@ class DiscussionPortal extends React.Component {
                           </Typography>
                           </Grid>
                           <Grid item xs ={2.5} m={0.5}>
-                          <Typography variant="caption" display="block" gutterBottom>
+                          {/* <Typography variant="caption" display="block" gutterBottom>
                             {`${post.createdAt.slice(0,10)}`}
-                          </Typography>
+                          </Typography> */}
                           </Grid>
                           <Grid item xs ={2} m={0.5}>
-                          <Typography variant="caption" display="block" gutterBottom>
+                          {/* <Typography variant="caption" display="block" gutterBottom>
                             {`${post.createdAt.slice(11, 19)}`}
-                          </Typography>
+                          </Typography> */}
                           </Grid>
+                          { comment.user._id === user.id &&
                           <Grid item xs ={1} m={0.5}>
                             <IconButton size="small">
                           <Typography variant="caption" display="block" gutterBottom>
@@ -257,10 +264,11 @@ class DiscussionPortal extends React.Component {
                           </Typography>
                             </IconButton>
                           </Grid>
+                          }
                           <Grid item xs ={0.5} m={0.5}>
                             <IconButton size="small" fontSize="small" color={this.checkColor(comment.likes)}>
                             <Typography variant="caption" color={this.checkColor(comment.likes)} display="block" gutterBottom>
-                            {post.likes.length}
+                            {comment.likes.length}
                             </Typography>
                             <FavoriteIcon fontSize="small" color={this.checkColor(comment.likes)} onClick={this.handleOnLikeCommentClick(comment._id)} />
                             </IconButton>

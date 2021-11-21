@@ -18,9 +18,15 @@ io.on("connection",socket => {
         //we send the data back
         const document = await codeEditor.findOne({ code: documentId });
         //we create a room for only this document
-        socket.join(documentId)
-        console.log(documentId);
-        socket.emit("load-document",document.content)
+        if(documentId){
+            socket.join(documentId)
+            if(document.content){
+                socket.emit("load-document",document.content)    
+            }
+            else{
+                socket.emit("load-document","")
+            }
+        }
         socket.on('send-changes',delta => {
             //console.log(delta)
             //to send the changes to all other users in that room with same documentId except us who have the document opened we  use socket.broadcast
@@ -30,8 +36,6 @@ io.on("connection",socket => {
         //to save the document
         socket.on("save-document", async data => {
             let document1 = await codeEditor.findOne({ code: documentId });
-            
-            console.log("document1",document1);
             if(document1)
             {
                 document1.content = data;

@@ -1,9 +1,9 @@
 import {
-    UPDATE_POSTS,
+    // UPDATE_POSTS,
     ADD_POST,
     ADD_COMMENT,
-    UPDATE_POST_LIKE,
-    UPDATE_COMMENT_LIKE,
+    // UPDATE_POST_LIKE,
+    // UPDATE_COMMENT_LIKE,
   } from './actionTypes';
 
 function getFormBody(params) {
@@ -85,7 +85,6 @@ export function createComment(content,post_id) {
         .then((data) => {
   
           if (data.success) {
-            console.log("comment",data.data);
             dispatch(addComment(data.data));
           }
         });
@@ -103,8 +102,7 @@ export function createComment(content,post_id) {
         .then((data) => {
   
           if (data.success) {
-            console.log("comment",data.data);
-            // dispatch(addComment(data.data));
+            dispatch(addComment(data.data));
           }
         });
     };

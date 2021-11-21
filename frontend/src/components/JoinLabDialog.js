@@ -74,9 +74,9 @@ class JoinLabDialog extends Component {
                       <TableCell align="center">{row.createdAt.slice(0, 10)}</TableCell>
                       <TableCell align="center">{row.maxMarks ==="" ? '-' : row.maxMarks}</TableCell>
                       <TableCell align="center">
-                      {user._id && <Link to={`/code-editor/${user._id}/${row._id}`} onClick={()=>{
+                      {user.id && <Link to={`/code-editor/${user.id}/${row._id}`} onClick={()=>{
                           //fetch this code-editor's details using row_id
-                          this.props.dispatch(createNewCodeEditor(user._id,row._id));
+                          this.props.dispatch(createNewCodeEditor(user.id,row._id));
                         }}>
                           Link  
                         </Link>
