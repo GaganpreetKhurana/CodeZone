@@ -10,6 +10,8 @@ import { Button, Grid } from "@mui/material";
 import JoinClassDialog from "./JoinClassDialog";
 import CreateClassDialog from "./CreateClassDialog";
 import ModeNightIcon from '@mui/icons-material/ModeNight';
+import { Box } from "@mui/system";
+import { Typography } from "@mui/material";
 
 class Nav extends React.Component {
   state = {
@@ -40,56 +42,57 @@ class Nav extends React.Component {
     return (
       <div>
         {/*Navbar */}
-        <nav className="nav">
-          <div className="left-div">
-            {/*on clicking the logo it will take to the homepage */}
-            <Link to="/">
-            <div className="logo"><img src={logo} alt="logo" width="250px" height="auto"  /></div>
+      <Box display="flex" p={2} alignItems="center" bgcolor="#404042">
+        <Box textAlign="right">
+          <Link to="/">
+              <img src={logo} alt="logo" width="250px" height="auto"  />
             </Link>
-          </div>
-          {auth.isLoggedIn &&
-            auth.user.role === "Teacher" && (<div>
-            <Grid container direction="row" justifyContent="space-evenly" alignItems="center">
-              <JoinClassDialog/>
-              <CreateClassDialog/>
-            </Grid>
-             </div>
-            )}
-          {auth.isLoggedIn && auth.user.role === "Student" && (
-            <JoinClassDialog/>
-          )}
-          <div className="right-nav">
+          </Box>
+          <Box flexGrow={6} textAlign="center">
+            {auth.isLoggedIn &&
+                auth.user.role === "Teacher" && (<div>
+                <Grid container direction="row" justifyContent="space-evenly" alignItems="center">
+                  <JoinClassDialog/>
+                  <CreateClassDialog/>
+                </Grid>
+                </div>
+                )}
+              {auth.isLoggedIn && auth.user.role === "Student" && (
+                <JoinClassDialog/>
+              )}
+          </Box>
+          <Box flexGrow={0.5} textAlign="right">
             {auth.isLoggedIn && (
-              <div className="user">
-                <Link to="/settings">
+              <div>
+                <Grid container direction="row" justifyContent="space-evenly" alignItems="center">
+                  <Link to="/settings">
                   <img
                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSH4dcYWVFHFsz8M3Rsjpy2Hg6gQAmgbCIwWA&usqp=CAU"
                     alt="user-dp"
                     id="user-dp"
+                    width="30px"
                   />
                 </Link>
-                <span>{auth.user.name}</span>
+                {auth.user.name}
+                </Grid>
               </div>
             )}
-
-            <div className="nav-links">
-              <ul>
+          </Box>
+          <Box flexGrow={0} textAlign="right">
+            <div>
                 {!auth.isLoggedIn && (
-                  <li>
-                    <Link to="/login">Log in</Link>
-                  </li>
+                    <Button><Link to="/login"><Typography color="common.white">Login</Typography></Link></Button>
                 )}
-                {auth.isLoggedIn && <li onClick={this.logout}>Logout</li>}
+                {auth.isLoggedIn && <Button onClick={this.logout}><Typography color="common.white">Logout</Typography></Button>}
                 {!auth.isLoggedIn && (
-                  <li>
-                    <Link to="/signup">Register</Link>
-                  </li>
+                    <Button><Link to="/signup"><Typography color="common.white">Register</Typography></Link></Button>
                 )}
-                <Button  onClick={this.switchTheme}><ModeNightIcon/></Button>
-              </ul>
             </div>
-          </div>
-        </nav>
+          </Box>
+          <Box flexGrow={0} textAlign="right">
+            <Button  onClick={this.switchTheme}><ModeNightIcon/></Button>
+          </Box>
+        </Box>
       </div>
     );
   }
