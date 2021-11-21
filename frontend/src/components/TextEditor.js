@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react"
 import Quill from "quill"
 import "quill/dist/quill.snow.css"
 import { io } from "socket.io-client"
-import { useParams } from "react-router-dom"
 
 const SAVE_INTERVAL_MS = 2000
 const TOOLBAR_OPTIONS = [

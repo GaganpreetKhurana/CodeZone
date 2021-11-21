@@ -22,7 +22,8 @@ const Div = styled('div')(({ theme }) => ({
 class CodeEditorScreen extends React.Component {
   render() {
     const { userId,labId } = this.props.match.params;
-    const {codeEditorDetails,editorLabDetails} = this.props.labDetails;
+    const {editorLabDetails} = this.props.labDetails;
+    // const {codeEditorDetails} = this.props.labDetails;
     return (
         <div>
           <Div>{editorLabDetails.description}</Div>

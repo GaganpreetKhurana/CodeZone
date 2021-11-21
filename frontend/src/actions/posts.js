@@ -1,9 +1,9 @@
 import {
-    UPDATE_POSTS,
+    // UPDATE_POSTS,
     ADD_POST,
     ADD_COMMENT,
-    UPDATE_POST_LIKE,
-    UPDATE_COMMENT_LIKE,
+    // UPDATE_POST_LIKE,
+    // UPDATE_COMMENT_LIKE,
   } from './actionTypes';
 
 function getFormBody(params) {
