@@ -22,6 +22,8 @@ const Div = styled('div')(({ theme }) => ({
 
 class CodeEditorScreen extends React.Component {
   render() {
+    let {students} = this.props.classroom;
+    const {user} = this.props.auth;
     const { userId,labId } = this.props.match.params;
     const {editorLabDetails} = this.props.labDetails;
     // const {codeEditorDetails} = this.props.labDetails;
@@ -49,7 +51,7 @@ class CodeEditorScreen extends React.Component {
                     alignItems="center">
                     <Grid item xs={8} m={0.5} >
                       <Fab variant="extended">
-                        <CodeEditorSideBar/>
+                        <CodeEditorSideBar students={students} user={user}/>
                       </Fab> 
                     </Grid>
                     <Grid item xs={8} m={0.5} > 
@@ -99,7 +101,8 @@ function mapStateToProps(state) {
     return {
       auth: state.auth,
       darkModetheme: state.theme,
-      labDetails: state.labDetails
+      labDetails: state.labDetails,
+      classroom: state.classroom,
     };
   }
 export default connect(mapStateToProps)(CodeEditorScreen);

@@ -49,10 +49,10 @@ export default function auth(state = initialClassroomState, action) {
     case CLEAR_CURRENT_CLASSROOM_DETAILS:
       return {
         ...state,
-        students: [],
-        teachers: [],
-        announcements: [],
-        posts: []
+        // students: [],
+        // teachers: [],
+        // announcements: [],
+        // posts: []
       }
     default:
       return state;
