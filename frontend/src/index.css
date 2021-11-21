@@ -566,3 +566,8 @@ body {
 .post-comments-list .comment-like img:hover {
   cursor: pointer;
 }
+.container{
+  height:300px;
+  overflow:auto;
+
+}

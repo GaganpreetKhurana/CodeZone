@@ -22,13 +22,10 @@ const Div = styled('div')(({ theme }) => ({
 class CodeEditorScreen extends React.Component {
   render() {
     const { userId,labId } = this.props.match.params;
-    console.log(userId,labId);
     const {codeEditorDetails,editorLabDetails} = this.props.labDetails;
-        // console.log("codeEditorDetails",codeEditorDetails.code);
-        // console.log("editorLabDetails",editorLabDetails);
     return (
         <div>
-          <Div>Classroom Lab</Div>
+          <Div>{editorLabDetails.description}</Div>
             <Grid
                 spacing={2}
                 container
@@ -43,7 +40,6 @@ class CodeEditorScreen extends React.Component {
                 </Grid>
 
                 <Grid item xs={4} m={2} > 
-
                     <Grid
                     spacing={2}
                     container
@@ -53,17 +49,16 @@ class CodeEditorScreen extends React.Component {
 
                     <Grid item xs={8} m={2} > 
                         <Paper elevation={4}>
-                        <Card sx={{ minWidth: 300 }}>
+                        <Card sx={{ minWidth: 300, minHeight:150 }}>
                         <Div >Code Input</Div>
                         <CardContent>
-                        
                         </CardContent>
                         </Card>
                         </Paper>
                     </Grid>
                     <Grid item xs={8} m={2} > 
                         <Paper elevation={4}>
-                        <Card sx={{ minWidth: 300 }}>
+                        <Card sx={{ minWidth: 300, minHeight:150 }}>
                         <Div >Code Output</Div>
                         <CardContent>
                         

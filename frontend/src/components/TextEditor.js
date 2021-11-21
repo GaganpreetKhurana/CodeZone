@@ -19,7 +19,6 @@ const TOOLBAR_OPTIONS = [
 
 export default function TextEditor(props) {
   const { documentId } = props;
-  console.log(documentId);
   //to access socket from anywhere we put socket in state
   const [socket, setSocket] = useState()
   //similarly for quill instance
