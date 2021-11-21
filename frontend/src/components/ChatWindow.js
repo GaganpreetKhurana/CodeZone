@@ -8,6 +8,7 @@ import Draggable from 'react-draggable';
 import ChatBox from './ChatBox';
 import IconButton from '@mui/material/IconButton';
 import CommentIcon from '@mui/icons-material/Comment';
+import DialogTitle from '@mui/material/DialogTitle';
 
 function PaperComponent(props) {
   return (
@@ -56,8 +57,8 @@ export default function DraggableDialog(props) {
         PaperProps={{
             sx: {
             width: "100%",
-            maxHeight: 700,
-            maxWidth: 700,
+            minHeight: 450,
+            minWidth: 400,
             }
         }}
         style={{
@@ -65,6 +66,9 @@ export default function DraggableDialog(props) {
           left: '65%',
         }}
       >
+        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+          Chat Window
+        </DialogTitle>
         <DialogContent>
             <ChatBox self_details={self} other_details={other}/>
         </DialogContent>
