@@ -26,7 +26,7 @@ class CodeEditorScreen extends React.Component {
     const {user} = this.props.auth;
     const { userId,labId } = this.props.match.params;
     const {editorLabDetails} = this.props.labDetails;
-    // const {codeEditorDetails} = this.props.labDetails;
+    //const {codeEditorDetails} = this.props.labDetails;
     return (
         <div>
           <Div>{editorLabDetails.description}</Div>
@@ -51,7 +51,7 @@ class CodeEditorScreen extends React.Component {
                     alignItems="center">
                     <Grid item xs={8} m={0.5} >
                       <Fab variant="extended">
-                        <CodeEditorSideBar students={students} user={user}/>
+                        <CodeEditorSideBar students={students} user={user} labId={labId} editorLabDetails={editorLabDetails} dispatch={this.props.dispatch}/>
                       </Fab> 
                     </Grid>
                     <Grid item xs={8} m={0.5} > 
@@ -59,7 +59,7 @@ class CodeEditorScreen extends React.Component {
                         <Card sx={{ minWidth: 300, minHeight:150 }}>
                         <Div >Question</Div>
                         <CardContent>
-                        
+                        {editorLabDetails.question}
                         </CardContent>
                         </Card>
                         </Paper>
@@ -69,6 +69,7 @@ class CodeEditorScreen extends React.Component {
                         <Card sx={{ minWidth: 300, minHeight:150 }}>
                         <Div >Code Input</Div>
                         <CardContent>
+                          {editorLabDetails.input}
                         </CardContent>
                         </Card>
                         </Paper>

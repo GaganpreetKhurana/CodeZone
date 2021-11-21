@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ChatWindow from "./ChatWindow";
+import { Link } from 'react-router-dom';
+import { clearLabDetails ,fetchClassLabDetails, createNewCodeEditor } from "../actions/classroom";
 
 //Material UI
 import { Grid} from '@mui/material';
@@ -29,8 +31,8 @@ export default function CodeEditorSideBar(props) {
     bottom: false,
     right: false,
   });
-  const {students,user} = props;
-  console.log(students,user);
+  const {students,user,labId,editorLabDetails} = props;
+  // console.log(props);
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -66,7 +68,14 @@ export default function CodeEditorSideBar(props) {
                   <div>
                     <Grid container direction="row" justifyContent="space-evenly" alignItems="center">
                         <ChatWindow self={user} other={value}/>
-                        <VisibilityIcon/>
+                        {(user.role==='Teacher' && value._id) && <Link to={`/code-editor/${value._id}/${labId}`} onClick={()=>{
+                          //fetch this code-editor's details using row_id
+                          props.dispatch(createNewCodeEditor(value._id,labId));
+                        }}>
+                          <VisibilityIcon/>  
+                        </Link>
+                        }
+                        
                     </Grid>
                   </div>
                 }
@@ -92,6 +101,7 @@ export default function CodeEditorSideBar(props) {
         </Grid> </Grid>
     </Box>
   );
+
 
   return (
     <div>
