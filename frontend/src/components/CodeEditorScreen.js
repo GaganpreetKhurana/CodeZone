@@ -38,7 +38,8 @@ class CodeEditorScreen extends React.Component {
 
                 <Grid item xs={6} m={2} >
                 <LanguageSelector/>
-                <TextEditor documentId={`${userId}+${labId}`}/>    
+                {(!user.Id && !labId) && <p> Error !! Please Refresh the Page</p>}
+                {(user.Id && labId) && <TextEditor documentId={`${userId}+${labId}`}/> }   
                 </Grid>
 
                 <Grid item xs={4} m={2} > 

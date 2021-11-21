@@ -43,7 +43,6 @@ class JoinLabDialog extends Component {
   
   render() {
     const { user } =this.props.auth;
-    console.log("userDetails",user);
     const { labDetails } = this.props.labDetails;
     return (
     <div>
@@ -54,6 +53,7 @@ class JoinLabDialog extends Component {
         {labDetails.length === 0 && <DialogTitle>No Existing Lab For this class yet!!</DialogTitle>}
         {labDetails.length !== 0 && <DialogTitle>Existing Lab Details</DialogTitle>}
         <DialogActions>
+        {labDetails.length !== 0 && 
             <TableContainer>
               <Table sx={{ minWidth: 450 }}>
                 <TableHead>
@@ -74,18 +74,20 @@ class JoinLabDialog extends Component {
                       <TableCell align="center">{row.createdAt.slice(0, 10)}</TableCell>
                       <TableCell align="center">{row.maxMarks ==="" ? '-' : row.maxMarks}</TableCell>
                       <TableCell align="center">
-                        <Link to={`/code-editor/${user._id}/${row._id}`} onClick={()=>{
+                      {user._id && <Link to={`/code-editor/${user._id}/${row._id}`} onClick={()=>{
                           //fetch this code-editor's details using row_id
                           this.props.dispatch(createNewCodeEditor(user._id,row._id));
                         }}>
                           Link  
                         </Link>
+                        }
                       </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
             </TableContainer>
+  }
         </DialogActions>
       </Dialog> 
     </div>
