@@ -42,14 +42,14 @@ export default function CodeEditorSideBar(props) {
   }));
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 700 }}
+      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 500 }}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-    <Grid item m={4} xs={3}>
+    <Grid item m={12} xs={3}>
             <Paper elevation={4}>
-            <Card sx={{ minWidth: 0 }}>
+            <Card sx={{ minWidth: 360 }}>
             <Div >Enrolled List</Div>
             <CardContent>
             {/* iterate over teachers and then  students list here */}
