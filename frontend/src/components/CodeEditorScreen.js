@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import TextEditor from "./TextEditor";
 import LanguageSelector from "./LanguageSelector";
+import CodeEditorSideBar from "./CodeEditorSideBar";
 //Material UI
 import { Grid} from '@mui/material';
 import Card from '@mui/material/Card';
@@ -32,9 +33,8 @@ class CodeEditorScreen extends React.Component {
                 container
                 direction="row"
                 justifyContent="space-evenly"
-                alignItems="center">
-
-                <Grid item xs={6} m={2} >
+                >
+                <Grid item xs={7} m={2} >
                 <LanguageSelector/>
                 {(!userId && !labId) && <p> Error !! Please Refresh the Page</p>}
                 {(userId && labId) && <TextEditor documentId={`${userId}+${labId}`}/> }   
@@ -47,8 +47,22 @@ class CodeEditorScreen extends React.Component {
                     direction="column"
                     justifyContent="space-evenly"
                     alignItems="center">
-
-                    <Grid item xs={8} m={2} > 
+                    <Grid item xs={8} m={0.5} >
+                      <Fab variant="extended">
+                        <CodeEditorSideBar/>
+                      </Fab> 
+                    </Grid>
+                    <Grid item xs={8} m={0.5} > 
+                        <Paper elevation={4}>
+                        <Card sx={{ minWidth: 300, minHeight:150 }}>
+                        <Div >Question</Div>
+                        <CardContent>
+                        
+                        </CardContent>
+                        </Card>
+                        </Paper>
+                    </Grid>
+                    <Grid item xs={8} m={0.5} > 
                         <Paper elevation={4}>
                         <Card sx={{ minWidth: 300, minHeight:150 }}>
                         <Div >Code Input</Div>
@@ -57,7 +71,7 @@ class CodeEditorScreen extends React.Component {
                         </Card>
                         </Paper>
                     </Grid>
-                    <Grid item xs={8} m={2} > 
+                    <Grid item xs={8} m={0.5} > 
                         <Paper elevation={4}>
                         <Card sx={{ minWidth: 300, minHeight:150 }}>
                         <Div >Code Output</Div>
@@ -67,10 +81,12 @@ class CodeEditorScreen extends React.Component {
                         </Card>
                         </Paper>
                     </Grid>
+                    <Grid item xs={8} m={0.5} > 
                     <Fab variant="extended">
                       <PlayCircleIcon sx={{ mr: 1 }} color="primary" />
                       Execute Code
                     </Fab>
+                    </Grid>
                 </Grid>
             </Grid>
             </Grid>
