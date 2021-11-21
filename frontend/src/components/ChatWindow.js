@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import Draggable from 'react-draggable';
 import ChatBox from './ChatBox';
@@ -34,7 +33,7 @@ export default function DraggableDialog(props) {
   const {self,other} = props;
   let disable;
   if(self && other){
-  if(self._id === other._id){
+  if(self.id === other._id){
     disable = true;
   }
   else{
@@ -67,7 +66,7 @@ export default function DraggableDialog(props) {
         }}
       >
         <DialogContent>
-            <ChatBox/>
+            <ChatBox self_details={self} other_details={other}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>

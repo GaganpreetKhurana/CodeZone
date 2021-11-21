@@ -25,13 +25,15 @@ const Div = styled('div')(({ theme }) => ({
 
 class ChatBox extends React.Component {
   render() {
-
+    const {self_details,other_details} =this.props;
+    console.log(self_details);
+    console.log(other_details);
     return (
 		<div>
 			<Paper elevation={4}>
             {/* Map senders message to the first block and receieved to the second block*/}
             <Card sx={{ minWidth: 0 }}>
-            <Div >Chatting with Student 1</Div>
+            {<Div >{`${other_details.name} - ${other_details.SID} `}</Div>}
             <CardContent>
             <List sx={{ width: '100%'}}>
             <ListItem alignItems="flex-start">
@@ -39,10 +41,10 @@ class ChatBox extends React.Component {
                 <Avatar alt="Student 2" src="" />
               </ListItemAvatar>
               <ListItemText
-                primary="Student 2"
+                primary={other_details.name}
                 secondary={
                   <React.Fragment>
-                    {"This is a sample comment"}
+                    {"Other User's message"}
                   </React.Fragment>
                 }
               />
@@ -50,10 +52,10 @@ class ChatBox extends React.Component {
             <Divider variant="inset" component="li" />
                         <ListItem alignItems="flex-start">
               <ListItemText
-                primary="Student 3"
+                primary={self_details.name}
                 secondary={
                   <React.Fragment>
-                    {"This is a sample comment 2"}
+                    {"My Message"}
                   </React.Fragment>
                 }
               />
@@ -63,7 +65,7 @@ class ChatBox extends React.Component {
             </ListItem>
             </List>
 
-			<Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 500 }}>
+			<Paper component="form" sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 300 }}>
               <InputBase
               sx={{ ml: 1, flex: 1 }}
               placeholder="Start typing a comment"

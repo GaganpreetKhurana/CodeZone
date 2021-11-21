@@ -94,9 +94,7 @@ class DiscussionPortal extends React.Component {
   //comment
   checkColor = (likes) =>{
     let {user} = this.props.auth;
-    console.log(user);
     let likedByUser = likes.filter(({_id})=> _id ===user.id )
-    console.log(likedByUser);
     if(likedByUser.length>0){
       return "secondary";
     }
