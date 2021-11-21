@@ -18,6 +18,10 @@ import Avatar from '@mui/material/Avatar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
+import Fab from '@mui/material/Fab';
+
+
+
 export default function CodeEditorSideBar(props) {
   const [state, setState] = React.useState({
     top: false,
@@ -44,9 +48,10 @@ export default function CodeEditorSideBar(props) {
     <Box
       sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 500 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      //onClick={toggleDrawer(anchor, false)}
+      //onKeyDown={toggleDrawer(anchor, false)}
     >
+    <Grid>
     <Grid item m={12} xs={3}>
             <Paper elevation={4}>
             <Card sx={{ minWidth: 360 }}>
@@ -75,7 +80,12 @@ export default function CodeEditorSideBar(props) {
             </CardContent>
             </Card>
         </Paper>
+        <Grid item m={12} xs={3}>
+            <Fab variant="extended">
+              <Button onClick={toggleDrawer(anchor, false)}>Close Sidebar</Button>
+            </Fab>
         </Grid>
+        </Grid> </Grid>
     </Box>
   );
 
@@ -87,7 +97,7 @@ export default function CodeEditorSideBar(props) {
           <Drawer
             anchor={anchor}
             open={state[anchor]}
-            onClose={toggleDrawer(anchor, false)}
+            //onClose={toggleDrawer(anchor, false)}
           >
             {list(anchor)}
           </Drawer>
