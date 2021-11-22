@@ -20,7 +20,7 @@ io.on("connection",socket => {
         //we create a room for only this document
         if(documentId){
             socket.join(documentId)
-            if(document.content){
+            if(document && document.content){
                 socket.emit("load-document",document.content)    
             }
             else{

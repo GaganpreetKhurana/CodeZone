@@ -28,7 +28,8 @@ class NoticeBoard extends React.Component {
             <Div>Announcements</Div>
             <CardContent>
               {/* List or checkboxes ? */}
-              <span className="row"> Wohoo! No work due soon</span>
+              <span className="row"> Assignment - 2 
+              Deadline 22-11-2021 11:59PM</span>
 
               {auth.user.role === "Teacher" && (
                 <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
