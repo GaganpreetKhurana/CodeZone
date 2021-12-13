@@ -92,6 +92,9 @@ class JoinLabDialog extends Component {
               </Table>
             </TableContainer>
   }
+  <Button onClick={this.dialogClose}>
+                Cancel
+            </Button>
         </DialogActions>
       </Dialog> 
     </div>

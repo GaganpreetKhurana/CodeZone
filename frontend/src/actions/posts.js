@@ -229,3 +229,45 @@ export function updateMeetLink(content,classroom_id) {
       });
   };
 }
+
+export function addAnnouncement(content,classroom_id) {
+  return (dispatch) => {
+    const url = "/api/announcements/create";
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: getFormBody({ classroom_id, content }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch(deleteSuccess());
+          return;
+        }
+        dispatch(deleteError(data.message));
+      });
+  };
+}
+//delete announcement
+export function deleteAnnouncement(id) {
+  return (dispatch) => {
+    const url = `/api/announcements/delete:${id}`;
+    fetch(url, {
+      headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch(deleteSuccess());
+        }
+        else{
+          dispatch(deleteError(data.message));
+        }
+      });
+  };
+}
