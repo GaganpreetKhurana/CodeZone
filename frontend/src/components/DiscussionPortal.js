@@ -62,8 +62,9 @@ class DiscussionPortal extends React.Component {
   commentMenu(id,content){
     return(
       <Menu id="fade-menu" anchorEl={this.state.anchorEl} open={this.state.open} onClose={this.handleCommentClose}>
-          <MenuItem onClick={this.handleCommentClose}><DeleteComment id={id} role={"Comment"}/></MenuItem>
-          <MenuItem onClick={this.handleCommentClose}><EditComment id={id} content={content} /></MenuItem>
+          <MenuItem><DeleteComment id={id} role={"Comment"}/></MenuItem>
+          <MenuItem><EditComment id={id} content={content} /></MenuItem>
+          <MenuItem onClick={this.handleCommentClose}>Close Menu</MenuItem>
       </Menu>
       )
   }
