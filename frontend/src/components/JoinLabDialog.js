@@ -33,10 +33,14 @@ class JoinLabDialog extends Component {
     //fetch lab details for this classsroom 
     const { classroomId} = this.props;
     this.props.dispatch(fetchClassLabDetails(classroomId));
+    this.timer = setInterval(() => {
+      this.props.dispatch(fetchClassLabDetails(classroomId));
+    }, 5000);
   }
 
   componentWillUnmount() {
-      //clear lab details
+    //clear lab details
+    clearInterval(this.timer);
     this.props.dispatch(clearLabDetails());
     this.props.dispatch(clearAuth());
   }

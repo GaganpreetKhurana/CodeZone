@@ -79,7 +79,7 @@ class CodeEditorScreen extends React.Component {
                         <Card sx={{ minWidth: 300, minHeight:150 }}>
                         <Div >Code Output</Div>
                         <CardContent>
-                        
+                        {editorLabDetails.output}
                         </CardContent>
                         </Card>
                         </Paper>
