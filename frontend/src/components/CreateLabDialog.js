@@ -161,6 +161,9 @@ class CreateLabDialog extends Component {
             <Button onClick={this.handleSubmitForm} disabled={inProgress}>
             Create Lab
             </Button>
+            <Button onClick={this.dialogClose}>
+                Cancel
+            </Button>
             </DialogActions>
       </Dialog>     
     </div>
