@@ -107,3 +107,62 @@ export function createComment(content,post_id) {
         });
     };
   }
+export function deleteSuccess(){
+  return {
+    type: "SUCCESS",
+  };
+}
+export function deleteError(message){
+  return {
+    type: "ERROR",
+    message,
+  };
+}
+export function clearMsg(){
+  return {
+    type: "CLEAR",
+  }
+}
+//delete post
+export function deletePost(post_id) {
+  return (dispatch) => {
+    const url = `/api/forum/delete/post:${post_id}`;
+    fetch(url, {
+      headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch(addPost(data.data));
+          dispatch(deleteSuccess());
+        }
+        else{
+          dispatch(deleteError(data.message));
+        }
+      });
+  };
+}
+
+//delete comment
+export function deleteComment(comment_id) {
+  return (dispatch) => {
+    const url = `/api/forum/delete/comment:${comment_id}`;
+    fetch(url, {
+      headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch(addPost(data.data));
+          dispatch(deleteSuccess());
+        }
+        else{
+          dispatch(deleteError(data.message));
+        }
+      });
+  };
+}

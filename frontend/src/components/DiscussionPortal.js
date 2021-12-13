@@ -1,12 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
 import { createPost,likePost, createComment,likeComment} from '../actions/posts';
+import DeletePost from './DeletePost';
+import DeleteComment from './DeleteComment';
 //Material UI
 import { Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 
 import List from '@mui/material/List';
@@ -22,6 +23,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
+import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Menu,MenuItem } from "@mui/material";
@@ -55,10 +57,10 @@ class DiscussionPortal extends React.Component {
       this.setAnchorEl(null);
   }
 
-  commentMenu(){
+  commentMenu(id){
     return(
-    <Menu id="fade-menu" anchorEl={this.state.anchorEl} open={this.state.open} onClose={this.handleCommentClose}>
-          <MenuItem onClick={this.handleCommentClose}><IconButton><DeleteIcon fontSize="small" /></IconButton></MenuItem>
+      <Menu id="fade-menu" anchorEl={this.state.anchorEl} open={this.state.open} onClose={this.handleCommentClose}>
+          <MenuItem onClick={this.handleCommentClose}><DeleteComment id={id} role={"Comment"}/></MenuItem>
           <MenuItem onClick={this.handleCommentClose}><IconButton><EditIcon fontSize="small" /></IconButton></MenuItem>
       </Menu>
       )
@@ -196,7 +198,7 @@ class DiscussionPortal extends React.Component {
                     {post.user._id === user.id && 
                     <Grid item xs ={2} m={0.5}> 
                     <ListItemIcon>
-                        <IconButton><DeleteIcon fontSize="small" /></IconButton>
+                        <DeletePost id={post._id} role={"Post"}/>
                     </ListItemIcon>
                     </Grid>
                     }
@@ -260,7 +262,7 @@ class DiscussionPortal extends React.Component {
                             <IconButton size="small">
                           <Typography variant="caption" display="block" gutterBottom>
                             <MenuIcon fontSize="small"  aria-owns={this.state.open ? 'fade-menu' : undefined} aria-haspopup="true" onClick={this.handleCommentClick}/>
-                            {this.commentMenu()}
+                            {this.commentMenu(comment._id)}
                           </Typography>
                             </IconButton>
                           </Grid>
