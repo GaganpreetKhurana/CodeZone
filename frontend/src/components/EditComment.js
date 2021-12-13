@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { updatePost, clearMsg} from "../actions/posts";
+import { updateComment, clearMsg} from "../actions/posts";
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -41,7 +41,7 @@ class EditPostPopUp extends Component {
     const { content } = this.state;
     const {id} = this.props;
     if (content && id) {
-      this.props.dispatch(updatePost(content,id));
+      this.props.dispatch(updateComment(content,id));
     }
   };
 
@@ -54,6 +54,7 @@ class EditPostPopUp extends Component {
   render() {
     const { error,success } = this.props.posts;
     const { id,content } = this.props;
+    console.log(id,content);
     return (
     <div>
     <IconButton><EditIcon fontSize="small"  variant="contained" onClick={this.dialogOpen}/></IconButton>
@@ -68,7 +69,7 @@ class EditPostPopUp extends Component {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-                Update Post
+                Update Comment
           </DialogContentText>
         </DialogContent>
         <DialogActions>

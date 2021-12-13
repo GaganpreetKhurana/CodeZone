@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { createPost,likePost, createComment,likeComment} from '../actions/posts';
 import DeletePost from './DeletePost';
 import DeleteComment from './DeleteComment';
+import EditPost from './EditPost';
+import EditComment from './EditComment'
 //Material UI
 import { Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
@@ -57,11 +59,11 @@ class DiscussionPortal extends React.Component {
       this.setAnchorEl(null);
   }
 
-  commentMenu(id){
+  commentMenu(id,content){
     return(
       <Menu id="fade-menu" anchorEl={this.state.anchorEl} open={this.state.open} onClose={this.handleCommentClose}>
           <MenuItem onClick={this.handleCommentClose}><DeleteComment id={id} role={"Comment"}/></MenuItem>
-          <MenuItem onClick={this.handleCommentClose}><IconButton><EditIcon fontSize="small" /></IconButton></MenuItem>
+          <MenuItem onClick={this.handleCommentClose}><EditComment id={id} content={content} /></MenuItem>
       </Menu>
       )
   }
@@ -205,7 +207,7 @@ class DiscussionPortal extends React.Component {
                     {post.user._id === user.id && 
                     <Grid item xs ={2} m={0.5}> 
                     <ListItemIcon>
-                        <IconButton><EditIcon fontSize="small" /></IconButton>
+                        <EditPost id={post._id} content={post.content}/>
                     </ListItemIcon>
                     </Grid>
                     }
@@ -262,7 +264,7 @@ class DiscussionPortal extends React.Component {
                             <IconButton size="small">
                           <Typography variant="caption" display="block" gutterBottom>
                             <MenuIcon fontSize="small"  aria-owns={this.state.open ? 'fade-menu' : undefined} aria-haspopup="true" onClick={this.handleCommentClick}/>
-                            {this.commentMenu(comment._id)}
+                            {this.commentMenu(comment._id,comment.content)}
                           </Typography>
                             </IconButton>
                           </Grid>

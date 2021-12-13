@@ -25,6 +25,7 @@ class DeleteCommentPopUp extends Component {
 
   dialogClose = () => {
     this.setState({ open: false });
+    this.props.dispatch(clearMsg());
   };
 
   //to clear the error if it comes on reload or whenever the user shifts from this page

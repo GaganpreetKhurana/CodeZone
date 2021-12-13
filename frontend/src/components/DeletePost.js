@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { deletePost,deleteComment, clearMsg} from "../actions/posts";
-import { fetchUserClassDetails } from "../actions/classroom";
+import { deletePost, clearMsg} from "../actions/posts";
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';

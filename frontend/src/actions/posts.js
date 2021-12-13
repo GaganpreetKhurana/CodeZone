@@ -136,7 +136,6 @@ export function deletePost(post_id) {
       .then((data) => {
         if (data.success) {
           dispatch(addPost(data.data));
-          dispatch(deleteSuccess());
         }
         else{
           dispatch(deleteError(data.message));
@@ -158,10 +157,51 @@ export function deleteComment(comment_id) {
       .then((data) => {
         if (data.success) {
           dispatch(addPost(data.data));
-          dispatch(deleteSuccess());
         }
         else{
           dispatch(deleteError(data.message));
+        }
+      });
+  };
+}
+
+//update post/comment
+export function updatePost(content,post_id) {
+  return (dispatch) => {
+    const url = '/api/forum/update/post';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: getFormBody({ content,post_id }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch(addPost(data.data));
+          dispatch(deleteSuccess());
+        }
+      });
+  };
+}
+export function updateComment(content,comment_id) {
+  return (dispatch) => {
+    const url = '/api/forum/update/comment';
+    fetch(url, {
+      method: 'POST',
+      headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+      body: getFormBody({ content,comment_id }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          dispatch(addPost(data.data));
+          dispatch(deleteSuccess());
         }
       });
   };
