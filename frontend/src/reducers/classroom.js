@@ -16,7 +16,8 @@ const initialClassroomState = {
   students: [],
   teachers: [],
   announcements: [],
-  posts: []
+  posts: [],
+  ClassMeetLink: ''
 };
 export default function auth(state = initialClassroomState, action) {
   switch (action.type) {
@@ -38,7 +39,8 @@ export default function auth(state = initialClassroomState, action) {
         students: action.students,
         teachers: action.teachers,
         announcements: action.announcements,
-        posts: action.posts
+        posts: action.posts,
+        ClassMeetLink: action.ClassMeetLink
       }
     case ADD_POST:
     case ADD_COMMENT:

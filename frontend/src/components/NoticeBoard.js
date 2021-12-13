@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import CreateLabDialog from "./CreateLabDialog";
 import JoinLabDialog from "./JoinLabDialog";
+import ShareLink from "./ShareLink";
 
 //Material UI
 import { Grid } from "@mui/material";
@@ -20,6 +21,7 @@ const Div = styled("div")(({ theme }) => ({
 class NoticeBoard extends React.Component {
   render() {
     const { auth,classroomId } = this.props;
+    const {ClassMeetLink} = this.props.classroom;
 
     return (
       <Grid item m={2} xs={3}>
@@ -32,13 +34,13 @@ class NoticeBoard extends React.Component {
               Deadline 22-11-2021 11:59PM</span>
 
               {auth.user.role === "Teacher" && (
-                <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                  Share Class Link
-                </Button>
+                <ShareLink classroom_id={classroomId}/>
               )}
-              <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+              <a href={ClassMeetLink} target="_blank">
+              <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} disabled={!ClassMeetLink}>
                 Online Class Link
               </Button>
+              </a>
               {auth.user.role === "Teacher" && <CreateLabDialog  classroomId={classroomId} />}
               <JoinLabDialog classroomId={classroomId} />
             </CardContent>
@@ -52,6 +54,7 @@ function mapStateToProps(state) {
   return {
     auth: state.auth,
     darkModetheme: state.theme,
+    classroom: state.classroom,
   };
 }
 export default connect(mapStateToProps)(NoticeBoard);
