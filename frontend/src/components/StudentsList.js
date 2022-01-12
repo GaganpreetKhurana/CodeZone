@@ -29,6 +29,7 @@ class StudentsList extends React.Component {
   render() {
     let {user} = this.props.auth;
     let {students, teachers} = this.props.classroom;
+    const {classroomId} = this.props;
     return (
         <Grid item m={2} xs={3}>
             <Paper elevation={4}>
@@ -41,7 +42,7 @@ class StudentsList extends React.Component {
                 <ListItem
                 key={value._id}
                 secondaryAction={
-                    <ChatWindow self={user} other={value}>
+                    <ChatWindow classroomId = {classroomId} self={user} other={value}>
                     </ChatWindow>
                 }
                 >
@@ -58,7 +59,7 @@ class StudentsList extends React.Component {
                 <ListItem
                 key={value._id}
                 secondaryAction={
-                    <ChatWindow self={user} other={value}>
+                    <ChatWindow classroomId = {classroomId} self={user} other={value}>
                     </ChatWindow>
                 }
                 >

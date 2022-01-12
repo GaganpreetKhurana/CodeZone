@@ -31,7 +31,7 @@ export default function DraggableDialog(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  const {self,other} = props;
+  const {self,other,classroomId} = props;
   let disable;
   if(self && other){
   if(self.id === other._id){
@@ -70,7 +70,7 @@ export default function DraggableDialog(props) {
           Chat Window
         </DialogTitle>
         <DialogContent>
-            <ChatBox self_details={self} other_details={other}/>
+            <ChatBox classroomId={classroomId} self_details={self} other_details={other}/>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
