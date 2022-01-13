@@ -31,7 +31,7 @@ class NoticeBoard extends React.Component {
     const {announcements} = this.props.classroom;
 
     return (
-      <Grid item m={2} xs={3}>
+      <div>
         <Paper elevation={4}>
           <Card sx={{ minWidth: 0 }}>
             <Div>Announcements</Div>
@@ -81,7 +81,7 @@ class NoticeBoard extends React.Component {
             </CardContent>
           </Card>
         </Paper>
-      </Grid>
+      </div>
     );
   }
 }

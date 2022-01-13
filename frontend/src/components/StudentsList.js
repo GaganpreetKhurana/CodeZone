@@ -63,7 +63,7 @@ class StudentsList extends React.Component {
     let { user } = this.props.auth;
     let { students, teachers } = this.props.classroom;
     return (
-      <Grid item m={2} xs={3}>
+      <div>
         <Paper elevation={4}>
           <FlexCol
             borderRadius={2}
@@ -111,7 +111,7 @@ class StudentsList extends React.Component {
             ))}
           </FlexCol>
         </Paper>
-      </Grid>
+      </div>
     );
   }
 }
