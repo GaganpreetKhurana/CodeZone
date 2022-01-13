@@ -45,7 +45,8 @@ io.on("connection", async (socket) => {
           if (sender) {
             room.chats.push({ sender: sender, content: message });
             room = await room.save();
-            socket.in(room_name).emit("ReceiveChat", room.chats);
+            let room2 = await Chats.findOne({ room: room_name });
+            socket.in(room_name).emit("ReceiveChat", room2.chats);
           }
         });
         // when the user disconnects.. perform this

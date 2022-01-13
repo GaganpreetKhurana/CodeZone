@@ -76,21 +76,22 @@ class ChatBox extends React.Component {
   }
   sendMessage = (e) => {
     e.preventDefault();
-    let olderMessages = this.props.classroom.messageArray;
+    let olderMessages = this.state.messages;
     let newMessage = {
       content: this.state.contentMessage,
       sender: this.props.self_details.id,
       time: Date.now(),
     };
-    this.setState({
-      contentMessage: "",
-      messages: [...olderMessages, newMessage],
-    });
+    
     this.socket.emit(
       "SendChat",
       this.props.self_details.id,
       this.state.contentMessage
     );
+    this.setState({
+      contentMessage: "",
+      messages: [...olderMessages, newMessage],
+    });
   };
 
   handleChangeMessage = (e) => {
