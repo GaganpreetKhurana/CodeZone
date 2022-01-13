@@ -6,7 +6,6 @@ import ShareLink from "./ShareLink";
 import AddAnnouncement from "./AddAnnouncement";
 
 //Material UI
-import { Grid } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import { Paper, Button } from "@mui/material";

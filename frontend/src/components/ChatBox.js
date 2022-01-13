@@ -1,8 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import io from "socket.io-client";
+// eslint-disable-next-line
 import { getEarlierMessages, clearEarlierMessages, updateMessages } from "../actions/classroom";
-
 
 //Material UI
 import List from "@mui/material/List";
@@ -121,7 +121,7 @@ class ChatBox extends React.Component {
                 {messages.length > 0 &&
                   messages.map((message) => (
                     <ListItem key={message.time} alignItems="flex-start">
-                      {message.sender == self_details.id ? (
+                      {message.sender === self_details.id ? (
                         <></>
                       ) : (
                         <ListItemAvatar>
@@ -130,7 +130,7 @@ class ChatBox extends React.Component {
                       )}
                       <ListItemText
                         primary={
-                          message.sender == self_details.id
+                          message.sender === self_details.id
                             ? "You"
                             : other_details.name
                         }
@@ -138,7 +138,7 @@ class ChatBox extends React.Component {
                           <React.Fragment>{message.content}</React.Fragment>
                         }
                       />
-                      {message.sender == self_details.id ? (
+                      {message.sender === self_details.id ? (
                         <ListItemAvatar>
                           <Avatar alt="Student 3" src="" />
                         </ListItemAvatar>

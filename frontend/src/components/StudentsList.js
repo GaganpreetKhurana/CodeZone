@@ -8,7 +8,6 @@ import Avatar from "@mui/material/Avatar";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
-import { Grid } from "@mui/material";
 import { Paper } from "@mui/material";
 
 const PersonItem = ({
