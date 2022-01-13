@@ -5,7 +5,10 @@ import {
     CLEAR_LAB_DETAILS,
     CREATE_CODE_EDITOR,
     FECTH_CURRENT_CLASSROOM_DETAILS,
-    CLEAR_CURRENT_CLASSROOM_DETAILS
+    CLEAR_CURRENT_CLASSROOM_DETAILS,
+    GET_EARLIER_MESSAGES,
+    CLEAR_EARLIER_MESSAGES,
+    UPDATE_CHAT_MESSAGE
   } from "./actionTypes";
 
 function userDetails(userDetails){
@@ -25,7 +28,6 @@ export function fetchUserClassDetails(){
           .then((response) => response.json())
           .then((data) => {
             if (data.success) {
-              console.log(data);
               dispatch(userDetails(data.data));
               return;
             }
@@ -119,7 +121,6 @@ export function fetchClassroomDetails(classroom_id){
         .then((response) => response.json())
         .then((data) => {
           if (data.success) {
-            console.log(data);
             dispatch(classroomDetails(data.data));
             return;
           }
@@ -130,5 +131,42 @@ export function fetchClassroomDetails(classroom_id){
 export function clearClassroomDetails(){
   return {
       type : CLEAR_CURRENT_CLASSROOM_DETAILS,
+  }
+}
+//receinving and clearing chat messages
+function updateChatDetails(messageArray){
+  return {
+      type : GET_EARLIER_MESSAGES,
+      messageArray
+  }
+}
+export function getEarlierMessages(room){
+  return (dispatch) => {
+      const url = `/api/classroom/previousChats/${room}`;
+      fetch(url, {
+        headers: {
+           Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            dispatch(updateChatDetails(data.data));
+            console.log("updated");
+            return;
+          }
+        });
+    };
+}
+export function updateMessages(newMesssage){
+  return {
+      type : UPDATE_CHAT_MESSAGE,
+      newMesssage
+  }
+}
+
+export function clearEarlierMessages(){
+  return {
+      type : CLEAR_EARLIER_MESSAGES,
   }
 }

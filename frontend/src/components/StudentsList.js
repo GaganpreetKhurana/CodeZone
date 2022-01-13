@@ -17,6 +17,8 @@ const PersonItem = ({
   count = 0,
   self = {},
   other = {},
+  classroomId = {},
+  messageArray={}
 }) => {
   return (
     <FlexRow gap={12} p={2} noWrap>
@@ -51,7 +53,7 @@ const PersonItem = ({
           </Typography>
         </Item>
         <Item>
-          <ChatWindow self={self} other={other}></ChatWindow>
+          <ChatWindow self={self} other={other} classroomId = {classroomId} messageArray={messageArray}></ChatWindow>
         </Item>
       </FlexRow>
     </FlexRow>
@@ -60,8 +62,9 @@ const PersonItem = ({
 
 class StudentsList extends React.Component {
   render() {
-    let { user } = this.props.auth;
-    let { students, teachers } = this.props.classroom;
+    let {user} = this.props.auth;
+    let {students, teachers,messageArray} = this.props.classroom;
+    const {classroomId} = this.props;
     return (
       <div>
         <Paper elevation={4}>
@@ -94,7 +97,7 @@ class StudentsList extends React.Component {
             </FlexRow>
             {teachers.map((value) => (
               <div>
-                <PersonItem name={value.name} self={user} other={value} />
+                <PersonItem name={value.name} self={user} other={value} classroomId = {classroomId} messageArray={messageArray}/>
                 <Divider />
               </div>
             ))}
@@ -105,6 +108,8 @@ class StudentsList extends React.Component {
                   count={value.SID}
                   self={user}
                   other={value}
+                  classroomId = {classroomId}
+                  messageArray={messageArray}
                 />
                 <Divider />
               </div>
