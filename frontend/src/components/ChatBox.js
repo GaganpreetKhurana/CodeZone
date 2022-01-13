@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 import io from "socket.io-client";
+import { getEarlierMessages, clearEarlierMessages } from "../actions/classroom";
+
 
 //Material UI
 import List from "@mui/material/List";
@@ -30,10 +32,14 @@ class ChatBox extends React.Component {
 
     this.state = {
       contentMessage: "",
-      messages: [],
+      messages: this.props.classroom.messageArray,
     };
   }
   componentDidMount() {
+      if(this.props.self_details.id && this.props.other_details._id && this.props.classroomId){
+        let roomCode = this.props.self_details.id > this.props.other_details._id ? this.props.classroomId + "--" + this.props.other_details._id + "--" + this.props.self_details.id :  this.props.classroomId + "--" + this.props.self_details.id + "--" +  this.props.other_details._id;
+        this.props.dispatch(getEarlierMessages(roomCode)); 
+      }
     this.setUpConnections();
   }
   setUpConnections = () => {
@@ -60,7 +66,7 @@ class ChatBox extends React.Component {
 
   componentWillUnmount() {
     this.socket.disconnect();
-    console.log("Disconnected");
+    this.props.dispatch(clearEarlierMessages());
   }
 
   sendMessage = (e) => {
@@ -94,7 +100,6 @@ class ChatBox extends React.Component {
     return (
       <div>
         <Paper elevation={4}>
-          {/* Map senders message to the first block and receieved to the second block*/}
           <Card sx={{ minWidth: 0 }}>
             {<Div>{`${other_details.name} - ${other_details.SID} `}</Div>}
             <CardContent>
@@ -167,6 +172,7 @@ class ChatBox extends React.Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    classroom: state.classroom,
     darkModetheme: state.theme,
   };
 }

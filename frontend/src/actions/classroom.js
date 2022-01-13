@@ -5,7 +5,9 @@ import {
     CLEAR_LAB_DETAILS,
     CREATE_CODE_EDITOR,
     FECTH_CURRENT_CLASSROOM_DETAILS,
-    CLEAR_CURRENT_CLASSROOM_DETAILS
+    CLEAR_CURRENT_CLASSROOM_DETAILS,
+    GET_EARLIER_MESSAGES,
+    CLEAR_EARLIER_MESSAGES
   } from "./actionTypes";
 
 function userDetails(userDetails){
@@ -128,5 +130,35 @@ export function fetchClassroomDetails(classroom_id){
 export function clearClassroomDetails(){
   return {
       type : CLEAR_CURRENT_CLASSROOM_DETAILS,
+  }
+}
+//receinving and clearing chat messages
+function updateChatDetails(messageArray){
+  return {
+      type : GET_EARLIER_MESSAGES,
+      messageArray
+  }
+}
+export function getEarlierMessages(room){
+  return (dispatch) => {
+      const url = `/api/classroom/classroomDetails/${room}`;
+      fetch(url, {
+        headers: {
+           Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            dispatch(updateChatDetails(data.data));
+            return;
+          }
+        });
+    };
+}
+
+export function clearEarlierMessages(){
+  return {
+      type : CLEAR_EARLIER_MESSAGES,
   }
 }

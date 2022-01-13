@@ -3,6 +3,8 @@ const {
   CLEAR_USER_CLASS_DETAILS,
   FECTH_CURRENT_CLASSROOM_DETAILS,
   CLEAR_CURRENT_CLASSROOM_DETAILS,
+  GET_EARLIER_MESSAGES,
+    CLEAR_EARLIER_MESSAGES,
   // UPDATE_POSTS,
   ADD_POST,
   ADD_COMMENT,
@@ -17,7 +19,8 @@ const initialClassroomState = {
   teachers: [],
   announcements: [],
   posts: [],
-  ClassMeetLink: ''
+  ClassMeetLink: '',
+  messageArray: []
 };
 export default function auth(state = initialClassroomState, action) {
   switch (action.type) {
@@ -55,6 +58,16 @@ export default function auth(state = initialClassroomState, action) {
         // teachers: [],
         // announcements: [],
         // posts: []
+      }
+    case GET_EARLIER_MESSAGES: 
+      return{
+        ...state,
+        messageArray:action.messageArray,
+      }
+    case CLEAR_EARLIER_MESSAGES:
+      return {
+        ...state,
+        messageArray: []
       }
     default:
       return state;
