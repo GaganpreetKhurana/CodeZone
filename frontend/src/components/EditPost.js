@@ -53,7 +53,7 @@ class EditPostPopUp extends Component {
 
   render() {
     const { error,success } = this.props.posts;
-    const { id,content } = this.props;
+    const { content } = this.props;
     return (
     <div>
     <IconButton><EditIcon fontSize="small"  variant="contained" onClick={this.dialogOpen}/></IconButton>
