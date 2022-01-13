@@ -27,14 +27,18 @@ const Div = styled("div")(({ theme }) => ({
 }));
 
 class ChatBox extends React.Component {
+  
   constructor(props) {
     super(props);
-
+    this.titleRef = React.createRef();
     this.state = {
       contentMessage: "",
       messages: [],
     };
   }
+  handleSmoothScroll = () => {
+    this.titleRef.current.scrollIntoView({ behavior: 'smooth' });
+}
   componentDidMount() {
     
       if(this.props.self_details.id && this.props.other_details._id && this.props.classroomId){
@@ -45,6 +49,7 @@ class ChatBox extends React.Component {
         this.setState({
           messages: this.props.classroom.messageArray,
         })
+        this.handleSmoothScroll();
       }, 1000);
     this.setUpConnections();
   }
@@ -65,6 +70,7 @@ class ChatBox extends React.Component {
         this.setState({
           messages: data,
         });
+        this.handleSmoothScroll();
       });
     }
     this.socket = socket;
@@ -92,8 +98,9 @@ class ChatBox extends React.Component {
       contentMessage: "",
       messages: [...olderMessages, newMessage],
     });
+    this.handleSmoothScroll();
   };
-
+  
   handleChangeMessage = (e) => {
     this.setState({
       contentMessage: e.target.value,
@@ -102,7 +109,6 @@ class ChatBox extends React.Component {
 
   render() {
     const { self_details, other_details } = this.props;
-    // const { messageArray } = this.props.classroom;
     const { messages } = this.state;
     return (
       <div>
@@ -110,6 +116,7 @@ class ChatBox extends React.Component {
           <Card sx={{ minWidth: 0 }}>
             {<Div>{`${other_details.name} - ${other_details.SID} `}</Div>}
             <CardContent>
+            
               <List sx={{ width: "100%" }}>
                 {messages.length > 0 &&
                   messages.map((message) => (
@@ -141,7 +148,7 @@ class ChatBox extends React.Component {
                     </ListItem>
                   ))}
               </List>
-
+              
               <Paper
                 component="form"
                 sx={{
@@ -151,12 +158,13 @@ class ChatBox extends React.Component {
                   width: 300,
                 }}
               >
-                <InputBase
+                < InputBase
                   sx={{ ml: 1, flex: 1 }}
                   placeholder="Start typing a comment"
                   inputProps={{ "aria-label": "search google maps" }}
                   value={this.state.contentMessage}
                   onChange={this.handleChangeMessage}
+                  ref={this.titleRef}
                 />
                 <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
                 <IconButton
