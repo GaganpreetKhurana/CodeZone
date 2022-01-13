@@ -25,7 +25,6 @@ export function fetchUserClassDetails(){
           .then((response) => response.json())
           .then((data) => {
             if (data.success) {
-              console.log(data);
               dispatch(userDetails(data.data));
               return;
             }
@@ -119,7 +118,6 @@ export function fetchClassroomDetails(classroom_id){
         .then((response) => response.json())
         .then((data) => {
           if (data.success) {
-            console.log(data);
             dispatch(classroomDetails(data.data));
             return;
           }

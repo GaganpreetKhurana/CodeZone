@@ -2,8 +2,9 @@ const mongoose = require('mongoose')
 const Chats = require("./models/chat");
 const User = require("./models/user");
 const Classroom = require("./models/class");
-
-
+// var app = require('express')();
+// var http = require('http').createServer(app);
+// var io = require('socket.io')(http);
 //to connect to mongoDB
 mongoose.connect("mongodb://localhost/codezone");
 
@@ -40,11 +41,13 @@ io.on("connection", async(socket) => {
 
             if(room_name){
                 room = await Chats.findOne({room: room_name });
+                // console.log(room);
                 if(!room){
                     room = await Chats.create({room: room_name});
+                }
                     //joined socket with that room name
-                    socket.join(room.room);
-
+                    socket.join(room_name);
+                    console.log(socket);
                     socket.on('SendChat', async(sender_id,message) => {
                         console.log(message);
                         var sender = await User.findById(sender_id);
@@ -52,14 +55,14 @@ io.on("connection", async(socket) => {
                             room.chats.push({ sender: sender, content: message });
                             room = await room.save();
                             console.log(room);
-                            socket.to(room.room).emit("ReceiveChat",room.chats);
+                            socket.in(room_name).emit('ReceiveChat',"abcsbvjbejbbruboun");
+                            console.log("Data sent");
                         }                
                     });
                     // when the user disconnects.. perform this
                     socket.on('disconnect', async() => {
                             socket.leave(room.room);
                         });
-                }
             }
 
         }

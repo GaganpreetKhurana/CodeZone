@@ -1,6 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
-import {io} from "socket.io-client";
+import io from "socket.io-client";
 
 //Material UI
 import List from '@mui/material/List';
@@ -35,20 +35,28 @@ class ChatBox extends React.Component {
             previousMessageArrayLength: 0,
             previousMessage: '',
         }
-        
-
     }
     componentDidMount() {
-        if(this.props.self_details.id && this.props.other_details._id && this.props.classroomId){
-        this.socket = io("http://localhost:3002", {
-            query: {
-                sender_id: this.props.self_details.id,
-                receiver_id: this.props.other_details._id,
-                classroomId: this.props.classroomId,
-            }
-        })
-        }
+        this.setUpConnections();
     }
+    setUpConnections = () => {
+        if(this.props.self_details.id && this.props.other_details._id && this.props.classroomId){
+            var socket = io("http://localhost:3002", {
+                query: {
+                    sender_id: this.props.self_details.id,
+                    receiver_id: this.props.other_details._id,
+                    classroomId: this.props.classroomId,
+                }
+            })
+            socket.on('ReceiveChat', (data) => {
+                console.log("HEllllllllllllllo");
+                console.log(data);  
+           });
+            }
+            this.socket = socket;
+
+    }
+    
 
     componentWillUnmount() {
         this.socket.disconnect();
@@ -65,24 +73,21 @@ class ChatBox extends React.Component {
         this.setState({
             contentMessage: '',
         });
-        this.socket.on('ReceiveChat', (data) => {
-            console.log(data);
-           
-       });
+        
     }
-
+    
     handleChangeMessage = (e) => {
         this.setState({
             contentMessage: e.target.value,
         });
     };
 
-    componentDidUpdate() {
-        this.socket.on('ReceiveChat', (data) => {
-             console.log(data);
+    // componentDidUpdate() {
+    //     this.socket.on('ReceiveChat', (data) => {
+    //          console.log(data);
             
-        });
-    }
+    //     });
+    // }
 
 
     render() {
