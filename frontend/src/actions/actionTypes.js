@@ -53,3 +53,8 @@ export const UPDATE_POST_LIKE = 'UPDATE_POST_LIKE';
 
 //liking a comment
 export const UPDATE_COMMENT_LIKE = 'UPDATE_COMMENT_LIKE';
+
+//receiving earlier messages
+export const GET_EARLIER_MESSAGES = 'GET_EARLIER_MESSAGES';
+export const CLEAR_EARLIER_MESSAGES = 'CLEAR_EARLIER_MESSAGES';
+export const UPDATE_CHAT_MESSAGE ='UPDATE_CHAT_MESSAGE';

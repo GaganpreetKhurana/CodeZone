@@ -47,7 +47,7 @@ class Classroom extends Component {
         direction="row"
         justifyContent="space-evenly"
       >
-        <StudentsList  />
+        <StudentsList classroomId={match.params.classroomID} />
         <DiscussionPortal classroomId={match.params.classroomID}/>
         <NoticeBoard classroomId={match.params.classroomID}/>  
       </Grid>
