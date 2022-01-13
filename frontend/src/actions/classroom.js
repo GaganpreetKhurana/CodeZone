@@ -7,7 +7,8 @@ import {
     FECTH_CURRENT_CLASSROOM_DETAILS,
     CLEAR_CURRENT_CLASSROOM_DETAILS,
     GET_EARLIER_MESSAGES,
-    CLEAR_EARLIER_MESSAGES
+    CLEAR_EARLIER_MESSAGES,
+    UPDATE_CHAT_MESSAGE
   } from "./actionTypes";
 
 function userDetails(userDetails){
@@ -141,7 +142,7 @@ function updateChatDetails(messageArray){
 }
 export function getEarlierMessages(room){
   return (dispatch) => {
-      const url = `/api/classroom/classroomDetails/${room}`;
+      const url = `/api/classroom/previousChats/${room}`;
       fetch(url, {
         headers: {
            Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -151,10 +152,17 @@ export function getEarlierMessages(room){
         .then((data) => {
           if (data.success) {
             dispatch(updateChatDetails(data.data));
+            console.log("updated");
             return;
           }
         });
     };
+}
+export function updateMessages(newMesssage){
+  return {
+      type : UPDATE_CHAT_MESSAGE,
+      newMesssage
+  }
 }
 
 export function clearEarlierMessages(){

@@ -5,6 +5,7 @@ const {
   CLEAR_CURRENT_CLASSROOM_DETAILS,
   GET_EARLIER_MESSAGES,
     CLEAR_EARLIER_MESSAGES,
+    UPDATE_CHAT_MESSAGE,
   // UPDATE_POSTS,
   ADD_POST,
   ADD_COMMENT,
@@ -44,13 +45,13 @@ export default function auth(state = initialClassroomState, action) {
         announcements: action.announcements,
         posts: action.posts,
         ClassMeetLink: action.ClassMeetLink
-      }
+      };
     case ADD_POST:
     case ADD_COMMENT:
       return{
         ...state,
         posts: action.posts
-      }
+      };
     case CLEAR_CURRENT_CLASSROOM_DETAILS:
       return {
         ...state,
@@ -62,13 +63,19 @@ export default function auth(state = initialClassroomState, action) {
     case GET_EARLIER_MESSAGES: 
       return{
         ...state,
-        messageArray:action.messageArray,
-      }
+        messageArray: action.messageArray
+      };
     case CLEAR_EARLIER_MESSAGES:
       return {
         ...state,
         messageArray: []
-      }
+      };
+      case UPDATE_CHAT_MESSAGE:
+        return {
+          ...state,
+          messageArray: [...state.messageArray,action.newMessage]
+        };
+      
     default:
       return state;
   }

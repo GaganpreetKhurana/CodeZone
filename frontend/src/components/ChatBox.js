@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import io from "socket.io-client";
-import { getEarlierMessages, clearEarlierMessages } from "../actions/classroom";
+import { getEarlierMessages, clearEarlierMessages, updateMessages } from "../actions/classroom";
 
 
 //Material UI
@@ -32,14 +32,20 @@ class ChatBox extends React.Component {
 
     this.state = {
       contentMessage: "",
-      messages: this.props.classroom.messageArray,
+      messages: [],
     };
   }
   componentDidMount() {
+    
       if(this.props.self_details.id && this.props.other_details._id && this.props.classroomId){
         let roomCode = this.props.self_details.id > this.props.other_details._id ? this.props.classroomId + "--" + this.props.other_details._id + "--" + this.props.self_details.id :  this.props.classroomId + "--" + this.props.self_details.id + "--" +  this.props.other_details._id;
         this.props.dispatch(getEarlierMessages(roomCode)); 
       }
+      this.timer = setTimeout(() => {
+        this.setState({
+          messages: this.props.classroom.messageArray,
+        })
+      }, 1000);
     this.setUpConnections();
   }
   setUpConnections = () => {
@@ -68,10 +74,9 @@ class ChatBox extends React.Component {
     this.socket.disconnect();
     this.props.dispatch(clearEarlierMessages());
   }
-
   sendMessage = (e) => {
     e.preventDefault();
-    let olderMessages = this.state.messages;
+    let olderMessages = this.props.classroom.messageArray;
     let newMessage = {
       content: this.state.contentMessage,
       sender: this.props.self_details.id,
@@ -96,6 +101,7 @@ class ChatBox extends React.Component {
 
   render() {
     const { self_details, other_details } = this.props;
+    // const { messageArray } = this.props.classroom;
     const { messages } = this.state;
     return (
       <div>
@@ -107,7 +113,7 @@ class ChatBox extends React.Component {
                 {messages.length > 0 &&
                   messages.map((message) => (
                     <ListItem key={message.time} alignItems="flex-start">
-                      {message.sender === self_details.id ? (
+                      {message.sender == self_details.id ? (
                         <></>
                       ) : (
                         <ListItemAvatar>
@@ -116,7 +122,7 @@ class ChatBox extends React.Component {
                       )}
                       <ListItemText
                         primary={
-                          message.sender === self_details.id
+                          message.sender == self_details.id
                             ? "You"
                             : other_details.name
                         }
@@ -124,7 +130,7 @@ class ChatBox extends React.Component {
                           <React.Fragment>{message.content}</React.Fragment>
                         }
                       />
-                      {message.sender === self_details.id ? (
+                      {message.sender == self_details.id ? (
                         <ListItemAvatar>
                           <Avatar alt="Student 3" src="" />
                         </ListItemAvatar>
