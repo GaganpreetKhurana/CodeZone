@@ -38,7 +38,6 @@ class StudentsList extends React.Component {
               <List sx={{ width: "100%", maxWidth: 360 }}>
                 {teachers.map((value) => (
                   <ListItem
-                    key={value._id}
                     secondaryAction={
                       <ChatWindow self={user} other={value}></ChatWindow>
                     }
@@ -55,22 +54,7 @@ class StudentsList extends React.Component {
                   </ListItem>
                 ))}
                 {students.map((value) => (
-                  <ListItem
-                    key={value._id}
-                    secondaryAction={
-                      <ChatWindow self={user} other={value}></ChatWindow>
-                    }
-                  >
-                    <ListItemButton>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <AccountCircleIcon />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText primary={`${value.name}-${value.SID}`} />
-                    </ListItemButton>
-                    <Divider />
-                  </ListItem>
+                  <ChatWindow self={user} other={value}></ChatWindow>
                 ))}
               </List>
             </CardContent>

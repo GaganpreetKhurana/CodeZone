@@ -7,6 +7,8 @@
     "@emotion/react": "^11.5.0",
     "@emotion/styled": "^11.3.0",
     "@material-ui/core": "^4.12.3",
+    "@material-ui/unstyled": "^5.0.0-alpha.44",
+    "@mui-treasury/component-flex": "0.1.0-alpha.1",
     "@mui/icons-material": "^5.0.4",
     "@mui/material": "^5.0.4",
     "@testing-library/jest-dom": "^5.14.1",
