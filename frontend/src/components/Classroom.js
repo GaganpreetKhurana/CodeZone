@@ -63,7 +63,7 @@ class Classroom extends Component {
           <Grid item m={2}>
             <NoticeBoard classroomId={match.params.classroomID} />{" "}
           </Grid>
-          <Grid item m={2}>
+          <Grid item m={2} style={{ maxHeight: "50vh", overflow: "auto" }}>
             <StudentsList />
           </Grid>
         </Grid>
