@@ -31,9 +31,7 @@ class ChatBox extends React.Component {
 
         this.state = {
             contentMessage: '',
-            messageArray: [],
-            previousMessageArrayLength: 0,
-            previousMessage: '',
+            messages: [],
         }
     }
     componentDidMount() {
@@ -49,8 +47,9 @@ class ChatBox extends React.Component {
                 }
             })
             socket.on('ReceiveChat', (data) => {
-                console.log("HEllllllllllllllo");
-                console.log(data);  
+                this.setState({
+                    messages: data,
+                });
            });
             }
             this.socket = socket;
@@ -66,14 +65,13 @@ class ChatBox extends React.Component {
 
     sendMessage = (e) => {
         e.preventDefault();
-        console.log('You clicked submit.');
-        console.log(this.state.contentMessage)
-        this.socket.emit('SendChat', this.props.self_details.id, this.state.contentMessage)
-        console.log('submitted')
+        let olderMessages = this.state.messages;
+        let newMessage = {content: this.state.contentMessage, sender: this.props.self_details.id, time: Date.now()}
         this.setState({
             contentMessage: '',
+            messages: [...olderMessages,newMessage],
         });
-        
+        this.socket.emit('SendChat', this.props.self_details.id, this.state.contentMessage);
     }
     
     handleChangeMessage = (e) => {
@@ -82,53 +80,8 @@ class ChatBox extends React.Component {
         });
     };
 
-    // componentDidUpdate() {
-    //     this.socket.on('ReceiveChat', (data) => {
-    //          console.log(data);
-            
-    //     });
-    // }
-
-
     render() {
         const {self_details, other_details} = this.props;
-        var messageJSX= this.state.messageArray.map((message) =>
-        {
-            {
-                message.sender === other_details.id &&
-                <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
-                        <Avatar alt="Student 2" src=""/>
-                    </ListItemAvatar>
-                    <ListItemText
-                        primary={other_details.name}
-                        secondary={
-                            <React.Fragment>
-                                {message}
-                            </React.Fragment>
-                        }
-                    />
-                </ListItem>
-            }
-            <Divider variant="inset" component="li"/>
-            {
-                message.sender === self_details.id &&
-                <ListItem alignItems="flex-start">
-                    <ListItemText
-                        primary={self_details.name}
-                        secondary={
-                            <React.Fragment>
-                                {message}
-                            </React.Fragment>
-                        }
-                    />
-                    <ListItemAvatar>
-                        <Avatar alt="Student 3" src=""/>
-                    </ListItemAvatar>
-                </ListItem>
-            }
-        });
-        console.log(messageJSX);
         return (
             <div>
                 <Paper elevation={4}>
@@ -137,8 +90,41 @@ class ChatBox extends React.Component {
                         {<Div>{`${other_details.name} - ${other_details.SID} `}</Div>}
                         <CardContent>
                             <List sx={{width: '100%'}}>
-
-                                {messageJSX}
+                            {this.state.messages.map((message) =>
+        {
+            { message.sender === other_details.id &&
+                 <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                        <Avatar alt="Student 2" src=""/>
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary={other_details.name}
+                        secondary={
+                            <React.Fragment>
+                                {message.content}
+                            </React.Fragment>
+                        }
+                    />
+                </ListItem>
+                    }
+            <Divider variant="inset" component="li"/>
+            {
+                message.sender === self_details.id &&
+                <ListItem alignItems="flex-start">
+                    <ListItemText
+                        primary={self_details.name}
+                        secondary={
+                            <React.Fragment>
+                                {message.content}
+                            </React.Fragment>
+                        }
+                    />
+                    <ListItemAvatar>
+                        <Avatar alt="Student 3" src=""/>
+                    </ListItemAvatar>
+                </ListItem>
+            }
+        })}
 
                             </List>
 
