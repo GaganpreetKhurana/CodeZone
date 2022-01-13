@@ -41,17 +41,34 @@ class Classroom extends Component {
     const { match } = this.props;
     // return <div>{match.params.classroomID}</div>;
     return (
-      <Grid 
-        spacing={2}
-        container
-        direction="row"
-        justifyContent="space-evenly"
-      >
-        <StudentsList classroomId={match.params.classroomID} />
-        <DiscussionPortal classroomId={match.params.classroomID}/>
-        <NoticeBoard classroomId={match.params.classroomID}/>  
+      <Grid container direction="row" justifyContent="space-evenly">
+        <Grid
+          item
+          xs={6}
+          m={2}
+          style={{ maxHeight: "100vh", overflow: "auto" }}
+        >
+          {" "}
+          <DiscussionPortal classroomId={match.params.classroomID} />
+        </Grid>
+        <Grid
+          item
+          xs={4}
+          m={2}
+          container
+          direction="column"
+          justifyContent="space-evenly"
+          alignItems="stretch"
+        >
+          <Grid item m={2}>
+            <NoticeBoard classroomId={match.params.classroomID} />{" "}
+          </Grid>
+          <Grid item m={2}>
+            <StudentsList />
+          </Grid>
+        </Grid>
       </Grid>
-    )
+    );
   }
 }
 function mapStateToProps(state) {

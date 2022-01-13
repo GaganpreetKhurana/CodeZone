@@ -4,7 +4,7 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ChatWindow from "./ChatWindow";
 import { Link } from 'react-router-dom';
-import { clearLabDetails ,fetchClassLabDetails, createNewCodeEditor } from "../actions/classroom";
+import {createNewCodeEditor } from "../actions/classroom";
 
 //Material UI
 import { Grid} from '@mui/material';
@@ -31,7 +31,7 @@ export default function CodeEditorSideBar(props) {
     bottom: false,
     right: false,
   });
-  const {students,user,labId,editorLabDetails} = props;
+  const {students,user,labId} = props;
   // console.log(props);
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {

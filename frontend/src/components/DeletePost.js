@@ -10,9 +10,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 class DeletePostPopUp extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   state = {
       dialogOpen:true
@@ -37,7 +34,7 @@ class DeletePostPopUp extends Component {
   };
 
   render() {
-    const { success, error } = this.props.posts;
+    const { error } = this.props.posts;
     return (
     <div>
     <IconButton><DeleteIcon fontSize="small"  variant="contained" onClick={this.dialogOpen}/></IconButton>

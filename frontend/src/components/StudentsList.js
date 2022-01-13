@@ -3,27 +3,62 @@ import { connect } from "react-redux";
 import ChatWindow from "./ChatWindow";
 
 //Material UI
-import { Grid} from '@mui/material';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import { Paper} from '@mui/material';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { styled } from '@mui/material/styles';
-import Divider from '@mui/material/Divider';
+import { FlexRow, FlexCol, Item } from "@mui-treasury/component-flex";
+import Avatar from "@mui/material/Avatar";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
+import { Grid } from "@mui/material";
+import { Paper } from "@mui/material";
 
-
-const Div = styled('div')(({ theme }) => ({
-  ...theme.typography.button,
-  backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(2),
-  textAlign: "center",
-}));
+const PersonItem = ({
+  src = "",
+  name = "",
+  count = 0,
+  self = {},
+  other = {},
+  classroomId = {},
+  messageArray={}
+}) => {
+  return (
+    <FlexRow gap={12} p={2} noWrap>
+      <Item noShrink>
+        <Avatar>
+          <AccountCircleIcon />
+        </Avatar>
+      </Item>
+      <FlexRow gap={2} p={0.25} grow stackPoint={240} alignItems="center">
+        <Item grow>
+          <Typography
+            noWrap
+            sx={{
+              fontWeight: 600,
+              fontSize: "1rem",
+              color: (theme) =>
+                theme.palette.mode === "dark" ? "#fff" : "#122740",
+            }}
+          >
+            <b>{name}</b>
+          </Typography>
+          <Typography
+            noWrap
+            variant="body2"
+            sx={{
+              fontSize: "0.875rem",
+              color: "#758392",
+              mt: -0.25,
+            }}
+          >
+            {count}
+          </Typography>
+        </Item>
+        <Item>
+          <ChatWindow self={self} other={other} classroomId = {classroomId} messageArray={messageArray}></ChatWindow>
+        </Item>
+      </FlexRow>
+    </FlexRow>
+  );
+};
 
 class StudentsList extends React.Component {
   render() {
@@ -31,61 +66,66 @@ class StudentsList extends React.Component {
     let {students, teachers,messageArray} = this.props.classroom;
     const {classroomId} = this.props;
     return (
-        <Grid item m={2} xs={3}>
-            <Paper elevation={4}>
-            <Card sx={{ minWidth: 0 }}>
-            <Div >Enrolled List</Div>
-            <CardContent>
-            {/* iterate over teachers and then  students list here */}
-            <List sx={{ width: '100%', maxWidth: 360}}>
+      <div>
+        <Paper elevation={4}>
+          <FlexCol
+            borderRadius={2}
+            sx={{
+              bgcolor: (theme) =>
+                theme.palette.mode === "dark"
+                  ? "#1f2733"
+                  : "rgb(244, 247, 250)",
+              boxShadow: (theme) =>
+                theme.palette.mode === "dark"
+                  ? "unset"
+                  : "0 8px 16px 0 #BDC9D7",
+            }}
+          >
+            <FlexRow
+              alignItems="center"
+              p={2}
+              sx={{
+                bgcolor: (theme) =>
+                  theme.palette.mode === "dark" ? "#2f3c50" : "#fff",
+              }}
+            >
+              <Item grow mr={1}>
+                <Typography variant="h6" align="center">
+                  <b>Student List</b>
+                </Typography>
+              </Item>
+            </FlexRow>
             {teachers.map((value) => (
-                <ListItem
-                key={value._id}
-                secondaryAction={
-                    <ChatWindow classroomId = {classroomId} self={user} other={value} messageArray={messageArray}>
-                    </ChatWindow>
-                }
-                >
-                <ListItemButton>
-                <ListItemAvatar>
-                    <Avatar><AccountCircleIcon /></Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={value.name} />
-                </ListItemButton>
+              <div>
+                <PersonItem name={value.name} self={user} other={value} classroomId = {classroomId} messageArray={messageArray}/>
                 <Divider />
-                </ListItem>
+              </div>
             ))}
             {students.map((value) => (
-                <ListItem
-                key={value._id}
-                secondaryAction={
-                    <ChatWindow classroomId = {classroomId} self={user} other={value} messageArray={messageArray}>
-                    </ChatWindow>
-                }
-                >
-                <ListItemButton>
-                <ListItemAvatar>
-                    <Avatar><AccountCircleIcon /></Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={`${value.name}-${value.SID}`} />
-                </ListItemButton>
+              <div>
+                <PersonItem
+                  name={value.name}
+                  count={value.SID}
+                  self={user}
+                  other={value}
+                  classroomId = {classroomId}
+                  messageArray={messageArray}
+                />
                 <Divider />
-                </ListItem>
+              </div>
             ))}
-            </List>
-            </CardContent>
-            </Card>
+          </FlexCol>
         </Paper>
-        </Grid>
+      </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-    return {
-      auth: state.auth,
-      darkModetheme: state.theme,
-      classroom: state.classroom,
-    };
-  }
+  return {
+    auth: state.auth,
+    darkModetheme: state.theme,
+    classroom: state.classroom,
+  };
+}
 export default connect(mapStateToProps)(StudentsList);
