@@ -66,7 +66,7 @@ class StudentsList extends React.Component {
     const {classroomId} = this.props;
     return (
       <div>
-        <Paper elevation={4}>
+        <Paper elevation={4} style={{ maxHeight: 400, overflow: "auto" }}>
           <FlexCol
             borderRadius={2}
             sx={{
@@ -96,7 +96,13 @@ class StudentsList extends React.Component {
             </FlexRow>
             {teachers.map((value) => (
               <div>
-                <PersonItem name={value.name} self={user} other={value} classroomId = {classroomId} messageArray={messageArray}/>
+                <PersonItem
+                  name={value.name}
+                  self={user}
+                  other={value}
+                  classroomId={classroomId}
+                  messageArray={messageArray}
+                />
                 <Divider />
               </div>
             ))}
@@ -107,7 +113,7 @@ class StudentsList extends React.Component {
                   count={value.SID}
                   self={user}
                   other={value}
-                  classroomId = {classroomId}
+                  classroomId={classroomId}
                   messageArray={messageArray}
                 />
                 <Divider />

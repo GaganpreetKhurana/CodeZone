@@ -8,7 +8,6 @@ import NoticeBoard from "./NoticeBoard";
 import { Grid} from '@mui/material';
 import { fetchClassroomDetails, clearClassroomDetails } from "../actions/classroom";
 
-
 class Classroom extends Component {
   componentDidMount() {
     const { match } = this.props;
@@ -63,7 +62,7 @@ class Classroom extends Component {
           <Grid item m={2}>
             <NoticeBoard classroomId={match.params.classroomID} />{" "}
           </Grid>
-          <Grid item m={2} style={{ maxHeight: "50vh", overflow: "auto" }}>
+          <Grid item m={2}>
             <StudentsList />
           </Grid>
         </Grid>
