@@ -60,11 +60,28 @@ class Nav extends React.Component {
                     justifyContent="space-evenly"
                     alignItems="center"
                   >
-                    <JoinClassDialog />
-                    <CreateClassDialog />
+                    <Grid item m={2}>
+                      <JoinClassDialog />
+                    </Grid>
+                    <Grid item m={2}>
+                      <CreateClassDialog />
+                    </Grid>
                   </Grid>
                 </div>
               )}
+              <Grid
+                container
+                direction="row"
+                justifyContent="space-evenly"
+                alignItems="center"
+              >
+                <Grid item m={2}>
+                  {auth.isLoggedIn && auth.user.role === "Student" && (
+                    <JoinClassDialog />
+                  )}
+                </Grid>
+              </Grid>
+
               {auth.isLoggedIn && (
                 <div>
                   <Grid
@@ -73,20 +90,19 @@ class Nav extends React.Component {
                     justifyContent="space-evenly"
                     alignItems="center"
                   >
-                    <Link to="/settings">
-                      <img
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSH4dcYWVFHFsz8M3Rsjpy2Hg6gQAmgbCIwWA&usqp=CAU"
-                        alt="user-dp"
-                        id="user-dp"
-                        width="30px"
-                      />
-                    </Link>
+                    <Grid item m={0.25}>
+                      <Link to="/settings">
+                        <img
+                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSH4dcYWVFHFsz8M3Rsjpy2Hg6gQAmgbCIwWA&usqp=CAU"
+                          alt="user-dp"
+                          id="user-dp"
+                          width="30px"
+                        />
+                      </Link>
+                    </Grid>
                     {auth.user.name}
                   </Grid>
                 </div>
-              )}
-              {auth.isLoggedIn && auth.user.role === "Student" && (
-                <JoinClassDialog />
               )}
               {!auth.isLoggedIn && (
                 <Button>
