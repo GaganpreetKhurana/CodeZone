@@ -14,6 +14,8 @@ import JoinClassDialog from "./JoinClassDialog";
 import CreateClassDialog from "./CreateClassDialog";
 import ModeNightIcon from "@mui/icons-material/ModeNight";
 import { Paper } from "@mui/material";
+import WbSunnyIcon from "@mui/icons-material/WbSunny";
+
 class Nav extends React.Component {
   state = {
     create: false,
@@ -39,6 +41,7 @@ class Nav extends React.Component {
 
   render() {
     const { auth } = this.props;
+    const { darkModetheme } = this.props;
 
     return (
       <Paper elevation={7}>
@@ -123,8 +126,12 @@ class Nav extends React.Component {
                 </Button>
               )}
               <Button onClick={this.switchTheme}>
-                {" "}
-                <ModeNightIcon />{" "}
+                {!darkModetheme.darkMode === true && (
+                  <ModeNightIcon color="secondary" />
+                )}
+                {!darkModetheme.darkMode === false && (
+                  <WbSunnyIcon color="secondary" />
+                )}
               </Button>
             </Toolbar>
           </AppBar>

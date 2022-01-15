@@ -78,7 +78,7 @@ const CustomCard = ({
 export default function Student(props) {
   const theme = useTheme();
   return (
-    <Grid item m={3} xs={4} sm={3} md={3}>
+    <Grid item m={3} xs={4} sm={4} md={4}>
         <CustomCard
           color={theme.palette.primary.main}
           title={props.classroom.subject}
