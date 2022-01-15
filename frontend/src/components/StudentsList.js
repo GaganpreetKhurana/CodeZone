@@ -9,6 +9,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { Paper } from "@mui/material";
+import Card from "@mui/material/Card";
 
 const PersonItem = ({
   src = "",
@@ -67,13 +68,11 @@ class StudentsList extends React.Component {
     return (
       <div>
         <Paper elevation={4} style={{ maxHeight: 300, overflow: "auto" }}>
-          <FlexCol
-            borderRadius={2}
+          <Card
             sx={{
+              minWidth: 0,
               bgcolor: (theme) =>
-                theme.palette.mode === "dark"
-                  ? "#1f2733"
-                  : "rgb(244, 247, 250)",
+                theme.palette.mode === "dark" ? "#272727" : "#fff",
               boxShadow: (theme) =>
                 theme.palette.mode === "dark"
                   ? "unset"
@@ -119,7 +118,7 @@ class StudentsList extends React.Component {
                 <Divider />
               </div>
             ))}
-          </FlexCol>
+          </Card>
         </Paper>
       </div>
     );
