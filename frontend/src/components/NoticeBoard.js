@@ -7,21 +7,16 @@ import AddAnnouncement from "./AddAnnouncement";
 
 //Material UI
 import Card from "@mui/material/Card";
+import { FlexRow, Item } from "@mui-treasury/component-flex";
 import CardContent from "@mui/material/CardContent";
 import { Paper, Button } from "@mui/material";
-import { styled } from "@mui/material/styles";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
+import Typography from "@mui/material/Typography";
 
-const Div = styled("div")(({ theme }) => ({
-  ...theme.typography.button,
-  backgroundColor: theme.palette.background.paper,
-  padding: theme.spacing(2),
-  textAlign: "center",
-}));
 
 class NoticeBoard extends React.Component {
   render() {
@@ -31,9 +26,32 @@ class NoticeBoard extends React.Component {
 
     return (
       <div>
-        <Paper elevation={4}>
-          <Card sx={{ minWidth: 0 }}>
-            <Div>Announcements</Div>
+        <Paper >
+          <Card
+            sx={{
+              minWidth: 0,
+              bgcolor: (theme) =>
+                theme.palette.mode === "dark" ? "#272727" : "#fff",
+              boxShadow: (theme) =>
+                theme.palette.mode === "dark"
+                  ? "unset"
+                  : "0 8px 16px 0 #BDC9D7",
+            }}
+          >
+            <FlexRow
+              alignItems="center"
+              p={2}
+              sx={{
+                bgcolor: (theme) =>
+                  theme.palette.mode === "dark" ? "#2f3c50" : "#fff",
+              }}
+            >
+              <Item grow mr={1}>
+                <Typography variant="h6" align="center">
+                  <b>Announcements</b>
+                </Typography>
+              </Item>
+            </FlexRow>
             <CardContent>
               {/* List or checkboxes ? */}
               {announcements.length === 0 && <>Wohoo!! No work due soon...</>}

@@ -8,7 +8,6 @@ import NoticeBoard from "./NoticeBoard";
 import { Grid} from '@mui/material';
 import { fetchClassroomDetails, clearClassroomDetails } from "../actions/classroom";
 
-
 class Classroom extends Component {
   componentDidMount() {
     const { match } = this.props;

@@ -127,7 +127,6 @@ class DiscussionPortal extends React.Component {
     let {user} = this.props.auth;
     return (
       <div>
-        <Grid item xs={4} m={2}>
           <Paper
             elevation={4}
             component="form"
@@ -153,9 +152,8 @@ class DiscussionPortal extends React.Component {
             >
               <PostAddIcon onClick={this.handleOnClick} />
             </IconButton>
-          </Paper>
-        </Grid>
-
+        </Paper>
+        
         {/* displaying old posts of classroom */}
         {!posts.length && <p>No Posts exist for this classroom</p>}
         <Paper elevation={4}>

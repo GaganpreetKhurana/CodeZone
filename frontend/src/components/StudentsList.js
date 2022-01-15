@@ -3,12 +3,13 @@ import { connect } from "react-redux";
 import ChatWindow from "./ChatWindow";
 
 //Material UI
-import { FlexRow, FlexCol, Item } from "@mui-treasury/component-flex";
+import { FlexRow, Item } from "@mui-treasury/component-flex";
 import Avatar from "@mui/material/Avatar";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 import { Paper } from "@mui/material";
+import Card from "@mui/material/Card";
 
 const PersonItem = ({
   src = "",
@@ -66,14 +67,12 @@ class StudentsList extends React.Component {
     const {classroomId} = this.props;
     return (
       <div>
-        <Paper elevation={4}>
-          <FlexCol
-            borderRadius={2}
+        <Paper elevation={4} style={{ maxHeight: 300, overflow: "auto" }}>
+          <Card
             sx={{
+              minWidth: 0,
               bgcolor: (theme) =>
-                theme.palette.mode === "dark"
-                  ? "#1f2733"
-                  : "rgb(244, 247, 250)",
+                theme.palette.mode === "dark" ? "#272727" : "#fff",
               boxShadow: (theme) =>
                 theme.palette.mode === "dark"
                   ? "unset"
@@ -96,7 +95,13 @@ class StudentsList extends React.Component {
             </FlexRow>
             {teachers.map((value) => (
               <div>
-                <PersonItem name={value.name} self={user} other={value} classroomId = {classroomId} messageArray={messageArray}/>
+                <PersonItem
+                  name={value.name}
+                  self={user}
+                  other={value}
+                  classroomId={classroomId}
+                  messageArray={messageArray}
+                />
                 <Divider />
               </div>
             ))}
@@ -107,13 +112,13 @@ class StudentsList extends React.Component {
                   count={value.SID}
                   self={user}
                   other={value}
-                  classroomId = {classroomId}
+                  classroomId={classroomId}
                   messageArray={messageArray}
                 />
                 <Divider />
               </div>
             ))}
-          </FlexCol>
+          </Card>
         </Paper>
       </div>
     );

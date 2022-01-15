@@ -11,7 +11,7 @@ import Classroom from "./Classroom";
 
 import { Paper} from '@mui/material';
 import { createTheme } from '@mui/material/styles';
-import { blue, deepOrange } from '@mui/material/colors';
+import { deepOrange } from '@mui/material/colors';
 import {ThemeProvider,CssBaseline} from '@mui/material';
 import CodeEditorScreen from "./CodeEditorScreen";
 
@@ -43,11 +43,13 @@ class App extends React.Component {
   render() {
     const { darkModetheme } = this.props;
     const theme = createTheme({
-    palette: {
+      palette: {
         mode: darkModetheme.darkMode ? "dark" : "light",
-        primary: blue,
+        primary: {
+          main: "#3F51B5",
+        },
         secondary: deepOrange,
-  },
+      },
     });
     const { auth } = this.props;
     //elselogin or signup page or 404 page or main homepage of app would be added

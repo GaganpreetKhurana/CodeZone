@@ -1,87 +1,97 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import CardActions from '@mui/material/CardActions';
-import Collapse from '@mui/material/Collapse';
-import Avatar from '@mui/material/Avatar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import { red } from '@mui/material/colors';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Link } from 'react-router-dom';
-import { Paper,Button } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
-import {Grid} from "@mui/material";
+import React from "react";
+import Color from "color"; // v3.2.1
+import { styled } from "@mui/material/styles";
+import Card from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardContent from "@mui/material/CardContent";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import { useTheme } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
-  marginLeft: 'auto',
-  transition: theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shortest,
-  }),
+const CardActionAreaActionArea = styled(CardActionArea)(() => ({
+  borderRadius: 10,
+  transition: "0.2s",
+  "&:hover": {
+    transform: "scale(1.09)",
+  },
 }));
 
-export default function TeacherClassCards(props) {
-  const [expanded, setExpanded] = React.useState(false);
+const StyledCard = styled(Card)(({ color }) => ({
+  minWidth: 226,
+  maxWidth: 226,
+  maxHeight: 226,
+  minHeight: 226,
+  borderRadius: 16,
+  boxShadow: "none",
+  "&:hover": {
+    boxShadow: `0 6px 12px 0 ${Color(color).rotate(-12).darken(0.2).fade(0.5)}`,
+  },
+}));
 
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
+const CardContentContent = styled(CardContent)(({ color }) => {
+  return {
+    backgroundColor: color,
+    padding: "1rem 1.5rem 1.5rem",
   };
+});
 
+const TypographyTitle = styled(Typography)(() => ({
+  fontFamily: "Keania One",
+  fontSize: "2rem",
+  color: "#fff",
+  textTransform: "uppercase",
+  paddingBottom: "25%",
+}));
+
+const TypographySubtitle = styled(Typography)(() => ({
+  fontFamily: "Montserrat",
+  color: "#fff",
+  opacity: 0.87,
+  marginTop: "2rem",
+  fontWeight: 500,
+  fontSize: 14,
+}));
+
+const CustomCard = ({
+  color,
+  title,
+  link,
+  subheader,
+  description,
+  creator,
+  enrolled,
+  classroomCode,
+}) => (
+  <CardActionAreaActionArea>
+    <Link to={link}>
+      <StyledCard color={color}>
+        <CardContentContent color={color}>
+          <TypographyTitle variant={"h2"}>{title}</TypographyTitle>
+          <TypographySubtitle>
+            {subheader} - {enrolled} Students - {classroomCode}
+          </TypographySubtitle>
+          <TypographySubtitle nowrap={true}>{description}</TypographySubtitle>
+        </CardContentContent>
+      </StyledCard>
+    </Link>
+  </CardActionAreaActionArea>
+);
+
+export default function Student(props) {
+  const theme = useTheme();
   return (
-    <Grid item sx={{ borderRadius: '50%' }} m={4} xs={12} sm={4} md={4}>
-    <Paper elevation={4}>
-    <Card sx={{ minWidth: 345 }}>
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {props.classroom.subject}
-          </Avatar>
-        }
-        action={
-        <div>
-            <Link to={`/classroom/${props.classroom._id}`}>
-                <Button style={{maxWidth: '120px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}} endIcon={<SendIcon />}>Enter</Button>
-            </Link>
-        </div>
-        }
-        title={props.classroom.subject}
-        subheader={props.classroom.batch} 
-      />
-      <CardActions disableSpacing>
-          <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          {props.classroom.description}
-        </Typography>
-      </CardContent>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <Paper elevation={7}>
-          <CardContent>
-          <Typography paragraph>
-            Students Enrolled - {props.classroom.students.length}
-          </Typography>
-          <Typography paragraph>
-            Classroom code - {props.classroom.code}
-          </Typography>
-        </CardContent>
-        </Paper>
-      </Collapse>
-    </Card>
-    </Paper>
-    </Grid>
+      <Grid item sx={{ borderRadius: "50%" }} m={3} xs={8} sm={3} md={3}>
+        <CustomCard
+          color={theme.palette.primary.main}
+          title={props.classroom.subject}
+          link={`/classroom/${props.classroom._id}`}
+          subheader={props.classroom.batch}
+          description={props.classroom.description}
+          creator={props.classroom.creator.name}
+          enrolled={props.classroom.students.length}
+          classroomCode={props.classroom.code}
+        />
+      </Grid>
   );
 }
