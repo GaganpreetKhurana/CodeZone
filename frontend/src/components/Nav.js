@@ -69,18 +69,19 @@ class Nav extends React.Component {
                   </Grid>
                 </div>
               )}
-              <Grid
-                container
-                direction="row"
-                justifyContent="space-evenly"
-                alignItems="center"
-              >
-                <Grid item m={2}>
-                  {auth.isLoggedIn && auth.user.role === "Student" && (
+
+              {auth.isLoggedIn && auth.user.role === "Student" && (
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="space-evenly"
+                  alignItems="center"
+                >
+                  <Grid item m={2}>
                     <JoinClassDialog />
-                  )}
+                  </Grid>
                 </Grid>
-              </Grid>
+              )}
 
               {auth.isLoggedIn && (
                 <div>

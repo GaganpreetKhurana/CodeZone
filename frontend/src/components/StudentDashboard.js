@@ -19,30 +19,32 @@ class StudentDashboard extends Component {
     const { classesJoined } = this.props.classroom;
     return (
       <div>
-        <Grid
-          container
-          direction="column"
-          justifyContent="space-evenly"
-          alignItems="center"
-        >
-          <Container>
-            <Grid m={5} item container justifyContent="center">
+        <div>
+          <Grid container direction="column">
+            <Grid
+              m={4}
+              item
+              container
+              justifyContent="space-evenly"
+              alignItems="center"
+            >
               <Typography variant="h4">CLASSES</Typography>
             </Grid>
-          </Container>
-          <Grid
-            container
-            direction="row"
-            justifyContent="space-evenly"
-            alignItems="center"
-          >
-            {classesJoined.map((classroom) => (
-              <div>
-                <StudentClassCards classroom={classroom} />
-              </div>
-            ))}
+            <Grid
+              item
+              container
+              direction="row"
+              justifyContent="space-evenly"
+              alignItems="center"
+            >
+              {classesJoined.map((classroom) => (
+                <div>
+                  <StudentClassCards classroom={classroom} />
+                </div>
+              ))}
+            </Grid>
           </Grid>
-        </Grid>
+        </div>
       </div>
     );
   }

@@ -81,8 +81,7 @@ const CustomCard = ({
 export default function Student(props) {
   const theme = useTheme();
   return (
-    <Grid container spacing={4}>
-      <Grid item sx={{ borderRadius: "50%" }} m={3} xs={12} sm={4} md={4}>
+      <Grid item sx={{ borderRadius: "50%" }} m={3} xs={8} sm={3} md={3}>
         <CustomCard
           color={theme.palette.primary.main}
           title={props.classroom.subject}
@@ -94,6 +93,5 @@ export default function Student(props) {
           classroomCode={props.classroom.code}
         />
       </Grid>
-    </Grid>
   );
 }
