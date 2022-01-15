@@ -66,7 +66,7 @@ class StudentsList extends React.Component {
     const {classroomId} = this.props;
     return (
       <div>
-        <Paper elevation={4} style={{ maxHeight: 400, overflow: "auto" }}>
+        <Paper elevation={4} style={{ maxHeight: 300, overflow: "auto" }}>
           <FlexCol
             borderRadius={2}
             sx={{

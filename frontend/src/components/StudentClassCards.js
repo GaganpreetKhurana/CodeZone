@@ -13,7 +13,7 @@ const CardActionAreaActionArea = styled(CardActionArea)(() => ({
   borderRadius: 10,
   transition: "0.2s",
   "&:hover": {
-    transform: "scale(1.15)",
+    transform: "scale(1.09)",
   },
 }));
 
