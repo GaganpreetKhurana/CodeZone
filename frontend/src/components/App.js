@@ -11,7 +11,7 @@ import Classroom from "./Classroom";
 
 import { Paper} from '@mui/material';
 import { createTheme } from '@mui/material/styles';
-import { blue, deepOrange } from '@mui/material/colors';
+import { deepOrange } from '@mui/material/colors';
 import {ThemeProvider,CssBaseline} from '@mui/material';
 import CodeEditorScreen from "./CodeEditorScreen";
 

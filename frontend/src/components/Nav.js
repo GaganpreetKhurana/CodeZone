@@ -9,8 +9,6 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import { Button, Grid } from "@mui/material";
 import JoinClassDialog from "./JoinClassDialog";
 import CreateClassDialog from "./CreateClassDialog";

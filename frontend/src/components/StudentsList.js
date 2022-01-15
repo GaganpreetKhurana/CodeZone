@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import ChatWindow from "./ChatWindow";
 
 //Material UI
-import { FlexRow, FlexCol, Item } from "@mui-treasury/component-flex";
+import { FlexRow, Item } from "@mui-treasury/component-flex";
 import Avatar from "@mui/material/Avatar";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Divider from "@mui/material/Divider";
