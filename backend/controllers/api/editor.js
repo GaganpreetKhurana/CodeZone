@@ -1,5 +1,4 @@
 const SECRET = require('./SECRET_KEYS')
-console.log(SECRET)
 var request = require('request');
 var Compiler = require('../../models/compiler')
 
