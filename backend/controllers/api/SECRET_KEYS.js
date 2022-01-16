@@ -1,5 +1,0 @@
-const SECRET = {
-    CLIENT_ID : '9c3cb903058cea13f9d66acc074a2526',
-    CLIENT_SECRET_KEY:'53f56e275863392d3a71f7670d5fb36932d9ea2fc027edfcb74b95c4473ba7d9'
-}
-module.exports =SECRET
