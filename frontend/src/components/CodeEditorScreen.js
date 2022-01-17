@@ -5,7 +5,6 @@ import LanguageSelector from "./LanguageSelector";
 import CodeEditorSideBar from "./CodeEditorSideBar";
 import {executeCode} from "../actions/execute"
 
-
 //Material UI
 import { Grid} from '@mui/material';
 import Card from '@mui/material/Card';
@@ -45,21 +44,17 @@ class CodeEditorScreen extends React.Component {
         e.preventDefault();
         const lab= this.props.labDetails.codeEditorDetails.lab;
         const code = this.props.labDetails.codeEditorDetails._id;
-        const  language = this.props.labDetails.codeEditorDetails.languageSelected;
+        const  language = "C++";
         const languageVersion = "0";
         const input = this.state.customInput;
         this.props.dispatch(executeCode(code, language,lab,input,languageVersion));
-        console.log(this.state)
-        console.log(this.props);
     };
   render() {
     let {students} = this.props.classroom;
     const {user} = this.props.auth;
+    const {executionStarted,customOutput,error} = this.props.execute;
     const { userId,labId } = this.props.match.params;
     const {editorLabDetails} = this.props.labDetails;
-    console.log("PROSP",this.props);
-    console.log("YYEEW",this.state);
-    //const {codeEditorDetails} = this.props.labDetails;
     return (
         <div>
           <Div>{editorLabDetails.description}</Div>
@@ -142,14 +137,14 @@ class CodeEditorScreen extends React.Component {
                                             sx={{ ml: 1, flex: 1 }}
                                             placeholder="Custom Output"
                                             inputProps={{ "aria-label": "search google maps" }}
-                                            value={this.state.customOutput}
+                                            value={customOutput}
                                         />
                                     </CardContent>
                                 </Card>
                             </Paper>
                         </Grid>
                     <Grid item xs={8} m={0.5} > 
-                    <Fab variant="extended" onClick={this.handleExecuteCode}>
+                    <Fab variant="extended" onClick={this.handleExecuteCode} disabled={executionStarted}>
                       <PlayCircleIcon sx={{ mr: 1 }} color="primary" />
                       Execute Code
                     </Fab>
@@ -168,6 +163,7 @@ function mapStateToProps(state) {
       darkModetheme: state.theme,
       labDetails: state.labDetails,
       classroom: state.classroom,
+      execute: state.execute,
     };
   }
 export default connect(mapStateToProps)(CodeEditorScreen);

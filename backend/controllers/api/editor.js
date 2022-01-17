@@ -25,7 +25,6 @@ module.exports.compile = async function (req, res) {
         clientSecret: SECRET.CLIENT_SECRET_KEY,
         stdin: req.body.input,
     };
-    console.log(program)
     if (req.body.languageVersion) {
         program.versionIndex = req.body.languageVersion;
     }
@@ -52,7 +51,7 @@ module.exports.compile = async function (req, res) {
                 newCompileRequest.CPUTime = body.cpuTime;
                 newCompileRequest.memory = body.memory;
                 newCompileRequest = await newCompileRequest.save();
-                // console.log(newCompileRequest);
+                newCompileRequest.input = req.body.input;
                 if (response.statusCode ==200){
                     return res.status(201).json({
                         message: "API request successfull",
