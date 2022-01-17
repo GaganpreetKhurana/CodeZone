@@ -35,9 +35,9 @@ function getFormBody(params) {
     return FormBody.join("&");
 }
 export function executeCode(code, language,lab,input,languageVersion) {
-    console.log("YY")
+    // console.log("YY")
     return (dispatch) => {
-        console.log("SENDINH");
+        // console.log("SENDINH");
         dispatch(startExecution());
         const url = "/api/editor/compile";
         fetch(url, {
@@ -50,8 +50,8 @@ export function executeCode(code, language,lab,input,languageVersion) {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log("XXXXXXXXXXXX");
-                console.log(data);
+                // console.log("XXXXXXXXXXXX");
+                // console.log(data);
                 if (data.success) {
                     dispatch(executionSuccessful(data.data));
                     return;

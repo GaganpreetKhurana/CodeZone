@@ -57,6 +57,8 @@ class CodeEditorScreen extends React.Component {
     const {user} = this.props.auth;
     const { userId,labId } = this.props.match.params;
     const {editorLabDetails} = this.props.labDetails;
+    console.log("PROSP",this.props);
+    console.log("YYEEW",this.state);
     //const {codeEditorDetails} = this.props.labDetails;
     return (
         <div>

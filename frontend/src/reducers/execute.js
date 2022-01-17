@@ -13,12 +13,15 @@ export default function auth(state = initialClassState, action) {
     switch (action.type) {
 
         case EXECUTION_SUCCESS:
-            console.log(action.result);
+            console.log(action.result.memory,"XXXXX");
             return {
                 ...state,
                 success:true,
                 error: null,
                 customOutput: action.result.output,
+                statusCode: action.result.statusCode,
+                memory: action.result.memory,
+                cpuTime: action.result.CPUTime,
             };
         case EXECUTION_FAILED:
             return {
