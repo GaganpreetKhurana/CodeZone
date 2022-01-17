@@ -1,6 +1,7 @@
 # CodeZone Major Project
 
-## Run Instructions For CodeZone-Backend:- 
+## Run Instructions For CodeZone-Backend:-
+
 <ul>
   <li>Clone the above repository.</li>
   <li>Move to backend folder cd backend</li>
@@ -12,8 +13,8 @@
   <li>On any browser visit localhost:8000 you will see the content there</li>
 </ul>
 
+## Run Instructions For CodeZone-Frontend:-
 
-## Run Instructions For CodeZone-Frontend:- 
 <ul>
   <li>Clone the above repository.</li>
   <li>Move to frontend folder cd frontend</li>
