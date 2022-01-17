@@ -5,7 +5,10 @@ import {
 } from '../actions/actionTypes';
 
 const initialClassState = {
-    executionOutput: null,
+    customOutput: null,
+    statusCode: null,
+    memory: null,
+    cpuTime: null,
     success: null,
     error: null
 };
