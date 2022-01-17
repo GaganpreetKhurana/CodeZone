@@ -4,8 +4,8 @@ var Compiler = require('../../models/compiler')
 var CodeEditor = require('../../models/codeEditor')
 
 const languageCodes = {
-    "Python" : "python3",
-    "Python2" : "python2",
+    "Python 3" : "python3",
+    "Python 2" : "python2",
     "Java" :"java",
     "C":"c",
     "C-99":"c99",

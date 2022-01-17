@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 class CodeEditor extends React.Component {
+
     render(){
         const {codeEditorDetails,editorLabDetails} = this.props.labDetails;
         console.log("codeEditorDetails",codeEditorDetails.code);

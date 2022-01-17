@@ -81,7 +81,7 @@ export default function LanguageSelector() {
           C++
         </MenuItem>
         <MenuItem onClick={handleClose} disableRipple>
-          Python
+          Python 3
         </MenuItem>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={handleClose} disableRipple>

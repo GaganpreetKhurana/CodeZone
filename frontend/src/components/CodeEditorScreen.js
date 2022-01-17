@@ -4,6 +4,7 @@ import TextEditor from "./TextEditor";
 import LanguageSelector from "./LanguageSelector";
 import CodeEditorSideBar from "./CodeEditorSideBar";
 import {executeCode} from "../actions/execute"
+import {clearExecution} from "../actions/execute"
 
 //Material UI
 import { Grid} from '@mui/material';
@@ -35,6 +36,9 @@ class CodeEditorScreen extends React.Component {
             cpuTime: "",
         };
     };
+    componentWillUnmount() {
+        this.props.dispatch(clearExecution());
+    }
     handleCustomInput = (e) => {
         this.setState({
             customInput: e.target.value,
@@ -44,7 +48,7 @@ class CodeEditorScreen extends React.Component {
         e.preventDefault();
         const lab= this.props.labDetails.codeEditorDetails.lab;
         const code = this.props.labDetails.codeEditorDetails._id;
-        const  language = "C++";
+        const  language = this.props.labDetails.codeEditorDetails.languageSelected;//"C++";
         const languageVersion = "0";
         const input = this.state.customInput;
         this.props.dispatch(executeCode(code, language,lab,input,languageVersion));
@@ -52,7 +56,7 @@ class CodeEditorScreen extends React.Component {
   render() {
     let {students} = this.props.classroom;
     const {user} = this.props.auth;
-    const {executionStarted,customOutput,error} = this.props.execute;
+    const {executionStarted,customOutput,memory,cpuTime,statusCode,error} = this.props.execute;
     const { userId,labId } = this.props.match.params;
     const {editorLabDetails} = this.props.labDetails;
     return (
@@ -133,12 +137,9 @@ class CodeEditorScreen extends React.Component {
                                 <Card sx={{ minWidth: 300, minHeight:150 }}>
                                     <Div >Code Custom Output</Div>
                                     <CardContent>
-                                        < InputBase
-                                            sx={{ ml: 1, flex: 1 }}
-                                            placeholder="Custom Output"
-                                            inputProps={{ "aria-label": "search google maps" }}
-                                            value={customOutput}
-                                        />
+                                        {customOutput}<br/>
+                                        Memory: {memory} kB<br/>
+                                        CPU Time :{cpuTime} seconds<br/>
                                     </CardContent>
                                 </Card>
                             </Paper>

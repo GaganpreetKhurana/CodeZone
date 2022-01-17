@@ -2,6 +2,7 @@ import {
     EXECUTION_START,
     EXECUTION_SUCCESS,
     EXECUTION_FAILED,
+    EXECUTION_CLEAR_STATE,
 } from "./actionTypes";
 
 
@@ -55,5 +56,11 @@ export function executeCode(code, language,lab,input,languageVersion) {
                 }
                 dispatch(executionFailed(data.message));
             });
+    };
+}
+
+export function clearExecution() {
+    return {
+        type: EXECUTION_CLEAR_STATE,
     };
 }
