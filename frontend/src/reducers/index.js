@@ -6,5 +6,6 @@ import labDetails from "./labDetails";
 import posts from "./posts";
 import theme from "./theme";
 import execute from "./execute";
+import language from "./language";
 
-export default combineReducers({ auth, createClassroom, classroom, theme, labDetails, posts,execute });
+export default combineReducers({ auth, createClassroom, classroom, theme, labDetails, posts,execute ,language});

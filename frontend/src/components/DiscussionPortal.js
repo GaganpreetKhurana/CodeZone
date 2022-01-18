@@ -127,39 +127,41 @@ class DiscussionPortal extends React.Component {
     let {user} = this.props.auth;
     return (
       <div>
-          <Paper
-            elevation={4}
-            component="form"
-            sx={{
-              p: "2px 4px",
-              display: "flex",
-              alignItems: "center",
-              width: 350,
-            }}
+        <Paper
+          elevation={4}
+          component="form"
+          sx={{
+            p: "12px 6px",
+            display: "flex",
+            alignItems: "center",
+            bgcolor: (theme) =>
+              theme.palette.mode === "dark" ? "#272727" : "#fff",
+          }}
+        >
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="Post A Classroom Query or Notification"
+            inputProps={{ "aria-label": "search google maps" }}
+            value={this.state.content}
+            onChange={this.handleChange}
+          />
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <IconButton
+            color="primary"
+            sx={{ p: "10px" }}
+            aria-label="directions"
           >
-            <InputBase
-              sx={{ ml: 1, flex: 1 }}
-              placeholder="Post A Classroom Query or Notification"
-              inputProps={{ "aria-label": "search google maps" }}
-              value={this.state.content}
-              onChange={this.handleChange}
-            />
-            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-            <IconButton
-              color="primary"
-              sx={{ p: "10px" }}
-              aria-label="directions"
-            >
-              <PostAddIcon onClick={this.handleOnClick} />
-            </IconButton>
+            <PostAddIcon onClick={this.handleOnClick} />
+          </IconButton>
         </Paper>
-        
+
         {/* displaying old posts of classroom */}
         {!posts.length && <p>No Posts exist for this classroom</p>}
-        <Paper elevation={4}>
-          {posts.length > 0 &&
-            posts.map((post) => (
-              <Box m={2} pt={3}>
+
+        {posts.length > 0 &&
+          posts.map((post) => (
+            <Box m={2} pt={3}>
+              <Paper elevation={4}>
                 <Card>
                   <CardHeader
                     avatar={
@@ -237,14 +239,12 @@ class DiscussionPortal extends React.Component {
                     <Paper
                       component="form"
                       sx={{
-                        p: "2px 4px",
                         display: "flex",
                         alignItems: "center",
-                        width: 350,
                       }}
                     >
                       <InputBase
-                        sx={{ ml: 1, flex: 1 }}
+                        sx={{ ml: 2, flex: 1 }}
                         value={this.state.contentComment}
                         onChange={this.handleChangeComment}
                         placeholder="Start typing a comment"
@@ -272,7 +272,10 @@ class DiscussionPortal extends React.Component {
                           <ListItem alignItems="flex-start">
                             <ListItemAvatar>
                               {/*Need to display the profile picture here */}
-                              <Avatar alt="Student 2" src="" />
+                              <Avatar
+                                alt="Student 2"
+                                src="https://media.istockphoto.com/photos/millennial-male-team-leader-organize-virtual-workshop-with-employees-picture-id1300972574?b=1&k=20&m=1300972574&s=170667a&w=0&h=2nBGC7tr0kWIU8zRQ3dMg-C5JLo9H2sNUuDjQ5mlYfo="
+                              />
                             </ListItemAvatar>
                             <ListItemText
                               primary={
@@ -359,9 +362,9 @@ class DiscussionPortal extends React.Component {
                       ))}
                   </CardContent>
                 </Card>
-              </Box>
-            ))}
-        </Paper>
+              </Paper>
+            </Box>
+          ))}
       </div>
     );
   }
