@@ -48,10 +48,10 @@ class CodeEditorScreen extends React.Component {
         e.preventDefault();
         const lab= this.props.labDetails.codeEditorDetails.lab;
         const code = this.props.labDetails.codeEditorDetails._id;
-        const  language = this.props.labDetails.codeEditorDetails.languageSelected;//"C++";
-        const languageVersion = "0";
+        const currentLanguage = this.props.language.editorLanguage;//"C++";
+        const languageVersion = "4";
         const input = this.state.customInput;
-        this.props.dispatch(executeCode(code, language,lab,input,languageVersion));
+        this.props.dispatch(executeCode(code, currentLanguage,lab,input,languageVersion));
     };
   render() {
     let {students} = this.props.classroom;
@@ -165,6 +165,7 @@ function mapStateToProps(state) {
       labDetails: state.labDetails,
       classroom: state.classroom,
       execute: state.execute,
+      language:state.language,
     };
   }
 export default connect(mapStateToProps)(CodeEditorScreen);

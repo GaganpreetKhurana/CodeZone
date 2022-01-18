@@ -46,6 +46,7 @@ module.exports.compile = async function (req, res) {
                 json: program
             },
             async function (error, response, body) {
+                // console.log(error,response,body);
                 newCompileRequest.statusCode = body.statusCode;
                 newCompileRequest.output = body.output;
                 newCompileRequest.CPUTime = body.cpuTime;

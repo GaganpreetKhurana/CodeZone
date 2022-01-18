@@ -14,9 +14,11 @@ class LanguageSelector extends React.Component {
   render() {
     return (
       <div>
-        <Button onClick={() => this.handleLanguage("cpp")}>C++</Button>
-        <Button onClick={() => this.handleLanguage("python")}>Python</Button>
-        <Button onClick={() => this.handleLanguage("javascript")}>Javascript</Button>
+        <Button onClick={() => this.handleLanguage("C++")}>C++</Button>
+        <Button onClick={() => this.handleLanguage("C++14")}>C++ 14</Button>
+        <Button onClick={() => this.handleLanguage("Python 3")}>Python 3</Button>
+        <Button onClick={() => this.handleLanguage("JavaScript")}>Javascript</Button>
+        <Button onClick={() => this.handleLanguage("Java")}>Java</Button>
       </div>
     );
   }
