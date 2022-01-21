@@ -44,6 +44,20 @@ class CodeEditorScreen extends React.Component {
             customInput: e.target.value,
         });
     };
+    handleSubmitCode = (e) => {
+        e.preventDefault();
+        const {content, code, finalSubmit, evaluateLab} = this.props.labDetails.codeEditorDetails;
+        if(code && content && finalSubmit === false && evaluateLab === true){
+            console.log(code,content,true,new Date() );
+            //at backend search by code in codeEditor
+            //make finalSubmit= true
+            //submittedAt=Date.now()
+            //contentSaved=content
+            //dispatch an action for this
+        }
+
+        
+    };
     handleExecuteCode = (e) => {
         e.preventDefault();
         const lab= this.props.labDetails.codeEditorDetails.lab;
@@ -59,6 +73,8 @@ class CodeEditorScreen extends React.Component {
     const {executionStarted,customOutput,memory,cpuTime,statusCode,error} = this.props.execute;
     const { userId,labId } = this.props.match.params;
     const {editorLabDetails} = this.props.labDetails;
+    const {finalSubmit, evaluateLab} = this.props.labDetails.codeEditorDetails;
+
     return (
         <div>
           <Div>{editorLabDetails.description}</Div>
@@ -150,6 +166,12 @@ class CodeEditorScreen extends React.Component {
                       Execute Code
                     </Fab>
                     </Grid>
+                    {evaluateLab && <Grid item xs={8} m={0.5} > 
+                    <Fab variant="extended" onClick={this.handleSubmitCode} disabled={finalSubmit}>
+                      <PlayCircleIcon sx={{ mr: 1 }} color="primary" />
+                      Final Submit
+                    </Fab>
+                    </Grid>}
                 </Grid>
             </Grid>
             </Grid>

@@ -48,7 +48,6 @@ class JoinLabDialog extends Component {
   render() {
     const { user } =this.props.auth;
     const { labDetails } = this.props.labDetails;
-    console.log(labDetails);
     return (
     <div>
     <Button  fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={this.dialogOpen}>
