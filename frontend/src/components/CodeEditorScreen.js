@@ -56,7 +56,7 @@ class CodeEditorScreen extends React.Component {
   render() {
     let {students} = this.props.classroom;
     const {user} = this.props.auth;
-    const {executionStarted,customOutput,memory,cpuTime,statusCode,error} = this.props.execute;
+    const {executionStarted,customOutput,memory,cpuTime} = this.props.execute;
     const { userId,labId } = this.props.match.params;
     const {editorLabDetails} = this.props.labDetails;
     return (

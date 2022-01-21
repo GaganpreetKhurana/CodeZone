@@ -5,13 +5,13 @@ import DeletePost from './DeletePost';
 import DeleteComment from './DeleteComment';
 import EditPost from './EditPost';
 import EditComment from './EditComment'
+
 //Material UI
 import { Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import InputBase from '@mui/material/InputBase';
 import Divider from '@mui/material/Divider';
 import PostAddIcon from '@mui/icons-material/PostAdd';
-
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
@@ -162,7 +162,12 @@ class DiscussionPortal extends React.Component {
           posts.map((post) => (
             <Box m={2} pt={3}>
               <Paper elevation={4}>
-                <Card>
+                <Card
+                  sx={{
+                    bgcolor: (theme) =>
+                      theme.palette.mode === "dark" ? "#272727" : "#fff",
+                  }}
+                >
                   <CardHeader
                     avatar={
                       <Avatar
@@ -177,7 +182,9 @@ class DiscussionPortal extends React.Component {
                     )}   ${post.createdAt.slice(11, 19)}`}
                   />
                   <Divider />
-                  <ListItem>{post.content}</ListItem>
+                  <ListItem>
+                    <Typography variant="body1">{post.content}</Typography>
+                  </ListItem>
                   <Divider />
                   <ListItem>
                     <Grid
@@ -280,7 +287,7 @@ class DiscussionPortal extends React.Component {
                             <ListItemText
                               primary={
                                 <Grid spacing={2} container direction="row">
-                                  <Grid item xs={3} m={0.5}>
+                                  <Grid item xs={4} m={0.5}>
                                     <Typography
                                       variant="caption"
                                       display="block"
@@ -325,7 +332,7 @@ class DiscussionPortal extends React.Component {
                                       </IconButton>
                                     </Grid>
                                   )}
-                                  <Grid item xs={0.5} m={0.5}>
+                                  <Grid item xs={1} m={0.5}>
                                     <IconButton
                                       size="small"
                                       fontSize="small"
