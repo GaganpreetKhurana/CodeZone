@@ -91,7 +91,7 @@ export function joinClassroom(code) {
 }
 
 //create new lab
-export function createNewLab(description, question, input, output, language, maxMarks, classroomId) {
+export function createNewLab(description, question, input, output, language, maxMarks, classroomId,evaluateLab) {
   return (dispatch) => {
     dispatch(startCreateClassroom());
     const url = "/api/classroom/createLab";
@@ -101,7 +101,7 @@ export function createNewLab(description, question, input, output, language, max
         "Content-Type": "application/x-www-form-urlencoded",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: getFormBody({ description, question, input, output, language, maxMarks, classroomId }),
+      body: getFormBody({ description, question, input, output, language, maxMarks, classroomId,evaluateLab}),
     })
       .then((response) => response.json())
       .then((data) => {
