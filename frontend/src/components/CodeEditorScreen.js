@@ -3,8 +3,7 @@ import { connect } from "react-redux";
 import TextEditor from "./TextEditor";
 import LanguageSelector from "./LanguageSelector";
 import CodeEditorSideBar from "./CodeEditorSideBar";
-import {executeCode} from "../actions/execute"
-import {clearExecution} from "../actions/execute"
+import {executeCode,clearExecution} from "../actions/execute"
 
 //Material UI
 import { Grid} from '@mui/material';
@@ -13,6 +12,8 @@ import CardContent from '@mui/material/CardContent';
 import { Paper} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import InputBase from "@mui/material/InputBase";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 import Fab from '@mui/material/Fab';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
@@ -34,6 +35,9 @@ class CodeEditorScreen extends React.Component {
             statusCode: "",
             memory: "",
             cpuTime: "",
+            successMessage:"",
+            errorMessage:"",
+            showFinalSubmit:false,
         };
     };
     componentWillUnmount() {
@@ -44,16 +48,57 @@ class CodeEditorScreen extends React.Component {
             customInput: e.target.value,
         });
     };
+    getFormBody =(params) => {
+        let FormBody = [];
+        for (let property in params) {
+          let encodedKey = encodeURIComponent(property);
+          let encodedValue = encodeURIComponent(params[property]);
+          FormBody.push(encodedKey + "=" + encodedValue);
+        }
+        return FormBody.join("&");
+      }
     handleSubmitCode = (e) => {
         e.preventDefault();
         const {content, code, finalSubmit, evaluateLab} = this.props.labDetails.codeEditorDetails;
-        if(code && content && finalSubmit === false && evaluateLab === true){
-            console.log(code,content,true,new Date() );
+        if(code && finalSubmit === false && evaluateLab === true){
             //at backend search by code in codeEditor
             //make finalSubmit= true
             //submittedAt=Date.now()
             //contentSaved=content
-            //dispatch an action for this
+            // console.log("Submit button presses");
+            const url = "/api/editor/submitCode";
+            fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: this.getFormBody({ code, content, finalSubmit:true, submittedAt: new Date()}),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    this.setState({
+                        successMessage:data.message,
+                        showFinalSubmit: true,
+                    })
+                    setTimeout(()=>{
+                        this.setState({
+                            successMessage: ""
+                        })
+                    },3000)
+                }
+                else{
+                    this.setState({
+                        errorMessage:data.message,
+                    })
+                    setTimeout(()=>{
+                        this.setState({
+                            errorMessage: ""
+                        })
+                    },3000)
+                }
+            });
         }
 
         
@@ -75,6 +120,7 @@ class CodeEditorScreen extends React.Component {
     const {editorLabDetails} = this.props.labDetails;
     const {finalSubmit, evaluateLab} = this.props.labDetails.codeEditorDetails;
 
+    // console.log("this.state.finalSubmit",this.state.showFinalSubmit,"finalSubmit",finalSubmit);
     return (
         <div>
           <Div>{editorLabDetails.description}</Div>
@@ -166,12 +212,22 @@ class CodeEditorScreen extends React.Component {
                       Execute Code
                     </Fab>
                     </Grid>
-                    {evaluateLab && <Grid item xs={8} m={0.5} > 
-                    <Fab variant="extended" onClick={this.handleSubmitCode} disabled={finalSubmit}>
+                    {evaluateLab === true && <Grid item xs={8} m={0.5} > 
+                    <Fab variant="extended" onClick={this.handleSubmitCode} disabled={this.state.showFinalSubmit || finalSubmit }>
                       <PlayCircleIcon sx={{ mr: 1 }} color="primary" />
                       Final Submit
                     </Fab>
                     </Grid>}
+                    {this.state.successMessage && <Snackbar open={true} autoHideDuration={2000}>
+                        <Alert severity="success" sx={{ width: '100%' }}>
+                        {this.state.successMessage}
+                        </Alert>
+                    </Snackbar>}
+                    {this.state.errorMessage && <Snackbar open={true} autoHideDuration={2000}>
+                        <Alert severity="error" sx={{ width: '100%' }}>
+                        {this.state.errorMessage}
+                        </Alert>
+                    </Snackbar>}
                 </Grid>
             </Grid>
             </Grid>
