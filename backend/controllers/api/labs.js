@@ -26,6 +26,7 @@ module.exports.createLab = async function(req, res) {
             description: req.body.description,
             language: req.body.language,
             maxMarks: req.body.maxMarks,
+            evaluateLab: req.body.evaluateLab
         });
         //add the lab_id in class.labsCreated
         if(lab){
@@ -54,7 +55,7 @@ module.exports.fetchExistingLabDetails = async function(req,res){
     }).select("labsCreated")
     .populate(
         "labsCreated",
-        "creator question input output maxMarks description language createdAt",null,{ sort: { 'created_at': -1 } }
+        "creator question input output maxMarks description language createdAt evaluateLab",null,{ sort: { 'created_at': -1 } }
     ).exec();
     if (classExistWithClassId) {
         return res.status(200).json({
@@ -114,6 +115,9 @@ module.exports.createEditor = async function(req,res){
                 customOutput:lab.output,
                 languageSelected:lab.language,
                 owner:req.user._id,
+                evaluateLab: lab.evaluateLab,
+                contentSaved: '',
+                finalSubmit: false,
             });
             if(newEditor){
                 // add codeEditor._id to codeEditor array of labs

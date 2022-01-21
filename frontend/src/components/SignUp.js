@@ -98,8 +98,6 @@ class Signup extends Component {
         });
     };
     handleRole = (e) => {
-        console.log(this.state);
-        console.log(e.target.checked);
         this.setState({
             role: e.target.checked,
         });

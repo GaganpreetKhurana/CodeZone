@@ -9,6 +9,8 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 class CreateLabDialog extends Component {
   constructor(props) {
@@ -20,6 +22,7 @@ class CreateLabDialog extends Component {
       language:"",
       maxMarks:"",
       description: "",
+      evaluateLab: false,
     };
   }
 
@@ -34,6 +37,9 @@ class CreateLabDialog extends Component {
   dialogClose = () => {
     this.setState({ open: false });
     this.props.dispatch(clearClassCode());
+    this.setState({
+      evaluateLab: false,
+    })
   };
 
   //to clear the error if it comes on reload or whenever the user shifts from this page
@@ -44,9 +50,9 @@ class CreateLabDialog extends Component {
   handleSubmitForm = (e) => {
     e.preventDefault();
     const { classroomId} = this.props;
-    const { description, question, input, output, language, maxMarks } = this.state;
+    const { description, question, input, output, language, maxMarks,evaluateLab } = this.state;
     if (description && classroomId) {
-      this.props.dispatch(createNewLab(description, question, input, output, language, maxMarks,classroomId));
+      this.props.dispatch(createNewLab(description, question, input, output, language, maxMarks,classroomId,evaluateLab));
     }
   };
   handleDescription = (e) => {
@@ -74,6 +80,11 @@ class CreateLabDialog extends Component {
       maxMarks: e.target.value,
     });
   };
+  handleEvaluateLab =(e) =>{
+    this.setState({
+      evaluateLab: e.target.checked,
+    });
+  }
   handleLanguage = (e) => {
     this.setState({
       language: e.target.value,
@@ -138,7 +149,12 @@ class CreateLabDialog extends Component {
                 fullWidth
                 variant="standard"
             />
-            <TextField
+              <FormControlLabel
+                control={<Checkbox value='true' color="primary"/>}
+                label="Evaluate Lab"
+                onChange={this.handleEvaluateLab}
+              />
+           {this.state.evaluateLab === true && (<><TextField
                 autoFocus
                 margin="normal"
                 type="text"
@@ -146,6 +162,7 @@ class CreateLabDialog extends Component {
                 onChange={this.handleMaxMarks}
                 fullWidth
                 variant="standard"
+                required
             />
             <TextField
                 autoFocus
@@ -155,7 +172,8 @@ class CreateLabDialog extends Component {
                 onChange={this.handleLanguage}
                 fullWidth
                 variant="standard"
-            />
+                required
+            /></> )}
         </DialogContent>
         <DialogActions>
             <Button onClick={this.handleSubmitForm} disabled={inProgress}>
@@ -177,3 +195,4 @@ function mapStateToProps(state) {
   };
 }
 export default connect(mapStateToProps)(CreateLabDialog);
+

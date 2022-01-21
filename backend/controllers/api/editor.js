@@ -77,3 +77,25 @@ module.exports.compile = async function (req, res) {
         });
     }
 }
+
+module.exports.submitCode = async function (req, res) {
+    let uniqueCode = req.body.code;
+    let codeEditorExist = await CodeEditor.findOne({ code: uniqueCode });
+    if(codeEditorExist){
+        codeEditorExist.contentSaved = req.body.content;
+        codeEditorExist.submittedAt = req.body.submittedAt;
+        codeEditorExist.finalSubmit = req.body.finalSubmit;
+        codeEditorExist.save();
+        return res.status(200).json({
+            message: "Lab Work submitted Successfully!!",
+            success: true,
+        });
+    }
+    else{
+        return res.json(422, {
+            message: "Error while submitting code!!",
+        });
+    }
+
+
+}

@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { logoutUser } from "../actions/auth";
 import { switchTheme } from "../actions/theme";
 import logo from "../static/logo.png";
-
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -115,7 +114,9 @@ class Nav extends React.Component {
               )}
               {auth.isLoggedIn && (
                 <Button onClick={this.logout}>
-                  <Typography color="common.white">Logout</Typography>
+                  <Link to="/">
+                    <Typography color="common.white">Logout</Typography>
+                  </Link>
                 </Button>
               )}
               {!auth.isLoggedIn && (
