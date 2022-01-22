@@ -18,8 +18,8 @@ function Home() {
                 <div className="container hero">
                     <div className="row">
                         <div className="col-md-8 offset-md-2">
-                            <h1 className="text-center" style={{fontSize: "60px", textAlign: "center",}}><img
-                                src={LogoFinal} style={{width: "90px"}}/><strong>&nbsp; CodeZone</strong>
+                            <h1 className="text-center" style={{ fontSize: "60px", textAlign: "center", }}>
+                                <img alt="" src={LogoFinal} style={{width: "90px"}} /><strong>&nbsp; CodeZone</strong>
                             </h1>
                         </div>
                     </div>
@@ -39,22 +39,22 @@ function Home() {
                         </svg>
                         <h3 className="name">Classroom Portal</h3>
                         <p className="description">Students can write, compile, run and post their
-                            codes.&nbsp;​Teachers can review and edit the codes in real time.&nbsp;<br/><br/></p>
+                            codes.&nbsp;Teachers can review and edit the codes in real time.&nbsp;<br/><br/></p>
                     </div>
                     <div className="col-sm-6 col-lg-4 item"><i className="fa fa-reddit-square icon"></i>
                         <h3 className="name">Discussion Portal</h3>
                         <p className="description">Discussion Portal - Forum for discussions where you can post,
-                            comment and like others post.&nbsp;​<br/><br/></p>
+                            comment and like others post.&nbsp;<br/><br/></p>
                     </div>
                     <div className="col-sm-6 col-lg-4 item"><i className="fa fa-list-alt icon"></i>
                         <h3 className="name">Learning Portal</h3>
-                        <p className="description">Learning Portal – Portal where learning resources could be
-                            shared.​<br/><br/></p>
+                        <p className="description">Learning Portal  Portal where learning resources could be
+                            shared.<br/><br/></p>
                     </div>
                     <div className="col-sm-6 col-lg-4 item"><i className="fa fa-pencil-square-o icon"></i>
                         <h3 className="name">Academic Assignments</h3>
-                        <p className="description">Teachers can create and evaluate assignments.​<br/>Chat
-                            functionality to connect teachers and&nbsp;students.&nbsp;​<br/><br/><br/></p>
+                        <p className="description">Teachers can create and evaluate assignments.<br/>Chat
+                            functionality to connect teachers and&nbsp;students.&nbsp;<br/><br/><br/></p>
                     </div>
                     <div className="col-sm-6 col-lg-4 item"><i className="fa fa-copy icon"></i>
                         <h3 className="name">Plagiarism</h3>
@@ -79,9 +79,9 @@ function Home() {
                                 <div className="cover">
                                     <h3 className="name">Vishal Thakur</h3>
                                     <p className="title"><br/><strong>DEVELOPER</strong><br/><br/></p>
-                                    <div className="social"><a href="#"><i
+                                    <div className="social"><a href="/home"><i
                                         className="fa fa-facebook-official"></i></a><a
-                                        href="#"><i className="fa fa-twitter"></i></a><a href="#"><i
+                                        href="/home"><i className="fa fa-twitter"></i></a><a href="/home"><i
                                         className="fa fa-instagram"></i></a></div>
                                 </div>
                             </div>
@@ -92,9 +92,9 @@ function Home() {
                                 <div className="cover">
                                     <h6 className="name">Gaganpreet Khurana</h6>
                                     <p className="title"><br/><strong>DEVELOPER</strong><br/><br/></p>
-                                    <div className="social"><a href="#"><i
+                                    <div className="social"><a href="/home"><i
                                         className="fa fa-facebook-official"></i></a><a
-                                        href="#"><i className="fa fa-twitter"></i></a><a href="#"><i
+                                        href="/home"><i className="fa fa-twitter"></i></a><a href="/home"><i
                                         className="fa fa-instagram"></i></a></div>
                                 </div>
                             </div>
@@ -105,9 +105,9 @@ function Home() {
                                 <div className="cover">
                                     <h3 className="name">Shayan Yaseen</h3>
                                     <p className="title"><br/><strong>DEVELOPER</strong><br/><br/></p>
-                                    <div className="social"><a href="#"><i
+                                    <div className="social"><a href="/home"><i
                                         className="fa fa-facebook-official"></i></a><a
-                                        href="#"><i className="fa fa-twitter"></i></a><a href="#"><i
+                                        href="/home"><i className="fa fa-twitter"></i></a><a href="/home"><i
                                         className="fa fa-instagram"></i></a></div>
                                 </div>
                             </div>
@@ -118,9 +118,9 @@ function Home() {
                                 <div className="cover">
                                     <h3 className="name">Akshit Garg</h3>
                                     <p className="title"><br/><strong>DEVELOPER</strong><br/><br/></p>
-                                    <div className="social"><a href="#"><i
+                                    <div className="social"><a href="/home"><i
                                         className="fa fa-facebook-official"></i></a><a
-                                        href="#"><i className="fa fa-twitter"></i></a><a href="#"><i
+                                        href="/home"><i className="fa fa-twitter"></i></a><a href="/home"><i
                                         className="fa fa-instagram"></i></a></div>
                                 </div>
                             </div>
@@ -133,17 +133,17 @@ function Home() {
                         <div className="col-sm-6 col-md-3 item">
                             <h3>Services</h3>
                             <ul>
-                                <li><a href="#">Classroom</a></li>
-                                <li><a href="#">Academic Assignment</a></li>
-                                <li><a href="#">Quizz</a></li>
+                                <li><a href="/home">Classroom</a></li>
+                                <li><a href="/home">Academic Assignment</a></li>
+                                <li><a href="/home">Quizz</a></li>
                             </ul>
                         </div>
                         <div className="col-sm-6 col-md-3 item">
                             <h3>About</h3>
                             <ul>
-                                <li><a href="#">Location</a></li>
-                                <li><a href="#">Team</a></li>
-                                <li><a href="#">Careers</a></li>
+                                <li><a href="/home">Location</a></li>
+                                <li><a href="/home">Team</a></li>
+                                <li><a href="/home">Careers</a></li>
                             </ul>
                         </div>
                         <div className="col-md-6 item text">
