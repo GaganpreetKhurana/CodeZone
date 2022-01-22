@@ -3,20 +3,15 @@ const mongoose = require("mongoose");
 var ChatSchema = new mongoose.Schema({
     room: {
         type: String,
-    },
-    chats: [{
+    }, chats: [{
         content: {
-            type: String,
-            default: ""
-        },
-        time: {
-            type: Date,
-            default: Date.now
-        },
-        sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+            type: String, default: ""
+        }, time: {
+            type: Date, default: Date.now
+        }, sender: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+        unread : {type: Boolean,default: true},
     }],
-
-}, { timestamps: true });
+    },{timestamps: true});
 
 
 const Chats = mongoose.model("Chats", ChatSchema);
