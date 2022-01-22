@@ -48,6 +48,7 @@ class JoinLabDialog extends Component {
   render() {
     const { user } =this.props.auth;
     const { labDetails } = this.props.labDetails;
+    console.log(labDetails);
     return (
     <div>
     <Button  fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={this.dialogOpen}>
@@ -69,7 +70,26 @@ class JoinLabDialog extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {labDetails.map((row) => (
+                {user.role==="Teacher" && labDetails.map((row) => (
+                    <TableRow
+                      key={row._id}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                      <TableCell component="th" scope="row" align="center">{row.description}</TableCell>
+                      <TableCell align="center">{row.createdAt.slice(0, 10)}</TableCell>
+                      <TableCell align="center">{row.maxMarks ==="" ? '-' : row.maxMarks}</TableCell>
+                      <TableCell align="center">
+                      {user.id && <Link to={`/labDetails/${user.id}/${row._id}`} onClick={()=>{
+                          //fetch this code-editor's details using row_id
+                          // this.props.dispatch(createNewCodeEditor(user.id,row._id));
+                        }}>
+                          View
+                        </Link>
+                        }
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                  {user.role==="Student" && labDetails.map((row) => (
                     <TableRow
                       key={row._id}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}

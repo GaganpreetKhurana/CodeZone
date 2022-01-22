@@ -106,8 +106,7 @@ class ChatBox extends React.Component {
   };
 
   render() {
-    //const { other_details } = this.props;
-    const { self_details } = this.props;
+    const { self_details, other_details } = this.props;
     const { messages } = this.state;
     return (
       <div>

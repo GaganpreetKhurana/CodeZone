@@ -65,7 +65,7 @@ class CodeEditorScreen extends React.Component {
             //make finalSubmit= true
             //submittedAt=Date.now()
             //contentSaved=content
-            // console.log("Submit button presses");
+            // console.log("Submit button presses",content.ops[0].insert);
             const url = "/api/editor/submitCode";
             fetch(url, {
             method: "POST",
@@ -73,7 +73,7 @@ class CodeEditorScreen extends React.Component {
                 "Content-Type": "application/x-www-form-urlencoded",
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-            body: this.getFormBody({ code, content, finalSubmit:true, submittedAt: new Date()}),
+            body: this.getFormBody({ code, content: content.ops[0].insert, finalSubmit:true, submittedAt: new Date()}),
             })
             .then((response) => response.json())
             .then((data) => {
