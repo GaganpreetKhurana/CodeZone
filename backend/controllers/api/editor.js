@@ -2,6 +2,8 @@ const SECRET = require('./SECRET_KEYS')
 var request = require('request');
 var Compiler = require('../../models/compiler')
 var CodeEditor = require('../../models/codeEditor')
+var Lab = require('../../models/labs')
+var User = require('../../models/user')
 
 const languageCodes = {
     "Python 3" : "python3",
@@ -98,4 +100,32 @@ module.exports.submitCode = async function (req, res) {
     }
 
 
+}
+
+
+module.exports.fetchLabDetails = async function (req, res) {
+    let userId = req.body.userId;
+    let labId = req.body.labId;
+    if(labId && userId){
+        let user = await User.findById(userId);
+        let lab = await Lab.findById(labId).populate("codeEditor","code lab owner contentSaved finalSubmit submittedAt")
+        .populate({
+            path: "codeEditor",
+            populate: {
+              path: "owner",
+              select: "SID name email role",
+            },
+          });
+        if(user && lab && user.role === "Teacher"){
+            return res.status(200).json({
+                message: "Lab Details FetchedSuccessfully!!",
+                success: true,
+                data: lab
+            });
+        }
+
+    }
+    return res.json(422, {
+        message: "Error while Fetching Details!",
+    });
 }

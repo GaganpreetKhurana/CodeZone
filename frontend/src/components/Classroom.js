@@ -45,7 +45,7 @@ class Classroom extends Component {
           item
           xs={6}
           m={2}
-          style={{ maxHeight: "100vh", overflow: "auto" }}
+          style={{ maxHeight: "150vh", overflow: "auto" }}
         >
           {" "}
           <DiscussionPortal classroomId={match.params.classroomID} />
