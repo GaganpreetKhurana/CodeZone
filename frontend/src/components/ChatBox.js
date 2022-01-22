@@ -50,6 +50,13 @@ class ChatBox extends React.Component {
         messages: this.props.classroom.messageArray,
       });
     }, 1000);
+    this.interval = setInterval(() => {
+      console.log("ReadAll");
+      this.socket.emit(
+          "ReadAll",
+          this.props.self_details.id
+      );
+    }, 5000);
     this.setUpConnections();
   }
   setUpConnections = () => {
