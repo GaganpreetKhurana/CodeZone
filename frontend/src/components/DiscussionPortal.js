@@ -6,6 +6,8 @@ import DeleteComment from './DeleteComment';
 import EditPost from './EditPost';
 import EditComment from './EditComment'
 
+import EmbedVideo from "./EmbedVideo";
+
 //Material UI
 import { Grid} from '@mui/material';
 import Paper from '@mui/material/Paper';
@@ -37,7 +39,6 @@ class DiscussionPortal extends React.Component {
       contentComment:'',
       anchorEl : null,
       open: false
-
     };
     this.setAnchorEl = this.setAnchorEl.bind(this)
     this.handleCommentClick = this.handleCommentClick.bind(this)
@@ -184,6 +185,7 @@ class DiscussionPortal extends React.Component {
                   <Divider />
                   <ListItem>
                     <Typography variant="body1">{post.content}</Typography>
+                    <EmbedVideo text ={post.content} />
                   </ListItem>
                   <Divider />
                   <ListItem>
