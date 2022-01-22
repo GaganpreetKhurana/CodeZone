@@ -18,9 +18,15 @@ export default function EmbedVideo(props) {
 
   let stringItem;
   if (urlList && urlList.length >= 0) {
-    stringItem = urlList.map((urlList) => (
-      <iframe id="player" src={urlList} frameborder="0"></iframe>
-    ));
+      stringItem = urlList.map((urlList) => (
+        <iframe
+          id="player"
+          src={urlList}
+          frameborder="0"
+          width="400"
+          height="250"
+        ></iframe>
+      ));
   }
 
   return (
