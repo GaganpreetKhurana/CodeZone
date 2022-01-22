@@ -22,7 +22,13 @@ class ChatBox extends React.Component {
             messages : [] ,
         };
     }
-    
+    handleSmoothScroll = () => {
+        this.titleRef.current.scrollIntoView({ behavior: 'smooth' });
+        this.socket.emit (
+            "ReadAll" ,
+            this.props.self_details.id
+        );
+    }
     componentDidMount () {
         if (
             this.props.self_details.id &&
@@ -54,7 +60,7 @@ class ChatBox extends React.Component {
                 "ReadAll" ,
                 this.props.self_details.id
             );
-        } , 5000 );
+        } , 2500 );
         this.setUpConnections ();
     }
     
