@@ -10,14 +10,23 @@ import CardContent from '@mui/material/CardContent';
 import { Paper} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import InputBase from "@mui/material/InputBase";
+// eslint-disable-next-line
 import Snackbar from '@mui/material/Snackbar';
+// eslint-disable-next-line
 import Alert from '@mui/material/Alert';
+// eslint-disable-next-line
 import Table from '@mui/material/Table';
+// eslint-disable-next-line
 import TableBody from '@mui/material/TableBody';
+// eslint-disable-next-line
 import TableCell from '@mui/material/TableCell';
+// eslint-disable-next-line
 import TableContainer from '@mui/material/TableContainer';
+// eslint-disable-next-line
 import TableHead from '@mui/material/TableHead';
+// eslint-disable-next-line
 import TablePagination from '@mui/material/TablePagination';
+// eslint-disable-next-line
 import TableRow from '@mui/material/TableRow';
 
 import Fab from '@mui/material/Fab';
@@ -130,103 +139,115 @@ class LabDashboard extends Component {
         
     };
     render() {
-    console.log(this.props)
-    let {students} = this.props.classroom;
-    const {user} = this.props.auth;
-    const { userId,labId } = this.props.match.params;
-    const {editorLabDetails} = this.props.labDetails;
-    const columns = [
-        { id: 'name', label: 'Name', minWidth: 170 },
-        { id: 'sid', label: 'SID', minWidth: 100 },
+      console.log(this.props);
+      let { students } = this.props.classroom;
+      const { user } = this.props.auth;
+      // eslint-disable-next-line
+      const { userId, labId } = this.props.match.params;
+      const { editorLabDetails } = this.props.labDetails;
+      // eslint-disable-next-line
+      const columns = [
+        { id: "name", label: "Name", minWidth: 170 },
+        { id: "sid", label: "SID", minWidth: 100 },
         {
-          id: 'viewCode',
-          label: 'View Code',
+          id: "viewCode",
+          label: "View Code",
           minWidth: 170,
         },
         {
-          id: 'marks',
-          label: 'Marks Obtained',
+          id: "marks",
+          label: "Marks Obtained",
           minWidth: 170,
         },
         {
-          id: 'submittedAt',
-          label: 'Submitted At',
+          id: "submittedAt",
+          label: "Submitted At",
           minWidth: 170,
         },
       ];
-    const {finalSubmit, evaluateLab} = this.props.labDetails.codeEditorDetails;
-    console.log(this.state.data);
-        
-        return (
-            <>
-            {this.state.loading && <>
-                <Grid
-                    spacing={2}
-                    container
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    >
-                <CircularProgress disableShrink />
-                </Grid>
-            </>}
-            {!this.state.loading && 
-            <>
-             <Div>{this.state.data && <>{this.state.data.description}</>}</Div>
-                <Grid
-                    spacing={2}
-                    container
-                    direction="column"
-                    justifyContent="center"
-                    alignItems="flex-start"
-                    >
-                        <Grid spacing={4}
-                        container
-                        direction="row"
-                        justifyContent="center"
-                        alignItems="center"
-                         >
-                            <Grid item xs={7} m={2} >
-                                <Paper elevation={4}>
-                                <Card sx={{ minWidth: 300, minHeight:150 }}>
-                                <Div >Question</Div>
-                                <CardContent>
-                                {this.state.data && <>{this.state.data.question}</>}
-                                </CardContent>
-                                </Card>
-                                </Paper>
-                            </Grid>
-                             <Grid item xs={4} m={2} >
-                             <Paper elevation={4}>
-                                <Card sx={{ minWidth: 300, minHeight:150 }}>
-                                    <Div >Custom Input For Evaluation</Div>
-                                    <CardContent>
-                                        < InputBase
-                                            sx={{ ml: 1, flex: 1 }}
-                                            placeholder="Custom Input"
-                                            inputProps={{ "aria-label": "search google maps" }}
-                                            value={this.state.customInput}
-                                            onChange={this.handleCustomInput}
-                                        />
-                                    </CardContent>
-                                </Card>
-                            </Paper>
-                            </Grid>
-                            <Fab variant="extended" m={3}>
-                                <CodeEditorSideBar students={students} user={user} labId={labId} editorLabDetails={editorLabDetails} dispatch={this.props.dispatch}/>
-                            </Fab> 
-                            <Fab variant="extended" onClick={this.handleSubmitCode} >
-                                <PlayCircleIcon sx={{ mr: 3 }} color="primary" />
-                                Evaluate and Download Report
-                            </Fab>
-                         </Grid>
-                    <Grid item xs={7} m={2} >
+      // eslint-disable-next-line
+      const { finalSubmit, evaluateLab } =
+        this.props.labDetails.codeEditorDetails;
+      console.log(this.state.data);
 
-                    </Grid>
-                </Grid>
-    </>}
+      return (
+        <>
+          {this.state.loading && (
+            <>
+              <Grid
+                spacing={2}
+                container
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <CircularProgress disableShrink />
+              </Grid>
             </>
-        );
+          )}
+          {!this.state.loading && (
+            <>
+              <Div>{this.state.data && <>{this.state.data.description}</>}</Div>
+              <Grid
+                spacing={2}
+                container
+                direction="column"
+                justifyContent="center"
+                alignItems="flex-start"
+              >
+                <Grid
+                  spacing={4}
+                  container
+                  direction="row"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Grid item xs={7} m={2}>
+                    <Paper elevation={4}>
+                      <Card sx={{ minWidth: 300, minHeight: 150 }}>
+                        <Div>Question</Div>
+                        <CardContent>
+                          {this.state.data && <>{this.state.data.question}</>}
+                        </CardContent>
+                      </Card>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={4} m={2}>
+                    <Paper elevation={4}>
+                      <Card sx={{ minWidth: 300, minHeight: 150 }}>
+                        <Div>Custom Input For Evaluation</Div>
+                        <CardContent>
+                          <InputBase
+                            sx={{ ml: 1, flex: 1 }}
+                            placeholder="Custom Input"
+                            inputProps={{ "aria-label": "search google maps" }}
+                            value={this.state.customInput}
+                            onChange={this.handleCustomInput}
+                          />
+                        </CardContent>
+                      </Card>
+                    </Paper>
+                  </Grid>
+                  <Fab variant="extended" m={3}>
+                    <CodeEditorSideBar
+                      students={students}
+                      user={user}
+                      labId={labId}
+                      editorLabDetails={editorLabDetails}
+                      dispatch={this.props.dispatch}
+                    />
+                  </Fab>
+                  <Fab variant="extended" onClick={this.handleSubmitCode}>
+                    <PlayCircleIcon sx={{ mr: 3 }} color="primary" />
+                    Evaluate and Download Report
+                  </Fab>
+                </Grid>
+                <Grid item xs={7} m={2}></Grid>
+              </Grid>
+            </>
+          )}
+        </>
+      );
     }
 }
 function mapStateToProps(state) {
