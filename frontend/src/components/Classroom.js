@@ -63,7 +63,7 @@ class Classroom extends Component {
             <NoticeBoard classroomId={match.params.classroomID} />{" "}
           </Grid>
           <Grid item m={2}>
-            <StudentsList />
+            <StudentsList classroomId={match.params.classroomID} />
           </Grid>
         </Grid>
       </Grid>
