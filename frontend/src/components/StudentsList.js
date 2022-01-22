@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import ChatWindow from "./ChatWindow";
+import { fetchUnreadMessageCount } from "../actions/classroom";
 
 //Material UI
 import { FlexRow, Item } from "@mui-treasury/component-flex";
@@ -18,7 +19,8 @@ const PersonItem = ({
   self = {},
   other = {},
   classroomId = {},
-  messageArray={}
+  messageArray={},
+    unreadMessageCount=0,
 }) => {
   return (
     <FlexRow gap={12} p={2} noWrap>
@@ -39,6 +41,7 @@ const PersonItem = ({
             }}
           >
             <b>{name}</b>
+              <b>  Unread: </b> {unreadMessageCount}
           </Typography>
           <Typography
             noWrap
@@ -61,9 +64,19 @@ const PersonItem = ({
 };
 
 class StudentsList extends React.Component {
-  render() {
+    componentDidMount() {
+        this.props.dispatch(fetchUnreadMessageCount(this.props.classroomId));
+        this.timer = setInterval(() => {
+            this.props.dispatch(fetchUnreadMessageCount(this.props.classroomId));
+            console.log(this.props.classroom.unreadMessageCount);
+            // console.log(this.state);
+        }, 10000);
+
+    }
+
+    render() {
     let {user} = this.props.auth;
-    let {students, teachers,messageArray} = this.props.classroom;
+    let {students, teachers,messageArray,unreadMessageCount} = this.props.classroom;
     const {classroomId} = this.props;
     return (
       <div>
@@ -101,6 +114,7 @@ class StudentsList extends React.Component {
                   other={value}
                   classroomId={classroomId}
                   messageArray={messageArray}
+                  unreadMessageCount={unreadMessageCount[value._id]}
                 />
                 <Divider />
               </div>
@@ -114,8 +128,10 @@ class StudentsList extends React.Component {
                   other={value}
                   classroomId={classroomId}
                   messageArray={messageArray}
+                  unreadMessageCount={unreadMessageCount[value._id]}
                 />
                 <Divider />
+
               </div>
             ))}
           </Card>

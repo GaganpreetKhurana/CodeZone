@@ -52,10 +52,13 @@ class ChatBox extends React.Component {
             this.handleSmoothScroll();
         }, 1000);
         this.setUpConnections();
-        this.socket.emit(
-            "ReadAll",
-            this.props.self_details.id
-        );
+        this.interval = setInterval(() => {
+            console.log("ReadAll");
+            this.socket.emit(
+                "ReadAll",
+                this.props.self_details.id
+            );
+        }, 5000);
     }
     setUpConnections = () => {
         if (

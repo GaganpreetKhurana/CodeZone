@@ -11,6 +11,7 @@ const {
   ADD_COMMENT,
   // UPDATE_POST_LIKE,
   // UPDATE_COMMENT_LIKE,
+    FETCH_UNREAD_MESSAGE_COUNT
 } = require("../actions/actionTypes");
 
 const initialClassroomState = {
@@ -75,7 +76,11 @@ export default function auth(state = initialClassroomState, action) {
           ...state,
           messageArray: [...state.messageArray,action.newMessage]
         };
-      
+    case FETCH_UNREAD_MESSAGE_COUNT:
+      return  {
+        ...state,
+        unreadMessageCount:action.unreadMessageCount
+      }
     default:
       return state;
   }

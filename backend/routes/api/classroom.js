@@ -13,5 +13,7 @@ router.post("/link", auth.authenticateToken, classroom.link);
 router.post("/createLab", auth.authenticateToken, labs.createLab);
 router.get("/fetchExistingLabDetails/:classroomId", auth.authenticateToken, labs.fetchExistingLabDetails);
 router.get("/createEditor/:userId/:labId",auth.authenticateToken,labs.createEditor)
+router.get("/unreadMessageCount/:classroomId", auth.authenticateToken, classroom.unreadMessageCount);
+
 
 module.exports = router;

@@ -8,7 +8,8 @@ import {
     CLEAR_CURRENT_CLASSROOM_DETAILS,
     GET_EARLIER_MESSAGES,
     CLEAR_EARLIER_MESSAGES,
-    UPDATE_CHAT_MESSAGE
+    UPDATE_CHAT_MESSAGE,
+    FETCH_UNREAD_MESSAGE_COUNT
   } from "./actionTypes";
 
 function userDetails(userDetails){
@@ -169,4 +170,29 @@ export function clearEarlierMessages(){
   return {
       type : CLEAR_EARLIER_MESSAGES,
   }
+}
+
+export function fetchUnreadMessageCount(classroomId){
+    return (dispatch) => {
+        const url = `/api/classroom/unreadMessageCount/${classroomId}`;
+        fetch(url, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    dispatch(unreadMessageCount(data.data));
+                    return;
+                }
+            });
+    };
+}
+
+export function unreadMessageCount(unreadMessageCount){
+    return {
+        type : FETCH_UNREAD_MESSAGE_COUNT,
+        unreadMessageCount
+    }
 }
