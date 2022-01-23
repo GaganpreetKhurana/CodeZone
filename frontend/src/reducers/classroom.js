@@ -22,7 +22,8 @@ const initialClassroomState = {
   announcements: [],
   posts: [],
   ClassMeetLink: '',
-  messageArray: []
+  messageArray: [],
+  unreadMessageCount:[],
 };
 export default function auth(state = initialClassroomState, action) {
   switch (action.type) {
