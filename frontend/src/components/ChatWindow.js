@@ -44,7 +44,11 @@ export default function DraggableDialog(props) {
   }
   return (
     <div>
-      <IconButton variant="outlined" onClick={handleClickOpen} disabled={disable}>
+      <IconButton
+        variant="outlined"
+        onClick={handleClickOpen}
+        disabled={disable}
+      >
         <CommentIcon />
       </IconButton>
       <Dialog
@@ -52,26 +56,30 @@ export default function DraggableDialog(props) {
         onClose={handleClose}
         PaperComponent={PaperComponent}
         aria-labelledby="draggable-dialog-title"
-        disableBackdropClick
         disableEnforceFocus
         hideBackdrop
         PaperProps={{
-            sx: {
+          sx: {
             width: "100%",
             minHeight: 450,
             minWidth: 400,
-            }
+          },
         }}
         style={{
-          top: '45%', // Position however you like
-          left: '65%',
+          top: "45%", // Position however you like
+          left: "65%",
         }}
       >
-        <DialogTitle style={{ cursor: 'move' }} id="draggable-dialog-title">
+        <DialogTitle style={{ cursor: "move" }} id="draggable-dialog-title">
           Chat Window
         </DialogTitle>
         <DialogContent>
-            <ChatBox classroomId={classroomId} self_details={self} other_details={other} messageArray={messageArray} />
+          <ChatBox
+            classroomId={classroomId}
+            self_details={self}
+            other_details={other}
+            messageArray={messageArray}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Close</Button>
