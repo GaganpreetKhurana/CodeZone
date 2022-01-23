@@ -50,9 +50,9 @@ module.exports.createLab = async function(req, res) {
 
 //to fetch existing lab details
 module.exports.fetchExistingLabDetails = async function(req,res){
-    let classExistWithClassId = await Classes.findOne({
-        _id: req.params.classroomId,
-    }).select("labsCreated")
+    let classExistWithClassId = await Classes.findOne ( {
+        _id : req.params.classroomId ,
+    } ).select("labsCreated")
     .populate(
         "labsCreated",
         "creator question input output maxMarks description language createdAt evaluateLab",null,{ sort: { 'created_at': -1 } }
