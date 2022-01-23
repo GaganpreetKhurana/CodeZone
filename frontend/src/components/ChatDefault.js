@@ -1,4 +1,4 @@
-const ChatDefault = ({ palette, spacing }) => {
+const defaultChatMsgStyles = ({ palette, spacing }) => {
   const radius = spacing(2.5);
   const size = spacing(4);
   const rightBgColor = palette.primary.main;
@@ -51,4 +51,4 @@ const ChatDefault = ({ palette, spacing }) => {
   };
 };
 
-export default ChatDefault;
+export default defaultChatMsgStyles;

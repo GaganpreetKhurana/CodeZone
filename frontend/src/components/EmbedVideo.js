@@ -25,6 +25,7 @@ export default function EmbedVideo(props) {
           frameborder="0"
           width="400"
           height="250"
+          title="Youtube"
         ></iframe>
       ));
   }

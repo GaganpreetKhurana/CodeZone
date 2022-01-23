@@ -108,7 +108,7 @@ class ChatBox extends React.Component {
         );
         this.setState ( {
             contentMessage : "" ,
-            messages : [ ... olderMessages , newMessage ] ,
+            messages : [ ...olderMessages , newMessage ] ,
         } );
     };
     
@@ -123,43 +123,41 @@ class ChatBox extends React.Component {
         const { self_details } = this.props;
         const { messages } = this.state;
         return (
-            <div>
-                { messages.length > 0 &&
-                    messages.map ( ( message ) => (
-                        <ChatMsg
-                            side={ message.sender === self_details.id ? "right" : "left" }
-                            avatar={ "" }
-                            messages={ [ message.content ] }
-                        />
-                    ) ) }
-                
-                
-                <Paper
-                    component="form"
-                    sx={ {
-                        display : "flex" ,
-                        alignItems : "center" ,
-                    } }
-                >
-                    <InputBase
-                        sx={ { ml : 1 , flex : 1 } }
-                        placeholder="Start typing a comment"
-                        inputProps={ { "aria-label" : "search google maps" } }
-                        value={ this.state.contentMessage }
-                        onChange={ this.handleChangeMessage }
-                        ref={ this.titleRef }
-                    />
-                    <Divider sx={ { height : 28 , m : 0.5 } } orientation="vertical"/>
-                    <IconButton
-                        color="primary"
-                        sx={ { p : "10px" } }
-                        aria-label="directions"
-                        onClick={ this.sendMessage }
-                    >
-                        <CommentIcon/>
-                    </IconButton>
-                </Paper>
-            </div>
+          <div>
+            {messages.length > 0 &&
+              messages.map((message) => (
+                <ChatMsg
+                  side={message.sender === self_details.id ? "right" : "left"}
+                  messages={[message.content]}
+                />
+              ))}
+
+            <Paper
+              component="form"
+              sx={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              <InputBase
+                sx={{ ml: 1, flex: 1 }}
+                placeholder="Start typing a comment"
+                inputProps={{ "aria-label": "search google maps" }}
+                value={this.state.contentMessage}
+                onChange={this.handleChangeMessage}
+                ref={this.titleRef}
+              />
+              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+              <IconButton
+                color="primary"
+                sx={{ p: "10px" }}
+                aria-label="directions"
+                onClick={this.sendMessage}
+              >
+                <CommentIcon />
+              </IconButton>
+            </Paper>
+          </div>
         );
     }
 }
