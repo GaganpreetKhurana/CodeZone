@@ -78,6 +78,7 @@ class StudentsList extends React.Component {
     let {user} = this.props.auth;
     let {students, teachers,messageArray,unreadMessageCount} = this.props.classroom;
     const {classroomId} = this.props;
+    console.log("classroomId",classroomId);
     return (
       <div>
         <Paper elevation={4} style={{ maxHeight: 300, overflow: "auto" }}>
