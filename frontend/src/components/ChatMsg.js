@@ -7,18 +7,30 @@ import Avatar from "@mui/material/Avatar";
 
 export default function ChatMsg(props) {
   const side = props.side;
+  const sideBool = props.side == "left" ? true : false;
   const message = props.messages;
   const sender = props.name;
   return (
-    <ListItem
-      align = {side === "right" ? "flex-end" : "flex-start"}
-      justifyContent={side === "right" ? "flex-end" : "flex-start"}
-      style={{ flex: 1 }}
-    >
-      <ListItemAvatar>
-        <Avatar alt={sender} />
-      </ListItemAvatar>
-      <ListItemText primary={message} />
-    </ListItem>
+    <div>
+      {sideBool ? (
+        <div>
+          <ListItem>
+            <ListItemAvatar>
+              <Avatar alt={sender} />
+            </ListItemAvatar>
+            <ListItemText primary={message} />
+          </ListItem>
+        </div>
+      ) : (
+        <div>
+          <ListItem>
+            <ListItemText primary={message} />
+            <ListItemAvatar>
+              <Avatar alt={sender} />
+            </ListItemAvatar>
+          </ListItem>
+        </div>
+      )}
+    </div>
   );
 }

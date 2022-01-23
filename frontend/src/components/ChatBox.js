@@ -118,9 +118,7 @@ class ChatBox extends React.Component {
     const { messages } = this.state;
     return (
       <div>
-        <List
-          sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-        >
+        <List justify="space-between">
           {messages.length > 0 &&
             messages.map((message) => (
               <ChatMsg
