@@ -185,6 +185,8 @@ class DiscussionPortal extends React.Component {
                   <Divider />
                   <ListItem>
                     <Typography variant="body1">{post.content}</Typography>
+                  </ListItem>
+                  <ListItem>
                     <EmbedVideo text ={post.content} />
                   </ListItem>
                   <Divider />
