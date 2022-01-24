@@ -35,7 +35,7 @@ class JoinLabDialog extends Component {
     this.props.dispatch(fetchClassLabDetails(classroomId));
     this.timer = setInterval(() => {
       this.props.dispatch(fetchClassLabDetails(classroomId));
-    }, 5000);
+    }, 1000);
   }
 
   componentWillUnmount() {
@@ -48,7 +48,7 @@ class JoinLabDialog extends Component {
   render() {
     const { user } =this.props.auth;
     const { labDetails } = this.props.labDetails;
-    console.log(labDetails);
+    const { classroomId} = this.props;
     return (
     <div>
     <Button  fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={this.dialogOpen}>
@@ -79,7 +79,7 @@ class JoinLabDialog extends Component {
                       <TableCell align="center">{row.createdAt.slice(0, 10)}</TableCell>
                       <TableCell align="center">{row.maxMarks ==="" ? '-' : row.maxMarks}</TableCell>
                       <TableCell align="center">
-                      {user.id && <Link to={`/labDetails/${user.id}/${row._id}`} onClick={()=>{
+                      {user.id && <Link to={`/labDetails/${classroomId}/${user.id}/${row._id}`} onClick={()=>{
                           //fetch this code-editor's details using row_id
                           // this.props.dispatch(createNewCodeEditor(user.id,row._id));
                         }}>

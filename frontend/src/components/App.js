@@ -74,7 +74,7 @@ class App extends React.Component {
                 <Route path="/code-editor/:userId/:labId" component={CodeEditorScreen}/>
               )}
               {auth.isLoggedIn && auth.user.role === "Teacher" && (
-                <Route path="/labDetails/:userId/:labId" component={LabDashboard} />
+                <Route path="/labDetails/:classroomId/:userId/:labId" component={LabDashboard} />
               )}
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />

@@ -45,6 +45,7 @@ class LabDashboard extends Component {
             loading: true,
             data:null,
             customInput: "",
+            customOutput: ""
         };
     };
     handleCustomInput = (e) => {
@@ -52,6 +53,11 @@ class LabDashboard extends Component {
             customInput: e.target.value,
         });
     };
+    handleCustomOutput = (e) => {
+      this.setState({
+          customOutput: e.target.value,
+      });
+  };
     getFormBody =(params) => {
         let FormBody = [];
         for (let property in params) {
@@ -62,7 +68,8 @@ class LabDashboard extends Component {
         return FormBody.join("&");
       }
     componentDidMount(){
-        const {labId,userId} = this.props.match.params;
+        const {labId,userId,classroomId} = this.props.match.params;
+        let { students } = this.props.classroom;
         if(labId && userId ){
             const url = "/api/editor/fetchLabDetails";
             fetch(url, {
@@ -71,7 +78,7 @@ class LabDashboard extends Component {
                 "Content-Type": "application/x-www-form-urlencoded",
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-            body: this.getFormBody({labId,userId}),
+            body: this.getFormBody({labId,userId,classroomId}),
             })
             .then((response) => response.json())
             .then((data) => {
@@ -141,6 +148,7 @@ class LabDashboard extends Component {
     render() {
       console.log(this.props);
       let { students } = this.props.classroom;
+      console.log("students",students);
       const { user } = this.props.auth;
       // eslint-disable-next-line
       const { userId, labId } = this.props.match.params;
@@ -149,6 +157,7 @@ class LabDashboard extends Component {
       const columns = [
         { id: "name", label: "Name", minWidth: 170 },
         { id: "sid", label: "SID", minWidth: 100 },
+        { id: "email", label: "Email", minWidth: 100 },
         {
           id: "viewCode",
           label: "View Code",
@@ -166,8 +175,7 @@ class LabDashboard extends Component {
         },
       ];
       // eslint-disable-next-line
-      const { finalSubmit, evaluateLab } =
-        this.props.labDetails.codeEditorDetails;
+      const { finalSubmit, evaluateLab } = this.props.labDetails.codeEditorDetails;
       console.log(this.state.data);
 
       return (
@@ -202,7 +210,7 @@ class LabDashboard extends Component {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Grid item xs={7} m={2}>
+                  <Grid item xs={5} m={2}>
                     <Paper elevation={4}>
                       <Card sx={{ minWidth: 300, minHeight: 150 }}>
                         <Div>Question</Div>
@@ -212,7 +220,7 @@ class LabDashboard extends Component {
                       </Card>
                     </Paper>
                   </Grid>
-                  <Grid item xs={4} m={2}>
+                  <Grid item xs={3} m={2}>
                     <Paper elevation={4}>
                       <Card sx={{ minWidth: 300, minHeight: 150 }}>
                         <Div>Custom Input For Evaluation</Div>
@@ -227,6 +235,24 @@ class LabDashboard extends Component {
                         </CardContent>
                       </Card>
                     </Paper>
+                    
+                  </Grid>
+                  <Grid item xs={3} m={2}>
+                    <Paper elevation={4}>
+                      <Card sx={{ minWidth: 300, minHeight: 150 }}>
+                        <Div>Custom Output For Evaluation</Div>
+                        <CardContent>
+                          <InputBase
+                            sx={{ ml: 1, flex: 1 }}
+                            placeholder="Custom Input"
+                            inputProps={{ "aria-label": "search google maps" }}
+                            value={this.state.customOutput}
+                            onChange={this.handleCustomOutput}
+                          />
+                        </CardContent>
+                      </Card>
+                    </Paper>
+                    
                   </Grid>
                   <Fab variant="extended" m={3}>
                     <CodeEditorSideBar
@@ -242,7 +268,9 @@ class LabDashboard extends Component {
                     Evaluate and Download Report
                   </Fab>
                 </Grid>
-                <Grid item xs={7} m={2}></Grid>
+                <Grid item xs={7} m={2}>
+                  {/* table will come here*/}
+                </Grid>
               </Grid>
             </>
           )}
