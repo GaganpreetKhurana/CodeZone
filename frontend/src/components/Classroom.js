@@ -58,7 +58,6 @@ class Classroom extends Component {
                 m={2}
                 container
                 direction="column"
-                justifyContent="space-evenly"
                 alignItems="stretch"
             >
                 <Grid item m={2}>
