@@ -151,7 +151,7 @@ module.exports.fetchLabDetails = async function (req, res) {
                         finalAnswerType.name = student.name;
                         finalAnswerType.sid = student.SID;
                         finalAnswerType.email = student.email;
-                        finalAnswerType.id = codeEditor._id.toString();
+                        finalAnswerType.id = codeEditor._id;
                          if(codeEditor.finalSubmit == true){
                             finalAnswerType.submitted = true;
                             finalAnswerType.submittedAt = codeEditor.submittedAt;
@@ -178,4 +178,79 @@ module.exports.fetchLabDetails = async function (req, res) {
     return res.json(422, {
         message: "Error while Fetching Details!",
     });
+}
+
+module.exports.downloadReport = async function (req, res) {
+    let customInput = req.body.customInput;
+    let customOutput = req.body.customOutput;
+    let data = JSON.parse(req.body.data);
+    //console.log(customInput,customOutput,data);
+    let finalAnswer = [];
+    for(let counter=0;counter<data.length;counter++){
+        let row = data[counter];
+        if(row.id){
+        let codeEditorExist = await CodeEditor.findById(row.id);
+        //evaluate and update maxMarks of codeEditorExist and also for row.maxMarks and append that in finalAnswer
+        if(codeEditorExist){
+            var program = {
+                script : row.code,
+                language : languageCodes[ codeEditorExist.languageSelected ] ,
+                clientId : SECRET.CLIENT_ID ,
+                clientSecret : SECRET.CLIENT_SECRET_KEY ,
+                stdin : customInput ,
+                versionIndex: "4" ,
+            };
+            let newCompileRequest = await Compiler.create ( {
+                code : row.code ,
+                language : languageCodes[ codeEditorExist.languageSelected ] ,
+                user : row.id ,
+                languageVersion : "4" ,
+                input : customInput ,
+                lab : row.id ,
+            } )
+
+            if ( newCompileRequest ) {
+                newCompileRequest = await newCompileRequest.save ();
+                await request ( {
+                        url : 'https://api.jdoodle.com/v1/execute' ,
+                        method : "POST" ,
+                        json : program
+                    } ,
+                    async function ( error , response , body ) {
+                        // console.log(error,response,body);
+                        newCompileRequest.statusCode = body.statusCode;
+                        newCompileRequest.output = body.output;
+                        newCompileRequest.CPUTime = body.cpuTime;
+                        newCompileRequest.memory = body.memory;
+                        newCompileRequest = await newCompileRequest.save ();
+                        if(body.output === customOutput){
+                            codeEditorExist.marksObtained = codeEditorExist.maxMarks;
+                            codeEditorExist.save();
+                            row.marks = codeEditorExist.maxMarks;
+                            console.log("body output",body.output);
+                            finalAnswer = [...finalAnswer,row]; 
+                        }    
+                        else{
+                            codeEditorExist.marksObtained = 0;
+                            codeEditorExist.save();
+                            row.marks = 0;
+                            finalAnswer = [...finalAnswer,row]; 
+                        }
+                    } );    
+            }
+        }   
+    }
+        else{
+            finalAnswer=[...finalAnswer,row];
+        }
+        
+    }
+    setTimeout(()=>{
+        return res.status(200).json({
+            message: "Lab Details Fetched Successfully!!",
+            success: true,
+            data: finalAnswer
+        });
+    },8000)
+    
 }

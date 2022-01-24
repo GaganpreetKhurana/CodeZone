@@ -63,7 +63,7 @@ class CreateLabDialog extends Component {
             this.setState({
                 error: ""
             })
-        },3000)
+        },6000)
       }
       else{
       this.props.dispatch(createNewLab(description, question, input, output, language, maxMarks,classroomId,evaluateLab));

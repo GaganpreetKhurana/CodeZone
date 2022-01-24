@@ -13,7 +13,7 @@ const codeEditorSchema = new mongoose.Schema ( {
         type : String
     } ,
     finalSubmit : { type : Boolean },
-    marksObtained :{ type : Boolean },
+    marksObtained :{ type : String },
     maxMarks: {type:String},
 } , { timestamps : true } );
 const codeEditor = mongoose.model ( "codeEditor" , codeEditorSchema );

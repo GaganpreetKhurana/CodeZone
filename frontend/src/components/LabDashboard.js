@@ -16,7 +16,8 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 import Fab from '@mui/material/Fab';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 
@@ -50,9 +51,12 @@ class LabDashboard extends Component {
         super(props);
         this.state = {
             loading: true,
+            loading2: false,
             data: [],
             customInput: "",
-            customOutput: ""
+            customOutput: "",
+            error:"",
+            success:""
         };
     };
     handleCustomInput = (e) => {
@@ -109,78 +113,69 @@ class LabDashboard extends Component {
         e.preventDefault();
         console.log("Pressesd")
         console.log(this.state.customInput,this.state.customOutput,this.state.data);
-        // const {content, code, finalSubmit, evaluateLab} = this.props.labDetails.codeEditorDetails;
-        // if(code && finalSubmit === false && evaluateLab === true){
-        //     //at backend search by code in codeEditor
-        //     //make finalSubmit= true
-        //     //submittedAt=Date.now()
-        //     //contentSaved=content
-        //     // console.log("Submit button presses");
-        //     const url = "/api/editor/submitCode";
-        //     fetch(url, {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/x-www-form-urlencoded",
-        //         Authorization: `Bearer ${localStorage.getItem("token")}`,
-        //     },
-        //     body: this.getFormBody({ code, content, finalSubmit:true, submittedAt: new Date()}),
-        //     })
-        //     .then((response) => response.json())
-        //     .then((data) => {
-        //         if (data.success) {
-        //             this.setState({
-        //                 successMessage:data.message,
-        //                 showFinalSubmit: true,
-        //             })
-        //             setTimeout(()=>{
-        //                 this.setState({
-        //                     successMessage: ""
-        //                 })
-        //             },3000)
-        //         }
-        //         else{
-        //             this.setState({
-        //                 errorMessage:data.message,
-        //             })
-        //             setTimeout(()=>{
-        //                 this.setState({
-        //                     errorMessage: ""
-        //                 })
-        //             },3000)
-        //         }
-        //     });
-        // }
+        if( !this.state.customOutput && !this.state.customInput){
+          this.setState({
+            error:"Please Fill Custom Input and Output to evaluate!!",
+        })
+        setTimeout(()=>{
+            this.setState({
+                error: ""
+            })
+        },6000)
+        }
+        else{
+          const {customInput, customOutput, data} = this.state;
+          if(customInput && customOutput && data){
+            const url = "/api/editor/downloadReport";
+            this.setState({
+              loading2:true,
+            })
+            fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+            body: this.getFormBody({ customInput, customOutput, data:JSON.stringify(data)}),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                  this.setState({
+                    loading2: false,
+                    data: data.data
+                })
+                  console.log("Output",data);
+                //     this.setState({
+                //         successMessage:data.message,
+                //         showFinalSubmit: true,
+                //     })
+                //     setTimeout(()=>{
+                //         this.setState({
+                //             successMessage: ""
+                //         })
+                //     },3000)
+                // }
+                // else{
+                //     this.setState({
+                //         errorMessage:data.message,
+                //     })
+                //     setTimeout(()=>{
+                //         this.setState({
+                //             errorMessage: ""
+                //         })
+                //     },3000)
+                }
+            });
+          }
 
-        
+        }      
     };
     render() {
       let { students } = this.props.classroom;
       const { user } = this.props.auth;
-      // eslint-disable-next-line
-      const { userId, labId } = this.props.match.params;
+      const { labId } = this.props.match.params;
       const { editorLabDetails } = this.props.labDetails;
-      // eslint-disable-next-line
-      const columns = [
-        { id: "name", label: "Name", minWidth: 170 },
-        { id: "sid", label: "SID", minWidth: 100 },
-        { id: "email", label: "Email", minWidth: 100 },
-        {
-          id: "viewCode",
-          label: "View Code",
-          minWidth: 170,
-        },
-        {
-          id: "marks",
-          label: "Marks Obtained",
-          minWidth: 170,
-        },
-        {
-          id: "submittedAt",
-          label: "Submitted At",
-          minWidth: 170,
-        },
-      ];
-      console.log("data",this.state.data);
       return (
         <>
           {this.state.loading && (
@@ -270,6 +265,19 @@ class LabDashboard extends Component {
                     <PlayCircleIcon sx={{ mr: 3 }} color="primary" />
                     Evaluate and Download Report
                   </Fab>
+                  {this.state.loading2 && (
+                    <>
+                      <Grid
+                        spacing={2}
+                        container
+                        direction="column"
+                        justifyContent="center"
+                        alignItems="center"
+                      >
+                        <CircularProgress disableShrink />
+                      </Grid>
+                    </>
+                  )}
                 </Grid>
                 <Grid item xs={12} ml={32} mt={4} >
                   {/* table will come here*/}
@@ -304,6 +312,11 @@ class LabDashboard extends Component {
                     </TableContainer>
                   </>}
                 </Grid>
+                {this.state.error && <Snackbar open={true} autoHideDuration={2000}>
+                        <Alert severity="error" sx={{ width: '100%' }}>
+                        {this.state.error}
+                        </Alert>
+                    </Snackbar>}
               </Grid>
             </>
           )}
