@@ -33,90 +33,50 @@ class Classroom extends Component {
         }
     }
     
-//     componentWillUnmount () {
-//         clearInterval ( this.timer );
-//         this.props.dispatch ( clearClassroomDetails () );
-//     }
     
-//     render () {
-//         const { match } = this.props;
-//         // return <div>{match.params.classroomID}</div>;
-//         return (
-//             <Grid container direction="row" justifyContent="space-evenly">
-//                 <Grid
-//                     item
-//                     xs={ 6 }
-//                     m={ 2 }
-//                     style={ { maxHeight : "100vh" , overflow : "auto" } }
-//                 >
-//                     { " " }
-//                     <DiscussionPortal classroomId={ match.params.classroomID }/>
-//                 </Grid>
-//                 <Grid
-//                     item
-//                     xs={ 4 }
-//                     m={ 2 }
-//                     container
-//                     direction="column"
-//                     justifyContent="space-evenly"
-//                     alignItems="stretch"
-//                 >
-//                     <Grid item m={ 2 }>
-//                         <NoticeBoard classroomId={ match.params.classroomID }/>{ " " }
-//                     </Grid>
-//                     <Grid item m={ 2 }>
-//                         <StudentsList classroomId={ match.params.classroomID }/>
-//                     </Grid>
-//                 </Grid>
-//             </Grid>
-//         );
-//     }
-//   }
-  componentWillUnmount(){
-    clearInterval(this.timer);
-    this.props.dispatch(clearClassroomDetails());
-  }
-  render() {
-    const { match } = this.props;
-    // return <div>{match.params.classroomID}</div>;
-    return (
-      <Grid container direction="row" justifyContent="space-evenly">
-        <Grid
-          item
-          xs={6}
-          m={2}
-          style={{ maxHeight: "150vh", overflow: "auto" }}
-        >
-          {" "}
-          <DiscussionPortal classroomId={match.params.classroomID} />
+    componentWillUnmount () {
+        clearInterval ( this.timer );
+        this.props.dispatch ( clearClassroomDetails () );
+    }
+    
+    render () {
+        const { match } = this.props;
+        // return <div>{match.params.classroomID}</div>;
+        return ( <Grid container direction="row" justifyContent="space-evenly">
+            <Grid
+                item
+                xs={6}
+                m={2}
+                style={{ maxHeight: "150vh", overflow: "auto" }}
+            >
+                {" "}
+                <DiscussionPortal classroomId={match.params.classroomID} />
+            </Grid>
+            <Grid
+                item
+                xs={4}
+                m={2}
+                container
+                direction="column"
+                justifyContent="space-evenly"
+                alignItems="stretch"
+            >
+                <Grid item m={2}>
+                    <NoticeBoard classroomId={match.params.classroomID} />{" "}
+                </Grid>
+                <Grid item m={2}>
+                    <StudentsList classroomId={match.params.classroomID} />
+                </Grid>
+            </Grid>
         </Grid>
-        <Grid
-          item
-          xs={4}
-          m={2}
-          container
-          direction="column"
-          justifyContent="space-evenly"
-          alignItems="stretch"
-        >
-          <Grid item m={2}>
-            <NoticeBoard classroomId={match.params.classroomID} />{" "}
-          </Grid>
-          <Grid item m={2}>
-            <StudentsList  classroomId={ match.params.classroomID } />
-          </Grid>
-        </Grid>
-      </Grid>
-    );
-  }
+        );
+    }
 }
 
 function mapStateToProps ( state ) {
     return {
-        auth : state.auth ,
-        createClassroom : state.createClassroom ,
+        auth : state.auth , createClassroom : state.createClassroom ,
     };
 }
 
 export default connect ( mapStateToProps ) ( Classroom );
-

@@ -62,11 +62,7 @@ class CodeEditorScreen extends React.Component {
         const id = this.props.labDetails.codeEditorDetails._id;
         const { code, finalSubmit, evaluateLab} = this.props.labDetails.codeEditorDetails;
         if(code && finalSubmit === false && evaluateLab === true){
-            //at backend search by code in codeEditor
-            //make finalSubmit= true
-            //submittedAt=Date.now()
-            //contentSaved=content
-            // console.log("Submit button presses",content.ops[0].insert);
+            let date = new Date();
             const url = "/api/editor/submitCode";
             fetch(url, {
             method: "POST",
@@ -74,7 +70,7 @@ class CodeEditorScreen extends React.Component {
                 "Content-Type": "application/x-www-form-urlencoded",
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-            body: this.getFormBody({ code,id , finalSubmit:true, submittedAt: new Date()}),
+            body: this.getFormBody({ code,id , finalSubmit:true, submittedAt: date.toLocaleString()}),
             })
             .then((response) => response.json())
             .then((data) => {

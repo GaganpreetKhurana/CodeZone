@@ -138,20 +138,25 @@ module.exports.fetchLabDetails = async function (req, res) {
                     submitted:null,
                     submittedAt:"",
                     code:"",
-                    marks:""
+                    marks:"",
+                    id:"",
+                    maxMarks:""
                 };
                 let flag = false;
                 for(let count = 0;count<codeEditorDetails.length;count++){
                     let codeEditor = codeEditorDetails[count];
+                    finalAnswerType.maxMarks = codeEditor.maxMarks;
                     if(codeEditor.owner && codeEditor.owner._id && student._id && student._id.toString() === codeEditor.owner._id.toString()){
                         flag = true;
                         finalAnswerType.name = student.name;
                         finalAnswerType.sid = student.SID;
                         finalAnswerType.email = student.email;
-                        if(codeEditor.finalSubmit == true){
+                        finalAnswerType.id = codeEditor._id.toString();
+                         if(codeEditor.finalSubmit == true){
                             finalAnswerType.submitted = true;
                             finalAnswerType.submittedAt = codeEditor.submittedAt;
                             finalAnswerType.code = codeEditor.contentSaved;
+                            finalAnswerType.marks = codeEditor.marksObtained;
                         }
                     }
                 }

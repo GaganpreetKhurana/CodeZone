@@ -10,10 +10,11 @@ const codeEditorSchema = new mongoose.Schema ( {
     evaluateLab : { type : Boolean } ,
     contentSaved : Object ,
     submittedAt : {
-        type : Date ,
-        default : Date.now
+        type : String
     } ,
-    finalSubmit : { type : Boolean } ,
+    finalSubmit : { type : Boolean },
+    marksObtained :{ type : Boolean },
+    maxMarks: {type:String},
 } , { timestamps : true } );
 const codeEditor = mongoose.model ( "codeEditor" , codeEditorSchema );
 module.exports = codeEditor;

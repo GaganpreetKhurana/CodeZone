@@ -11,6 +11,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 
 class CreateLabDialog extends Component {
   constructor(props) {
@@ -23,6 +25,7 @@ class CreateLabDialog extends Component {
       maxMarks:"",
       description: "",
       evaluateLab: false,
+      error: ""
     };
   }
 
@@ -52,7 +55,19 @@ class CreateLabDialog extends Component {
     const { classroomId} = this.props;
     const { description, question, input, output, language, maxMarks,evaluateLab } = this.state;
     if (description && classroomId) {
+      if(evaluateLab && !language && !maxMarks ){
+          this.setState({
+            error:"Please Fill language and Max Marks!!",
+        })
+        setTimeout(()=>{
+            this.setState({
+                error: ""
+            })
+        },3000)
+      }
+      else{
       this.props.dispatch(createNewLab(description, question, input, output, language, maxMarks,classroomId,evaluateLab));
+      }
     }
   };
   handleDescription = (e) => {
@@ -175,6 +190,11 @@ class CreateLabDialog extends Component {
                 required
             /></> )}
         </DialogContent>
+        {this.state.error && <Snackbar open={true} autoHideDuration={2000}>
+                        <Alert severity="error" sx={{ width: '100%' }}>
+                        {this.state.error}
+                        </Alert>
+                    </Snackbar>}
         <DialogActions>
             <Button onClick={this.handleSubmitForm} disabled={inProgress}>
             Create Lab
