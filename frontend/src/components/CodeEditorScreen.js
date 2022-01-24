@@ -59,13 +59,10 @@ class CodeEditorScreen extends React.Component {
       }
     handleSubmitCode = (e) => {
         e.preventDefault();
-        const {content, code, finalSubmit, evaluateLab} = this.props.labDetails.codeEditorDetails;
+        const id = this.props.labDetails.codeEditorDetails._id;
+        const { code, finalSubmit, evaluateLab} = this.props.labDetails.codeEditorDetails;
         if(code && finalSubmit === false && evaluateLab === true){
-            //at backend search by code in codeEditor
-            //make finalSubmit= true
-            //submittedAt=Date.now()
-            //contentSaved=content
-            // console.log("Submit button presses",content.ops[0].insert);
+            let date = new Date();
             const url = "/api/editor/submitCode";
             fetch(url, {
             method: "POST",
@@ -73,7 +70,7 @@ class CodeEditorScreen extends React.Component {
                 "Content-Type": "application/x-www-form-urlencoded",
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
-            body: this.getFormBody({ code, content: content.ops[0].insert, finalSubmit:true, submittedAt: new Date()}),
+            body: this.getFormBody({ code,id , finalSubmit:true, submittedAt: date.toLocaleString()}),
             })
             .then((response) => response.json())
             .then((data) => {
@@ -118,7 +115,7 @@ class CodeEditorScreen extends React.Component {
     const {executionStarted,customOutput,memory,cpuTime} = this.props.execute;
     const { userId,labId } = this.props.match.params;
     const {editorLabDetails} = this.props.labDetails;
-    const {finalSubmit, evaluateLab} = this.props.labDetails.codeEditorDetails;
+    const {content, finalSubmit, evaluateLab} = this.props.labDetails.codeEditorDetails;
 
     // console.log("this.state.finalSubmit",this.state.showFinalSubmit,"finalSubmit",finalSubmit);
     return (

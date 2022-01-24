@@ -1,6 +1,6 @@
 const mongoose = require ( "mongoose" );
 const codeEditorSchema = new mongoose.Schema ( {
-    content : Object ,
+    content : Object,
     code : { type : String } ,
     lab : { type : mongoose.Schema.Types.ObjectId , ref : "Lab" } ,
     customInput : { type : String } ,
@@ -10,10 +10,11 @@ const codeEditorSchema = new mongoose.Schema ( {
     evaluateLab : { type : Boolean } ,
     contentSaved : Object ,
     submittedAt : {
-        type : Date ,
-        default : Date.now
+        type : String
     } ,
-    finalSubmit : { type : Boolean } ,
+    finalSubmit : { type : Boolean },
+    marksObtained :{ type : String },
+    maxMarks: {type:String},
 } , { timestamps : true } );
 const codeEditor = mongoose.model ( "codeEditor" , codeEditorSchema );
 module.exports = codeEditor;

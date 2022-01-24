@@ -3,7 +3,7 @@ import Quill from "quill"
 import "quill/dist/quill.snow.css"
 import { io } from "socket.io-client"
 
-const SAVE_INTERVAL_MS = 2000
+const SAVE_INTERVAL_MS = 1000
 const TOOLBAR_OPTIONS = [
   [{ header: [1, 2, 3, 4, 5, 6, false] }],
   [{ font: [] }],

@@ -118,6 +118,7 @@ module.exports.createEditor = async function(req,res){
                 evaluateLab: lab.evaluateLab,
                 contentSaved: '',
                 finalSubmit: false,
+                maxMarks: lab.maxMarks,
             });
             if(newEditor){
                 // add codeEditor._id to codeEditor array of labs

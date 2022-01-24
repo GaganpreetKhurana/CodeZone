@@ -68,7 +68,7 @@ class StudentsList extends React.Component {
         this.props.dispatch(fetchUnreadMessageCount(this.props.classroomId));
         this.timer = setInterval(() => {
             this.props.dispatch(fetchUnreadMessageCount(this.props.classroomId));
-            console.log(this.props.classroom.unreadMessageCount);
+            // console.log(this.props.classroom.unreadMessageCount);
             // console.log(this.state);
         }, 10000);
 
@@ -78,7 +78,6 @@ class StudentsList extends React.Component {
     let {user} = this.props.auth;
     let {students, teachers,messageArray,unreadMessageCount} = this.props.classroom;
     const {classroomId} = this.props;
-    console.log("classroomId",classroomId);
     return (
       <div>
         <Paper elevation={4} style={{ maxHeight: 300, overflow: "auto" }}>
