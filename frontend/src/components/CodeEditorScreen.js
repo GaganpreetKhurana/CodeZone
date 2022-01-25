@@ -189,11 +189,27 @@ class CodeEditorScreen extends React.Component {
           </Grid>
           <Grid item xs={8} m={3}>
             <LanguageSelector />
-            {!userId && !labId && <p> Error !! Please Refresh the Page</p>}
-            {userId && labId && (
-              <TextEditor documentId={`${userId}+${labId}`} />
-            )}
-            
+            <Paper>
+              <Card
+                sx={{
+                  bgcolor: (theme) =>
+                    theme.palette.mode === "dark" ? "#272727" : "#fff",
+                  boxShadow: (theme) =>
+                    theme.palette.mode === "dark"
+                      ? "unset"
+                      : "0 8px 16px 0 #BDC9D7",
+                }}
+              >
+                <CardContent>
+                  {!userId && !labId && (
+                    <p> Error !! Please Refresh the Page</p>
+                  )}
+                  {userId && labId && (
+                    <TextEditor documentId={`${userId}+${labId}`} />
+                  )}
+                </CardContent>
+              </Card>
+            </Paper>
             <Grid container direction="row" justifyContent="space-evenly">
               <Grid item xs={3} m={2}>
                 <Paper>
