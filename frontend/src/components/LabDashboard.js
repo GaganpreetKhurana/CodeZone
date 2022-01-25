@@ -22,6 +22,11 @@ import Snackbar from '@mui/material/Snackbar';
 import Fab from '@mui/material/Fab';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import DownloadIcon from '@mui/icons-material/Download';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
+import SortIcon from '@mui/icons-material/Sort';
+import Button from '@mui/material/Button';
 
 const Div = styled('div')(({ theme }) => ({
   ...theme.typography.button,
@@ -38,12 +43,21 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontSize: 14,
   },
 }));
-
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   '&:nth-of-type(odd)': {
     backgroundColor: theme.palette.action.hover,
   },
-  // hide last border
   '&:last-child td, &:last-child th': {
     border: 0,
   },
@@ -60,6 +74,7 @@ class LabDashboard extends Component {
             error:"",
             success:"",
             downloadButton: false,
+            open:null,
         };
     };
     handleCustomInput = (e) => {
@@ -72,6 +87,17 @@ class LabDashboard extends Component {
           customOutput: e.target.value,
       });
   };
+  handleOpen = (e) => ()=>{
+    this.setState({
+      open: e,
+    })
+  }
+  handleClose = (e) =>{
+    console.log("Closed");
+    this.setState({
+      open: null,
+    })
+  }
     getFormBody =(params) => {
         let FormBody = [];
         for (let property in params) {
@@ -96,7 +122,6 @@ class LabDashboard extends Component {
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                  console.log("FinaL Result",data.data);
                     this.setState({
                         loading: false,
                         data: data.data
@@ -110,6 +135,36 @@ class LabDashboard extends Component {
             });
         }
 
+    }
+    handleSort = (e) => ()=>{
+      if(e==='sid'){
+        this.setState({
+          data: this.state.data.sort((a,b) => (a.sid > b.sid) ? 1 : ((b.sid > a.sid) ? -1 : 0))
+        })
+      }
+      if(e==='email'){
+        this.setState({
+          data: this.state.data.sort((a,b) => (a.email > b.email) ? 1 : ((b.email > a.email) ? -1 : 0))
+        })
+
+      }
+      if(e==='marks'){
+        this.setState({
+          data: this.state.data.sort((a,b) => (a.marks > b.marks) ? 1 : ((b.marks > a.marks) ? -1 : 0))
+        })
+
+      }
+      if(e==='submittedAt'){
+        this.setState({
+          data: this.state.data.sort((a,b) => (a.submittedAt > b.submittedAt) ? 1 : ((b.submittedAt > a.submittedAt) ? -1 : 0))
+        })
+      }
+      if(e==='name'){
+        this.setState({
+          data: this.state.data.sort((a,b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
+        })
+
+      }
     }
     handleDownload = (e) =>{
       e.preventDefault();
@@ -157,25 +212,6 @@ class LabDashboard extends Component {
                     data: data.data,
                     downloadButton: true,
                 })
-                //     this.setState({
-                //         successMessage:data.message,
-                //         showFinalSubmit: true,
-                //     })
-                //     setTimeout(()=>{
-                //         this.setState({
-                //             successMessage: ""
-                //         })
-                //     },3000)
-                // }
-                // else{
-                //     this.setState({
-                //         errorMessage:data.message,
-                //     })
-                //     setTimeout(()=>{
-                //         this.setState({
-                //             errorMessage: ""
-                //         })
-                //     },3000)
                 }
             });
           }
@@ -299,12 +335,31 @@ class LabDashboard extends Component {
                       <Table aria-label="customized table">
                         <TableHead>
                           <TableRow>
-                            <StyledTableCell>Name</StyledTableCell>
-                            <StyledTableCell align="right">SID</StyledTableCell>
-                            <StyledTableCell align="right">Email</StyledTableCell>
+                            <StyledTableCell>Name
+                            <IconButton>
+                              <SortIcon onClick={this.handleSort('name')} />
+                              </IconButton>
+                            </StyledTableCell>
+                            <StyledTableCell align="right">SID
+                              <IconButton>
+                              <SortIcon onClick={this.handleSort('sid')} />
+                              </IconButton>
+                            </StyledTableCell>
+                            <StyledTableCell align="right">Email
+                            <IconButton>
+                                <SortIcon onClick={this.handleSort('email')} />
+                              </IconButton>
+                            </StyledTableCell>
                             <StyledTableCell align="right">View Code</StyledTableCell>
-                            <StyledTableCell align="right">Marks</StyledTableCell>
-                            <StyledTableCell align="right">Submitted At</StyledTableCell>                            
+                            <StyledTableCell align="right">Marks
+                            <IconButton>
+                            <SortIcon onClick={this.handleSort('marks')} />
+                            </IconButton></StyledTableCell>
+                            <StyledTableCell align="right">Submitted At
+                            <IconButton>
+                            <SortIcon onClick={this.handleSort('submittedAt')} />
+                              </IconButton>
+                            </StyledTableCell>                            
                           </TableRow>
                         </TableHead>
                         <TableBody>
@@ -315,7 +370,22 @@ class LabDashboard extends Component {
                               </StyledTableCell>
                               <StyledTableCell align="right">{row.sid}</StyledTableCell>
                               <StyledTableCell align="right">{row.email}</StyledTableCell>
-                              <StyledTableCell align="right">row.code</StyledTableCell>
+                              <StyledTableCell align="right">
+                                <Button onClick={this.handleOpen(row.sid)}>View Code</Button>
+                                {this.state.open === row.sid && <Modal
+                                    open={true}
+                                    onClose={this.handleClose}
+                                    aria-labelledby="modal-modal-title"
+                                    aria-describedby="modal-modal-description"
+                                  >
+                                    <Box sx={style}>
+                                      <Typography id="modal-modal-title" variant="h6" component="h2">
+                                        Code Submitted
+                                      </Typography>
+                                      {row.code}
+                                    </Box>
+                                  </Modal>}
+                              </StyledTableCell>
                               <StyledTableCell align="right">{row.marks}</StyledTableCell>
                               <StyledTableCell align="right">{row.submittedAt}</StyledTableCell>
                             </StyledTableRow>
