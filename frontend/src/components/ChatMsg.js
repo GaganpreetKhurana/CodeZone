@@ -6,8 +6,8 @@ import Avatar from "@mui/material/Avatar";
 
 
 export default function ChatMsg(props) {
-  const side = props.side;
-  const sideBool = props.side == "left" ? true : false;
+  //const side = props.side;
+  const sideBool = props.side === "left" ? true : false;
   const message = props.messages;
   const sender = props.name;
   return (

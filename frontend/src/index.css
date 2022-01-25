@@ -656,7 +656,6 @@ nav .nav-links ul li:hover {
 }
 
 .container {
-    height: 300px;
+    height: 45vh;
     overflow: auto;
-
 }
