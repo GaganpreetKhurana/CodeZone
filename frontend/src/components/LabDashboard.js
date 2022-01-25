@@ -171,10 +171,15 @@ class LabDashboard extends Component {
       const { editorLabDetails } = this.props.labDetails;
       const workSheet = XLSX.utils.json_to_sheet(this.state.data);
       const workBook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workBook, workSheet, editorLabDetails.description);
-      let buf =XLSX.write(workBook,{bookType:'xlsx',type:'buffer'})
-      XLSX.write(workBook,{bookType:'xlsx',type:'binary'})
-      XLSX.writeFile(workBook,"StudentData.xlsx");
+      XLSX.utils.book_append_sheet(
+        workBook,
+        workSheet,
+        editorLabDetails.description
+      );
+      // eslint-disable-next-line
+      let buf = XLSX.write(workBook, { bookType: "xlsx", type: "buffer" });
+      XLSX.write(workBook, { bookType: "xlsx", type: "binary" });
+      XLSX.writeFile(workBook, "StudentData.xlsx");
     }
     
     handleSubmitCode = (e) => {
