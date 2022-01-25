@@ -116,7 +116,6 @@ class CodeEditorScreen extends React.Component {
     const { userId,labId } = this.props.match.params;
     const {editorLabDetails} = this.props.labDetails;
     const {content, finalSubmit, evaluateLab} = this.props.labDetails.codeEditorDetails;
-
     // console.log("this.state.finalSubmit",this.state.showFinalSubmit,"finalSubmit",finalSubmit);
     return (
         <div>
