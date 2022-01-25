@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import CodeEditorSideBar from "./CodeEditorSideBar";
-
+import XLSX from 'xlsx';
 //Material UI
 import CircularProgress from '@mui/material/CircularProgress';
 import { Grid} from '@mui/material';
 import Card from '@mui/material/Card';
+import IconButton from '@mui/material/IconButton';
 import CardContent from '@mui/material/CardContent';
 import { Paper} from '@mui/material';
 import InputBase from "@mui/material/InputBase";
@@ -20,6 +21,7 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import Fab from '@mui/material/Fab';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import DownloadIcon from '@mui/icons-material/Download';
 
 const Div = styled('div')(({ theme }) => ({
   ...theme.typography.button,
@@ -56,7 +58,8 @@ class LabDashboard extends Component {
             customInput: "",
             customOutput: "",
             error:"",
-            success:""
+            success:"",
+            downloadButton: false,
         };
     };
     handleCustomInput = (e) => {
@@ -108,11 +111,19 @@ class LabDashboard extends Component {
         }
 
     }
+    handleDownload = (e) =>{
+      e.preventDefault();
+      const { editorLabDetails } = this.props.labDetails;
+      const workSheet = XLSX.utils.json_to_sheet(this.state.data);
+      const workBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workBook, workSheet, editorLabDetails.description);
+      let buf =XLSX.write(workBook,{bookType:'xlsx',type:'buffer'})
+      XLSX.write(workBook,{bookType:'xlsx',type:'binary'})
+      XLSX.writeFile(workBook,"StudentData.xlsx");
+    }
     
     handleSubmitCode = (e) => {
         e.preventDefault();
-        console.log("Pressesd")
-        console.log(this.state.customInput,this.state.customOutput,this.state.data);
         if( !this.state.customOutput && !this.state.customInput){
           this.setState({
             error:"Please Fill Custom Input and Output to evaluate!!",
@@ -143,9 +154,9 @@ class LabDashboard extends Component {
                 if (data.success) {
                   this.setState({
                     loading2: false,
-                    data: data.data
+                    data: data.data,
+                    downloadButton: true,
                 })
-                  console.log("Output",data);
                 //     this.setState({
                 //         successMessage:data.message,
                 //         showFinalSubmit: true,
@@ -193,7 +204,7 @@ class LabDashboard extends Component {
           )}
           {!this.state.loading && (
             <>
-              <Div>{this.state.data && <>{this.state.data.description}</>}</Div>
+              <Div>{editorLabDetails && <>{editorLabDetails.description}</>}</Div>
               <Grid
                 spacing={2}
                 container
@@ -213,7 +224,7 @@ class LabDashboard extends Component {
                       <Card sx={{ minWidth: 300, minHeight: 150 }}>
                         <Div>Question</Div>
                         <CardContent>
-                          {this.state.data && <>{this.state.data.question}</>}
+                          {editorLabDetails && <>{editorLabDetails.question}</>}
                         </CardContent>
                       </Card>
                     </Paper>
@@ -267,15 +278,17 @@ class LabDashboard extends Component {
                   </Fab>
                   {this.state.loading2 && (
                     <>
-                      <Grid
-                        spacing={2}
-                        container
-                        direction="column"
-                        justifyContent="center"
-                        alignItems="center"
-                      >
+                       Evaluating ....
                         <CircularProgress disableShrink />
-                      </Grid>
+                      
+                    </>
+                  )}
+                  {this.state.downloadButton && (
+                    <>
+                      Evaluated..
+                      <IconButton>
+                        <DownloadIcon onClick={this.handleDownload} />
+                      </IconButton>
                     </>
                   )}
                 </Grid>

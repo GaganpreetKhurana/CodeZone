@@ -81,7 +81,7 @@ class JoinLabDialog extends Component {
                       <TableCell align="center">
                       {user.id && <Link to={`/labDetails/${classroomId}/${user.id}/${row._id}`} onClick={()=>{
                           //fetch this code-editor's details using row_id
-                          // this.props.dispatch(createNewCodeEditor(user.id,row._id));
+                           this.props.dispatch(createNewCodeEditor(user.id,row._id));
                         }}>
                           View
                         </Link>
