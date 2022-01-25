@@ -17,9 +17,6 @@ import Alert from "@mui/material/Alert";
 
 import Fab from "@mui/material/Fab";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
-import { FlexRow } from "@mui-treasury/component-flex";
-import { Item } from "@mui-treasury/component-flex";
-import { Typography } from "@mui/material";
 
 const Div = styled("div")(({ theme }) => ({
   ...theme.typography.button,
@@ -136,116 +133,94 @@ class CodeEditorScreen extends React.Component {
           direction="row"
           justifyContent="space-evenly"
         >
-          <Grid item xs={4} m={2}>
-            <LanguageSelector />
-            {!userId && !labId && <p> Error !! Please Refresh the Page</p>}
-            {userId && labId && (
-              <TextEditor documentId={`${userId}+${labId}`} />
-            )}
-          </Grid>
           <Grid item xs={7} m={2}>
             <LanguageSelector />
             {!userId && !labId && <p> Error !! Please Refresh the Page</p>}
             {userId && labId && (
               <TextEditor documentId={`${userId}+${labId}`} />
             )}
-            <Grid container direction="row" justifyContent="space-evenly">
-              <Grid item xs={4} m={2}>
-                <Paper>
-                  <Card
-                    sx={{
-                      
-                      bgcolor: (theme) =>
-                        theme.palette.mode === "dark" ? "#272727" : "#fff",
-                      boxShadow: (theme) =>
-                        theme.palette.mode === "dark"
-                          ? "unset"
-                          : "0 8px 16px 0 #BDC9D7",
-                    }}
-                  >
-                    <FlexRow
-                      alignItems="center"
-                      p={2}
-                      sx={{
-                        bgcolor: (theme) =>
-                          theme.palette.mode === "dark" ? "#2f3c50" : "#fff",
-                      }}
-                    >
-                      <Item grow mr={1}>
-                        <Typography variant="h6" align="center">
-                          <b>Code Custom Input</b>
-                        </Typography>
-                      </Item>
-                    </FlexRow>
-                    <CardContent>
-                      <InputBase
-                        sx={{ ml: 1, flex: 1 }}
-                        placeholder="Custom Input"
-                        inputProps={{ "aria-label": "search google maps" }}
-                        value={this.state.customInput}
-                        onChange={this.handleCustomInput}
-                      />
-                    </CardContent>
+          </Grid>
+
+          <Grid item xs={4} m={2}>
+            <Grid
+              spacing={2}
+              container
+              direction="column"
+              justifyContent="space-evenly"
+              alignItems="center"
+            >
+              <Grid item xs={8} m={0.5}>
+                <Fab variant="extended">
+                  <CodeEditorSideBar
+                    students={students}
+                    user={user}
+                    labId={labId}
+                    editorLabDetails={editorLabDetails}
+                    dispatch={this.props.dispatch}
+                  />
+                </Fab>
+              </Grid>
+              <Grid item xs={8} m={0.5}>
+                <Paper elevation={4}>
+                  <Card sx={{ minWidth: 300, minHeight: 150 }}>
+                    <Div>Question</Div>
+                    <CardContent>{editorLabDetails.question}</CardContent>
                   </Card>
                 </Paper>
               </Grid>
-              <Grid item xs={4} m={2}>
-                <Paper>
-                  <Card
-                    sx={{
-                      minWidth: 300,
-                      minHeight: 150,
-                      maxHeight: 150,
-                      maxWidth: 300,
-                      bgcolor: (theme) =>
-                        theme.palette.mode === "dark" ? "#272727" : "#fff",
-                      boxShadow: (theme) =>
-                        theme.palette.mode === "dark"
-                          ? "unset"
-                          : "0 8px 16px 0 #BDC9D7",
-                    }}
-                  >
-                    <FlexRow
-                      alignItems="center"
-                      p={2}
-                      sx={{
-                        bgcolor: (theme) =>
-                          theme.palette.mode === "dark" ? "#2f3c50" : "#fff",
-                      }}
-                    >
-                      <Item grow mr={1}>
-                        <Typography variant="h6" align="center">
-                          <b>Code Custom Output</b>
-                        </Typography>
-                      </Item>
-                    </FlexRow>
-                    <CardContent>
-                      <Typography
-                        variant="caption"
-                        display="block"
-                        gutterBottom
-                      >
-                        {customOutput}
-                      </Typography>
-                      <Typography
-                        variant="caption"
-                        display="block"
-                        gutterBottom
-                      >
-                        Memory: {memory} kB
-                      </Typography>
-                      <Typography
-                        variant="caption"
-                        display="block"
-                        gutterBottom
-                      >
-                        CPU Time :{cpuTime} seconds
-                      </Typography>
-                      
-                    </CardContent>
+              <Grid item xs={8} m={0.5}>
+                <Paper elevation={4}>
+                  <Card sx={{ minWidth: 300, minHeight: 150 }}>
+                    <Div>Code Input</Div>
+                    <CardContent>{editorLabDetails.input}</CardContent>
                   </Card>
                 </Paper>
               </Grid>
+              <Grid item xs={8} m={0.5}>
+                <Paper elevation={4}>
+                  <Card sx={{ minWidth: 300, minHeight: 150 }}>
+                    <Div>Code Output</Div>
+                    <CardContent>{editorLabDetails.output}</CardContent>
+                  </Card>
+                </Paper>
+              </Grid>
+              
+              <Grid item xs={8} m={0.5}>
+                <Fab
+                  variant="extended"
+                  onClick={this.handleExecuteCode}
+                  disabled={executionStarted}
+                >
+                  <PlayCircleIcon sx={{ mr: 1 }} color="primary" />
+                  Execute Code
+                </Fab>
+              </Grid>
+              {evaluateLab === true && (
+                <Grid item xs={8} m={0.5}>
+                  <Fab
+                    variant="extended"
+                    onClick={this.handleSubmitCode}
+                    disabled={this.state.showFinalSubmit || finalSubmit}
+                  >
+                    <PlayCircleIcon sx={{ mr: 1 }} color="primary" />
+                    Final Submit
+                  </Fab>
+                </Grid>
+              )}
+              {this.state.successMessage && (
+                <Snackbar open={true} autoHideDuration={2000}>
+                  <Alert severity="success" sx={{ width: "100%" }}>
+                    {this.state.successMessage}
+                  </Alert>
+                </Snackbar>
+              )}
+              {this.state.errorMessage && (
+                <Snackbar open={true} autoHideDuration={2000}>
+                  <Alert severity="error" sx={{ width: "100%" }}>
+                    {this.state.errorMessage}
+                  </Alert>
+                </Snackbar>
+              )}
             </Grid>
           </Grid>
         </Grid>

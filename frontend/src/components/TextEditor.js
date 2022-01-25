@@ -133,6 +133,6 @@ export default function TextEditor(props) {
     setQuill(q)
   }, [])
   return (
-    <div className="container" ref={wrapperRef}></div>
+    <div className="container" ref={wrapperRef} ></div>
   )
 }
