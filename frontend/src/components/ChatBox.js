@@ -54,7 +54,7 @@ class ChatBox extends React.Component {
     this.interval = setInterval(() => {
       console.log("ReadAll");
       this.socket.emit("ReadAll", this.props.self_details.id);
-    }, 2500);
+    }, 10000);
     this.setUpConnections();
   }
 

@@ -117,16 +117,13 @@ class CodeEditorScreen extends React.Component {
     );
   };
   render() {
-    let { students } = this.props.classroom;
-    const { user } = this.props.auth;
-    const { executionStarted, customOutput, memory, cpuTime } =
-      this.props.execute;
-    const { userId, labId } = this.props.match.params;
-    const { editorLabDetails } = this.props.labDetails;
-    // eslint-disable-next-line
-    const { content, finalSubmit, evaluateLab } =
-      this.props.labDetails.codeEditorDetails;
 
+    let {students} = this.props.classroom;
+    const {user} = this.props.auth;
+    const {executionStarted,customOutput,memory,cpuTime} = this.props.execute;
+    const { userId,labId } = this.props.match.params;
+    const {editorLabDetails} = this.props.labDetails;
+    const {content, finalSubmit, evaluateLab} = this.props.labDetails.codeEditorDetails;
     // console.log("this.state.finalSubmit",this.state.showFinalSubmit,"finalSubmit",finalSubmit);
     return (
       <div>
