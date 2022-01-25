@@ -105,7 +105,7 @@ export default function CodeEditorSideBar(props) {
 
   return (
     <div>
-      {['right'].map((anchor) => (
+      {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}>Student List</Button>
           <Drawer

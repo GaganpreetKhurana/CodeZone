@@ -16,13 +16,12 @@
       }}
     >
       <Item grow mr={1}>
-        <Typography variant="h6" align="center">
-          <b></b>
-        </Typography>
+        <LanguageSelector />
       </Item>
     </FlexRow>
     <CardContent>
-      
+      {!userId && !labId && <p> Error !! Please Refresh the Page</p>}
+      {userId && labId && <TextEditor documentId={`${userId}+${labId}`} />}
     </CardContent>
   </Card>
 </Paper>;

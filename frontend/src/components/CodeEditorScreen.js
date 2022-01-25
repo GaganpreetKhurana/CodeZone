@@ -175,7 +175,7 @@ class CodeEditorScreen extends React.Component {
                 </Card>
               </Paper>
             </Grid>
-            <Grid item m={2}>
+            <Grid item m={11}>
               <Fab variant="extended">
                 <CodeEditorSideBar
                   students={students}
@@ -187,18 +187,20 @@ class CodeEditorScreen extends React.Component {
               </Fab>
             </Grid>
           </Grid>
-          <Grid item xs={8} m={1}>
+          <Grid item xs={8} m={3}>
             <LanguageSelector />
             {!userId && !labId && <p> Error !! Please Refresh the Page</p>}
             {userId && labId && (
               <TextEditor documentId={`${userId}+${labId}`} />
             )}
+            
             <Grid container direction="row" justifyContent="space-evenly">
               <Grid item xs={3} m={2}>
                 <Paper>
                   <Card
                     sx={{
-                      minHeight: 70,
+                      minHeight: 150,
+                      maxHeight: 150,
                       bgcolor: (theme) =>
                         theme.palette.mode === "dark" ? "#272727" : "#fff",
                       boxShadow: (theme) =>
@@ -237,6 +239,7 @@ class CodeEditorScreen extends React.Component {
                 <Paper>
                   <Card
                     sx={{
+                      minHeight: 150,
                       maxHeight: 150,
                       bgcolor: (theme) =>
                         theme.palette.mode === "dark" ? "#272727" : "#fff",
