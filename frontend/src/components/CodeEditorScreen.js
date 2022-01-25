@@ -123,6 +123,7 @@ class CodeEditorScreen extends React.Component {
       this.props.execute;
     const { userId, labId } = this.props.match.params;
     const { editorLabDetails } = this.props.labDetails;
+    // eslint-disable-next-line
     const { content, finalSubmit, evaluateLab } =
       this.props.labDetails.codeEditorDetails;
 

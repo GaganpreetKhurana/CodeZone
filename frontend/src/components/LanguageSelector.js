@@ -2,7 +2,6 @@ import * as React from 'react';
 import { connect } from "react-redux";
 import { languageSelect } from "../actions/language";
 
-import Button from '@mui/material/Button';
 import Box from "@mui/material/Box";
 import Tabs, { tabsClasses } from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
