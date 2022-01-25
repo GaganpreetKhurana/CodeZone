@@ -134,27 +134,71 @@ class CodeEditorScreen extends React.Component {
           spacing={2}
           container
           direction="row"
-          justifyContent="space-evenly"
+          justifyContent="space-between"
         >
-          <Grid item xs={4} m={2}>
-            <LanguageSelector />
-            {!userId && !labId && <p> Error !! Please Refresh the Page</p>}
-            {userId && labId && (
-              <TextEditor documentId={`${userId}+${labId}`} />
-            )}
+          <Grid
+            item
+            xs={3}
+            m={4}
+            container
+            direction="column"
+            alignItems="stretch"
+          >
+            <Grid item m={2}>
+              <Paper>
+                <Card
+                  sx={{
+                    minHeight: "50vh",
+                    bgcolor: (theme) =>
+                      theme.palette.mode === "dark" ? "#272727" : "#fff",
+                    boxShadow: (theme) =>
+                      theme.palette.mode === "dark"
+                        ? "unset"
+                        : "0 8px 16px 0 #BDC9D7",
+                  }}
+                >
+                  <FlexRow
+                    alignItems="center"
+                    p={2}
+                    sx={{
+                      bgcolor: (theme) =>
+                        theme.palette.mode === "dark" ? "#2f3c50" : "#fff",
+                    }}
+                  >
+                    <Item grow mr={1}>
+                      <Typography variant="h6" align="center">
+                        <b>Question</b>
+                      </Typography>
+                    </Item>
+                  </FlexRow>
+                  <CardContent>{editorLabDetails.question}</CardContent>
+                </Card>
+              </Paper>
+            </Grid>
+            <Grid item m={2}>
+              <Fab variant="extended">
+                <CodeEditorSideBar
+                  students={students}
+                  user={user}
+                  labId={labId}
+                  editorLabDetails={editorLabDetails}
+                  dispatch={this.props.dispatch}
+                />
+              </Fab>
+            </Grid>
           </Grid>
-          <Grid item xs={7} m={2}>
+          <Grid item xs={8} m={1}>
             <LanguageSelector />
             {!userId && !labId && <p> Error !! Please Refresh the Page</p>}
             {userId && labId && (
               <TextEditor documentId={`${userId}+${labId}`} />
             )}
             <Grid container direction="row" justifyContent="space-evenly">
-              <Grid item xs={4} m={2}>
+              <Grid item xs={3} m={2}>
                 <Paper>
                   <Card
                     sx={{
-                      
+                      minHeight: 70,
                       bgcolor: (theme) =>
                         theme.palette.mode === "dark" ? "#272727" : "#fff",
                       boxShadow: (theme) =>
@@ -172,7 +216,7 @@ class CodeEditorScreen extends React.Component {
                       }}
                     >
                       <Item grow mr={1}>
-                        <Typography variant="h6" align="center">
+                        <Typography variant="h12" align="center">
                           <b>Code Custom Input</b>
                         </Typography>
                       </Item>
@@ -189,14 +233,11 @@ class CodeEditorScreen extends React.Component {
                   </Card>
                 </Paper>
               </Grid>
-              <Grid item xs={4} m={2}>
+              <Grid item xs={3} m={2}>
                 <Paper>
                   <Card
                     sx={{
-                      minWidth: 300,
-                      minHeight: 150,
                       maxHeight: 150,
-                      maxWidth: 300,
                       bgcolor: (theme) =>
                         theme.palette.mode === "dark" ? "#272727" : "#fff",
                       boxShadow: (theme) =>
@@ -209,12 +250,14 @@ class CodeEditorScreen extends React.Component {
                       alignItems="center"
                       p={2}
                       sx={{
+                        minHeight: 50,
+                        maxHeight: 70,
                         bgcolor: (theme) =>
                           theme.palette.mode === "dark" ? "#2f3c50" : "#fff",
                       }}
                     >
                       <Item grow mr={1}>
-                        <Typography variant="h6" align="center">
+                        <Typography variant="h12" align="center">
                           <b>Code Custom Output</b>
                         </Typography>
                       </Item>
@@ -241,10 +284,45 @@ class CodeEditorScreen extends React.Component {
                       >
                         CPU Time :{cpuTime} seconds
                       </Typography>
-                      
                     </CardContent>
                   </Card>
                 </Paper>
+              </Grid>
+              <Grid item xs={3} m={2}>
+                <Fab
+                  variant="extended"
+                  onClick={this.handleExecuteCode}
+                  disabled={executionStarted}
+                >
+                  <PlayCircleIcon sx={{ mr: 1 }} color="primary" />
+                  Execute Code
+                </Fab>
+                {evaluateLab === true && (
+                  <Grid item xs={8} m={0.5}>
+                    <Fab
+                      variant="extended"
+                      onClick={this.handleSubmitCode}
+                      disabled={this.state.showFinalSubmit || finalSubmit}
+                    >
+                      <PlayCircleIcon sx={{ mr: 1 }} color="primary" />
+                      Final Submit
+                    </Fab>
+                  </Grid>
+                )}
+                {this.state.successMessage && (
+                  <Snackbar open={true} autoHideDuration={2000}>
+                    <Alert severity="success" sx={{ width: "100%" }}>
+                      {this.state.successMessage}
+                    </Alert>
+                  </Snackbar>
+                )}
+                {this.state.errorMessage && (
+                  <Snackbar open={true} autoHideDuration={2000}>
+                    <Alert severity="error" sx={{ width: "100%" }}>
+                      {this.state.errorMessage}
+                    </Alert>
+                  </Snackbar>
+                )}
               </Grid>
             </Grid>
           </Grid>
