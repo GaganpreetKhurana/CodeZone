@@ -83,8 +83,11 @@ class DiscussionPortal extends React.Component {
   handleOnClick = () => {
     // dispatch action
     const { classroomId } = this.props;
-    if (this.state.content && classroomId) {
-      this.props.dispatch(createPost(this.state.content, classroomId));
+    if ((this.state.content || this.state.files) && classroomId) {
+      if (!this.state.content) {
+        this.state.content = "File Post"
+      }
+      this.props.dispatch(createPost(this.state.content, this.state.files, classroomId));
       this.setState({
         content: "",
       });
@@ -129,8 +132,6 @@ class DiscussionPortal extends React.Component {
 
   getFiles = (files) => {
     this.setState({ files: files });
-    console.log("Hello");
-    console.log(this.state.files);
   }
 
   render() {
@@ -166,9 +167,8 @@ class DiscussionPortal extends React.Component {
             <PostAddIcon onClick={this.handleOnClick} />
           </IconButton>
           <FileBase64 multiple={false} onDone={this.getFiles.bind(this)} />
-          <img src={files.base64} />
         </Paper>
-
+        <img alt="" src={files.base64} />
         {/* displaying old posts of classroom */}
         {!posts.length && <p>No Posts exist for this classroom</p>}
 
@@ -199,6 +199,7 @@ class DiscussionPortal extends React.Component {
                   <ListItem>
                     <Typography variant="body1">{post.content}</Typography>
                   </ListItem>
+                  <img alt="" src={post.file} />
                   <ListItem>
                     <EmbedVideo text={post.content} />
                   </ListItem>
