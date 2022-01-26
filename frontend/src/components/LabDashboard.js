@@ -169,7 +169,11 @@ class LabDashboard extends Component {
     handleDownload = (e) =>{
       e.preventDefault();
       const { editorLabDetails } = this.props.labDetails;
-      const workSheet = XLSX.utils.json_to_sheet(this.state.data);
+      let newData = this.state.data.map(row =>{
+        delete row.id
+        return row
+      })
+      const workSheet = XLSX.utils.json_to_sheet(newData);
       const workBook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(
         workBook,
