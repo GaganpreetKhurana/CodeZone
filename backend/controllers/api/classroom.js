@@ -290,7 +290,7 @@ module.exports.link = async function ( req , res ) {
 
 //to get previous chats
 module.exports.previousChats = async function ( req , res ) {
-    console.log ( "request came" );
+    // console.log ( "request came" );
     let room = await Chats.findOne ( { room : sanitizer.escape ( req.params.room ) } );
     // console.log ( room );
     
@@ -314,12 +314,12 @@ module.exports.previousChats = async function ( req , res ) {
 };
 
 module.exports.unreadMessageCount = async function ( req , res ) {
-    console.log ( "Unread" );
+    // console.log ( "Unread" );
     var classroomId = req.params.classroomId;
     let classroom = await Classes.findById ( classroomId );
     // console.log(classroomId);
     if ( classroom ) {
-        
+        // console.log(classroomId)
         let unreadCount = {};
         for ( let i = 0 ; i < classroom.students.length ; i ++ ) {
             if ( classroom.students[ i ]._id != req.user._id ) {
@@ -331,10 +331,11 @@ module.exports.unreadMessageCount = async function ( req , res ) {
                 unreadCount[ classroom.teachers[ i ]._id ] = 0;
             }
         }
-        // console.log(unreadCount,"XX")
+        
         
         var regex = RegExp ( ".*" + classroomId + ".*" + req.user._id + ".*" );
         var rooms = await Chats.find ( { room : regex } );
+        // console.log(rooms.length);
         for ( let i = 0 ; i < rooms.length ; i ++ ) {
             let room_name = rooms[ i ].room;
             let receiver = room_name.split ( "--" );
@@ -356,6 +357,7 @@ module.exports.unreadMessageCount = async function ( req , res ) {
             
             
         }
+        // console.log(unreadCount,"XX")
         return res.status ( 200 ).json ( {
             success : true ,
             data : unreadCount ,
