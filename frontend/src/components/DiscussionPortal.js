@@ -84,10 +84,9 @@ class DiscussionPortal extends React.Component {
     // dispatch action
     const { classroomId } = this.props;
     if ((this.state.content || this.state.files) && classroomId) {
-      if (!this.state.content) {
-        this.setState({
-          content: "File Post",
-        });
+      if (this.state.content === "") {
+        // eslint-disable-next-line
+        this.state.content = "File Post";
       }
       this.props.dispatch(createPost(this.state.content, this.state.files.base64, classroomId));
       this.setState({
@@ -161,6 +160,9 @@ class DiscussionPortal extends React.Component {
             value={this.state.content}
             onChange={this.handleChange}
           />
+          <FileBase64 multiple={false} onDone={this.getFiles.bind(this)} />
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <img alt="" src={files.base64} width="50" height="50" />
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
           <IconButton
             color="primary"
@@ -169,9 +171,7 @@ class DiscussionPortal extends React.Component {
           >
             <PostAddIcon onClick={this.handleOnClick} />
           </IconButton>
-          <FileBase64 multiple={false} onDone={this.getFiles.bind(this)} />
         </Paper>
-        <img alt="" src={files.base64} />
         {/* displaying old posts of classroom */}
         {!posts.length && <p>No Posts exist for this classroom</p>}
 
@@ -202,9 +202,38 @@ class DiscussionPortal extends React.Component {
                   <ListItem>
                     <Typography variant="body1">{post.content}</Typography>
                   </ListItem>
-                  <img alt="" src={post.file} />
+                  {post.content === "File Post" && (
+                    <ListItem>
+                      <Grid
+                        container
+                        spacing={0}
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                      >
+                        <Grid item xs={3}>
+                          <img
+                            alt=""
+                            src={post.file}
+                            width="300"
+                            height="300"
+                          />
+                        </Grid>
+                      </Grid>
+                    </ListItem>
+                  )}
                   <ListItem>
-                    <EmbedVideo text={post.content} />
+                    <Grid
+                      container
+                      spacing={0}
+                      direction="column"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Grid item xs={3}>
+                        <EmbedVideo text={post.content} />
+                      </Grid>
+                    </Grid>
                   </ListItem>
                   <Divider />
                   <ListItem>
