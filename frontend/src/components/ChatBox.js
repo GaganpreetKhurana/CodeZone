@@ -24,7 +24,7 @@ class ChatBox extends React.Component {
   }
   handleSmoothScroll = () => {
     this.titleRef.current.scrollIntoView({ behavior: "smooth" });
-    this.socket.emit("ReadAll", this.props.self_details.id);
+    // this.socket.emit("ReadAll", this.props.self_details.id);
   };
   componentDidMount() {
     if (
@@ -51,11 +51,12 @@ class ChatBox extends React.Component {
         messages: this.props.classroom.messageArray,
       });
     }, 1000);
-    this.interval = setInterval(() => {
-      console.log("ReadAll");
-      this.socket.emit("ReadAll", this.props.self_details.id);
-    }, 10000);
     this.setUpConnections();
+    this.interval = setInterval(() => {
+      console.log("ReadAll",this.props.self_details.id);
+      this.socket.emit("ReadAll", this.props.self_details.id);
+    }, 2500);
+    
   }
 
   setUpConnections = () => {
@@ -84,6 +85,8 @@ class ChatBox extends React.Component {
   componentWillUnmount() {
     this.socket.disconnect();
     this.props.dispatch(clearEarlierMessages());
+    clearInterval(this.interval);
+    console.log("Cleared Interval")
   }
 
   sendMessage = (e) => {
