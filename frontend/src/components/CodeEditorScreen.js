@@ -136,8 +136,9 @@ class CodeEditorScreen extends React.Component {
         >
           <Grid
             item
-            xs={3}
-            m={4}
+            xs={12}
+            md={3}
+            m={3}
             container
             direction="column"
             alignItems="stretch"
@@ -185,7 +186,7 @@ class CodeEditorScreen extends React.Component {
               </Fab>
             </Grid>
           </Grid>
-          <Grid item xs={8} m={3}>
+          <Grid item xs={12} md={8} m={3}>
             <LanguageSelector />
             <Paper>
               <Card

@@ -85,7 +85,9 @@ class DiscussionPortal extends React.Component {
     const { classroomId } = this.props;
     if ((this.state.content || this.state.files) && classroomId) {
       if (!this.state.content) {
-        this.state.content = "File Post"
+        this.setState({
+          content: "File Post",
+        });
       }
       this.props.dispatch(createPost(this.state.content, this.state.files.base64, classroomId));
       this.setState({
