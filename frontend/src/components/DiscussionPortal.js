@@ -7,6 +7,7 @@ import EditPost from './EditPost';
 import EditComment from './EditComment'
 
 import EmbedVideo from "./EmbedVideo";
+import FileBase64 from "react-file-base64";
 
 //Material UI
 import { Grid} from '@mui/material';
@@ -35,97 +36,110 @@ class DiscussionPortal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      content: '',
-      contentComment:'',
-      anchorEl : null,
-      open: false
+      content: "",
+      contentComment: "",
+      anchorEl: null,
+      open: false,
+      files: "",
     };
-    this.setAnchorEl = this.setAnchorEl.bind(this)
-    this.handleCommentClick = this.handleCommentClick.bind(this)
-    this.handleCommentClose = this.handleCommentClose.bind(this)
+    this.setAnchorEl = this.setAnchorEl.bind(this);
+    this.handleCommentClick = this.handleCommentClick.bind(this);
+    this.handleCommentClose = this.handleCommentClose.bind(this);
   }
 
   handleCommentClick(event) {
-      this.setAnchorEl(event.currentTarget);
+    this.setAnchorEl(event.currentTarget);
   }
-  setAnchorEl(value){
-      this.setState({
-          anchorEl: value,
-          open: !this.state.open
-      })
+  setAnchorEl(value) {
+    this.setState({
+      anchorEl: value,
+      open: !this.state.open,
+    });
   }
   handleCommentClose() {
-      this.setAnchorEl(null);
+    this.setAnchorEl(null);
   }
 
-  commentMenu(id,content){
-    return(
-      <Menu id="fade-menu" anchorEl={this.state.anchorEl} open={this.state.open} onClose={this.handleCommentClose}>
-          <MenuItem><DeleteComment id={id} role={"Comment"}/></MenuItem>
-          <MenuItem><EditComment id={id} content={content} /></MenuItem>
-          <MenuItem onClick={this.handleCommentClose}>Close Menu</MenuItem>
+  commentMenu(id, content) {
+    return (
+      <Menu
+        id="fade-menu"
+        anchorEl={this.state.anchorEl}
+        open={this.state.open}
+        onClose={this.handleCommentClose}
+      >
+        <MenuItem>
+          <DeleteComment id={id} role={"Comment"} />
+        </MenuItem>
+        <MenuItem>
+          <EditComment id={id} content={content} />
+        </MenuItem>
+        <MenuItem onClick={this.handleCommentClose}>Close Menu</MenuItem>
       </Menu>
-      )
+    );
   }
 
-
-
-
-//posts
+  //posts
   handleOnClick = () => {
     // dispatch action
-    const {classroomId} = this.props;
-    if(this.state.content && classroomId){
-      this.props.dispatch(createPost(this.state.content,classroomId));
+    const { classroomId } = this.props;
+    if ((this.state.content || this.state.files) && classroomId) {
+      if (this.state.content === "") {
+        // eslint-disable-next-line
+        this.state.content = "File Post";
+      }
+      this.props.dispatch(createPost(this.state.content, this.state.files.base64, classroomId));
       this.setState({
-        content: '',
+        content: "",
+        file: "",
       });
     }
-    
   };
-  
-  handleOnLikePostClick = (post_id) =>
-    ()=>{
-      this.props.dispatch(likePost(post_id));
-    }
-  
+
+  handleOnLikePostClick = (post_id) => () => {
+    this.props.dispatch(likePost(post_id));
+  };
+
   handleChange = (e) => {
     this.setState({
       content: e.target.value,
     });
   };
-  
+
   //comment
-  checkColor = (likes) =>{
-    let {user} = this.props.auth;
-    let likedByUser = likes.filter(({_id})=> _id ===user.id )
-    if(likedByUser.length>0){
+  checkColor = (likes) => {
+    let { user } = this.props.auth;
+    let likedByUser = likes.filter(({ _id }) => _id === user.id);
+    if (likedByUser.length > 0) {
       return "secondary";
     }
-  }
+  };
   handleChangeComment = (e) => {
     this.setState({
       contentComment: e.target.value,
     });
   };
-  handleOnLikeCommentClick = (comment_id) =>
-    ()=>{
-      this.props.dispatch(likeComment(comment_id));
-    }
-  handleOnClickComment = (post_id) => 
-   ()=>{
+  handleOnLikeCommentClick = (comment_id) => () => {
+    this.props.dispatch(likeComment(comment_id));
+  };
+  handleOnClickComment = (post_id) => () => {
     // dispatch action
-    if(this.state.contentComment && post_id){
-      this.props.dispatch(createComment(this.state.contentComment,post_id));
+    if (this.state.contentComment && post_id) {
+      this.props.dispatch(createComment(this.state.contentComment, post_id));
       this.setState({
-        contentComment: '',
+        contentComment: "",
       });
     }
-    
   };
+
+  getFiles = (files) => {
+    this.setState({ files: files });
+  }
+
   render() {
-    const {posts} = this.props.classroom;
-    let {user} = this.props.auth;
+    const { posts } = this.props.classroom;
+    let { user } = this.props.auth;
+    const files = this.state.files;
     return (
       <div>
         <Paper
@@ -146,6 +160,9 @@ class DiscussionPortal extends React.Component {
             value={this.state.content}
             onChange={this.handleChange}
           />
+          <FileBase64 multiple={false} onDone={this.getFiles.bind(this)} />
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          <img alt="" src={files.base64} width="50" height="50" />
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
           <IconButton
             color="primary"
@@ -155,7 +172,6 @@ class DiscussionPortal extends React.Component {
             <PostAddIcon onClick={this.handleOnClick} />
           </IconButton>
         </Paper>
-
         {/* displaying old posts of classroom */}
         {!posts.length && <p>No Posts exist for this classroom</p>}
 
@@ -186,8 +202,38 @@ class DiscussionPortal extends React.Component {
                   <ListItem>
                     <Typography variant="body1">{post.content}</Typography>
                   </ListItem>
+                  {post.content === "File Post" && (
+                    <ListItem>
+                      <Grid
+                        container
+                        spacing={0}
+                        direction="column"
+                        alignItems="center"
+                        justifyContent="center"
+                      >
+                        <Grid item xs={3}>
+                          <img
+                            alt=""
+                            src={post.file}
+                            width="300"
+                            height="300"
+                          />
+                        </Grid>
+                      </Grid>
+                    </ListItem>
+                  )}
                   <ListItem>
-                    <EmbedVideo text ={post.content} />
+                    <Grid
+                      container
+                      spacing={0}
+                      direction="column"
+                      alignItems="center"
+                      justifyContent="center"
+                    >
+                      <Grid item xs={3}>
+                        <EmbedVideo text={post.content} />
+                      </Grid>
+                    </Grid>
                   </ListItem>
                   <Divider />
                   <ListItem>

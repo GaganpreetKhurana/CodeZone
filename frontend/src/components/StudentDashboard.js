@@ -4,7 +4,7 @@ import { fetchUserClassDetails,clearUserClassDetails } from "../actions/classroo
 import { Grid } from '@mui/material';
 import StudentClassCards from './StudentClassCards';
 import Typography from '@mui/material/Typography';
-
+import { Container } from '@mui/material';
 
 class StudentDashboard extends Component {
   componentDidMount() {
@@ -38,8 +38,10 @@ class StudentDashboard extends Component {
               alignItems="center"
             >
               {classesJoined.map((classroom) => (
-                <div>
-                  <StudentClassCards classroom={classroom} />
+                <div key={classroom.id}>
+                  <Container>
+                    <StudentClassCards classroom={classroom} />
+                  </Container>
                 </div>
               ))}
             </Grid>

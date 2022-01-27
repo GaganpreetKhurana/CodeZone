@@ -23,7 +23,7 @@ function getFormBody(params) {
     };
   }
 
-export function createPost(content,classroom_id) {
+export function createPost(content,file,classroom_id) {
     return (dispatch) => {
       const url = '/api/forum/create/post';
       fetch(url, {
@@ -32,7 +32,7 @@ export function createPost(content,classroom_id) {
         "Content-Type": "application/x-www-form-urlencoded",
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-        body: getFormBody({ content,classroom_id }),
+        body: getFormBody({ content,file,classroom_id }),
       })
         .then((response) => response.json())
         .then((data) => {

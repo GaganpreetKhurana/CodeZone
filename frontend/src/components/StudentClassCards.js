@@ -19,6 +19,9 @@ const CardActionAreaActionArea = styled(CardActionArea)(() => ({
 
 const StyledCard = styled(Card)(({ color }) => ({
   minWidth: 256,
+  minHeigth: 256,
+  maxWidth: 256,
+  maxHeigth: 256,
   borderRadius: 16,
   boxShadow: "none",
   "&:hover": {
@@ -78,7 +81,7 @@ const CustomCard = ({
 export default function Student(props) {
   const theme = useTheme();
   return (
-    <Grid item m={3} xs={4} sm={4} md={4}>
+    <Grid item m={4} xs={12} sm={4} md={4}>
         <CustomCard
           color={theme.palette.primary.main}
           title={props.classroom.subject}

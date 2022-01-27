@@ -23,9 +23,11 @@ module.exports.create = async function ( req , res ) {
         // user enrolled in subject
         
         //create post object
+        
         let newPost = await Post.create ( {
-            user : req.user._id ,
-            content : req.body.content ,
+            user: req.user._id,
+            content: req.body.content,
+            file: req.body.file,
             class : subject ,
         } );
         

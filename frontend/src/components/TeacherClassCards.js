@@ -18,10 +18,10 @@ const CardActionAreaActionArea = styled(CardActionArea)(() => ({
 }));
 
 const StyledCard = styled(Card)(({ color }) => ({
-  minWidth: 226,
-  maxWidth: 226,
-  maxHeight: 226,
-  minHeight: 226,
+  minWidth: 256,
+  minHeigth: 256,
+  maxWidth: 256,
+  maxHeigth: 256,
   borderRadius: 16,
   boxShadow: "none",
   "&:hover": {
