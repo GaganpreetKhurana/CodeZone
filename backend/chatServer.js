@@ -44,24 +44,24 @@ io.on ( "connection" , async ( socket ) => {
                 socket.join ( room_name );
                 socket.on ( "ReadAll" , async ( sender_id ) => {
                     room = await Chats.findOne ( { room : room_name } );
-                    console.log("Reading",sender_id,room.chats.length);
+                    // console.log("Reading",sender_id,room.chats.length);
                     let count = 0;
                     for ( let counter = 0 ; counter < room.chats.length ; counter ++ ) {
                         let chat = room.chats[ counter ];
-                        if (chat.unread) {
-                            console.log ( chat.unread , chat.sender._id.toString() , sender_id , chat.sender._id.toString() != sender_id);
-                        }
+                        // if (chat.unread) {
+                        //     console.log ( chat.unread , chat.sender._id.toString() , sender_id , chat.sender._id.toString() != sender_id);
+                        // }
                         if ( chat.sender._id.toString() != sender_id && chat.unread ) {
                             
                             chat.unread = false;
                             count += 1;
                         }
                     }
-                    console.log(count)
+                    // console.log(count)
                     if ( count > 0 ) {
-                        console.log ( count );
+                        // console.log ( count );
                         room = await room.save ();
-                        console.log("READD")
+                        // console.log("READD")
                     }
                     let room2 = await Chats.findOne ( { room : room_name } );
                     socket.in ( room_name ).emit ( "ReceiveChat" , room2.chats );

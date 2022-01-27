@@ -290,7 +290,7 @@ module.exports.link = async function ( req , res ) {
 
 //to get previous chats
 module.exports.previousChats = async function ( req , res ) {
-    console.log ( "request came" );
+    // console.log ( "request came" );
     let room = await Chats.findOne ( { room : sanitizer.escape ( req.params.room ) } );
     // console.log ( room );
     
@@ -357,7 +357,7 @@ module.exports.unreadMessageCount = async function ( req , res ) {
             
             
         }
-        console.log(unreadCount,"XX")
+        // console.log(unreadCount,"XX")
         return res.status ( 200 ).json ( {
             success : true ,
             data : unreadCount ,

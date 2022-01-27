@@ -68,13 +68,13 @@ class StudentsList extends React.Component {
         this.props.dispatch(fetchUnreadMessageCount(this.props.classroomId));
         this.timer = setInterval(() => {
             this.props.dispatch(fetchUnreadMessageCount(this.props.classroomId));
-            console.log(this.props.classroom.unreadMessageCount);
+            // console.log(this.props.classroom.unreadMessageCount);
             // console.log(this.state);
         }, 5000);
 
     }
     componentWillUnmount () {
-        console.log(this.timer);
+        // console.log(this.timer);
         clearInterval(this.timer);
     }
     

@@ -53,7 +53,7 @@ class ChatBox extends React.Component {
     }, 1000);
     this.setUpConnections();
     this.interval = setInterval(() => {
-      console.log("ReadAll",this.props.self_details.id);
+      // console.log("ReadAll",this.props.self_details.id);
       this.socket.emit("ReadAll", this.props.self_details.id);
     }, 2500);
     
@@ -86,7 +86,7 @@ class ChatBox extends React.Component {
     this.socket.disconnect();
     this.props.dispatch(clearEarlierMessages());
     clearInterval(this.interval);
-    console.log("Cleared Interval")
+    // console.log("Cleared Interval")
   }
 
   sendMessage = (e) => {
