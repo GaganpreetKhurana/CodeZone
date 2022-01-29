@@ -107,7 +107,34 @@ module.exports.login = async function (req, res) {
 }
   
 };
-//to upload user image
+
+//to fetch user details
+module.exports.fetchUserDetails = async function (req,res){
+  let user = await User.findById(req.params.id);
+  if(user){
+    return res.json(200, {
+      message: "User Details fetched successfully!!!",
+      success: true,
+      data: {
+        user: {
+          email: user.email,
+          name: user.name,
+          id: user._id,
+          SID: user.SID,
+          role: user.role,
+          avatar: user.avatar,
+        },
+      },
+    });
+  }else{
+    return res.json(200, {
+      message: "Sign up not successful",
+    });
+  }
+
+}
+
+//to update user profile
 module.exports.updateProfile = async function (req, res) {
   let user = await User.findById(req.body.id);
   if (!user ) {
