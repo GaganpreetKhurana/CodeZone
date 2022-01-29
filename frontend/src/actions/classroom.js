@@ -32,6 +32,9 @@ export function fetchUserClassDetails(){
               dispatch(userDetails(data.data));
               return;
             }
+          })
+          .catch((err)=>{
+            console.log(err);
           });
       };
 }

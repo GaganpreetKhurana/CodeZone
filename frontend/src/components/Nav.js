@@ -41,7 +41,7 @@ class Nav extends React.Component {
   render() {
     const { auth } = this.props;
     const { darkModetheme } = this.props;
-
+    console.log(auth.user);
     return (
       <Paper elevation={7}>
         <Box sx={{ flexGrow: 1 }}>
@@ -94,7 +94,7 @@ class Nav extends React.Component {
                     <Grid item m={0.25}>
                       <Link to="/settings">
                         <img
-                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSH4dcYWVFHFsz8M3Rsjpy2Hg6gQAmgbCIwWA&usqp=CAU"
+                          src={auth?.user?.avatar}
                           alt="user-dp"
                           id="user-dp"
                           width="30px"

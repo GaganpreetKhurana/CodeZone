@@ -167,6 +167,8 @@ module.exports.fetchLabDetails = async function (req, res) {
                 }
                 finalResult = [...finalResult,finalAnswerType];
             }
+            finalResult.sort((a,b) => (a.sid > b.sid) ? 1 : ((b.sid > a.sid) ? -1 : 0));
+
             return res.status(200).json({
                 message: "Lab Details Fetched Successfully!!",
                 success: true,
