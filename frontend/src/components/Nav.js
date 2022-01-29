@@ -41,7 +41,6 @@ class Nav extends React.Component {
   render() {
     const { auth } = this.props;
     const { darkModetheme } = this.props;
-    console.log(auth.user);
     return (
       <Paper elevation={7}>
         <Box sx={{ flexGrow: 1 }}>
