@@ -9,6 +9,7 @@ import TeacherDashboard from "./TeacherDashboard";
 import StudentDashboard from "./StudentDashboard";
 import Classroom from "./Classroom";
 import LabDashboard from "./LabDashboard";
+import Settings from "./Settings";
 
 import { Paper} from '@mui/material';
 import { createTheme } from '@mui/material/styles';
@@ -79,6 +80,7 @@ class App extends React.Component {
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
               <Route path="/signup" component={SignUp} />
+              <Route path="/settings" component={Settings} />
               <Route path="/CodeEditorScreen" component={CodeEditorScreen} />
               {!auth.isLoggedIn && (<Route path="/classroom/:classroomID" component={Home}/>)}
               <Route component={Page404} />
