@@ -25,15 +25,22 @@ module.exports.signup = async function (req, res) {
           password: hash,
           role: req.body.role,
           SID: req.body.SID,
-          avatar: "",
+          avatar: ""
         };
         let user1 = await User.create(userDetails);
         if (user1) {
+          let tokenDetails = {
+            name: user1.name,
+            _id: user1._id,
+            role: user1.role,
+            SID: user1.SID,
+            email: user1.email,
+          }
           return res.json(200, {
             message: "Sign up successful",
             success: true,
             data: {
-              token: jwt.sign(user1.toJSON(), "CODEZONE", {
+              token: jwt.sign(tokenDetails, "CODEZONE", {
                 expiresIn: "100000000",
               }),
               user: {
@@ -67,11 +74,18 @@ module.exports.login = async function (req, res) {
   else{
   bcrypt.compare(req.body.password, user.password, function(err, result) {
     if (result) {
+      let tokenDetails = {
+        name: user.name,
+        _id: user._id,
+        role: user.role,
+        SID: user.SID,
+        email: user.email,
+      }
         return res.json(200, {
             message: "Here is the token",
             success: true,
             data: {
-              token: jwt.sign(user.toJSON(), "CODEZONE", { expiresIn: "100000000" }),
+              token: jwt.sign(tokenDetails, "CODEZONE", { expiresIn: "100000000" }),
               user: {
                 email: user.email,
                 name: user.name,
@@ -120,11 +134,18 @@ module.exports.updateProfile = async function (req, res) {
                 }
                 user.save();
                 let user1 = await User.findById(req.body.id);
+                let tokenDetails = {
+                  name: user1.name,
+                  _id: user1._id,
+                  role: user1.role,
+                  SID: user1.SID,
+                  email: user1.email,
+                }
                 return res.json(200, {
                   message: "Profile updated Successfully",
                   success: true,
                   data: {
-                    token: jwt.sign(user.toJSON(), "CODEZONE", { expiresIn: "100000000" }),
+                    token: jwt.sign(tokenDetails, "CODEZONE", { expiresIn: "100000000" }),
                     user: {
                       email: user1.email,
                       name: user1.name,
@@ -137,10 +158,17 @@ module.exports.updateProfile = async function (req, res) {
                 });
               }
               else{
+                let tokenDetails = {
+                  name: user.name,
+                  _id: user._id,
+                  role: user.role,
+                  SID: user.SID,
+                  email: user.email,
+                }
                 return res.json(422, {
                   message: "Error while saving... Try after sometime!!!",
                   data: {
-                    token: jwt.sign(user.toJSON(), "CODEZONE", {
+                    token: jwt.sign(tokenDetails, "CODEZONE", {
                       expiresIn: "100000000",
                     }),
                     user: {
@@ -171,11 +199,18 @@ module.exports.updateProfile = async function (req, res) {
           }
           user.save();
           let user1 = await User.findById(req.body.id);
+          let tokenDetails = {
+            name: user1.name,
+            _id: user1._id,
+            role: user1.role,
+            SID: user1.SID,
+            email: user1.email,
+          }
           return res.json(200, {
             message: "Profile updated Successfully",
             success: true,
             data: {
-              token: jwt.sign(user.toJSON(), "CODEZONE", { expiresIn: "100000000" }),
+              token: jwt.sign(tokenDetails, "CODEZONE", { expiresIn: "100000000" }),
               user: {
                 email: user1.email,
                 name: user1.name,
@@ -191,10 +226,17 @@ module.exports.updateProfile = async function (req, res) {
     }
     else {
       // access denied
+      let tokenDetails = {
+        name: user.name,
+        _id: user._id,
+        role: user.role,
+        SID: user.SID,
+        email: user.email,
+      }
       return res.json(422, {
         message: "Incorrect Old Password! Profile not updated",
         data: {
-          token: jwt.sign(user.toJSON(), "CODEZONE", {
+          token: jwt.sign(tokenDetails, "CODEZONE", {
             expiresIn: "100000000",
           }),
           user: {
@@ -209,8 +251,5 @@ module.exports.updateProfile = async function (req, res) {
       });
     }
   });
-}
-
-
-  
+}  
 };
