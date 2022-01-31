@@ -6,6 +6,7 @@ import { fetchUnreadMessageCount } from "../actions/classroom";
 //Material UI
 import { FlexRow, Item } from "@mui-treasury/component-flex";
 import Avatar from "@mui/material/Avatar";
+// eslint-disable-next-line
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
