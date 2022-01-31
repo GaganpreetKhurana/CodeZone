@@ -136,9 +136,7 @@ module.exports.fetchUserDetails = async function (req,res){
 
 //to update user profile
 module.exports.updateProfile = async function (req, res) {
-  console.log("Request Came",req.body.id);
-  let user = await User.findById(req.body.id);
-  console.log(user);
+  let user = await User.findOne({email: req.body.email});
   if (!user ) {
     return res.json(500, {
       message: "Server Error!! Please try after sometime",
@@ -162,7 +160,7 @@ module.exports.updateProfile = async function (req, res) {
                   user.SID = req.body.SID;
                 }
                 user.save();
-                let user1 = await User.findById(req.body.id);
+                let user1 = await User.findOne({email: req.body.email});
                 let tokenDetails = {
                   name: user1.name,
                   _id: user1._id,
@@ -227,7 +225,7 @@ module.exports.updateProfile = async function (req, res) {
             user.SID = req.body.SID;
           }
           user.save();
-          let user1 = await User.findById(req.body.id);
+          let user1 = await User.findOne({email: req.body.email});
           let tokenDetails = {
             name: user1.name,
             _id: user1._id,

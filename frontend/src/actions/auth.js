@@ -56,7 +56,6 @@ export function login(email, password) {
       .then((data) => {
         if (data.success) {
           localStorage.setItem("token", data.data.token);
-          console.log(data.data.user);
           dispatch(loginSuccess(data.data.user));
           return;
         }

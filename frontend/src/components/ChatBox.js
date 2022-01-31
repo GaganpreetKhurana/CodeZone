@@ -118,7 +118,6 @@ class ChatBox extends React.Component {
   render() {
     const { self_details, other_details} = this.props;
     const { messages } = this.state;
-    console.log("messages",messages);
     return (
       <div>
         <List justify="space-between">

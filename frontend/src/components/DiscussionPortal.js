@@ -188,7 +188,7 @@ class DiscussionPortal extends React.Component {
                   <CardHeader
                     avatar={
                       <Avatar
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSH4dcYWVFHFsz8M3Rsjpy2Hg6gQAmgbCIwWA&usqp=CAU"
+                        src={post?.user?.avatar}
                         alt="user-pic"
                       />
                     }
@@ -331,7 +331,7 @@ class DiscussionPortal extends React.Component {
                               {/*Need to display the profile picture here */}
                               <Avatar
                                 alt="Student 2"
-                                src="https://media.istockphoto.com/photos/millennial-male-team-leader-organize-virtual-workshop-with-employees-picture-id1300972574?b=1&k=20&m=1300972574&s=170667a&w=0&h=2nBGC7tr0kWIU8zRQ3dMg-C5JLo9H2sNUuDjQ5mlYfo="
+                                src={comment?.user?.avatar}
                               />
                             </ListItemAvatar>
                             <ListItemText

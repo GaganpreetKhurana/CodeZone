@@ -93,7 +93,6 @@ class LabDashboard extends Component {
     })
   }
   handleClose = (e) =>{
-    console.log("Closed");
     this.setState({
       open: null,
     })
@@ -122,7 +121,6 @@ class LabDashboard extends Component {
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
-                  console.log(data.data);
                     this.setState({
                         loading: false,
                         data: data.data

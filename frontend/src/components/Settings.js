@@ -29,7 +29,6 @@ export default function Settings() {
 
   const [editProfile,setEditProfile] = useState(false);
   const {user} = useSelector(state => state.auth);
-  console.log("@@@@@@@@@@@@@@@",user);
 
   if(!user){
       return <></>
@@ -55,7 +54,6 @@ export default function Settings() {
                         {const reader = new FileReader();
                         reader.addEventListener("load", ()=>{
                             setFile(e.target.files[0]);
-                            console.log(reader.result);
                             setUploadedFile(reader.result);
                             setSuccess("File Uploaded successfully !!!");  
                             setTimeout(()=>{
@@ -87,7 +85,7 @@ export default function Settings() {
                       "Content-Type": "application/x-www-form-urlencoded",
                       Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
-                    body: getFormBody({avatar:uploadedFile, id:user.id,name,SID:sid,newPassword,previousPassword}),
+                    body: getFormBody({avatar:uploadedFile, email:user?.email,name,SID:sid,newPassword,previousPassword}),
                   })
                     .then((response) => response.json())
                     .then((data) => {

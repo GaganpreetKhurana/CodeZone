@@ -29,7 +29,6 @@ class App extends React.Component {
     //check if token already present else wwe would place it
     const token = localStorage.getItem("token");
     const user = jwt_decode(token);
-    console.log(user);
     if (user) {
       this.props.dispatch(
         authenticateUser({
