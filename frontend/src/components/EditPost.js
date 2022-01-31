@@ -16,7 +16,7 @@ class EditPostPopUp extends Component {
     super(props);
     this.state = {
       content: this.props.content,
-      file: this.post.files,
+      file: this.props.files,
     };
   }
 
