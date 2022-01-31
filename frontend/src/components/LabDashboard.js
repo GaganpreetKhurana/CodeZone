@@ -93,7 +93,6 @@ class LabDashboard extends Component {
     })
   }
   handleClose = (e) =>{
-    console.log("Closed");
     this.setState({
       open: null,
     })
@@ -169,7 +168,8 @@ class LabDashboard extends Component {
     handleDownload = (e) =>{
       e.preventDefault();
       const { editorLabDetails } = this.props.labDetails;
-      let newData = this.state.data.map(row =>{
+      let newData1 = this.state.data;
+      let newData = newData1?.map(row =>{
         delete row.id
         return row
       })

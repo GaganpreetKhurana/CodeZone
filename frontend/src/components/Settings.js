@@ -54,7 +54,6 @@ export default function Settings() {
                         {const reader = new FileReader();
                         reader.addEventListener("load", ()=>{
                             setFile(e.target.files[0]);
-                            console.log(reader.result);
                             setUploadedFile(reader.result);
                             setSuccess("File Uploaded successfully !!!");  
                             setTimeout(()=>{
@@ -77,6 +76,7 @@ export default function Settings() {
     e.preventDefault();
     if(newPassword || previousPassword || confirmNewPassword){
         if(previousPassword){
+            console.log(uploadedFile, user.id,name,sid,newPassword,previousPassword);
             if((newPassword && confirmNewPassword && newPassword === confirmNewPassword) || (!newPassword && !confirmNewPassword)){
                 const url = "/api/users/updateProfile";
                 fetch(url, {
@@ -85,7 +85,7 @@ export default function Settings() {
                       "Content-Type": "application/x-www-form-urlencoded",
                       Authorization: `Bearer ${localStorage.getItem("token")}`,
                     },
-                    body: getFormBody({avatar:uploadedFile, id:user.id,name,SID:sid,newPassword,previousPassword}),
+                    body: getFormBody({avatar:uploadedFile, email:user?.email,name,SID:sid,newPassword,previousPassword}),
                   })
                     .then((response) => response.json())
                     .then((data) => {
@@ -119,7 +119,6 @@ export default function Settings() {
             }
         }
         else{
-            console.log("erroooorrrrr");
             setError("To Update Profile Fill previous password");
             setTimeout(()=>{
             setError('');
@@ -127,7 +126,6 @@ export default function Settings() {
         }
     }
     else{
-        console.log("erroooorrrrr");
         setError("To Update Profile Fill previous password");
         setTimeout(()=>{
         setError('');
@@ -176,7 +174,7 @@ backgroundPosition: 'top center' }}>
                             value={`Email - ${user.email}`}
                             disabled={true}
                         />
-                        {editProfile ? (<TextField
+                        {editProfile && <TextField
                             margin="normal"
                             required
                             fullWidth
@@ -186,7 +184,8 @@ backgroundPosition: 'top center' }}>
                             id="name"
                             autoComplete="name"
                             onChange = {(e)=>{setName(e.target.value)}}
-                        />) : (<TextField
+                        />} 
+                        {!editProfile && <TextField
                         margin="normal"
                         fullWidth
                         name="name1"
@@ -194,7 +193,7 @@ backgroundPosition: 'top center' }}>
                         autoComplete="name1"
                         value={`Name - ${user.name}`}
                         disabled={true}
-                    />)}
+                    />}
                     {(editProfile && user.role === 'Student') && (<TextField
                             margin="normal"
                             required

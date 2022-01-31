@@ -17,7 +17,6 @@ import { Paper} from '@mui/material';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Fab from '@mui/material/Fab';
@@ -82,7 +81,7 @@ export default function CodeEditorSideBar(props) {
                 >
                 <ListItemButton>
                 <ListItemAvatar>
-                    <Avatar><AccountCircleIcon /></Avatar>
+                    <Avatar src={value?.avatar}></Avatar>
                 </ListItemAvatar>
                 <ListItemText primary={`${value.name}-${value.SID}`} />
                 </ListItemButton>

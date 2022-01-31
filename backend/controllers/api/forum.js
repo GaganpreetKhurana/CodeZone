@@ -50,7 +50,7 @@ module.exports.create = async function ( req , res ) {
                         path : "posts" ,
                         populate : {
                             path : "user" ,
-                            select : "name role" ,
+                            select : "name role email SID avatar" ,
                         }
                     } )
                     .populate ( {
@@ -73,7 +73,7 @@ module.exports.create = async function ( req , res ) {
                             path : "comments" ,
                             populate : {
                                 path : "user" ,
-                                select : "name role" ,
+                                select : "name role SID email avatar" ,
                             }
                         } ,
                         
@@ -158,7 +158,7 @@ module.exports.delete = async function ( req , res ) {
                     path : "posts" ,
                     populate : {
                         path : "user" ,
-                        select : "name role" ,
+                        select : "name role SID email avatar" ,
                     }
                 } )
                 .populate ( {
@@ -181,7 +181,7 @@ module.exports.delete = async function ( req , res ) {
                         path : "comments" ,
                         populate : {
                             path : "user" ,
-                            select : "name role" ,
+                            select : "name role SID email avatar" ,
                         }
                     } ,
                     
@@ -241,7 +241,7 @@ module.exports.update = async function ( req , res ) {
                     path : "posts" ,
                     populate : {
                         path : "user" ,
-                        select : "name role" ,
+                        select : "name role SID email avatar" ,
                     }
                 } )
                 .populate ( {
@@ -264,7 +264,7 @@ module.exports.update = async function ( req , res ) {
                         path : "comments" ,
                         populate : {
                             path : "user" ,
-                            select : "name role" ,
+                            select : "name role SID email avatar" ,
                         }
                     } ,
                     
@@ -331,7 +331,7 @@ module.exports.like = async function ( req , res ) {
                         path : "posts" ,
                         populate : {
                             path : "user" ,
-                            select : "name role" ,
+                            select : "name role SID email avatar" ,
                         }
                     } )
                     .populate ( {
@@ -354,7 +354,7 @@ module.exports.like = async function ( req , res ) {
                             path : "comments" ,
                             populate : {
                                 path : "user" ,
-                                select : "name role" ,
+                                select : "name role SID email avatar" ,
                             }
                         } ,
                         
@@ -393,7 +393,7 @@ module.exports.like = async function ( req , res ) {
                         path : "posts" ,
                         populate : {
                             path : "user" ,
-                            select : "name role" ,
+                            select : "name role SID email avatar" ,
                         }
                     } )
                     .populate ( {
@@ -416,7 +416,7 @@ module.exports.like = async function ( req , res ) {
                             path : "comments" ,
                             populate : {
                                 path : "user" ,
-                                select : "name role" ,
+                                select : "name role SID email avatar" ,
                             }
                         } ,
                         
@@ -505,7 +505,7 @@ module.exports.createComment = async function ( req , res ) {
                         path : "posts" ,
                         populate : {
                             path : "user" ,
-                            select : "name role" ,
+                            select : "name role SID email avatar" ,
                         }
                     } )
                     .populate ( {
@@ -528,7 +528,7 @@ module.exports.createComment = async function ( req , res ) {
                             path : "comments" ,
                             populate : {
                                 path : "user" ,
-                                select : "name role" ,
+                                select : "name role SID email avatar" ,
                             }
                         } ,
                         
@@ -616,7 +616,7 @@ module.exports.deleteComment = async function ( req , res ) {
                     path : "posts" ,
                     populate : {
                         path : "user" ,
-                        select : "name role" ,
+                        select : "name role SID email avatar" ,
                     }
                 } )
                 .populate ( {
@@ -639,7 +639,7 @@ module.exports.deleteComment = async function ( req , res ) {
                         path : "comments" ,
                         populate : {
                             path : "user" ,
-                            select : "name role" ,
+                            select : "name role SID email avatar" ,
                         }
                     } ,
                     
@@ -711,7 +711,7 @@ module.exports.updateComment = async function ( req , res ) {
                     path : "posts" ,
                     populate : {
                         path : "user" ,
-                        select : "name role" ,
+                        select : "name role SID email avatar" ,
                     }
                 } )
                 .populate ( {
@@ -734,7 +734,7 @@ module.exports.updateComment = async function ( req , res ) {
                         path : "comments" ,
                         populate : {
                             path : "user" ,
-                            select : "name role" ,
+                            select : "name role SID email avatar" ,
                         }
                     } ,
                     
@@ -809,7 +809,7 @@ module.exports.likeComment = async function ( req , res ) {
                         path : "posts" ,
                         populate : {
                             path : "user" ,
-                            select : "name role" ,
+                            select : "name role SID email avatar" ,
                         }
                     } )
                     .populate ( {
@@ -832,7 +832,7 @@ module.exports.likeComment = async function ( req , res ) {
                             path : "comments" ,
                             populate : {
                                 path : "user" ,
-                                select : "name role" ,
+                                select : "name role SID email avatar" ,
                             }
                         } ,
                         
@@ -871,7 +871,7 @@ module.exports.likeComment = async function ( req , res ) {
                         path : "posts" ,
                         populate : {
                             path : "user" ,
-                            select : "name role" ,
+                            select : "name role SID email avatar" ,
                         }
                     } )
                     .populate ( {
@@ -894,7 +894,7 @@ module.exports.likeComment = async function ( req , res ) {
                             path : "comments" ,
                             populate : {
                                 path : "user" ,
-                                select : "name role" ,
+                                select : "name role SID email avatar" ,
                             }
                         } ,
                         

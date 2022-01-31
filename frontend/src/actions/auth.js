@@ -105,6 +105,7 @@ export function signup(email, password, confirmpassword, name,role,SID) {
       .then((data) => {
         if (data.success) {
           localStorage.setItem("token", data.data.token);
+          console.log(data.data.user);
           dispatch(signupSuccess(data.data.user));
           return;
         }
