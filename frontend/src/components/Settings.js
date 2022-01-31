@@ -20,7 +20,7 @@ export default function Settings() {
   const [previousPassword, setPreviousPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
   const dispatch = useDispatch();
-
+  // eslint-disable-next-line
   const [file,setFile] = useState('');
   const [uploadedFile, setUploadedFile] = useState('');
 

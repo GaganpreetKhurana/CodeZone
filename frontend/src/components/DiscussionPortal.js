@@ -84,14 +84,18 @@ class DiscussionPortal extends React.Component {
     // dispatch action
     const { classroomId } = this.props;
     if ((this.state.content || this.state.files) && classroomId) {
-      if (this.state.content === "") {
+      if (!this.state.content.length) {
         // eslint-disable-next-line
         this.state.content = "File Post";
+      }
+      if (!this.state.files.base64.length) {
+        // eslint-disable-next-line
+        this.state.files = "";
       }
       this.props.dispatch(createPost(this.state.content, this.state.files.base64, classroomId));
       this.setState({
         content: "",
-        file: "",
+        files: "",
       });
     }
   };
@@ -186,12 +190,7 @@ class DiscussionPortal extends React.Component {
                   }}
                 >
                   <CardHeader
-                    avatar={
-                      <Avatar
-                        src={post?.user?.avatar}
-                        alt="user-pic"
-                      />
-                    }
+                    avatar={<Avatar src={post?.user?.avatar} alt="user-pic" />}
                     title={post.user.name}
                     subheader={`${post.createdAt.slice(
                       0,
@@ -202,7 +201,7 @@ class DiscussionPortal extends React.Component {
                   <ListItem>
                     <Typography variant="body1">{post.content}</Typography>
                   </ListItem>
-                  {post.content === "File Post" && (
+                  { post.file !== "" && (
                     <ListItem>
                       <Grid
                         container
@@ -285,7 +284,7 @@ class DiscussionPortal extends React.Component {
                       {post.user._id === user.id && (
                         <Grid item xs={2} m={0.5}>
                           <ListItemIcon>
-                            <EditPost id={post._id} content={post.content} />
+                            <EditPost id={post._id} content={post.content} file={post.file}/>
                           </ListItemIcon>
                         </Grid>
                       )}
