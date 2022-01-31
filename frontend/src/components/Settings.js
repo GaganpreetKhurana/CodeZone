@@ -119,7 +119,6 @@ export default function Settings() {
             }
         }
         else{
-            console.log("erroooorrrrr");
             setError("To Update Profile Fill previous password");
             setTimeout(()=>{
             setError('');
@@ -127,7 +126,6 @@ export default function Settings() {
         }
     }
     else{
-        console.log("erroooorrrrr");
         setError("To Update Profile Fill previous password");
         setTimeout(()=>{
         setError('');
