@@ -37,7 +37,6 @@ export default function auth(state = initialAuthState, action) {
       };
     case LOGIN_SUCCESS:
     case SIGNUP_SUCCESS:
-      console.log("Auth updated");
       return {
         ...state,
         user: action.user,
