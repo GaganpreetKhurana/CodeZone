@@ -52,7 +52,7 @@ class App extends React.Component {
             this.props.dispatch(
               authenticateUser({
                 email: data.data.user.email,
-                id: data.data.user._id,
+                id: data.data.user.id,
                 name: data.data.user.name,
                 role: data.data.user.role,
                 SID: data.data.user.SID,
