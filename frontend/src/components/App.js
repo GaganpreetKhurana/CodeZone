@@ -29,6 +29,7 @@ class App extends React.Component {
     //check if token already present else wwe would place it
     const token = localStorage.getItem("token");
     const user = jwt_decode(token);
+    console.log(user);
     if (user) {
       this.props.dispatch(
         authenticateUser({
@@ -113,10 +114,12 @@ class App extends React.Component {
               {auth.isLoggedIn && auth.user.role === "Teacher" && (
                 <Route path="/labDetails/:classroomId/:userId/:labId" component={LabDashboard} />
               )}
+              {auth.isLoggedIn && (
+                <Route path="/settings" component={Settings}/>
+              )}
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
               <Route path="/signup" component={SignUp} />
-              <Route path="/settings" component={Settings} />
               <Route path="/CodeEditorScreen" component={CodeEditorScreen} />
               {!auth.isLoggedIn && (<Route path="/classroom/:classroomID" component={Home}/>)}
               <Route component={Page404} />

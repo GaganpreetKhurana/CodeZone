@@ -36,7 +36,9 @@ class StudentDashboard extends Component {
               direction="row"
               justifyContent="space-evenly"
               alignItems="center"
-            >
+            >{
+              classesJoined?.length < 1 && <Typography variant="h6">No classes to display!!!</Typography>
+            }
               {classesJoined.map((classroom) => (
                 <div key={classroom.id}>
                   <Container>

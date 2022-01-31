@@ -29,6 +29,7 @@ export default function Settings() {
 
   const [editProfile,setEditProfile] = useState(false);
   const {user} = useSelector(state => state.auth);
+  console.log("@@@@@@@@@@@@@@@",user);
 
   if(!user){
       return <></>
@@ -77,6 +78,7 @@ export default function Settings() {
     e.preventDefault();
     if(newPassword || previousPassword || confirmNewPassword){
         if(previousPassword){
+            console.log(uploadedFile, user.id,name,sid,newPassword,previousPassword);
             if((newPassword && confirmNewPassword && newPassword === confirmNewPassword) || (!newPassword && !confirmNewPassword)){
                 const url = "/api/users/updateProfile";
                 fetch(url, {
@@ -174,7 +176,7 @@ backgroundPosition: 'top center' }}>
                             value={`Email - ${user.email}`}
                             disabled={true}
                         />
-                        {editProfile ? (<TextField
+                        {editProfile && <TextField
                             margin="normal"
                             required
                             fullWidth
@@ -184,7 +186,8 @@ backgroundPosition: 'top center' }}>
                             id="name"
                             autoComplete="name"
                             onChange = {(e)=>{setName(e.target.value)}}
-                        />) : (<TextField
+                        />} 
+                        {!editProfile && <TextField
                         margin="normal"
                         fullWidth
                         name="name1"
@@ -192,7 +195,7 @@ backgroundPosition: 'top center' }}>
                         autoComplete="name1"
                         value={`Name - ${user.name}`}
                         disabled={true}
-                    />)}
+                    />}
                     {(editProfile && user.role === 'Student') && (<TextField
                             margin="normal"
                             required

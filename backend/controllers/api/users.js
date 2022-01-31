@@ -136,7 +136,9 @@ module.exports.fetchUserDetails = async function (req,res){
 
 //to update user profile
 module.exports.updateProfile = async function (req, res) {
+  console.log("Request Came",req.body.id);
   let user = await User.findById(req.body.id);
+  console.log(user);
   if (!user ) {
     return res.json(500, {
       message: "Server Error!! Please try after sometime",

@@ -122,6 +122,7 @@ class LabDashboard extends Component {
             .then((response) => response.json())
             .then((data) => {
                 if (data.success) {
+                  console.log(data.data);
                     this.setState({
                         loading: false,
                         data: data.data
@@ -169,7 +170,8 @@ class LabDashboard extends Component {
     handleDownload = (e) =>{
       e.preventDefault();
       const { editorLabDetails } = this.props.labDetails;
-      let newData = this.state.data.map(row =>{
+      let newData1 = this.state.data;
+      let newData = newData1?.map(row =>{
         delete row.id
         return row
       })

@@ -14,6 +14,7 @@ import Card from "@mui/material/Card";
 
 const PersonItem = ({
   src = "",
+  avatar = "",
   name = "",
   count = 0,
   self = {},
@@ -25,8 +26,7 @@ const PersonItem = ({
   return (
     <FlexRow gap={12} p={2} noWrap>
       <Item noShrink>
-        <Avatar>
-          <AccountCircleIcon />
+        <Avatar src={avatar}>
         </Avatar>
       </Item>
       <FlexRow gap={2} p={0.25} grow stackPoint={240} alignItems="center">
@@ -127,6 +127,7 @@ class StudentsList extends React.Component {
               <div>
                 <PersonItem
                   name={value.name}
+                  avatar = {value?.avatar}
                   count={value.SID}
                   self={user}
                   other={value}
