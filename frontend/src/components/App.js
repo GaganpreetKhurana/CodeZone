@@ -28,6 +28,7 @@ class App extends React.Component {
   componentDidMount() {
     //check if token already present else wwe would place it
     const token = localStorage.getItem("token");
+    if(token){
     const user = jwt_decode(token);
     if (user) {
       this.props.dispatch(
@@ -75,7 +76,8 @@ class App extends React.Component {
           }
         });
       
-    }   
+    } 
+    }  
   }
 
   render() {
