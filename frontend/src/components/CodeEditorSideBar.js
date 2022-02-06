@@ -30,8 +30,9 @@ export default function CodeEditorSideBar(props) {
     bottom: false,
     right: false,
   });
-  const {students,user,labId} = props;
-  // console.log(props);
+  
+  const {students,user,labId,classroomId,teachers} = props;
+  // console.log(props,state,"Sidebar");
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -66,7 +67,7 @@ export default function CodeEditorSideBar(props) {
                 secondaryAction={
                   <div>
                     <Grid container direction="row" justifyContent="space-evenly" alignItems="center">
-                        <ChatWindow self={user} other={value}/>
+                        <ChatWindow self={user} other={value} classroomId={classroomId}/>
                         {(user.role==='Teacher' && value._id) && <Link to={`/code-editor/${value._id}/${labId}`} onClick={()=>{
                           //fetch this code-editor's details using row_id
                           props.dispatch(createNewCodeEditor(value._id,labId));
@@ -88,6 +89,34 @@ export default function CodeEditorSideBar(props) {
                 <Divider />
                 </ListItem>
             ))}
+                {teachers.map((value) => (
+                    <ListItem
+                        key={value._id}
+                        secondaryAction={
+                            <div>
+                                <Grid container direction="row" justifyContent="space-evenly" alignItems="center">
+                                    <ChatWindow self={user} other={value} classroomId={classroomId}/>
+                                    {(user.role==='Teacher' && value._id) && <Link to={`/code-editor/${value._id}/${labId}`} onClick={()=>{
+                                        //fetch this code-editor's details using row_id
+                                        props.dispatch(createNewCodeEditor(value._id,labId));
+                                    }}>
+                                        <VisibilityIcon/>
+                                    </Link>
+                                    }
+                    
+                                </Grid>
+                            </div>
+                        }
+                    >
+                        <ListItemButton>
+                            <ListItemAvatar>
+                                <Avatar><AccountCircleIcon /></Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={`${value.name}`} />
+                        </ListItemButton>
+                        <Divider />
+                    </ListItem>
+                ))}
             </List>
             </CardContent>
             </Card>
