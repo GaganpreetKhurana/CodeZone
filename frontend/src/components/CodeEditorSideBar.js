@@ -112,7 +112,7 @@ export default function CodeEditorSideBar(props) {
                     >
                         <ListItemButton>
                             <ListItemAvatar>
-                                <Avatar><AccountCircleIcon /></Avatar>
+                                <Avatar src={value?.avatar}></Avatar>
                             </ListItemAvatar>
                             <ListItemText primary={`${value.name}`} />
                         </ListItemButton>
