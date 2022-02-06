@@ -223,6 +223,7 @@ module.exports.downloadReport = async function (req, res) {
                         newCompileRequest.CPUTime = body.cpuTime;
                         newCompileRequest.memory = body.memory;
                         newCompileRequest = await newCompileRequest.save ();
+                        console.log(body.output,customOutput,body.output==customOutput,body.output===customOutput)
                         if(body.output === customOutput){
                             codeEditorExist.marksObtained = codeEditorExist.maxMarks;
                             codeEditorExist.save();
