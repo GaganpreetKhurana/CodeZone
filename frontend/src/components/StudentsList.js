@@ -17,7 +17,7 @@ const PersonItem = ({
   src = "",
   avatar = "",
   name = "",
-  count = 0,
+  count = null,
   self = {},
   other = {},
   classroomId = {},
@@ -57,7 +57,7 @@ const PersonItem = ({
           </Typography>
         </Item>
         <Item>
-          <ChatWindow self={self} other={other} classroomId = {classroomId} messageArray={messageArray}></ChatWindow>
+          <ChatWindow self={self} avatar={avatar} other={other} classroomId = {classroomId} messageArray={messageArray}></ChatWindow>
         </Item>
       </FlexRow>
     </FlexRow>
@@ -117,6 +117,7 @@ class StudentsList extends React.Component {
                   name={value.name}
                   self={user}
                   other={value}
+                  avatar = {value?.avatar}
                   classroomId={classroomId}
                   messageArray={messageArray}
                   unreadMessageCount={unreadMessageCount[value._id]}

@@ -21,6 +21,8 @@ import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Fab from '@mui/material/Fab';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+
 
 
 export default function CodeEditorSideBar(props) {
