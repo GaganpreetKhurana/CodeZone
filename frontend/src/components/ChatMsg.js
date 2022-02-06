@@ -4,19 +4,18 @@ import ListItemText from "@mui/material/ListItemText";
 import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
 
-
 export default function ChatMsg(props) {
-  //const side = props.side;
   const sideBool = props.side === "left" ? true : false;
   const message = props.messages;
   const sender = props.name;
+  const avatar = props?.avatar;
   return (
     <div>
       {sideBool ? (
         <div>
           <ListItem>
             <ListItemAvatar>
-              <Avatar alt={sender} />
+              <Avatar alt={sender} src={avatar} />
             </ListItemAvatar>
             <ListItemText primary={message} />
           </ListItem>
@@ -26,7 +25,7 @@ export default function ChatMsg(props) {
           <ListItem>
             <ListItemText primary={message} />
             <ListItemAvatar>
-              <Avatar alt={sender} />
+              <Avatar alt={sender} src={avatar} />
             </ListItemAvatar>
           </ListItem>
         </div>

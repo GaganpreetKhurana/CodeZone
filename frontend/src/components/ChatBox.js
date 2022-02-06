@@ -116,8 +116,7 @@ class ChatBox extends React.Component {
   };
 
   render() {
-    //const { other_details } = this.props;
-    const { self_details } = this.props;
+    const { self_details, other_details} = this.props;
     const { messages } = this.state;
     return (
       <div>
@@ -127,6 +126,7 @@ class ChatBox extends React.Component {
               <ChatMsg
                 name={message.sender}
                 side={message.sender === self_details.id ? "right" : "left"}
+                avatar = {message.sender === self_details.id ? self_details?.avatar : other_details?.avatar}
                 messages={message.content}
               />
             ))}

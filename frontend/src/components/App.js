@@ -9,6 +9,7 @@ import TeacherDashboard from "./TeacherDashboard";
 import StudentDashboard from "./StudentDashboard";
 import Classroom from "./Classroom";
 import LabDashboard from "./LabDashboard";
+import Settings from "./Settings";
 
 import { Paper} from '@mui/material';
 import { createTheme } from '@mui/material/styles';
@@ -27,8 +28,9 @@ class App extends React.Component {
   componentDidMount() {
     //check if token already present else wwe would place it
     const token = localStorage.getItem("token");
-    if (token) {
-      const user = jwt_decode(token);
+    if(token){
+    const user = jwt_decode(token);
+    if (user) {
       this.props.dispatch(
         authenticateUser({
           email: user.email,
@@ -36,9 +38,46 @@ class App extends React.Component {
           name: user.name,
           role: user.role,
           SID: user.SID,
+          avatar: '',
         })
       );
-    }   
+      const url = `/api/users/fetchUserDetails/${user._id}`;
+      fetch(url, {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        }
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            this.props.dispatch(
+              authenticateUser({
+                email: data.data.user.email,
+                id: data.data.user.id,
+                name: data.data.user.name,
+                role: data.data.user.role,
+                SID: data.data.user.SID,
+                avatar: data.data.user.avatar,
+              })
+            );
+            return;
+          }
+          else{
+            this.props.dispatch(
+              authenticateUser({
+                email: user.email,
+                id: user._id,
+                name: user.name,
+                role: user.role,
+                SID: user.SID,
+                avatar: '',
+              })
+            );
+          }
+        });
+      
+    } 
+    }  
   }
 
   render() {
@@ -75,6 +114,9 @@ class App extends React.Component {
               )}
               {auth.isLoggedIn && auth.user.role === "Teacher" && (
                 <Route path="/labDetails/:classroomId/:userId/:labId" component={LabDashboard} />
+              )}
+              {auth.isLoggedIn && (
+                <Route path="/settings" component={Settings}/>
               )}
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />

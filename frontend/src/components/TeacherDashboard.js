@@ -14,7 +14,7 @@ class TeacherDashboard extends Component {
   }
   render() {
     //create the details of the classes joined and created by the user
-    const { classesCreated,/*classesJoined*/ } = this.props.classroom;
+    const { classesCreated,classesJoined } = this.props.classroom;
 
     return (
       <div>
@@ -34,8 +34,15 @@ class TeacherDashboard extends Component {
             direction="row"
             justifyContent="space-evenly"
             alignItems="center"
-          >
+          >{
+            (classesCreated?.length < 1 && classesJoined?.length < 1) && <Typography variant="h6">No classes to display!!!</Typography>
+          }
             {classesCreated.map((classroom) => (
+              <div>
+                <TeacherClassCards classroom={classroom} />
+              </div>
+            ))}
+            {classesJoined.map((classroom) => (
               <div>
                 <TeacherClassCards classroom={classroom} />
               </div>

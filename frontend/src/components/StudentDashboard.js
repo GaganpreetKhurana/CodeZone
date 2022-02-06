@@ -4,7 +4,8 @@ import { fetchUserClassDetails,clearUserClassDetails } from "../actions/classroo
 import { Grid } from '@mui/material';
 import StudentClassCards from './StudentClassCards';
 import Typography from '@mui/material/Typography';
-
+import { Container } from '@mui/material';
+import { Box } from '@mui/system';
 
 class StudentDashboard extends Component {
   componentDidMount() {
@@ -19,10 +20,9 @@ class StudentDashboard extends Component {
     const { classesJoined } = this.props.classroom;
     return (
       <div>
-        <div>
-          <Grid container direction="column">
+        <Box m={4}>
+          <Grid container direction="column" height="100vh">
             <Grid
-              m={4}
               item
               container
               justifyContent="space-evenly"
@@ -36,15 +36,19 @@ class StudentDashboard extends Component {
               direction="row"
               justifyContent="space-evenly"
               alignItems="center"
-            >
+            >{
+              classesJoined?.length < 1 && <Typography variant="h6">No classes to display!!!</Typography>
+            }
               {classesJoined.map((classroom) => (
-                <div>
-                  <StudentClassCards classroom={classroom} />
+                <div key={classroom.id}>
+                  <Container>
+                    <StudentClassCards classroom={classroom} />
+                  </Container>
                 </div>
               ))}
             </Grid>
           </Grid>
-        </div>
+        </Box>
       </div>
     );
   }

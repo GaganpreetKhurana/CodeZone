@@ -141,7 +141,7 @@ module.exports.details = async function ( req , res ) {
             path : "classesJoined" ,
             populate : {
                 path : "creator students teachers" ,
-                select : "SID name email role" ,
+                select : "SID name email role avatar" ,
             } ,
         } )
         .populate (
@@ -152,7 +152,7 @@ module.exports.details = async function ( req , res ) {
             path : "classesCreated" ,
             populate : {
                 path : "creator students teachers" ,
-                select : "SID name email role" ,
+                select : "SID name email role avatar" ,
             } ,
         } )
         .exec ();
@@ -193,13 +193,13 @@ module.exports.dashboard = async function ( req , res ) {
             success : true ,
             data : await Classes.findById ( sanitizer.escape ( req.params.classroom_id ) )
                 .select ( "teachers students posts announcements code ClassMeetLink" )
-                .populate ( "teachers students" , "name SID id email" )
+                .populate ( "teachers students" , "name SID id email avatar" )
                 .populate ( "posts" , "content updatedAt user comments likes" )
                 .populate ( {
                     path : "posts" ,
                     populate : {
                         path : "user" ,
-                        select : "name role" ,
+                        select : "name role avatar SID email" ,
                     } ,
                 } )
                 .populate ( {
@@ -222,7 +222,7 @@ module.exports.dashboard = async function ( req , res ) {
                         path : "comments" ,
                         populate : {
                             path : "user" ,
-                            select : "name role" ,
+                            select : "name role avatar SID email" ,
                         } ,
                     } ,
                 } )

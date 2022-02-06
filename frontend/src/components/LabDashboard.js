@@ -93,7 +93,6 @@ class LabDashboard extends Component {
     })
   }
   handleClose = (e) =>{
-    console.log("Closed");
     this.setState({
       open: null,
     })
@@ -169,7 +168,12 @@ class LabDashboard extends Component {
     handleDownload = (e) =>{
       e.preventDefault();
       const { editorLabDetails } = this.props.labDetails;
-      const workSheet = XLSX.utils.json_to_sheet(this.state.data);
+      let newData1 = this.state.data;
+      let newData = newData1?.map(row =>{
+        delete row.id
+        return row
+      })
+      const workSheet = XLSX.utils.json_to_sheet(newData);
       const workBook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(
         workBook,

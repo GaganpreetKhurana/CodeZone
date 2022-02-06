@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { logoutUser } from "../actions/auth";
 import { switchTheme } from "../actions/theme";
+import Avatar from '@mui/material/Avatar';
 import logo from "../static/logo.png";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -41,7 +42,6 @@ class Nav extends React.Component {
   render() {
     const { auth } = this.props;
     const { darkModetheme } = this.props;
-
     return (
       <Paper elevation={7}>
         <Box sx={{ flexGrow: 1 }}>
@@ -93,12 +93,8 @@ class Nav extends React.Component {
                   >
                     <Grid item m={0.25}>
                       <Link to="/settings">
-                        <img
-                          src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSH4dcYWVFHFsz8M3Rsjpy2Hg6gQAmgbCIwWA&usqp=CAU"
-                          alt="user-dp"
-                          id="user-dp"
-                          width="30px"
-                        />
+                        <Avatar src={auth?.user?.avatar} sx={{ width: 35, height: 35 }}>
+                    </Avatar>
                       </Link>
                     </Grid>
                     {auth.user.name}
