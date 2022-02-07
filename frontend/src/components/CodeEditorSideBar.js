@@ -38,7 +38,6 @@ function CodeEditorSideBar(props) {
   const {students,user,labId,classroomId,teachers} = props;
   let unreadMessageCount= props.classroom.unreadMessageCount;
   
-  // console.log(props,state,"Sidebar");
     const dispatch = useDispatch();
     
     
@@ -109,7 +108,8 @@ function CodeEditorSideBar(props) {
                 <ListItemAvatar>
                     <Avatar src={value?.avatar}></Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={`${value.name}-${value.SID}`} secondary={`Unread: ${unreadMessageCount[value._id]}`} />
+                    {( value._id == user.id) && <ListItemText primary={`${value.name}-${value.SID}`}   />}
+                    {( value._id != user.id) && <ListItemText primary={`${value.name}-${value.SID}`} secondary={`Unread: ${unreadMessageCount[value._id]}`}  />}
                 </ListItemButton>
                 <Divider />
                 </ListItem>
@@ -137,7 +137,8 @@ function CodeEditorSideBar(props) {
                             <ListItemAvatar>
                                 <Avatar src={value?.avatar}></Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={`${value.name}`} secondary={`Unread: ${unreadMessageCount[value._id]}`}  />
+                            {( value._id == user.id) && <ListItemText primary={`${value.name}`}  />}
+                            {( value._id != user.id) && <ListItemText primary={`${value.name}`} secondary={`Unread: ${unreadMessageCount[value._id]}`}  />}
                         </ListItemButton>
                         <Divider />
                     </ListItem>
