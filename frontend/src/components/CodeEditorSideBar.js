@@ -8,6 +8,9 @@ import { useEffect} from "react";
 import {useDispatch,connect} from "react-redux";
 import {createNewCodeEditor } from "../actions/classroom";
 import { fetchUnreadMessageCount } from "../actions/classroom";
+// import NotificationSound from "../static/sounds/notification.mp3";
+import Sound from 'react-sound';
+
 
 
 //Material UI
@@ -33,30 +36,42 @@ function CodeEditorSideBar(props) {
     top: false,
     left: false,
     bottom: false,
-    right: false
+    right: false,
+      play : false,
+      previousUnreadMessageCount:{},
+      
   });
+  
   const {students,user,labId,classroomId,teachers} = props;
-  let unreadMessageCount= props.classroom.unreadMessageCount;
   
     const dispatch = useDispatch();
-    
+    useEffect(() =>{
+        for (let [key,value] of Object.entries(state.previousUnreadMessageCount)){
+            console.log("ZZ",key,value)
+            if (value<props.classroom.unreadMessageCount[key]){
+                setState({play:true})
+                console.log("Messages",state.previousUnreadMessageCount);
+                break;
+            }
+        }
+        console.log("YY",state,"XZZX",props.classroom.unreadMessageCount,state.previousUnreadMessageCount);
+        setState({previousUnreadMessageCount:Object.assign({}, props.classroom.unreadMessageCount)});
+        console.log("YY",state,"XX",props.classroom.unreadMessageCount,state.previousUnreadMessageCount);
+    },[props.classroom.unreadMessageCount])
     
     useEffect(() => {
         dispatch(fetchUnreadMessageCount(props.classroomId));
         let timer = setInterval(() => {
             dispatch(fetchUnreadMessageCount(props.classroomId));
-            // console.log(props.classroom.unreadMessageCount,"XX");
-            
-            
         }, 5000);
         
         return () => {
             // componentwillunmount in functional component.
             // Anything in here is fired on component unmount.
-            // console.log("cleared",timer);
+            console.log("cleared",timer);
             clearInterval(timer);
         }
-    }, [dispatch,props])
+    }, [dispatch])
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -109,7 +124,7 @@ function CodeEditorSideBar(props) {
                     <Avatar src={value?.avatar}></Avatar>
                 </ListItemAvatar>
                     {( value._id == user.id) && <ListItemText primary={`${value.name}-${value.SID}`}   />}
-                    {( value._id != user.id) && <ListItemText primary={`${value.name}-${value.SID}`} secondary={`Unread: ${unreadMessageCount[value._id]}`}  />}
+                    {( value._id != user.id) && <ListItemText primary={`${value.name}-${value.SID}`} secondary={`Unread: ${props.classroom.unreadMessageCount[value._id]}`}  />}
                 </ListItemButton>
                 <Divider />
                 </ListItem>
@@ -138,7 +153,7 @@ function CodeEditorSideBar(props) {
                                 <Avatar src={value?.avatar}></Avatar>
                             </ListItemAvatar>
                             {( value._id == user.id) && <ListItemText primary={`${value.name}`}  />}
-                            {( value._id != user.id) && <ListItemText primary={`${value.name}`} secondary={`Unread: ${unreadMessageCount[value._id]}`}  />}
+                            {( value._id != user.id) && <ListItemText primary={`${value.name}`} secondary={`Unread: ${props.classroom.unreadMessageCount[value._id]}`}  />}
                         </ListItemButton>
                         <Divider />
                     </ListItem>
