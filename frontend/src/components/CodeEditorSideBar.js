@@ -4,7 +4,11 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ChatWindow from "./ChatWindow";
 import { Link } from 'react-router-dom';
+import { useEffect} from "react";
+import {useDispatch,connect} from "react-redux";
 import {createNewCodeEditor } from "../actions/classroom";
+import { fetchUnreadMessageCount } from "../actions/classroom";
+
 
 //Material UI
 import { Grid} from '@mui/material';
@@ -21,20 +25,39 @@ import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Fab from '@mui/material/Fab';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 
 
-export default function CodeEditorSideBar(props) {
+function CodeEditorSideBar(props) {
   const [state, setState] = React.useState({
     top: false,
     left: false,
     bottom: false,
-    right: false,
+    right: false
   });
-  
   const {students,user,labId,classroomId,teachers} = props;
+  let unreadMessageCount= props.classroom.unreadMessageCount;
+  
   // console.log(props,state,"Sidebar");
+    const dispatch = useDispatch();
+    
+    
+    useEffect(() => {
+        dispatch(fetchUnreadMessageCount(props.classroomId));
+        let timer = setInterval(() => {
+            dispatch(fetchUnreadMessageCount(props.classroomId));
+            // console.log(props.classroom.unreadMessageCount,"XX");
+            
+            
+        }, 5000);
+        
+        return () => {
+            // componentwillunmount in functional component.
+            // Anything in here is fired on component unmount.
+            // console.log("cleared",timer);
+            clearInterval(timer);
+        }
+    }, [dispatch,props])
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -86,7 +109,7 @@ export default function CodeEditorSideBar(props) {
                 <ListItemAvatar>
                     <Avatar src={value?.avatar}></Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={`${value.name}-${value.SID}`} />
+                <ListItemText primary={`${value.name}-${value.SID}`} secondary={`Unread: ${unreadMessageCount[value._id]}`} />
                 </ListItemButton>
                 <Divider />
                 </ListItem>
@@ -114,7 +137,7 @@ export default function CodeEditorSideBar(props) {
                             <ListItemAvatar>
                                 <Avatar src={value?.avatar}></Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={`${value.name}`} />
+                            <ListItemText primary={`${value.name}`} secondary={`Unread: ${unreadMessageCount[value._id]}`}  />
                         </ListItemButton>
                         <Divider />
                     </ListItem>
@@ -150,3 +173,10 @@ export default function CodeEditorSideBar(props) {
     </div>
   );
 }
+function mapStateToProps(state) {
+    return {
+        classroom: state.classroom,
+    };
+}
+
+export default connect(mapStateToProps)(CodeEditorSideBar);
