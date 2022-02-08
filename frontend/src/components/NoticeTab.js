@@ -46,7 +46,6 @@ function a11yProps(index) {
 }
 
 export default function NoticeTab(props) {
-  const classroomId = props.classroomId;
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 

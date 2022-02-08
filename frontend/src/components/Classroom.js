@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import DiscussionPortal from "./DiscussionPortal";
 import StudentsList from "./StudentsList";
 import NoticeTab from "./NoticeTab";
-import NoticeBoard from "./NoticeBoard";
 //Material UI
 import { Grid } from '@mui/material';
 import { clearClassroomDetails , fetchClassroomDetails } from "../actions/classroom";
