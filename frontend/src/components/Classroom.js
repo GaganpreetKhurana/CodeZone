@@ -62,7 +62,7 @@ class Classroom extends Component {
               alignItems="stretch"
             >
               <Grid item m={2}>
-                <NoticeBoard classroomId={match.params.classroomID} />{" "}
+                <NoticeTab classroomId={match.params.classroomID} />{" "}
               </Grid>
               <Grid item m={2}>
                 <StudentsList classroomId={match.params.classroomID} />
