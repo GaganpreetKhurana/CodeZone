@@ -4,7 +4,14 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ChatWindow from "./ChatWindow";
 import { Link } from 'react-router-dom';
+import { useEffect} from "react";
+import {useDispatch,connect} from "react-redux";
 import {createNewCodeEditor } from "../actions/classroom";
+import { fetchUnreadMessageCount } from "../actions/classroom";
+// import NotificationSound from "../static/sounds/notification.mp3";
+import Sound from 'react-sound';
+
+
 
 //Material UI
 import { Grid} from '@mui/material';
@@ -21,20 +28,50 @@ import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Fab from '@mui/material/Fab';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 
 
-export default function CodeEditorSideBar(props) {
+function CodeEditorSideBar(props) {
   const [state, setState] = React.useState({
     top: false,
     left: false,
     bottom: false,
     right: false,
+      play : false,
+      previousUnreadMessageCount:{},
+      
   });
   
   const {students,user,labId,classroomId,teachers} = props;
-  // console.log(props,state,"Sidebar");
+  
+    const dispatch = useDispatch();
+    useEffect(() =>{
+        for (let [key,value] of Object.entries(state.previousUnreadMessageCount)){
+            console.log("ZZ",key,value)
+            if (value<props.classroom.unreadMessageCount[key]){
+                setState({play:true})
+                console.log("Messages",state.previousUnreadMessageCount);
+                break;
+            }
+        }
+        console.log("YY",state,"XZZX",props.classroom.unreadMessageCount,state.previousUnreadMessageCount);
+        setState({previousUnreadMessageCount:Object.assign({}, props.classroom.unreadMessageCount)});
+        console.log("YY",state,"XX",props.classroom.unreadMessageCount,state.previousUnreadMessageCount);
+    },[props.classroom.unreadMessageCount])
+    
+    useEffect(() => {
+        dispatch(fetchUnreadMessageCount(props.classroomId));
+        let timer = setInterval(() => {
+            dispatch(fetchUnreadMessageCount(props.classroomId));
+        }, 5000);
+        
+        return () => {
+            // componentwillunmount in functional component.
+            // Anything in here is fired on component unmount.
+            console.log("cleared",timer);
+            clearInterval(timer);
+        }
+    }, [dispatch])
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -86,7 +123,8 @@ export default function CodeEditorSideBar(props) {
                 <ListItemAvatar>
                     <Avatar src={value?.avatar}></Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={`${value.name}-${value.SID}`} />
+                    {( value._id == user.id) && <ListItemText primary={`${value.name}-${value.SID}`}   />}
+                    {( value._id != user.id) && <ListItemText primary={`${value.name}-${value.SID}`} secondary={`Unread: ${props.classroom.unreadMessageCount[value._id]}`}  />}
                 </ListItemButton>
                 <Divider />
                 </ListItem>
@@ -114,7 +152,8 @@ export default function CodeEditorSideBar(props) {
                             <ListItemAvatar>
                                 <Avatar src={value?.avatar}></Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={`${value.name}`} />
+                            {( value._id == user.id) && <ListItemText primary={`${value.name}`}  />}
+                            {( value._id != user.id) && <ListItemText primary={`${value.name}`} secondary={`Unread: ${props.classroom.unreadMessageCount[value._id]}`}  />}
                         </ListItemButton>
                         <Divider />
                     </ListItem>
@@ -150,3 +189,10 @@ export default function CodeEditorSideBar(props) {
     </div>
   );
 }
+function mapStateToProps(state) {
+    return {
+        classroom: state.classroom,
+    };
+}
+
+export default connect(mapStateToProps)(CodeEditorSideBar);
