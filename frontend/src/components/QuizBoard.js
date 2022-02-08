@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import AddAnnouncement from "./AddAnnouncement";
+import { Link } from "react-router-dom";
 
 //Material UI
 import Card from "@mui/material/Card";
@@ -42,10 +42,18 @@ class QuizBoard extends React.Component {
               </Item>
             </FlexRow>
             <CardContent>
-              <Button>Join Quiz</Button>
-              <Button>Quiz Results</Button>
+              <Link to="/Quiz">
+                <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                  Join Quiz
+                </Button>
+              </Link>
+              <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                Quiz Results
+              </Button>
               {auth.user.role === "Teacher" && (
-                <Button>Create Quiz</Button>
+                <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                  Create Quiz
+                </Button>
               )}
             </CardContent>
           </Card>
