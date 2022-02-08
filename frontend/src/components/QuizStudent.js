@@ -68,7 +68,6 @@ class QuizStudent extends Component {
             }, this)}
           </ul>
           
-          <span>Score: {this.state.score}</span>
           <span>
             Question {this.state.progress + 1} of{" "}
             {this.state.questionData.length}
