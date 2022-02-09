@@ -2,7 +2,6 @@ import { Component } from "react";
 import { connect } from "react-redux";
 
 // Material UI
-import { Paper } from "@mui/material";
 import { Grid } from "@mui/material";
 import Color from "color"; // v3.2.1
 import { styled } from "@mui/material/styles";
@@ -10,9 +9,7 @@ import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
-import { Button } from "@mui/material";
+
 
 const CardActionAreaActionArea = styled(CardActionArea)(() => ({
   borderRadius: 10,
