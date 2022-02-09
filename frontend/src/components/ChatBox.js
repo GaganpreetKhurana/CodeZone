@@ -2,8 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import io from "socket.io-client";
 import Picker from 'emoji-picker-react';
-import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
-
+import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 // eslint-disable-next-line
 import {clearEarlierMessages, getEarlierMessages} from "../actions/classroom";
 
@@ -127,7 +126,7 @@ class ChatBox extends React.Component{
 		console.log(this.state.contentMessage);
 	};
 	handleEmojiPicker = (e) => {
-		this.emojiPickerShow = !this.emojiPickerShow
+		this.emojiPickerShow = !this.emojiPickerShow;
 	}
 	
 	render(){
@@ -146,7 +145,8 @@ class ChatBox extends React.Component{
 							/>
 						))}
 				</List>
-				
+				{this.emojiPickerShow &&
+					<Picker pickerStyle={{width: '100%', aspectRatio: '0.2'}} onEmojiClick={this.onEmojiClick}/>}
 				<Paper
 					component="form"
 					sx={{
@@ -162,7 +162,7 @@ class ChatBox extends React.Component{
 						onChange={this.handleChangeMessage}
 						ref={this.titleRef}
 					/>
-					<EmojiEmotionsIcon onClick={this.handleEmojiPicker} color='primary'/>
+					<InsertEmoticonIcon onClick={this.handleEmojiPicker} color='primary'/>
 					<Divider sx={{height: 28, m: 0.5}} orientation="vertical"/>
 					<IconButton
 						color="primary"
@@ -172,7 +172,6 @@ class ChatBox extends React.Component{
 					>
 						<CommentIcon/>
 					</IconButton>
-					{this.emojiPickerShow && <Picker onEmojiClick={this.onEmojiClick}/>}
 				</Paper>
 			</div>
 		);
