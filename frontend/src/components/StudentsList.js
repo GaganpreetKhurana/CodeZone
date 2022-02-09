@@ -43,7 +43,6 @@ const PersonItem = ( {
                         } }
                     >
                         <b>{ name }</b>
-                        <b> Unread: </b> { unreadMessageCount }
                     </Typography>
                     <Typography
                         noWrap
@@ -58,8 +57,11 @@ const PersonItem = ( {
                     </Typography>
                 </Item>
                 <Item>
+                    <Badge badgeContent={ unreadMessageCount } color="error">
+    
                     <ChatWindow self={ self } avatar={ avatar } other={ other } classroomId={ classroomId }
                                 messageArray={ messageArray }></ChatWindow>
+                    </Badge>
                 </Item>
             </FlexRow>
         </FlexRow>
@@ -191,7 +193,7 @@ class StudentsList extends React.Component {
                         ) ) }
                     </Card>
                 </Paper>
-                { ( this.play == true ) && <Sound
+                { ( this.play === true ) && <Sound
                     url={ NotificationSound }
                     playStatus={ Sound.status.PLAYING }
                     onLoading={ this.handleLoading }

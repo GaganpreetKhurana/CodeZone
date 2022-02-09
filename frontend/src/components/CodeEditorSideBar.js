@@ -123,8 +123,11 @@ function CodeEditorSideBar ( props ) {
                                                 <div>
                                                     <Grid container direction="row" justifyContent="space-evenly"
                                                           alignItems="center">
+                                                        <Badge badgeContent={ props.classroom.unreadMessageCount[ value._id ]  } color="error">
+    
                                                         <ChatWindow self={ user } other={ value }
                                                                     classroomId={ classroomId }/>
+                                                        </Badge>
                                                         { ( user.role === 'Teacher' && value._id ) &&
                                                             <Link to={ `/code-editor/${ value._id }/${ labId }` }
                                                                   onClick={ () => {
@@ -143,11 +146,7 @@ function CodeEditorSideBar ( props ) {
                                                 <ListItemAvatar>
                                                     <Avatar src={ value?.avatar }></Avatar>
                                                 </ListItemAvatar>
-                                                { ( value._id == user.id ) &&
-                                                    <ListItemText primary={ `${ value.name }-${ value.SID }` }/> }
-                                                { ( value._id != user.id ) &&
-                                                    <ListItemText primary={ `${ value.name }-${ value.SID }` }
-                                                                  secondary={ `Unread: ${ props.classroom.unreadMessageCount[ value._id ] }` }/> }
+                                                    <ListItemText primary={ value.name  } secondary={value.SID}/>
                                             </ListItemButton>
                                             <Divider/>
                                         </ListItem>
@@ -159,8 +158,10 @@ function CodeEditorSideBar ( props ) {
                                                 <div>
                                                     <Grid container direction="row" justifyContent="space-evenly"
                                                           alignItems="center">
+                                                        <Badge badgeContent={ props.classroom.unreadMessageCount[ value._id ]  } color="error">
+    
                                                         <ChatWindow self={ user } other={ value }
-                                                                    classroomId={ classroomId }/>
+                                                                    classroomId={ classroomId }/></Badge>
                                                         { ( user.role === 'Teacher' && value._id ) &&
                                                             <Link to={ `/code-editor/${ value._id }/${ labId }` }
                                                                   onClick={ () => {
@@ -179,11 +180,7 @@ function CodeEditorSideBar ( props ) {
                                                 <ListItemAvatar>
                                                     <Avatar src={ value?.avatar }></Avatar>
                                                 </ListItemAvatar>
-                                                { ( value._id == user.id ) &&
-                                                    <ListItemText primary={ `${ value.name }` }/> }
-                                                { ( value._id != user.id ) &&
-                                                    <ListItemText primary={ `${ value.name }` }
-                                                                  secondary={ `Unread: ${ props.classroom.unreadMessageCount[ value._id ] }` }/> }
+                                                    <ListItemText primary={ value.name }/>
                                             </ListItemButton>
                                             <Divider/>
                                         </ListItem>
