@@ -3,11 +3,11 @@ const webdriver = require("selenium-webdriver");
 const {By} = require ("selenium-webdriver");
 const ltCapabilities = require('../capabilities');
 
-const user = "teacher@gmail.com";
-const password = "teacher";
 const subject = "Economics"
 const description = "HSN-312"
 const batch = "CSE-4th year"
+const user = "teacher@gmail.com";
+const password = "teacher";
 
 describe("CodeZone Testing",async function(){
     // selenium automation testing on cloud used --- lambdatest for this
