@@ -4,11 +4,11 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import ChatWindow from "./ChatWindow";
 import { Link } from 'react-router-dom';
-import { useEffect} from "react";
+import { useEffect,useRef} from "react";
 import {useDispatch,connect} from "react-redux";
 import {createNewCodeEditor } from "../actions/classroom";
 import { fetchUnreadMessageCount } from "../actions/classroom";
-// import NotificationSound from "../static/sounds/notification.mp3";
+import NotificationSound from "../static/sounds/notification.mp3";
 import Sound from 'react-sound';
 
 
@@ -38,25 +38,26 @@ function CodeEditorSideBar(props) {
     bottom: false,
     right: false,
       play : false,
-      previousUnreadMessageCount:{},
+      
       
   });
+  const previousUnreadMessageCount= useRef(Object.assign({},props.classroom.unreadMessageCount));
   
   const {students,user,labId,classroomId,teachers} = props;
   
     const dispatch = useDispatch();
     useEffect(() =>{
-        for (let [key,value] of Object.entries(state.previousUnreadMessageCount)){
-            console.log("ZZ",key,value)
+        for (let [key,value] of Object.entries(previousUnreadMessageCount.current)){
+            // console.log("ZZ",key,value)
             if (value<props.classroom.unreadMessageCount[key]){
-                setState({play:true})
-                console.log("Messages",state.previousUnreadMessageCount);
+                setState({...state,play:true})
+                // console.log("Messages",previousUnreadMessageCount);
                 break;
             }
         }
-        console.log("YY",state,"XZZX",props.classroom.unreadMessageCount,state.previousUnreadMessageCount);
-        setState({previousUnreadMessageCount:Object.assign({}, props.classroom.unreadMessageCount)});
-        console.log("YY",state,"XX",props.classroom.unreadMessageCount,state.previousUnreadMessageCount);
+        // console.log("YY",state,"XZZX",props.classroom.unreadMessageCount,previousUnreadMessageCount);
+        previousUnreadMessageCount.current = Object.assign({},props.classroom.unreadMessageCount);
+        // console.log("YY",state,"XX",props.classroom.unreadMessageCount,previousUnreadMessageCount);
     },[props.classroom.unreadMessageCount])
     
     useEffect(() => {
@@ -79,7 +80,22 @@ function CodeEditorSideBar(props) {
 
     setState({ ...state, [anchor]: open });
   };
-  const Div = styled('div')(({ theme }) => ({
+    const playing = () => {
+        console.log("Playing");
+    };
+    const playStopped = () => {
+        setState({...state,play: false });
+        console.log("Stopped Playing");
+    };
+    const  handleError = (code,desc) => {
+      console.log(code,desc,"ERROR");
+    }
+    
+    const  handleLoading = (loaded,total,duration) => {
+        console.log(loaded,total,duration,"Loading");
+    }
+    
+    const Div = styled('div')(({ theme }) => ({
     ...theme.typography.button,
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(2),
@@ -182,10 +198,20 @@ function CodeEditorSideBar(props) {
             open={state[anchor]}
             //onClose={toggleDrawer(anchor, false)}
           >
+            
             {list(anchor)}
+            
           </Drawer>
         </React.Fragment>
       ))}
+        {(state.play == true) && <Sound
+            url = {NotificationSound}
+            playStatus = {Sound.status.PLAYING}
+            onLoading = {handleLoading}
+            onError = {handleError}
+            onPlaying = {playing}
+            onFinishedPlaying = {playStopped}
+        />}
     </div>
   );
 }
