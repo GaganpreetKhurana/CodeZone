@@ -28,7 +28,8 @@ import { styled } from '@mui/material/styles';
 import Divider from '@mui/material/Divider';
 import Fab from '@mui/material/Fab';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-
+import { Badge } from '@mui/material';
+import EmailIcon from '@mui/icons-material/Email';
 
 
 function CodeEditorSideBar(props) {
@@ -37,7 +38,9 @@ function CodeEditorSideBar(props) {
     left: false,
     bottom: false,
     right: false,
+      totalUnreadCount:0,
       play : false,
+      
       
       
   });
@@ -47,14 +50,21 @@ function CodeEditorSideBar(props) {
   
     const dispatch = useDispatch();
     useEffect(() =>{
+        let total=0;
+        let playNotification = false;
         for (let [key,value] of Object.entries(previousUnreadMessageCount.current)){
             // console.log("ZZ",key,value)
-            if (value<props.classroom.unreadMessageCount[key]){
-                setState({...state,play:true})
+            total+=props.classroom.unreadMessageCount[key]
+    
+            if (value<props.classroom.unreadMessageCount[key] && !playNotification){
+                playNotification=true;
                 // console.log("Messages",previousUnreadMessageCount);
-                break;
+                // console.log("ZZZ",state);
+    
             }
         }
+        setState({...state,totalUnreadCount:total,play:playNotification});
+        // console.log("X",state);
         // console.log("YY",state,"XZZX",props.classroom.unreadMessageCount,previousUnreadMessageCount);
         previousUnreadMessageCount.current = Object.assign({},props.classroom.unreadMessageCount);
         // console.log("YY",state,"XX",props.classroom.unreadMessageCount,previousUnreadMessageCount);
@@ -192,7 +202,13 @@ function CodeEditorSideBar(props) {
     <div>
       {['left'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>Student List</Button>
+          <Button onClick={toggleDrawer(anchor, true)}>
+              Student List
+              { ( state.totalUnreadCount>0) && <Badge badgeContent={ state.totalUnreadCount } color="error">
+                  <EmailIcon color="primary"/>
+              </Badge>
+              }
+          </Button>
           <Drawer
             anchor={anchor}
             open={state[anchor]}
