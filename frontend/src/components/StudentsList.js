@@ -1,11 +1,14 @@
-import React from "react";
+import React , { useRef } from "react";
 import { connect } from "react-redux";
 import ChatWindow from "./ChatWindow";
 import { fetchUnreadMessageCount } from "../actions/classroom";
-
+import NotificationSound from "../static/sounds/notification.mp3";
+import Sound from 'react-sound';
 //Material UI
 import { FlexRow, Item } from "@mui-treasury/component-flex";
 import Avatar from "@mui/material/Avatar";
+import { Badge } from '@mui/material';
+import EmailIcon from '@mui/icons-material/Email';
 // eslint-disable-next-line
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Divider from "@mui/material/Divider";
@@ -65,10 +68,39 @@ const PersonItem = ({
 };
 
 class StudentsList extends React.Component {
+    constructor (props) {
+        super (props);
+        this.previousUnreadMessageCount = React.createRef(Object.assign({},this.props.classroom.unreadMessageCount));
+    
+    }
     componentDidMount() {
+        this.play = false;
+        this.totalUnreadCount = 0;
         this.props.dispatch(fetchUnreadMessageCount(this.props.classroomId));
+        this.previousUnreadMessageCount.current = Object.assign({},this.props.classroom.unreadMessageCount);
+        
         this.timer = setInterval(() => {
             this.props.dispatch(fetchUnreadMessageCount(this.props.classroomId));
+            console.log(this.previousUnreadMessageCount,this.props.classroom);
+            let total=0;
+            let playNotification = false;
+            for (let [key,value] of Object.entries(this.previousUnreadMessageCount.current)){
+                // console.log("ZZ",key,value)
+                total+=this.props.classroom.unreadMessageCount[key]
+        
+                if (value<this.props.classroom.unreadMessageCount[key] && !playNotification){
+                    playNotification=true;
+                    // console.log("Messages",previousUnreadMessageCount);
+                    // console.log("ZZZ",state);
+            
+                }
+            }
+            this.totalUnreadCount=total;
+            this.play=playNotification;
+            // setState({...state,this.totalUnreadCount:total,play:playNotification});
+            // console.log("X",state);
+            // console.log("YY",state,"XZZX",props.classroom.unreadMessageCount,previousUnreadMessageCount);
+            this.previousUnreadMessageCount.current = Object.assign({},this.props.classroom.unreadMessageCount);
             // console.log(this.props.classroom.unreadMessageCount);
             // console.log(this.state);
         }, 5000);
@@ -77,6 +109,20 @@ class StudentsList extends React.Component {
     componentWillUnmount () {
         // console.log(this.timer);
         clearInterval(this.timer);
+    }
+    playing = () => {
+        console.log("Playing");
+    };
+    playStopped = () => {
+        this.play= false ;
+        console.log("Stopped Playing");
+    };
+    handleError = (code,desc) => {
+        console.log(code,desc,"ERROR");
+    }
+    
+    handleLoading = (loaded,total,duration) => {
+        console.log(loaded,total,duration,"Loading");
     }
     
     render() {
@@ -107,7 +153,11 @@ class StudentsList extends React.Component {
             >
               <Item grow mr={1}>
                 <Typography variant="h6" align="center">
-                  <b>Student List</b>
+                  <b>Student List   </b>
+                    { ( this.totalUnreadCount>0) && <Badge badgeContent={ this.totalUnreadCount } color="error">
+                        <EmailIcon color="primary"/>
+                    </Badge>
+                    }
                 </Typography>
               </Item>
             </FlexRow>
@@ -143,6 +193,14 @@ class StudentsList extends React.Component {
             ))}
           </Card>
         </Paper>
+          {(this.play == true) && <Sound
+              url = {NotificationSound}
+              playStatus = {Sound.status.PLAYING}
+              onLoading = {this.handleLoading}
+              onError = {this.handleError}
+              onPlaying = {this.playing}
+              onFinishedPlaying = {this.playStopped}
+          />}
       </div>
     );
   }
