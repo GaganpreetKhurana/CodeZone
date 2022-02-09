@@ -74,7 +74,7 @@ class CreateClassPopUp extends Component {
 
     return (
         <div>
-        <Button variant="contained" onClick={this.dialogOpen}>
+        <Button variant="contained" onClick={this.dialogOpen}  id="create-class">
             Create
         </Button>
         <Dialog open={this.state.open} onClose={this.dialogClose}>
