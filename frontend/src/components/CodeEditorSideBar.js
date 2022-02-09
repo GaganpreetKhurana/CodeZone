@@ -56,9 +56,9 @@ function CodeEditorSideBar(props){
 				
 			}
 		}
-		setState({... state, totalUnreadCount: total, play: playNotification});
+		setState({...state, totalUnreadCount: total, play: playNotification});
 		previousUnreadMessageCount.current = Object.assign({}, props.classroom.unreadMessageCount);
-	}, [props.classroom.unreadMessageCount])
+	}, [props.classroom.unreadMessageCount, state])
 	
 	useEffect(() => {
 		dispatch(fetchUnreadMessageCount(props.classroomId));
@@ -72,19 +72,19 @@ function CodeEditorSideBar(props){
 			console.log("cleared", timer);
 			clearInterval(timer);
 		}
-	}, [dispatch])
+	}, [dispatch, props.classroomId])
 	const toggleDrawer = (anchor, open) => (event) => {
 		if(event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')){
 			return;
 		}
 		
-		setState({... state, [anchor]: open});
+		setState({...state, [anchor]: open});
 	};
 	const playing = () => {
 		console.log("Playing");
 	};
 	const playStopped = () => {
-		setState({... state, play: false});
+		setState({...state, play: false});
 		console.log("Stopped Playing");
 	};
 	const handleError = (code, desc) => {
@@ -96,7 +96,7 @@ function CodeEditorSideBar(props){
 	}
 	
 	const Div = styled('div')(({theme}) => ({
-		... theme.typography.button,
+		...theme.typography.button,
 		backgroundColor: theme.palette.background.paper,
 		padding: theme.spacing(2),
 		textAlign: "center",
@@ -226,7 +226,7 @@ function CodeEditorSideBar(props){
 					</Drawer>
 				</React.Fragment>
 			))}
-			{(state.play == true) && <Sound
+			{(state.play === true) && <Sound
 				url={NotificationSound}
 				playStatus={Sound.status.PLAYING}
 				onLoading={handleLoading}
