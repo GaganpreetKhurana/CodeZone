@@ -45,6 +45,14 @@ const TypographyTitle = styled(Typography)(() => ({
   textTransform: "uppercase",
 }));
 
+const TypographySubtitle = styled(Typography)(() => ({
+  fontFamily: "Montserrat",
+  color: "#fff",
+  opacity: 0.87,
+  fontWeight: 500,
+  fontSize: 18,
+}));
+
 const CustomCard = ({ color, title }) => (
   <CardActionAreaActionArea>
     <StyledCard color={color}>
@@ -55,13 +63,21 @@ const CustomCard = ({ color, title }) => (
   </CardActionAreaActionArea>
 );
 
+const CustomCard2 = ({ color, title, subtitle }) => (
+  <StyledCard color={color}>
+    <CardContentContent color={color} disableSpacing>
+      <TypographyTitle variant={"h2"}>{title}</TypographyTitle>
+      <TypographySubtitle variant={"h2"}>{subtitle}</TypographySubtitle>
+    </CardContentContent>
+  </StyledCard>
+);
+
 class QuizStudent extends Component {
   constructor(props) {
     super(props);
 
     this.state = this.getInitialState();
     this.checkAnswer = this.checkAnswer.bind(this);
-    this.resetQuiz = this.resetQuiz.bind(this);
   }
 
   getInitialState() {
@@ -100,9 +116,6 @@ class QuizStudent extends Component {
     }
   }
 
-  resetQuiz() {
-    this.setState({ score: 0, progress: 0 });
-  }
 
   render() {
     var currentQuestion = this.state.questionData[this.state.progress];
@@ -116,43 +129,62 @@ class QuizStudent extends Component {
               justifyContent="space-evenly"
               alignItems="center"
             >
-              <p>{currentQuestion.question}</p>
-              <ul>
-                {currentQuestion.answers.map((answer, index) => (
-                  <div>
-                    <Grid
-                      item
-                      m={4}
-                      xs={12}
-                      sm={4}
-                      md={4}
-                      onClick={() => this.checkAnswer(index)}
-                    >
-                      <CustomCard title={answer} color="#3F51B5"/>
-                    </Grid>
-                  </div>
-                ))}
-              </ul>
+              <Grid item m={2}>
+                {" "}
+                <CustomCard2 title={currentQuestion.question} color="#5879ad" />
+              </Grid>
+              <Grid item m={2}>
+                <ul>
+                  {currentQuestion.answers.map((answer, index) => (
+                    <div>
+                      <Grid
+                        item
+                        m={4}
+                        xs={12}
+                        sm={4}
+                        md={4}
+                        onClick={() => this.checkAnswer(index)}
+                      >
+                        <CustomCard title={answer} color="#253145" />
+                      </Grid>
+                    </div>
+                  ))}
+                </ul>
+              </Grid>
             </Grid>
-
-            <span>
-              Question {this.state.progress + 1} of{" "}
-              {this.state.questionData.length}
-            </span>
+            <Grid
+              item
+              m={2}
+              container
+              justifyContent="space-evenly"
+              alignItems="center"
+            >
+              <CustomCard2
+                subtitle={
+                  <span>
+                    Question {this.state.progress + 1} of{" "}
+                    {this.state.questionData.length}
+                  </span>
+                }
+                color="#253145"
+              />
+            </Grid>
           </Grid>
         </div>
       );
     } else {
       return (
         <div>
-          <p>Quiz Finished!</p>
-          <span>Score: {this.state.score}</span>
-          <button
-            type="button"
-            onClick={this.resetQuiz}
-          >
-            Reset Quiz
-          </button>
+          <Grid container direction="column" height="100vh">
+            <Grid item m={15} container justifyContent="center"></Grid>
+            <Grid item container justifyContent="center" alignItems="center">
+              <CustomCard2
+                title={"Quiz Finished!"}
+                subtitle={<span>Score: {this.state.score}</span>}
+                color="#253145"
+              />
+            </Grid>
+          </Grid>
         </div>
       );
     }
