@@ -31,6 +31,9 @@ import { Typography } from "@mui/material";
 import IconButton from '@mui/material/IconButton';
 import { Menu,MenuItem } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 class DiscussionPortal extends React.Component {
   constructor(props) {
@@ -41,6 +44,7 @@ class DiscussionPortal extends React.Component {
       anchorEl: null,
       open: false,
       files: "",
+      fileUpload: false,
     };
     this.setAnchorEl = this.setAnchorEl.bind(this);
     this.handleCommentClick = this.handleCommentClick.bind(this);
@@ -88,11 +92,14 @@ class DiscussionPortal extends React.Component {
         // eslint-disable-next-line
         this.state.content = "File Post";
       }
-      if (!this.state.files.base64.length) {
+      let fileVal = this.state.files;
+      if (fileVal == "") {
         // eslint-disable-next-line
-        this.state.files = "";
+        fileVal = "Empty";
+      } else {
+        fileVal = fileVal.base64;
       }
-      this.props.dispatch(createPost(this.state.content, this.state.files.base64, classroomId));
+      this.props.dispatch(createPost(this.state.content, fileVal, classroomId));
       this.setState({
         content: "",
         files: "",
@@ -107,6 +114,12 @@ class DiscussionPortal extends React.Component {
   handleChange = (e) => {
     this.setState({
       content: e.target.value,
+    });
+  };
+
+  handleFileChange = () => {
+    this.setState({
+      fileUpload: !this.state.fileUpload,
     });
   };
 
@@ -138,12 +151,11 @@ class DiscussionPortal extends React.Component {
 
   getFiles = (files) => {
     this.setState({ files: files });
-  }
+  };
 
   render() {
     const { posts } = this.props.classroom;
     let { user } = this.props.auth;
-    const files = this.state.files;
     return (
       <div>
         <Paper
@@ -164,9 +176,20 @@ class DiscussionPortal extends React.Component {
             value={this.state.content}
             onChange={this.handleChange}
           />
-          <FileBase64 multiple={false} onDone={this.getFiles.bind(this)} />
+          {this.state.fileUpload && (
+            <FileBase64 multiple={false} onDone={this.getFiles.bind(this)} />
+          )}
+          <FormGroup>
+            <FormControlLabel
+              control={<Checkbox />}
+              label="Image"
+              onChange={this.handleFileChange}
+            />
+          </FormGroup>
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-          <img alt="" src={files.base64} width="50" height="50" />
+          {this.state.files !== "" && (
+            <img alt="" src={this.state.files.base64} width="50" height="50" />
+          )}
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
           <IconButton
             color="primary"
@@ -201,7 +224,7 @@ class DiscussionPortal extends React.Component {
                   <ListItem>
                     <Typography variant="body1">{post.content}</Typography>
                   </ListItem>
-                  { post.file !== "" && (
+                  {post.file !== "Empty" && (
                     <ListItem>
                       <Grid
                         container
@@ -284,7 +307,11 @@ class DiscussionPortal extends React.Component {
                       {post.user._id === user.id && (
                         <Grid item xs={2} m={0.5}>
                           <ListItemIcon>
-                            <EditPost id={post._id} content={post.content} file={post.file}/>
+                            <EditPost
+                              id={post._id}
+                              content={post.content}
+                              file={post.file}
+                            />
                           </ListItemIcon>
                         </Grid>
                       )}
