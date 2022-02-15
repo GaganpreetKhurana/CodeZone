@@ -93,7 +93,7 @@ class Nav extends React.Component {
                   >
                     <Grid item m={0.25}>
                       <Link to="/settings" id="profile-settings">
-                        <Avatar src={auth?.user?.avatar} sx={{ width: 35, height: 35 }}>
+                        <Avatar src={auth?.user?.avatar} sx={{ width: 35, height: 35 }} id="profile-page">
                     </Avatar>
                       </Link>
                     </Grid>

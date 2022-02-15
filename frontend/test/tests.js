@@ -3,9 +3,9 @@ const webdriver = require("selenium-webdriver");
 const {By} = require ("selenium-webdriver");
 const ltCapabilities = require('../capabilities');
 
-const subject = "Economics"
-const description = "HSN-312"
-const batch = "CSE-4th year"
+const subject = "Economics21243"
+const description = "HSN-31212432"
+const batch = "CSE-4th years2134"
 const user = "teacher@gmail.com";
 const password = "teacher";
 
@@ -57,21 +57,92 @@ describe("CodeZone Testing",async function(){
             });
     })
 
-
+    // let text = '';
     // describe("Create new classroom", async function(){
     //     it("Open create classroom form",async function(){
     //         await driver.findElement(By.id("create-class")).click();
+    //     })
+    //     it("Enter Required Details",async function(){
     //         await driver.findElement(By.id("subject")).sendKeys(subject);
     //         await driver.findElement(By.id("batch")).sendKeys(batch);
     //         await driver.findElement(By.id("description")).sendKeys(description);
+    //     })
+    //     it("Submit Details",async function(){
     //         await driver.findElement(By.id("create-classroom")).click();
     //     })
-
-    //     it("Message Displayed", async function(){
+        
+    //     it("Response Message Displayed", async function(){
+    //         driver.wait(webdriver.until.elementLocated(By.id("message")),5000);
+    //         text = await driver.findElement(By.id("message")).getText();
+    //         });
+    //     it("Close Create Classroom Form", async function(){
+    //         await driver.findElement(By.id("cancel")).click();
+    //         });
+    // })
+    // describe("Join new classroom", async function(){
+    //     it("Open join classroom form",async function(){
+    //         await driver.findElement(By.id("join-class")).click();
+    //     })
+    //     it("Enter required details",async function(){
+    //         await driver.findElement(By.id("code")).sendKeys(text.slice(-7));
+    //     })
+    //     it("Submitdetails",async function(){
+    //         await driver.findElement(By.id("join-classroom")).click();
+    //     })
+        
+    //     it("Response Message Displayed", async function(){
     //         driver.wait(webdriver.until.elementLocated(By.id("message")),5000);
     //         await driver.findElement(By.id("message")).getText();
     //         });
+    //     it("Close Join Classroom Form", async function(){
+    //         await driver.findElement(By.id("cancel")).click();
+    //         });
     // })
+    describe("Notice-Board",async function(){
+        it("Notice Board Check", async function(){
+            await driver.findElement(By.id("notice-board"));
+            });
+    })
+    describe("Quiz-Board",async function(){
+        it("Quiz Board Check", async function(){
+            await driver.findElement(By.id("quiz-board"));
+            });
+    })
+    describe("Student-list",async function(){
+        it("Student List Check", async function(){
+            await driver.findElement(By.id("student-list"));
+            });
+    })
+    describe("Profile-page",async function(){
+        it("Profile Page Check", async function(){
+            await driver.findElement(By.id("profile-page")).click();
+            });
+        it("Profile Details Displayed", async function(){
+            await driver.findElement(By.id("name1"));
+            await driver.findElement(By.id("email"));
+            });
+        it("Edit Profile Button Present", async function(){
+            await driver.findElement(By.id("edit-profile"));
+            });
+    })
+    describe("Edit Profile",async function(){
+        it("Edit Profile Check", async function(){
+            await driver.findElement(By.id("edit-profile")).click();
+            });
+        it("Edit Options Displayed", async function(){
+            await driver.findElement(By.id("name"));
+            await driver.findElement(By.id("avatar"));
+            await driver.findElement(By.id("newPassword"));
+            await driver.findElement(By.id("oldPassword"));
+            await driver.findElement(By.id("confirmPassword"));
+            await driver.findElement(By.id("go-back"));
+            await driver.findElement(By.id("save"));
+            });
+        it("Go Back", async function(){
+            driver.navigate().back();
+            driver.navigate().back();
+            });
+    })
 
 
 

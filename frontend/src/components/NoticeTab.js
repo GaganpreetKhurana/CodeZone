@@ -77,10 +77,10 @@ export default function NoticeTab(props) {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        <TabPanel value={value} index={0} dir={theme.direction}>
+        <TabPanel value={value} index={0} dir={theme.direction} id="notice-board">
           <NoticeBoard classroomId={props.classroomId} />
         </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
+        <TabPanel value={value} index={1} dir={theme.direction} id="quiz-board">
           <QuizBoard classroomId={props.classroomId} />
         </TabPanel>
       </SwipeableViews>

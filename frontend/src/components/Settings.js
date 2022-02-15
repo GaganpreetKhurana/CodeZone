@@ -263,6 +263,7 @@ backgroundPosition: 'top center' }}>
                             sx={{mt: 3, mb: 2, ml:7, mr:7}}
                             onClick={()=>{setEditProfile(false)}}
                             color="error"
+                            id="go-back"
 
                         >
                             Go Back
@@ -271,7 +272,8 @@ backgroundPosition: 'top center' }}>
                             variant="contained"
                             sx={{mt: 3, mb: 2}}
                             onClick = {onSubmit}
-                            color = "success" 
+                            color = "success"
+                            id="save" 
                         >
                             Save
                         </Button></> :<Button
@@ -280,6 +282,7 @@ backgroundPosition: 'top center' }}>
                             variant="contained"
                             sx={{mt: 3, mb: 2}}
                             onClick={()=>{setEditProfile(true)}}
+                            id="edit-profile"
 
                         >
                             Edit Profile
