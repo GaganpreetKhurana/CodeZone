@@ -98,6 +98,21 @@ describe("CodeZone Testing",async function(){
     //         await driver.findElement(By.id("cancel")).click();
     //         });
     // })
+    describe("Notice-Board",async function(){
+        it("Notice Board Check", async function(){
+            await driver.findElement(By.id("notice-board"));
+            });
+    })
+    describe("Quiz-Board",async function(){
+        it("Quiz Board Check", async function(){
+            await driver.findElement(By.id("quiz-board"));
+            });
+    })
+    describe("Student-list",async function(){
+        it("Student List Check", async function(){
+            await driver.findElement(By.id("student-list"));
+            });
+    })
 
 
 

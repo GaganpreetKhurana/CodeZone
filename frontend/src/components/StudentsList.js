@@ -150,7 +150,7 @@ class StudentsList extends React.Component{
 							}}
 						>
 							<Item grow mr={1}>
-								<Typography variant="h6" align="center">
+								<Typography variant="h6" align="center" id="student-list">
 									<b>Student List </b>
 									{(this.totalUnreadCount > 0) &&
 										<Badge badgeContent={this.totalUnreadCount} color="error">
