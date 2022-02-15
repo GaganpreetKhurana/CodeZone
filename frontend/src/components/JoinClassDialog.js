@@ -62,9 +62,9 @@ class JoinClassPopUp extends Component {
     </Button>
       <Dialog open={this.state.open} onClose={this.dialogClose}>
         <DialogTitle>
-            {error && <div className="alert error-dailog">{error}</div>}
+            {error && <div className="alert error-dailog" id="message">{error}</div>}
             {code && (
-              <div className="alert success-dailog">
+              <div className="alert success-dailog" id="message">
                 <p>Classroom joined successfully!!</p>
               </div>
             )}
@@ -84,9 +84,13 @@ class JoinClassPopUp extends Component {
                 onChange={this.handleCode}
                 fullWidth
                 variant="standard"
+                id="code"
             />
-            <Button onClick={this.handleSubmitForm} disabled={inProgress} >
+            <Button onClick={this.handleSubmitForm} disabled={inProgress} id="join-classroom" >
                 Join Classroom
+            </Button>
+            <Button onClick={this.dialogClose} id="cancel">
+            Cancel
             </Button>
         </DialogActions>
       </Dialog> 

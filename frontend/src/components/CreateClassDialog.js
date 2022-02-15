@@ -129,6 +129,9 @@ class CreateClassPopUp extends Component {
             <Button onClick={this.handleSubmitForm} disabled={inProgress} id="create-classroom">
             Create
             </Button>
+            <Button onClick={this.dialogClose} id="cancel">
+            Cancel
+            </Button>
         </DialogActions>
       </Dialog>     
     </div>
