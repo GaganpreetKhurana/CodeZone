@@ -93,7 +93,7 @@ class DiscussionPortal extends React.Component {
         this.state.content = "File Post";
       }
       let fileVal = this.state.files;
-      if (fileVal == "") {
+      if (fileVal === "") {
         // eslint-disable-next-line
         fileVal = "Empty";
       } else {
