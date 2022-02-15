@@ -113,6 +113,36 @@ describe("CodeZone Testing",async function(){
             await driver.findElement(By.id("student-list"));
             });
     })
+    describe("Profile-page",async function(){
+        it("Profile Page Check", async function(){
+            await driver.findElement(By.id("profile-page")).click();
+            });
+        it("Profile Details Displayed", async function(){
+            await driver.findElement(By.id("name1"));
+            await driver.findElement(By.id("email"));
+            });
+        it("Edit Profile Button Present", async function(){
+            await driver.findElement(By.id("edit-profile"));
+            });
+    })
+    describe("Edit Profile",async function(){
+        it("Edit Profile Check", async function(){
+            await driver.findElement(By.id("edit-profile")).click();
+            });
+        it("Edit Options Displayed", async function(){
+            await driver.findElement(By.id("name"));
+            await driver.findElement(By.id("avatar"));
+            await driver.findElement(By.id("newPassword"));
+            await driver.findElement(By.id("oldPassword"));
+            await driver.findElement(By.id("confirmPassword"));
+            await driver.findElement(By.id("go-back"));
+            await driver.findElement(By.id("save"));
+            });
+        it("Go Back", async function(){
+            driver.navigate().back();
+            driver.navigate().back();
+            });
+    })
 
 
 
