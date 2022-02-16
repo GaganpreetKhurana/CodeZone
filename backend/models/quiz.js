@@ -7,6 +7,7 @@ var QuizSchema = new mongoose.Schema({
 	questions: [{
 		question: {type: String},
 		options: [{
+			Ā
 			type: String
 		}],
 		correctOption: [{type: Number, default: 0}],
