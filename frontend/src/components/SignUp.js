@@ -17,19 +17,6 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 
-//Copyright
-function Copyright(props) {
-    return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
-            <Link to="/" color="inherit">
-                CodeZone
-            </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
-        </Typography>
-    );
-}
 
 class Signup extends Component {
     constructor(props) {
@@ -123,6 +110,7 @@ class Signup extends Component {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        height: "100vh",
                     }}
                 >
                     <Avatar sx={{m: 1, bgcolor: 'primary.main'}}>
@@ -224,7 +212,6 @@ class Signup extends Component {
                         </Grid>
                     </Box>
                 </Box>
-                <Copyright sx={{mt: 5}}/>
             </Container>
         );
     }

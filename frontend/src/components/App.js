@@ -11,6 +11,7 @@ import Classroom from "./Classroom";
 import LabDashboard from "./LabDashboard";
 import Settings from "./Settings";
 import QuizStudent from "./QuizStudent";
+import QuizCreate from "./QuizCreate";
 
 import { Paper} from '@mui/material';
 import { createTheme } from '@mui/material/styles';
@@ -126,10 +127,10 @@ class App extends React.Component {
                 <Route path="/settings" component={Settings} />
               )}
               {auth.isLoggedIn && auth.user.role === "Student" && (
-                <Route
-                  path="/quiz"
-                  component={QuizStudent}
-                />
+                <Route path="/quiz" component={QuizStudent} />
+              )}
+              {auth.isLoggedIn && auth.user.role === "Teacher" && (
+                <Route path="/quizCreate" component={QuizCreate} />
               )}
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />

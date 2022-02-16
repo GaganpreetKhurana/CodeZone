@@ -28,7 +28,6 @@ class StudentDashboard extends Component {
               justifyContent="space-evenly"
               alignItems="center"
             >
-              <Typography variant="h4">CLASSES</Typography>
             </Grid>
             <Grid
               item
