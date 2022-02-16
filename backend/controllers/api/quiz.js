@@ -183,3 +183,77 @@ module.exports.update = async function ( req , res ) {
 	}
 	
 }
+
+// get quiz
+module.exports.view = async function ( req , res ) {
+	
+	console.log ( req.params.quiz_id );
+	// get quiz
+	let quiz = await Quiz.findById ( sanitizer.escape ( req.params.quiz_id ) );
+	if ( !quiz ) {
+		return res.status ( 404 ).json ( {
+			success : false ,
+			message : "Quiz not found!" ,
+		} );
+	}
+	// get subject
+	let subject = await Class.findById ( quiz.class._id );
+	if ( !subject ) {
+		return res.status ( 404 ).json ( {
+			success : false ,
+			message : "Subject not found!" ,
+		} );
+	}
+	
+	
+	if ( subject.students.includes ( req.user._id ) ) {
+		
+		// user is a student for this subject
+		let current_quiz = {};
+		current_quiz.class = quiz.class;
+		current_quiz.dateScheduled = quiz.dateScheduled;
+		current_quiz.questions=[]
+		for (let i=0;i<quiz.questions.length;i++){
+			let currentQuestion={};
+			let question = quiz.questions[i];
+			currentQuestion.question = question.question;
+			currentQuestion.options = question.options;
+			currentQuestion.questionType = question.questionType;
+			currentQuestion.maxScore = question.maxScore;
+			currentQuestion.studentAnswer = null;
+			for (int j =0;j<question.studentAnswers.length;j++){
+				if (question.studentAnswers[j].student.id == req.user._id){
+					currentQuestion.studentAnswer = question.studentAnswers[j];
+					break;
+				}
+			}
+			current_quiz.questions.push((currentQuestion));
+		}
+		current_quiz.submission = null;
+		for (int j =0;j<quiz.submissions.length;j++){
+			if (quiz.submissions[j].student.id == req.user._id){
+				current_quiz.submission = quiz.submissions[j];
+				break;
+			}
+		}
+		console.log(current_quiz);
+		return res.status ( 200 ).json ( {
+			message : "Quiz retrival sucessfull!" ,
+			success : true ,
+			data : current_quiz,
+		} );
+	}else if(subject.teachers.includes ( req.user._id )){
+		return res.status ( 200 ).json ( {
+			message : "Quiz retrieval successfull!" ,
+			success : true ,
+			data : quiz,
+		} );
+	}
+	else {
+		return res.status ( 401 ).json ( {
+			success : false ,
+			message : "User is not in this class!" ,
+		} );
+	}
+	
+}
