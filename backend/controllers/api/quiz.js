@@ -288,3 +288,36 @@ module.exports.updateAnswer = async function(req, res){
 	}
 	
 }
+
+// submit answer
+module.exports.submit = async function(req, res){
+	
+	console.log(req.params.quiz_id);
+	// get quiz
+	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id));
+	if( !quiz){
+		return res.status(404).json({
+			success: false, message: "Quiz not found!",
+		});
+	}
+	
+	
+	if(subject.students.includes(req.user._id)){
+		marksScored = 0
+		for(int i=0;i<quiz.questions.length.i++){
+			for(int j=0;j<quiz.questions[i].studentAnswers.length;j++){
+				if(quiz.questions[i].studentAnswers[j].student.id == req.user._id){
+					if (quiz.questions[i].studentAnswers[j].optionSelected == quiz.questions[i].)
+				}
+			}
+		}
+		quiz = await quiz.save();
+		console.log(current_quiz);
+		
+	} else{
+		return res.status(401).json({
+			success: false, message: "User is not a student in this class!",
+		});
+	}
+	
+}

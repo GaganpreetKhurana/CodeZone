@@ -8,7 +8,7 @@ router.get('/delete::quiz_id', auth.authenticateToken, quiz.delete);
 router.post('/update', auth.authenticateToken, quiz.update);
 router.get('/view::quiz_id', auth.authenticateToken, quiz.view);
 router.post('/updateAnswer::quiz_id', auth.authenticateToken, quiz.updateAnswer);
-router.post('/submit::quiz_id', auth.authenticateToken, quiz.updateSubmit);
+router.post('/submit::quiz_id', auth.authenticateToken, quiz.submit);
 
 
 module.exports = router;
