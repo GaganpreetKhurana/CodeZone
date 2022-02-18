@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 //Material UI
-import { Grid, Box ,Card,Button } from "@mui/material";
+import { Grid, Box, Card, Button, Paper } from "@mui/material";
 import TextField from "@mui/material/TextField";
 
 class QuizCreate extends React.Component {
@@ -30,7 +30,7 @@ class QuizCreate extends React.Component {
 
   handleQuestions = () => {
     let optionData = [...this.state.answers];
-    optionData.push(this.state.option1)
+    optionData.push(this.state.option1);
     optionData.push(this.state.option2);
     optionData.push(this.state.option3);
     optionData.push(this.state.option4);
@@ -54,19 +54,19 @@ class QuizCreate extends React.Component {
       option3: "",
       option4: "",
     });
-    console.log(this.state)
+    console.log(this.state);
   };
 
   render() {
     return (
       <div>
-        <Grid height="100vh">
+        <Grid height="100vh" m={4}>
           <Box
             style={{
-              position: "absolute",
+              position: "relative",
               left: "50%",
               top: "50%",
-              transform: "translate(-50%, -50%)",
+              transform: "translate(-50%, -60%)",
             }}
           >
             <Card
@@ -82,7 +82,7 @@ class QuizCreate extends React.Component {
               }}
             >
               <Grid container justifyContent="space-evenly" alignItems="center">
-                <Grid item xs={8} sm={8} md={8}>
+                <Grid item m={2} xs={12} sm={12}>
                   {" "}
                   <TextField
                     id="quizName"
@@ -94,62 +94,129 @@ class QuizCreate extends React.Component {
                     onChange={(event) => this.handleChange(event, "quizName")}
                   />
                 </Grid>
-                <Grid item xs={8} sm={8} md={8}>
+                <Grid item m={2} xs={12} sm={12}>
                   {" "}
                   <TextField
-                    id="question"
-                    label="Question"
+                    id="quizDescription"
+                    label="Quiz Description"
                     variant="filled"
                     fullWidth="True"
+                    value={this.state.quizName}
                     type="text"
-                    value={this.state.question}
-                    onChange={(event) => this.handleChange(event, "question")}
+                    onChange={(event) => this.handleChange(event, "quizName")}
                   />
-                  <TextField
-                    id="correct"
-                    label="correct"
-                    variant="filled"
-                    fullWidth="True"
-                    type="number"
-                    value={this.state.correct}
-                    onChange={(event) => this.handleChange(event, "correct")}
-                  />
-                  <Grid item xs={12} sm={12} md={12}>
-                    <TextField
-                      id="option1"
-                      label="Option One"
-                      variant="filled"
-                      type="text"
-                      value={this.state.option1}
-                      onChange={(event) => this.handleChange(event, "option1")}
-                    />
-                    <TextField
-                      id="option2"
-                      label="Option Two"
-                      variant="filled"
-                      type="text"
-                      value={this.state.option2}
-                      onChange={(event) => this.handleChange(event, "option2")}
-                    />
-                    <TextField
-                      id="option3"
-                      label="Option Three"
-                      variant="filled"
-                      type="text"
-                      value={this.state.option3}
-                      onChange={(event) => this.handleChange(event, "option3")}
-                    />
-                    <TextField
-                      id="option4"
-                      label="Option Four"
-                      variant="filled"
-                      type="text"
-                      value={this.state.option4}
-                      onChange={(event) => this.handleChange(event, "option4")}
-                    />
-                  </Grid>
-                  <Button onClick={this.handleQuestions}>Submit</Button>
                 </Grid>
+                <Grid item m={2} xs={12} sm={12}>
+                  <Paper>
+                    <Grid item m={2} xs={12} sm={12}>
+                      {" "}
+                      <TextField
+                        id="question"
+                        label="Question"
+                        variant="filled"
+                        fullWidth="True"
+                        type="text"
+                        value={this.state.question}
+                        onChange={(event) =>
+                          this.handleChange(event, "question")
+                        }
+                      />{" "}
+                    </Grid>
+                    <Grid item m={2} xs={12}>
+                      <Grid
+                        container
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="center"
+                        spacing={3}
+                      >
+                        <Grid item xs={12} sm={6}>
+                          <TextField
+                            id="option1"
+                            label="Option One"
+                            fullWidth="True"
+                            variant="filled"
+                            type="text"
+                            value={this.state.option1}
+                            onChange={(event) =>
+                              this.handleChange(event, "option1")
+                            }
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField
+                            id="option2"
+                            label="Option Two"
+                            fullWidth="True"
+                            variant="filled"
+                            type="text"
+                            value={this.state.option2}
+                            onChange={(event) =>
+                              this.handleChange(event, "option2")
+                            }
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField
+                            id="option3"
+                            label="Option Three"
+                            fullWidth="True"
+                            variant="filled"
+                            type="text"
+                            value={this.state.option3}
+                            onChange={(event) =>
+                              this.handleChange(event, "option3")
+                            }
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <TextField
+                            id="option4"
+                            label="Option Four"
+                            variant="filled"
+                            fullWidth="True"
+                            type="text"
+                            value={this.state.option4}
+                            onChange={(event) =>
+                              this.handleChange(event, "option4")
+                            }
+                          />
+                        </Grid>
+                      </Grid>
+                    </Grid>
+                    <Grid item m={2} xs={12} sm={12}>
+                      <TextField
+                        id="correct"
+                        label="Correct Option"
+                        variant="filled"
+                        fullWidth="True"
+                        type="number"
+                        value={this.state.correct}
+                        onChange={(event) =>
+                          this.handleChange(event, "correct")
+                        }
+                      />
+                    </Grid>
+                    <Grid item m={2} xs={12} sm={12}>
+                      <TextField
+                        id="marks"
+                        label="Marks"
+                        variant="filled"
+                        fullWidth="True"
+                        type="number"
+                        value={this.state.correct}
+                        onChange={(event) => this.handleChange(event, "marks")}
+                      />
+                    </Grid>
+                  </Paper>
+                </Grid>
+                <Box sx={{ justifyContent: "space-between" }}>
+                  <Button onClick={this.handleQuestions}>Add Question</Button>
+
+                  <Button onClick={this.handleQuestions}>
+                    Submit the quiz
+                  </Button>
+                </Box>
               </Grid>
             </Card>
           </Box>
