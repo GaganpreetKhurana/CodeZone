@@ -51,23 +51,31 @@ class QuizCreate extends React.Component {
     questionData.push(newData);
     this.setState({ questionData });
     let marks = this.state.questionMarks; 
-    this.setState({
-      question: "",
-      answers: [],
-      correct: null,
-      type: "mcq",
-      option1: "",
-      option2: "",
-      option3: "",
-      option4: "",
-      questionMarks: null,
-      questionNumber: this.state.questionNumber + 1,
-      maxScore: this.state.maxScore + marks,
-    },console.log(this.state)); 
+    this.setState(
+      {
+        question: "",
+        answers: [],
+        correct: 0,
+        type: "mcq",
+        option1: "",
+        option2: "",
+        option3: "",
+        option4: "",
+        questionMarks: 0,
+        questionNumber: this.state.questionNumber + 1,
+        maxScore: parseInt(this.state.maxScore) + parseInt(marks),
+      },
+    ); 
   };
 
   handleSubmit = () => {
-
+    const submitQuizData = {
+      quizName: this.state.quizName,
+      quizDescription: this.state.quizDescription,
+      questionData: this.state.questionData,
+      maxScore: this.state.maxScore,
+    };
+    console.log(submitQuizData);
   }
 
   render() {
