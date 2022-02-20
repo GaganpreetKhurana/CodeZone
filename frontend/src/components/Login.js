@@ -77,6 +77,7 @@ class Login extends Component {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        height: "100vh"
                     }}
                 >
                     <Avatar sx={{m: 1, bgcolor: 'primary.main'}}>

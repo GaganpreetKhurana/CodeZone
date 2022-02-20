@@ -42,19 +42,23 @@ class QuizBoard extends React.Component {
               </Item>
             </FlexRow>
             <CardContent>
-              <Link to="/Quiz">
-                <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                  Join Quiz
-                </Button>
-              </Link>
+              {auth.user.role === "Student" && (
+                <Link to="/Quiz">
+                  <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                    Join Quiz
+                  </Button>
+                </Link>
+              )}
+              {auth.user.role === "Teacher" && (
+                <Link to="/quizCreate">
+                  <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                    Create Quiz
+                  </Button>
+                </Link>
+              )}
               <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                 Quiz Results
               </Button>
-              {auth.user.role === "Teacher" && (
-                <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                  Create Quiz
-                </Button>
-              )}
             </CardContent>
           </Card>
         </Paper>

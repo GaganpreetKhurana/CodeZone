@@ -41,7 +41,7 @@ class Classroom extends Component {
     render () {
         const { match } = this.props;
         // return <div>{match.params.classroomID}</div>;
-        return (
+      return (
           <Grid container direction="row" justifyContent="space-evenly">
             <Grid
               item
