@@ -10,7 +10,6 @@ import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-
 const CardActionAreaActionArea = styled(CardActionArea)(() => ({
   borderRadius: 10,
   transition: "0.2s",
@@ -20,10 +19,22 @@ const CardActionAreaActionArea = styled(CardActionArea)(() => ({
 }));
 
 const StyledCard = styled(Card)(({ color }) => ({
-  minWidth: 256,
-  minHeigth: 256,
-  maxWidth: 256,
-  maxHeigth: 256,
+  minWidth: "30vh",
+  minHeigth: "30vh",
+  maxWidth: "30vh",
+  maxHeigth: "30vh",
+  borderRadius: 16,
+  boxShadow: "none",
+  "&:hover": {
+    boxShadow: `0 6px 12px 0 ${Color(color).rotate(-12).darken(0.2).fade(0.5)}`,
+  },
+}));
+
+const StyledCard2 = styled(Card)(({ color }) => ({
+  minWidth: "100hh",
+  minHeigth: "60vh",
+  maxWidth: "100hh",
+  maxHeigth: "60vh",
   borderRadius: 16,
   boxShadow: "none",
   "&:hover": {
@@ -57,19 +68,19 @@ const CustomCard = ({ color, title }) => (
   <CardActionAreaActionArea>
     <StyledCard color={color}>
       <CardContentContent color={color} disableSpacing>
-        <TypographyTitle variant={"h2"}>{title}</TypographyTitle>
+        <TypographySubtitle variant={"h2"}>{title}</TypographySubtitle>
       </CardContentContent>
     </StyledCard>
   </CardActionAreaActionArea>
 );
 
 const CustomCard2 = ({ color, title, subtitle }) => (
-  <StyledCard color={color}>
+  <StyledCard2 color={color}>
     <CardContentContent color={color} disableSpacing>
       <TypographyTitle variant={"h2"}>{title}</TypographyTitle>
       <TypographySubtitle variant={"h2"}>{subtitle}</TypographySubtitle>
     </CardContentContent>
-  </StyledCard>
+  </StyledCard2>
 );
 
 class QuizStudent extends Component {
@@ -116,60 +127,103 @@ class QuizStudent extends Component {
     }
   }
 
-
   render() {
     var currentQuestion = this.state.questionData[this.state.progress];
     if (this.state.questionData.length > this.state.progress) {
       return (
         <div>
-          <Grid container direction="column" height="100vh">
-            <Grid
-              item
-              container
-              justifyContent="space-evenly"
-              alignItems="center"
-            >
-              <Grid item m={2}>
-                {" "}
-                <CustomCard2 title={currentQuestion.question} color="#5879ad" />
-              </Grid>
-              <Grid item m={2}>
-                <ul>
-                  {currentQuestion.answers.map((answer, index) => (
-                    <div>
+          <div>
+            <Grid height="100vh" m={10}>
+              <Card
+                sx={{
+                  bgcolor: (theme) =>
+                    theme.palette.mode === "dark" ? "#272727" : "#fff",
+                  boxShadow: (theme) =>
+                    theme.palette.mode === "dark"
+                      ? "unset"
+                      : "0 8px 16px 0 #BDC9D7",
+                }}
+              >
+                <Grid
+                  item
+                  container
+                  direction="row"
+                  justifyContent="space-evenly"
+                  alignItems="center"
+                >
+                  <Grid item m={2} sx={2}>
+                    {" "}
+                    <CustomCard2
+                      title={currentQuestion.question}
+                      color="#5879ad"
+                    />
+                  </Grid>
+                  <Grid
+                    container
+                    sx={2}
+                    direction="row"
+                    justifyContent="space-evenly"
+                    alignItems="center"
+                  >
+                    <Grid item m={2} sx={2} onClick={() => this.checkAnswer(0)}>
+                      <CustomCard
+                        title={currentQuestion.answers[0]}
+                        color="#253145"
+                      />
+                    </Grid>
+                    <Grid item m={2} sx={2} onClick={() => this.checkAnswer(1)}>
+                      <CustomCard
+                        title={currentQuestion.answers[1]}
+                        color="#253145"
+                      />
+                    </Grid>
+                    <Grid
+                      container
+                      sx={12}
+                      direction="row"
+                      justifyContent="space-evenly"
+                      alignItems="center"
+                    >
                       <Grid
                         item
-                        m={4}
-                        xs={12}
-                        sm={4}
-                        md={4}
-                        onClick={() => this.checkAnswer(index)}
+                        m={2}
+                        sx={2}
+                        onClick={() => this.checkAnswer(0)}
                       >
-                        <CustomCard title={answer} color="#253145" />
+                        <CustomCard
+                          title={currentQuestion.answers[2]}
+                          color="#253145"
+                        />
                       </Grid>
-                    </div>
-                  ))}
-                </ul>
-              </Grid>
-            </Grid>
-            <Grid
-              item
-              m={2}
-              container
-              justifyContent="space-evenly"
-              alignItems="center"
-            >
-              <CustomCard2
-                subtitle={
+                      <Grid
+                        item
+                        m={2}
+                        sx={2}
+                        onClick={() => this.checkAnswer(0)}
+                      >
+                        <CustomCard
+                          title={currentQuestion.answers[3]}
+                          color="#253145"
+                        />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <Grid
+                  item
+                  m={2}
+                  container
+                  justifyContent="space-evenly"
+                  alignItems="center"
+                >
                   <span>
                     Question {this.state.progress + 1} of{" "}
                     {this.state.questionData.length}
                   </span>
-                }
-                color="#253145"
-              />
+                </Grid>
+              </Card>
             </Grid>
-          </Grid>
+          </div>
         </div>
       );
     } else {
@@ -178,11 +232,7 @@ class QuizStudent extends Component {
           <Grid container direction="column" height="100vh">
             <Grid item m={15} container justifyContent="center"></Grid>
             <Grid item container justifyContent="center" alignItems="center">
-              <CustomCard2
-                title={"Quiz Finished!"}
-                subtitle={<span>Score: {this.state.score}</span>}
-                color="#253145"
-              />
+              <CustomCard2 title={"Quiz Finished!"} color="#253145" />
             </Grid>
           </Grid>
         </div>
