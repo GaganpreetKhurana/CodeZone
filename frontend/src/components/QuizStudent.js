@@ -99,25 +99,53 @@ class QuizStudent extends Component {
           answers: ["India", "Australia", "Cuba", "Algeria"],
           correct: 0,
           type: "mcq",
+          questionNumber: 0,
+          questionMarks: "10",
         },
         {
           question: "This is the capital of which country? Bangkok",
           answers: ["Argentina", "Thailand", "India", "United Kingdom"],
           correct: 1,
           type: "mcq",
+          questionNumber: 1,
+          questionMarks: "20",
         },
       ],
+      quizName: "Python Quiz",
+      quizDescription: "OOPS",
+      maxScore: 30,
+
       progress: 0,
       score: 0,
+
+      studentResponse: {
+        finalScore: 0,
+        response: []
+      }
     };
+  }
+
+  updateResponse = (index) => {
+    const newResponse = {
+      question: this.state.progress,
+      answer: index
+    };
+    
+    let studentResponse = this.state.studentResponse;
+    studentResponse.response.push(newResponse);
+    studentResponse.finalScore = this.state.score;
+    this.setState({ studentResponse });
+    console.log(studentResponse)
   }
 
   checkAnswer(index) {
     var correct = this.state.questionData[this.state.progress].correct;
     var newScore = 0,
-      newProgress = 0;
+    newProgress = 0;
     if (correct === index) {
-      newScore = this.state.score + 1;
+      newScore =
+        parseInt(this.state.score) +
+        parseInt(this.state.questionData[this.state.progress].questionMarks);
       this.setState({ score: newScore });
       newProgress = this.state.progress + 1;
       this.setState({ progress: newProgress });
@@ -125,6 +153,7 @@ class QuizStudent extends Component {
       newProgress = this.state.progress + 1;
       this.setState({ progress: newProgress });
     }
+    this.updateResponse(index);
   }
 
   render() {
@@ -144,6 +173,8 @@ class QuizStudent extends Component {
                       : "0 8px 16px 0 #BDC9D7",
                 }}
               >
+                {this.state.quizName}
+                {this.state.quizDescription}
                 <Grid
                   item
                   container
@@ -162,7 +193,7 @@ class QuizStudent extends Component {
                     container
                     sx={2}
                     direction="row"
-                    justifyContent="space-evenly"
+                    justifyContent="center"
                     alignItems="center"
                   >
                     <Grid item m={2} sx={2} onClick={() => this.checkAnswer(0)}>
@@ -181,14 +212,14 @@ class QuizStudent extends Component {
                       container
                       sx={12}
                       direction="row"
-                      justifyContent="space-evenly"
+                      justifyContent="center"
                       alignItems="center"
                     >
                       <Grid
                         item
                         m={2}
                         sx={2}
-                        onClick={() => this.checkAnswer(0)}
+                        onClick={() => this.checkAnswer(2)}
                       >
                         <CustomCard
                           title={currentQuestion.answers[2]}
@@ -199,7 +230,7 @@ class QuizStudent extends Component {
                         item
                         m={2}
                         sx={2}
-                        onClick={() => this.checkAnswer(0)}
+                        onClick={() => this.checkAnswer(3)}
                       >
                         <CustomCard
                           title={currentQuestion.answers[3]}
