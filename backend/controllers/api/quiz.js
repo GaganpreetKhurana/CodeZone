@@ -187,10 +187,7 @@ module.exports.view = async function(req, res){
 			currentQuestion.questionType = question.questionType;
 			currentQuestion.maxScore = question.maxScore;
 			currentQuestion.studentAnswer = null;
-			for(int j = 0;
-			j < question.studentAnswers.length;
-			j ++
-		)
+			for(let j = 0;j < question.studentAnswers.length;j++)
 			{
 				if(question.studentAnswers[j].student.id == req.user._id){
 					currentQuestion.studentAnswer = question.studentAnswers[j];
@@ -200,10 +197,7 @@ module.exports.view = async function(req, res){
 			current_quiz.questions.push((currentQuestion));
 		}
 		current_quiz.submission = null;
-		for(int j = 0;
-		j < quiz.submissions.length;
-		j ++
-	)
+		for(let j = 0;	j < quiz.submissions.length;j++)
 		{
 			if(quiz.submissions[j].student.id == req.user._id){
 				current_quiz.submission = quiz.submissions[j];
@@ -245,10 +239,7 @@ module.exports.updateAnswer = async function(req, res){
 		for(let i = 0; i < quiz.questions.length; i ++){
 			if(i in req.body.answers){
 				
-				for(int j = 0;
-				j < question.studentAnswers.length;
-				j ++
-			)
+				for(let j = 0;j < question.studentAnswers.length;j++)
 				{
 					if(question.studentAnswers[j].student.id == req.user._id){
 						quiz.questions[i].studentAnswers[j].optionSelected = req.body.answers[i];
@@ -280,7 +271,7 @@ module.exports.updateAnswer = async function(req, res){
 						success: false
 					});
 				}
-			}
+			})
 	} else{
 		return res.status(401).json({
 			success: false, message: "User is not a student in this class!",
@@ -304,12 +295,14 @@ module.exports.submit = async function(req, res){
 	
 	if(subject.students.includes(req.user._id)){
 		marksScored = 0
-		for(int i=0;i<quiz.questions.length.i++){
-			for(int j=0;j<quiz.questions[i].studentAnswers.length;j++){
+		for(let i = 0; i < quiz.questions.length; i ++){
+			for(let j = 0; j < quiz.questions[i].studentAnswers.length; j ++){
 				if(quiz.questions[i].studentAnswers[j].student.id == req.user._id){
-					if (quiz.questions[i].studentAnswers[j].optionSelected == quiz.questions[i].)
+					if(quiz.questions[i].studentAnswers[j].optionSelected == quiz.questions[i].optionSelected){
+					}
 				}
 			}
+			
 		}
 		quiz = await quiz.save();
 		console.log(current_quiz);
@@ -319,5 +312,5 @@ module.exports.submit = async function(req, res){
 			success: false, message: "User is not a student in this class!",
 		});
 	}
-	
 }
+	

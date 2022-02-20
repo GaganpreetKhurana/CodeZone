@@ -21,13 +21,13 @@ var QuizSchema = new mongoose.Schema({
 	maxScoreQuiz: {
 		type: Number, default: function(){
 			total = 0;
-			for(int i = 0; i < this.questions.length;i ++)
+			for(let i = 0; i < this.questions.length;i ++)
 			{
 				total += this.questions[i].maxScore;
 			}
 			return total;
 		},
-		required = true
+		required : true
 	},
 	submissions: [{
 		student: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
