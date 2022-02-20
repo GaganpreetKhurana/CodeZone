@@ -1,11 +1,12 @@
 const Quiz = require("../../models/quiz")
+const Question = require("../../models/question")
 const Class = require("../../models/class")
 const sanitizer = require('sanitizer')
 var request = require("request");
 
 
 module.exports.create = async function(req, res){
-	console.log(req.body, "RR");
+	// console.log(req.body, "RR");
 	// get subject
 	let subject = await Class.findById(req.body.classroom_id);
 	if( !subject){
