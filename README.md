@@ -87,7 +87,7 @@
 
 ---
 
-*25 September 2020 - 5 October 2020*
+*25 September 2021 - 5 October 2021*
 
 **Module Integration**
 
@@ -97,7 +97,7 @@
 - Working Features - 
     - Teachers can create and evaluate assignments.
     - Chat functionality to connect teachers and students
-
+---
 *5 October 2021 - 25 October 2021*
 
 **Feature Expansion**
@@ -107,14 +107,30 @@
 - Issued several bugs fixes in the modules and integration
 
 ---
-*25 October 2020 - 5 December*
+*25 October 2021 - 5 December 2021*
 
-**Feature Expansion**
+**Feature Development**
 
-- Discussion Portal & Chat Functionality 
+- **Discussion Portal & Chat Functionality **
 	- Teachers can post learning materials on the classroom discussion portal. Students can post their doubts on the forum.
 	
 - **Live Code Editor**
 	- The user could share the editor on which they are working on by share the URL. Another user could just open the link to view what the first user was working on. They could also edit and run the code which they are working on.
 
+---
+*5 December 2021 - 15 January 2022*
 
+**Feature Enhancement**
+- ** Chat completion** - Chat functionality to connect teachers and students is fully functional
+- ** Lab reports** 	- Teachers can download lab/assignments reports
+- **UI rebuild** - The UI is modified and made more user friendly
+
+---
+*15 January 2022 - Present*
+**Feature Testing & Enhancement**
+- **Testing **
+	-  To ensure quality by testing the functionality of our application and to check whether it is working as intended or as per the requirements. 
+	- It allowed to find bugs at any given time or prior to a release.
+	
+- **Quiz Section**
+	- Integrated quizz/test feature for teacher to conduct evaluation
