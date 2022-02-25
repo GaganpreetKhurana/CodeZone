@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { fetchUserClassDetails,clearUserClassDetails } from "../actions/classroom";
 import TeacherClassCards from './TeacherClassCards';
+import JoinClassDialog from './JoinClassDialog';
+import CreateClassDialog from "./CreateClassDialog";
 import Typography from '@mui/material/Typography';
 import { Grid,Box } from '@mui/material';
 import { Paper } from '@mui/material';
@@ -57,6 +59,19 @@ class TeacherDashboard extends Component {
                 >
                   Manage your courses or create a new a classroom
                 </Typography>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="space-evenly"
+                  alignItems="center"
+                >
+                  <Grid item m={2}>
+                    <JoinClassDialog />
+                  </Grid>
+                  <Grid item m={2}>
+                    <CreateClassDialog />
+                  </Grid>
+                </Grid>
               </Box>
             </Grid>
             <Grid

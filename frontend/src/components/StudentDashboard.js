@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import { Container } from '@mui/material';
 import { Box } from '@mui/system';
 import { Paper } from '@mui/material';
-
+import JoinClassDialog from './JoinClassDialog';
 class StudentDashboard extends Component {
   componentDidMount() {
     this.props.dispatch(fetchUserClassDetails());
@@ -37,30 +37,45 @@ class StudentDashboard extends Component {
                 backgroundPosition: "center",
               }}
             >
-              <Box
+              <Grid
                 sx={{
                   pt: 8,
                   pb: 6,
                 }}
                 m={4}
+                direction="column"
+                justifyContent="space-evenly"
+                alignItems="center"
               >
-                <Typography
-                  component="h1"
-                  variant="h2"
-                  align="center"
-                  color="text.primary"
+                <Grid item m={2}>
+                  <Typography
+                    component="h1"
+                    variant="h2"
+                    align="center"
+                    color="text.primary"
+                  >
+                    Classrooms
+                  </Typography>
+                  <Typography
+                    variant="h5"
+                    align="center"
+                    color="text.secondary"
+                    paragraph
+                  >
+                    Join a classroom or enter into an already joined one
+                  </Typography>
+                </Grid>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="space-evenly"
+                  alignItems="center"
                 >
-                  Classrooms
-                </Typography>
-                <Typography
-                  variant="h5"
-                  align="center"
-                  color="text.secondary"
-                  paragraph
-                >
-                  Join a classroom or enter into an already joined one
-                </Typography>
-              </Box>
+                  <Grid item m={2}>
+                    <JoinClassDialog />
+                  </Grid>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid
               item

@@ -52,36 +52,6 @@ class Nav extends React.Component {
                   <img src={logo} alt="logo" width="150" height="50" />
                 </Link>
               </Typography>
-              {auth.isLoggedIn && auth.user.role === "Teacher" && (
-                <div>
-                  <Grid
-                    container
-                    direction="row"
-                    justifyContent="space-evenly"
-                    alignItems="center"
-                  >
-                    <Grid item m={2}>
-                      <JoinClassDialog />
-                    </Grid>
-                    <Grid item m={2}>
-                      <CreateClassDialog />
-                    </Grid>
-                  </Grid>
-                </div>
-              )}
-
-              {auth.isLoggedIn && auth.user.role === "Student" && (
-                <Grid
-                  container
-                  direction="row"
-                  justifyContent="space-evenly"
-                  alignItems="center"
-                >
-                  <Grid item m={2}>
-                    <JoinClassDialog />
-                  </Grid>
-                </Grid>
-              )}
 
               {auth.isLoggedIn && (
                 <div>
