@@ -80,18 +80,29 @@ const CustomCard = ({
 
 export default function Student(props) {
   const theme = useTheme();
+  const linkObj = {
+    pathname: `/classroom/${props.classroom._id}`,
+    state: {
+      title: `${props.classroom.subject}`,
+      subheader: `${props.classroom.batch}`,
+      description: `${props.classroom.description}`,
+      creator: `${props.classroom.creator}`,
+      enrolled: `${props.classroom.enrolled}`,
+      classroomCode: `${props.classroom.classroomCode}`,
+    },
+  };
   return (
     <Grid item m={4} xs={12} sm={4} md={4}>
-        <CustomCard
-          color={theme.palette.primary.main}
-          title={props.classroom.subject}
-          link={`/classroom/${props.classroom._id}`}
-          subheader={props.classroom.batch}
-          description={props.classroom.description}
-          creator={props.classroom.creator.name}
-          enrolled={props.classroom.students.length}
-          classroomCode={props.classroom.code}
-        />
-      </Grid>
+      <CustomCard
+        color={theme.palette.primary.main}
+        title={props.classroom.subject}
+        link={linkObj}
+        subheader={props.classroom.batch}
+        description={props.classroom.description}
+        creator={props.classroom.creator.name}
+        enrolled={props.classroom.students.length}
+        classroomCode={props.classroom.code}
+      />
+    </Grid>
   );
 }

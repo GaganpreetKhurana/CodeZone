@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import NoticeBoard from "./NoticeBoard";
 import QuizBoard from "./QuizBoard";
-
+import StudentsList from "./StudentsList";
 //Material UI
 import { useTheme } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -70,6 +70,7 @@ export default function NoticeTab(props) {
         >
           <Tab label="Notice" {...a11yProps(0)} />
           <Tab label="Quiz" {...a11yProps(1)} />
+          <Tab label="Student List" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -77,11 +78,24 @@ export default function NoticeTab(props) {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        <TabPanel value={value} index={0} dir={theme.direction} id="notice-board">
+        <TabPanel
+          value={value}
+          index={0}
+          dir={theme.direction}
+          id="notice-board"
+        >
           <NoticeBoard classroomId={props.classroomId} />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction} id="quiz-board">
           <QuizBoard classroomId={props.classroomId} />
+        </TabPanel>
+        <TabPanel
+          value={value}
+          index={2}
+          dir={theme.direction}
+          id="student-list"
+        >
+          <StudentsList classroomId={props.classroomID} />
         </TabPanel>
       </SwipeableViews>
     </Box>
