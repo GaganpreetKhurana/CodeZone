@@ -10,12 +10,12 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Button, Grid } from "@mui/material";
-import JoinClassDialog from "./JoinClassDialog";
-import CreateClassDialog from "./CreateClassDialog";
+import LoginIcon from "@mui/icons-material/Login";
 import ModeNightIcon from "@mui/icons-material/ModeNight";
 import { Paper } from "@mui/material";
 import WbSunnyIcon from "@mui/icons-material/WbSunny";
-
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import LogoutIcon from "@mui/icons-material/Logout";
 class Nav extends React.Component {
   state = {
     create: false,
@@ -53,6 +53,28 @@ class Nav extends React.Component {
                 </Link>
               </Typography>
 
+              {!auth.isLoggedIn && (
+                <Button>
+                  <Link to="/login" id="login-button">
+                    <LoginIcon color="action" fontSize="small" />
+                  </Link>
+                </Button>
+              )}
+              {auth.isLoggedIn && (
+                <Button onClick={this.logout}>
+                  <Link to="/" id="logout-button">
+                    <LogoutIcon color="action" fontSize="small" />
+                  </Link>
+                </Button>
+              )}
+              {!auth.isLoggedIn && (
+                <Button>
+                  <Link to="/signup">
+                    <HowToRegIcon color="action" fontSize="small" />
+                  </Link>
+                </Button>
+              )}
+
               {auth.isLoggedIn && (
                 <div>
                   <Grid
@@ -63,41 +85,22 @@ class Nav extends React.Component {
                   >
                     <Grid item m={0.25}>
                       <Link to="/settings" id="profile-settings">
-                        <Avatar src={auth?.user?.avatar} sx={{ width: 35, height: 35 }} id="profile-page">
-                    </Avatar>
+                        <Avatar
+                          src={auth?.user?.avatar}
+                          sx={{ width: 35, height: 35 }}
+                          id="profile-page"
+                        />
                       </Link>
                     </Grid>
-                    {auth.user.name}
                   </Grid>
                 </div>
               )}
-              {!auth.isLoggedIn && (
-                <Button>
-                  <Link to="/login" id="login-button">
-                    <Typography color="common.white">Login</Typography>
-                  </Link>
-                </Button>
-              )}
-              {auth.isLoggedIn && (
-                <Button onClick={this.logout}>
-                  <Link to="/" id="logout-button">
-                    <Typography color="common.white">Logout</Typography>
-                  </Link>
-                </Button>
-              )}
-              {!auth.isLoggedIn && (
-                <Button>
-                  <Link to="/signup">
-                    <Typography color="common.white">Register</Typography>
-                  </Link>
-                </Button>
-              )}
               <Button onClick={this.switchTheme}>
                 {!darkModetheme.darkMode === true && (
-                  <ModeNightIcon color="secondary" />
+                  <ModeNightIcon color="action" />
                 )}
                 {!darkModetheme.darkMode === false && (
-                  <WbSunnyIcon color="secondary" />
+                  <WbSunnyIcon color="action" />
                 )}
               </Button>
             </Toolbar>
