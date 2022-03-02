@@ -4,6 +4,8 @@ var QuizSchema = new mongoose.Schema({
 	class: {
 		type: mongoose.Schema.Types.ObjectId, ref: "Class"
 	},
+	title : { type:String , default: "QUIZ"},
+	description : { type:String , default: ""}
 	questions: [{
 		type: mongoose.Schema.Types.ObjectId, ref: "Question"
 	}],

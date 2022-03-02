@@ -5,6 +5,7 @@ const sanitizer = require('sanitizer')
 var request = require("request");
 
 
+// Create Quiz
 module.exports.create = async function(req, res){
 	// console.log(req.body, "RR");
 	// get subject
@@ -22,8 +23,27 @@ module.exports.create = async function(req, res){
 		
 		//create quiz object
 		let newQuiz = await Quiz.create({
-			creator: req.user._id, questions: req.body.questions, dateScheduled: req.body.dateScheduled, class: subject,
+			creator: req.user._id,
+			dateScheduled: req.body.dateScheduled,
+			class: subject,
+			title: req.body.quizName,
+			description: req.body.quizDescription,
+			maxScoreQuiz: req.body.maxScore,
+			
 		})
+		for (let i=0;i<req.body.questionData.length;i++){
+			let newQuestion = await Question.create({
+				class: subject,
+				question: req.body.questionData[i].question,
+				creator: req.user._id,
+				// maxScore: req.body.questionData[i].maxScore,
+				options:req.body.questionData[i].answers,
+				correctOption: [req.body.questionData[i].correct],
+				questionType: req.body.questionData[i].type,
+			})
+			newQuestion = await newQuestion.save();
+			newQuiz.questions.push(newQuestion);
+		}
 		
 		
 		// if object created
@@ -37,8 +57,8 @@ module.exports.create = async function(req, res){
 					.select("quizzes")
 					.populate({
 						path: "quizzes", populate: {
-							path: "creator", select: "name",
-						}, options: {
+							path: "creator questions", select: "name question options correctOption questionType maxScore",
+						},options: {
 							sort: {createdAt: - 1}
 						}
 					}),
