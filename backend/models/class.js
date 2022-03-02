@@ -13,6 +13,7 @@ const classSchema = new mongoose.Schema ( {
     labsCreated : [ { type : mongoose.Schema.Types.ObjectId , ref : "Lab" } ] ,
     announcements : [ { type : mongoose.Schema.Types.ObjectId , ref : "Announcements" } ] ,
     ClassMeetLink : { type : String } ,
+    quizzes : [{type: mongoose.Schema.Types.ObjectId, ref: "Quiz"},]
 } , { timestamps : true } );
 
 const Class = mongoose.model ( "Class" , classSchema );

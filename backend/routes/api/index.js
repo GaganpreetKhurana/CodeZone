@@ -7,4 +7,5 @@ router.use ( '/classroom' , require ( './classroom' ) );
 router.use ( '/forum' , require ( './forum' ) );
 router.use ( '/announcements' , require ( './announcements' ) );
 router.use ( '/editor' , require ( './editor' ) );
+router.use ( '/quiz' , require ( './quiz' ) );
 module.exports = router;

@@ -1,6 +1,7 @@
 {
   "proxy": "http://127.0.0.1:8000/",
   "name": "frontend",
+  "homepage": "https://GaganpreetKhurana.github.io/CodeZone",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -22,6 +23,7 @@
     "chromedriver": "^97.0.4",
     "emoji-picker-react": "^3.5.1",
     "font-awesome": "^4.7.0",
+    "gh-pages": "^3.2.3",
     "jwt-decode": "^3.1.2",
     "material-ui": "^0.20.2",
     "mocha": "^9.2.0",
@@ -52,7 +54,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "mocha --no-timeouts --parallel --reporter mochawesome --require mochawesome/register",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
