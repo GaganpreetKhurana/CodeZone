@@ -7,7 +7,7 @@ var request = require("request");
 
 // Create Quiz
 module.exports.create = async function(req, res){
-	// console.log(req.body, "RR");
+	console.log(req.body.QuizData, "RR");
 	// get subject
 	let subject = await Class.findById(req.body.classroom_id);
 	if( !subject){
@@ -31,6 +31,7 @@ module.exports.create = async function(req, res){
 			maxScoreQuiz: req.body.maxScore,
 			
 		})
+		console.log(newQuiz);
 		for (let i=0;i<req.body.questionData.length;i++){
 			let newQuestion = await Question.create({
 				class: subject,
@@ -41,6 +42,7 @@ module.exports.create = async function(req, res){
 				correctOption: [req.body.questionData[i].correct],
 				questionType: req.body.questionData[i].type,
 			})
+			console.log(newQuestion);
 			newQuestion = await newQuestion.save();
 			newQuiz.questions.push(newQuestion);
 		}
@@ -49,6 +51,7 @@ module.exports.create = async function(req, res){
 		// if object created
 		if(newQuiz){
 			newQuiz = await newQuiz.save();
+			console.log(newQuiz)
 			subject.quizzes.push(newQuiz);
 			subject = await subject.save();
 			
