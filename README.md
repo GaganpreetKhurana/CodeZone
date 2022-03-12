@@ -111,7 +111,7 @@
 
 **Feature Development**
 
-- **Discussion Portal & Chat Functionality **
+- **Discussion Portal & Chat Functionality**
 	- Teachers can post learning materials on the classroom discussion portal. Students can post their doubts on the forum.
 	
 - **Live Code Editor**
@@ -121,14 +121,14 @@
 *5 December 2021 - 15 January 2022*
 
 **Feature Enhancement**
-- ** Chat completion** - Chat functionality to connect teachers and students is fully functional
-- ** Lab reports** 	- Teachers can download lab/assignments reports
+- **Chat completion** - Chat functionality to connect teachers and students is fully functional
+- **Lab reports** 	- Teachers can download lab/assignments reports
 - **UI rebuild** - The UI is modified and made more user friendly
 
 ---
 *15 January 2022 - Present*
 **Feature Testing & Enhancement**
-- **Testing **
+- **Testing**
 	-  To ensure quality by testing the functionality of our application and to check whether it is working as intended or as per the requirements. 
 	- It allowed to find bugs at any given time or prior to a release.
 	
