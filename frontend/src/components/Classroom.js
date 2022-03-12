@@ -42,12 +42,13 @@ class Classroom extends Component {
     render () {
         const { match } = this.props;
         // return <div>{match.params.classroomID}</div>;
-      const classTitle = this.props.location.state.title;
-      const subheader = this.props.location.state.subheader;
-      const description = this.props.location.state.description;
-      const creator = this.props.location.state.creator;
-      const enrolled = this.props.location.state.enrolled;
-      const classroomCode = this.props.location.state.classroomCode;
+        console.log(this.props);
+      const classTitle = "";//this.props.location.state.title;
+      const subheader = "";//this.props.location.state.subheader;
+      const description = "";//this.props.location.state.description;
+      const creator = "";//this.props.location.state.creator;
+      const enrolled = "";//this.props.location.state.enrolled;
+      const classroomCode = "";//this.props.location.state.classroomCode;
 
       return (
         <Grid container direction="row" justifyContent="space-evenly">

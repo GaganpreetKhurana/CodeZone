@@ -2,6 +2,11 @@ import React from "react";
 import {connect} from "react-redux";
 import io from "socket.io-client";
 import Picker from 'emoji-picker-react';
+
+
+import EmbedVideo from "./EmbedVideo";
+import FileBase64 from "react-file-base64";
+
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 // eslint-disable-next-line
 import {clearEarlierMessages, getEarlierMessages} from "../actions/classroom";
@@ -22,6 +27,7 @@ class ChatBox extends React.Component{
 		this.state = {
 			contentMessage: "",
 			messages: [],
+			file:""
 		};
 		this.emojiPickerShow = false;
 	}
@@ -81,6 +87,7 @@ class ChatBox extends React.Component{
 				this.setState({
 					messages: data,
 				});
+				console.log(data);
 				this.handleSmoothScroll();
 			});
 		}
@@ -106,7 +113,8 @@ class ChatBox extends React.Component{
 		this.socket.emit(
 			"SendChat",
 			this.props.self_details.id,
-			this.state.contentMessage
+			this.state.contentMessage,
+			this.state.file,
 		);
 		this.setState({
 			contentMessage: "",

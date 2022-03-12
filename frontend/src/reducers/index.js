@@ -7,5 +7,6 @@ import posts from "./posts";
 import theme from "./theme";
 import execute from "./execute";
 import language from "./language";
+import quiz from "./quiz";
 
-export default combineReducers({ auth, createClassroom, classroom, theme, labDetails, posts,execute ,language});
+export default combineReducers({ auth, createClassroom, classroom, theme, labDetails, posts,execute ,language,quiz});
