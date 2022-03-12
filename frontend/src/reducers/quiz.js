@@ -20,7 +20,7 @@ export default function auth(state = initialClassState, action) {
 				...state,
 				success:true,
 				error: null,
-				quiz:action.result.quiz,
+				quiz:action.quiz,
 				quizCreateStarted: null,
 			};
 		case QUIZ_CREATE_FAILED:

@@ -36,23 +36,24 @@ export function quizCreateFailed(errorMsg) {
 // 	return FormBody.join("&");
 // }
 
-export function quizCreate(quizName,quizDescription,questionData,maxScore) {
-	// console.log(quizName,quizDescription,questionData,maxScore);
+export function quizCreate(quizName,quizDescription,questionData,maxScore,classroom_id) {
+	console.log(quizName,quizDescription,questionData,maxScore,classroom_id);
 	return (dispatch) => {
 		dispatch(startQuizCreate());
 		const url = "/api/quiz/create";
 		fetch(url, {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json",
+				'content-type': 'application/json',
 				Authorization: `Bearer ${localStorage.getItem("token")}`,
 			},
-			body: {
+			body: JSON.stringify({
+				"classroom_id": classroom_id,
 				"quizName": quizName,
 				"quizDescription": quizDescription,
 				"questionData":questionData,
 				"maxScore":maxScore
-			},
+			}),
 		})
 			.then((response) => response.json())
 			.then((data) => {

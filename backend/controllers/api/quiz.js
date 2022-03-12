@@ -7,7 +7,8 @@ var request = require("request");
 
 // Create Quiz
 module.exports.create = async function(req, res){
-	console.log(req.body.QuizData, "RR");
+	
+	console.log(req.body,"EE");
 	// get subject
 	let subject = await Class.findById(req.body.classroom_id);
 	if( !subject){
@@ -56,15 +57,7 @@ module.exports.create = async function(req, res){
 			subject = await subject.save();
 			
 			return res.status(201).json({
-				message: "Quiz created successfully", success: true, data: await Class.findById(req.body.classroom_id)
-					.select("quizzes")
-					.populate({
-						path: "quizzes", populate: {
-							path: "creator questions", select: "name question options correctOption questionType maxScore",
-						},options: {
-							sort: {createdAt: - 1}
-						}
-					}),
+				message: "Quiz created successfully", success: true, data: newQuiz
 			});
 		} else{
 			return res.status(400).json({
