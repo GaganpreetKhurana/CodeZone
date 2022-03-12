@@ -133,7 +133,8 @@ class App extends React.Component {
                 <Route path="/quizCreate" component={QuizCreate} />
               )}
               <Route exact path="/" component={Home} />
-              <Route path="/login" component={Login} />
+                <Route path="/CodeZone" component={Home} />
+                <Route path="/login" component={Login} />
               <Route path="/signup" component={SignUp} />
               <Route path="/CodeEditorScreen" component={CodeEditorScreen} />
               {!auth.isLoggedIn && (
