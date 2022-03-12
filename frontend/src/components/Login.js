@@ -60,7 +60,8 @@ class Login extends Component {
                 sm={4}
                 md={7}
                 sx={{
-                  backgroundImage: "url(https://source.unsplash.com/random)",
+                  backgroundImage:
+                    "url(https://source.unsplash.com/programming)",
                   backgroundRepeat: "no-repeat",
                   backgroundColor: (t) =>
                     t.palette.mode === "light"
@@ -79,70 +80,70 @@ class Login extends Component {
                 elevation={6}
                 square
               >
+                <Box
+                  sx={{
+                    marginTop: 8,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    height: "100vh",
+                    m: 2,
+                  }}
+                >
+                  <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
+                    <LockOutlinedIcon />
+                  </Avatar>
+                  <Typography component="h1" variant="h5">
+                    Sign in
+                  </Typography>
+                  {error && <div className="alert error-dailog">{error}</div>}
                   <Box
-                    sx={{
-                      marginTop: 8,
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      height: "100vh",
-                      m: 2 
-                    }}
+                    component="form"
+                    onSubmit={this.handleSubmitForm}
+                    noValidate
+                    sx={{ mt: 1 }}
                   >
-                    <Avatar sx={{ m: 1, bgcolor: "primary.main" }}>
-                      <LockOutlinedIcon />
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                      Sign in
-                    </Typography>
-                    {error && <div className="alert error-dailog">{error}</div>}
-                    <Box
-                      component="form"
-                      onSubmit={this.handleSubmitForm}
-                      noValidate
-                      sx={{ mt: 1 }}
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      id="email"
+                      label="Email Address"
+                      name="email"
+                      autoComplete="email"
+                      autoFocus
+                      onChange={this.handleEmail}
+                    />
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="password"
+                      label="Password"
+                      type="password"
+                      id="password"
+                      autoComplete="current-password"
+                      onChange={this.handlePassword}
+                    />
+                    <Button
+                      type="submit"
+                      fullWidth
+                      variant="contained"
+                      sx={{ mt: 3, mb: 2 }}
+                      disabled={inProgress}
+                      id="sign-in"
                     >
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                        onChange={this.handleEmail}
-                      />
-                      <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        onChange={this.handlePassword}
-                      />
-                      <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
-                        disabled={inProgress}
-                        id="sign-in"
-                      >
-                        Sign In
-                      </Button>
-                      <Grid container>
-                        <Grid item>
-                          <Link to="/signup" variant="body2">
-                            {"Don't have an account? Sign Up"}
-                          </Link>
-                        </Grid>
+                      Sign In
+                    </Button>
+                    <Grid container>
+                      <Grid item>
+                        <Link to="/signup" variant="body2">
+                          {"Don't have an account? Sign Up"}
+                        </Link>
                       </Grid>
-                    </Box>
+                    </Grid>
                   </Box>
+                </Box>
               </Grid>
             </Grid>
           </div>
