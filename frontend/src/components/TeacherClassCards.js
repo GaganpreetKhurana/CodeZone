@@ -1,13 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Color from "color"; // v3.2.1
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 const CardActionAreaActionArea = styled(CardActionArea)(() => ({
   borderRadius: 10,
@@ -48,7 +52,7 @@ const TypographySubtitle = styled(Typography)(() => ({
   fontFamily: "Montserrat",
   color: "#fff",
   opacity: 0.87,
-  marginTop: "2rem",
+  marginTop: "0.1rem",
   fontWeight: 500,
   fontSize: 14,
 }));
@@ -62,36 +66,64 @@ const CustomCard = ({
   creator,
   enrolled,
   classroomCode,
-}) => (
-  <CardActionAreaActionArea>
-    <Link to={link} id="class-card">
+}) => {
+  const [error, setError] = useState("");
+  return (
+    <CardActionAreaActionArea>
       <StyledCard color={color}>
         <CardContentContent color={color}>
-          <TypographyTitle variant={"h2"}>{title}</TypographyTitle>
+          <Link to={link} id="class-card">
+            <TypographyTitle variant={"h2"}>{title}</TypographyTitle>
+            <TypographySubtitle>{`Batch - ${subheader}`}</TypographySubtitle>
+            <TypographySubtitle>
+              {`Enrolled Students - ${enrolled}`}
+            </TypographySubtitle>
+          </Link>
           <TypographySubtitle>
-            {subheader} - {enrolled} Students - {classroomCode}
+            {`Class Code - ${classroomCode}`}
+            <Button
+              onClick={() => {
+                navigator.clipboard.writeText(classroomCode);
+                setError("Text copied to clipboard");
+                setTimeout(() => {
+                  setError("");
+                }, 2000);
+              }}
+            >
+              <ContentCopyIcon color="action" />
+            </Button>
           </TypographySubtitle>
-          <TypographySubtitle nowrap={true}>{description}</TypographySubtitle>
+
+          <TypographySubtitle
+            nowrap={true}
+          >{`Subject Code - ${description}`}</TypographySubtitle>
         </CardContentContent>
       </StyledCard>
-    </Link>
-  </CardActionAreaActionArea>
-);
+      {error && (
+        <Snackbar open={true} autoHideDuration={2000}>
+          <Alert severity="success" sx={{ width: "100%" }}>
+            {error}
+          </Alert>
+        </Snackbar>
+      )}
+    </CardActionAreaActionArea>
+  );
+};
 
 export default function Student(props) {
   const theme = useTheme();
   return (
-      <Grid item sx={{ borderRadius: "50%" }} m={3} xs={8} sm={3} md={3}>
-        <CustomCard
-          color={theme.palette.primary.main}
-          title={props.classroom.subject}
-          link={`/classroom/${props.classroom._id}`}
-          subheader={props.classroom.batch}
-          description={props.classroom.description}
-          creator={props.classroom.creator.name}
-          enrolled={props.classroom.students.length}
-          classroomCode={props.classroom.code}
-        />
-      </Grid>
+    <Grid item sx={{ borderRadius: "50%" }} m={3} xs={8} sm={3} md={3}>
+      <CustomCard
+        color={theme.palette.primary.main}
+        title={props.classroom.subject}
+        link={`/classroom/${props.classroom._id}`}
+        subheader={props.classroom.batch}
+        description={props.classroom.description}
+        creator={props.classroom.creator.name}
+        enrolled={props.classroom.students.length}
+        classroomCode={props.classroom.code}
+      />
+    </Grid>
   );
 }

@@ -46,6 +46,7 @@ function a11yProps(index) {
 }
 
 export default function NoticeTab(props) {
+  console.log("Proppppps of notice board", props);
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -95,7 +96,7 @@ export default function NoticeTab(props) {
           dir={theme.direction}
           id="student-list"
         >
-          <StudentsList classroomId={props.classroomID} />
+          <StudentsList classroomId={props.classroomId} />
         </TabPanel>
       </SwipeableViews>
     </Box>
