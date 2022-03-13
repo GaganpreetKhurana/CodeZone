@@ -5,9 +5,11 @@ import Card from "@mui/material/Card";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography";
 import { useTheme } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 const CardActionAreaActionArea = styled(CardActionArea)(() => ({
   borderRadius: 10,
@@ -48,7 +50,7 @@ const TypographySubtitle = styled(Typography)(() => ({
   fontFamily: "Montserrat",
   color: "#fff",
   opacity: 0.87,
-  marginTop: "2rem",
+  marginTop: "0.1rem",
   fontWeight: 500,
   fontSize: 14,
 }));
@@ -64,17 +66,27 @@ const CustomCard = ({
   classroomCode,
 }) => (
   <CardActionAreaActionArea>
-    <Link to={link} id="class-card">
       <StyledCard color={color}>
-        <CardContentContent color={color}>
-          <TypographyTitle variant={"h2"}>{title}</TypographyTitle>
-          <TypographySubtitle>
-            {subheader} - {enrolled} Students - {classroomCode}
-          </TypographySubtitle>
-          <TypographySubtitle nowrap={true}>{description}</TypographySubtitle>
-        </CardContentContent>
+      <CardContentContent color={color}>
+      <Link to={link} id="class-card">
+      <TypographyTitle variant={"h2"}>{title}</TypographyTitle>
+      <TypographySubtitle>
+        {`Batch - ${subheader}`}
+      </TypographySubtitle>
+      <TypographySubtitle>
+        {`Enrolled Students - ${enrolled}`}
+      </TypographySubtitle>
+      </Link>
+      <TypographySubtitle>
+        {`Class Code - ${classroomCode}`}
+        <Button onClick={()=>{console.log("clicked")}}>
+          <ContentCopyIcon color="action" />
+        </Button>
+      </TypographySubtitle>
+      
+      <TypographySubtitle nowrap={true}>{description}</TypographySubtitle>
+      </CardContentContent>
       </StyledCard>
-    </Link>
   </CardActionAreaActionArea>
 );
 

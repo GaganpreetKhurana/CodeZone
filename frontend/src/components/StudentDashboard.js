@@ -93,6 +93,7 @@ class StudentDashboard extends Component {
                   direction="row"
                   justifyContent="space-evenly"
                   alignItems="center"
+                  id="class-list"
                 >
                   {classesJoined?.length < 1 && (
                     <Typography variant="h6">

@@ -57,7 +57,7 @@ class TeacherDashboard extends Component {
                   color="text.secondary"
                   paragraph
                 >
-                  Manage your courses or create a new a classroom
+                  Manage your courses or create a new classroom
                 </Typography>
                 <Grid
                   container
@@ -90,6 +90,7 @@ class TeacherDashboard extends Component {
                   direction="row"
                   justifyContent="space-evenly"
                   alignItems="center"
+                  id="class-list"
                 >
                   {classesCreated?.length < 1 && classesJoined?.length < 1 && (
                     <Typography variant="h6">
