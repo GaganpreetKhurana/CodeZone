@@ -11,12 +11,21 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import Divider from '@mui/material/Divider';
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+
+import FileBase64 from "react-file-base64";
+
 class EditPostPopUp extends Component {
   constructor(props) {
     super(props);
     this.state = {
       content: this.props.content,
       file: this.props.files,
+      files: "",
+      fileUpload: false,
     };
   }
 
@@ -39,13 +48,40 @@ class EditPostPopUp extends Component {
   }
   handleSubmitForm = (e) => {
     e.preventDefault();
-    const { content } = this.state;
+    const { content,files ,file} = this.state;
     const {id} = this.props;
-    if (content && id) {
-      this.props.dispatch(updatePost(content,id));
+    if ( (content || files) && id) {
+        if (!content.length) {
+          // eslint-disable-next-line
+          this.state.content = "File Post";
+        }
+        let fileVal = files;
+        
+        if (fileVal === "") {
+          // eslint-disable-next-line
+          
+          fileVal = "Empty";
+          
+        } else {
+          fileVal = fileVal.base64;
+        }
+        this.props.dispatch(updatePost(content, id,fileVal));
+        this.setState({
+          content: "",
+          files: "",
+        });
+        this.handleFileChange();
     }
   };
-
+  
+  getFiles = (files) => {
+    this.setState({ files: files });
+  };
+  handleFileChange = () => {
+    this.setState({
+      fileUpload: !this.state.fileUpload,
+    });
+  };
   handleCode = (e) => {
     this.setState({
       content: e.target.value,
@@ -83,6 +119,21 @@ class EditPostPopUp extends Component {
                 fullWidth
                 variant="standard"
             />
+          {this.state.fileUpload && (
+              <FileBase64 multiple={false} onDone={this.getFiles.bind(this)} />
+          )}
+          <FormGroup>
+            <FormControlLabel
+                control={<Checkbox />}
+                label="Image"
+                onChange={this.handleFileChange}
+            />
+          </FormGroup>
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          {this.state.files !== "" && (
+              <img alt="" src={this.state.files.base64} width="50" height="50" />
+          )}
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
             <Button onClick={this.handleSubmitForm}>
                 Update
             </Button>
