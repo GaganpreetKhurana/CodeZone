@@ -64,7 +64,7 @@ function CodeEditorSideBar(props){
 		dispatch(fetchUnreadMessageCount(props.classroomId));
 		let timer = setInterval(() => {
 			dispatch(fetchUnreadMessageCount(props.classroomId));
-		}, 5000);
+		}, 2000);
 		
 		return () => {
 			// componentwillunmount in functional component.
