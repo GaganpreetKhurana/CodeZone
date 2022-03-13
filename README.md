@@ -36,6 +36,12 @@
 - Give command npm start that will start the frontend server.
 - On any browser visit localhost:3000 you will see the content there
 
+###  3. Instructions to perform Unit/ Integration Testing:-
+
+- Clone the above repository.
+- Move to frontend folder cd frontend
+- Use command npm install to download the dependencies.
+- Give command npm test.
 
 ## Objectives:
 
