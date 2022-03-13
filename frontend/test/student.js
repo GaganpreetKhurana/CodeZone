@@ -3,9 +3,9 @@ const webdriver = require("selenium-webdriver");
 const { By } = require("selenium-webdriver");
 const ltCapabilities = require("../capabilities");
 
-const user = "gagan@gmail.com";
-const password = "gagan";
-const text = "sLLBFRX";
+const user = "vishal@gmail.com";
+const password = "vishal";
+const text = "PxnoXwq";
 
 describe("CodeZone Testing", async function () {
   // selenium automation testing on cloud used --- lambdatest for this
