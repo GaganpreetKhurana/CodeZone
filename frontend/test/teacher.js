@@ -3,9 +3,9 @@ const webdriver = require("selenium-webdriver");
 const {By} = require ("selenium-webdriver");
 const ltCapabilities = require('../capabilities');
 
-const subject = "Economics21243"
-const description = "HSN-31212432"
-const batch = "CSE-4th years2134"
+const subject = "Economics212438765"
+const description = "HSN-312125432"
+const batch = "CSE-4th years21534"
 const user = "teacher@gmail.com";
 const password = "teacher";
 
@@ -48,6 +48,50 @@ describe("CodeZone Testing",async function(){
         it("Classes List", async function(){
             await driver.findElement(By.id("class-list"));
             });
+    })
+
+    let text = '';
+    describe("Create new classroom", async function(){
+        it("Open create classroom form",async function(){
+            await driver.findElement(By.id("create-class")).click();
+        })
+        it("Enter Required Details",async function(){
+            await driver.findElement(By.id("subject")).sendKeys(subject);
+            await driver.findElement(By.id("batch")).sendKeys(batch);
+            await driver.findElement(By.id("description")).sendKeys(description);
+        })
+        it("Submit Details",async function(){
+            await driver.findElement(By.id("create-classroom")).click();
+        })
+        
+        it("Response Message Displayed", async function(){
+            driver.wait(webdriver.until.elementLocated(By.id("message")),5000);
+            text = await driver.findElement(By.id("message")).getText();
+            });
+        it("Close Create Classroom Form", async function(){
+            await driver.findElement(By.id("cancel")).click();
+            });
+    })
+    describe("Join new classroom", async function(){
+        it("Open join classroom form",async function(){
+            await driver.findElement(By.id("join-class")).click();
+        })
+        it("Enter required details",async function(){
+            await driver.findElement(By.id("code")).sendKeys(text.slice(-7));
+        })
+        it("Submitdetails",async function(){
+            await driver.findElement(By.id("join-classroom")).click();
+        })
+        
+        it("Response Message Displayed", async function(){
+            driver.wait(webdriver.until.elementLocated(By.id("message")),5000);
+            await driver.findElement(By.id("message")).getText();
+            });
+        it("Close Join Classroom Form", async function(){
+            await driver.findElement(By.id("cancel")).click();
+            });
+    })
+    describe("Classroom",async function(){
         it("Enter any Classroom", async function(){
             if(driver.findElement(By.id("class-card"))){
                 await driver.findElement(By.id("class-card")).click();
@@ -56,48 +100,6 @@ describe("CodeZone Testing",async function(){
             }
             });
     })
-
-    // let text = '';
-    // describe("Create new classroom", async function(){
-    //     it("Open create classroom form",async function(){
-    //         await driver.findElement(By.id("create-class")).click();
-    //     })
-    //     it("Enter Required Details",async function(){
-    //         await driver.findElement(By.id("subject")).sendKeys(subject);
-    //         await driver.findElement(By.id("batch")).sendKeys(batch);
-    //         await driver.findElement(By.id("description")).sendKeys(description);
-    //     })
-    //     it("Submit Details",async function(){
-    //         await driver.findElement(By.id("create-classroom")).click();
-    //     })
-        
-    //     it("Response Message Displayed", async function(){
-    //         driver.wait(webdriver.until.elementLocated(By.id("message")),5000);
-    //         text = await driver.findElement(By.id("message")).getText();
-    //         });
-    //     it("Close Create Classroom Form", async function(){
-    //         await driver.findElement(By.id("cancel")).click();
-    //         });
-    // })
-    // describe("Join new classroom", async function(){
-    //     it("Open join classroom form",async function(){
-    //         await driver.findElement(By.id("join-class")).click();
-    //     })
-    //     it("Enter required details",async function(){
-    //         await driver.findElement(By.id("code")).sendKeys(text.slice(-7));
-    //     })
-    //     it("Submitdetails",async function(){
-    //         await driver.findElement(By.id("join-classroom")).click();
-    //     })
-        
-    //     it("Response Message Displayed", async function(){
-    //         driver.wait(webdriver.until.elementLocated(By.id("message")),5000);
-    //         await driver.findElement(By.id("message")).getText();
-    //         });
-    //     it("Close Join Classroom Form", async function(){
-    //         await driver.findElement(By.id("cancel")).click();
-    //         });
-    // })
     describe("Notice-Board",async function(){
         it("Notice Board Check", async function(){
             await driver.findElement(By.id("notice-board"));
