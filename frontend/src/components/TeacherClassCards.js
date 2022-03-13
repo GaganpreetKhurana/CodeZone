@@ -79,12 +79,12 @@ const CustomCard = ({
       </Link>
       <TypographySubtitle>
         {`Class Code - ${classroomCode}`}
-        <Button onClick={()=>{console.log("clicked")}}>
+        <Button onClick={()=>{navigator.clipboard.writeText(classroomCode)}}>
           <ContentCopyIcon color="action" />
         </Button>
       </TypographySubtitle>
       
-      <TypographySubtitle nowrap={true}>{description}</TypographySubtitle>
+      <TypographySubtitle nowrap={true}>{`Subject Code - ${description}`}</TypographySubtitle>
       </CardContentContent>
       </StyledCard>
   </CardActionAreaActionArea>
