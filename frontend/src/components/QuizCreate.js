@@ -1,6 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
 
+import {quizCreate} from "../actions/quiz";
+
 //Material UI
 import { Grid, Box, Card, Button, Paper } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -75,7 +77,10 @@ class QuizCreate extends React.Component {
       questionData: this.state.questionData,
       maxScore: this.state.maxScore,
     };
-    console.log(submitQuizData);
+    // console.log(submitQuizData,"RR");
+    console.log(this.state,this.props);
+    let classroom_id="6223be7bec9dcc6a275416d2";
+    this.props.dispatch(quizCreate(submitQuizData.quizName,submitQuizData.quizDescription,submitQuizData.questionData,submitQuizData.maxScore,classroom_id));
   }
 
   render() {
