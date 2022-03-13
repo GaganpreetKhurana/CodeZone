@@ -66,10 +66,10 @@ io.on ( "connection" , async ( socket ) => {
                     let room2 = await Chats.findOne ( { room : room_name } );
                     socket.in ( room_name ).emit ( "ReceiveChat" , room2.chats );
                 } );
-                socket.on ( "SendChat" , async ( sender_id , message ) => {
+                socket.on ( "SendChat" , async ( sender_id , message, imageType= false ) => {
                     var sender = await User.findById ( sender_id );
                     if ( sender ) {
-                        room.chats.push ( { sender : sender , content : message } );
+                        room.chats.push ( { sender : sender , content : message, file: imageType } );
                         room = await room.save ();
                         let room2 = await Chats.findOne ( { room : room_name } );
                         socket.in ( room_name ).emit ( "ReceiveChat" , room2.chats );

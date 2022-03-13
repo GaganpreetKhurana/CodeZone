@@ -5,7 +5,7 @@ import Picker from 'emoji-picker-react';
 
 
 // import EmbedVideo from "./EmbedVideo";
-// import FileBase64 from "react-file-base64";
+import FileBase64 from "react-file-base64";
 
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 // eslint-disable-next-line
@@ -27,7 +27,7 @@ class ChatBox extends React.Component{
 		this.state = {
 			contentMessage: "",
 			messages: [],
-			file:""
+			fileType:false,
 		};
 		this.emojiPickerShow = false;
 	}
@@ -105,16 +105,17 @@ class ChatBox extends React.Component{
 		e.preventDefault();
 		let olderMessages = this.state.messages;
 		let newMessage = {
-			content: this.state.contentMessage,
+			content: this.state.fileType?this.state.contentMessage.base64:this.state.contentMessage,
 			sender: this.props.self_details.id,
+			fileType: this.state.fileType,
 			time: Date.now(),
 		};
 		
 		this.socket.emit(
 			"SendChat",
 			this.props.self_details.id,
-			this.state.contentMessage,
-			this.state.file,
+			newMessage.content,
+			this.state.fileType,
 		);
 		this.setState({
 			contentMessage: "",
