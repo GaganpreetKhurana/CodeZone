@@ -99,7 +99,7 @@ class StudentsList extends React.Component{
 			
 			this.previousUnreadMessageCount.current = Object.assign({}, this.props.classroom.unreadMessageCount);
 			
-		}, 5000);
+		}, 2000);
 		
 	}
 	

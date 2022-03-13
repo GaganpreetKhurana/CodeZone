@@ -4,8 +4,8 @@ import io from "socket.io-client";
 import Picker from 'emoji-picker-react';
 
 
-import EmbedVideo from "./EmbedVideo";
-import FileBase64 from "react-file-base64";
+// import EmbedVideo from "./EmbedVideo";
+// import FileBase64 from "react-file-base64";
 
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 // eslint-disable-next-line
@@ -66,7 +66,7 @@ class ChatBox extends React.Component{
 		this.interval = setInterval(() => {
 			// console.log("ReadAll",this.props.self_details.id,this.socket);
 			this.socket.emit("ReadAll", this.props.self_details.id);
-		}, 2500);
+		}, 1500);
 		
 	}
 	
