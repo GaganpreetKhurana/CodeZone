@@ -283,7 +283,6 @@ backgroundPosition: 'top center' }}>
                             sx={{mt: 3, mb: 2}}
                             onClick={()=>{setEditProfile(true)}}
                             id="edit-profile"
-
                         >
                             Edit Profile
                         </Button>}

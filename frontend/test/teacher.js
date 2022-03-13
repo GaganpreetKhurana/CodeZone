@@ -42,9 +42,6 @@ describe("CodeZone Testing",async function(){
         it("Join class option", async function(){
             await driver.findElement(By.id("join-class"));
             });
-        it("Join class option", async function(){
-            await driver.findElement(By.id("join-class"));
-            });
         it("Classes List", async function(){
             await driver.findElement(By.id("class-list"));
             });
