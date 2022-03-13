@@ -166,7 +166,7 @@ export function deleteComment(comment_id) {
 }
 
 //update post/comment
-export function updatePost(content,post_id) {
+export function updatePost(content,post_id,file) {
   return (dispatch) => {
     const url = '/api/forum/update/post';
     fetch(url, {
@@ -175,7 +175,7 @@ export function updatePost(content,post_id) {
       "Content-Type": "application/x-www-form-urlencoded",
       Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
-      body: getFormBody({ content,post_id }),
+      body: getFormBody({ content,post_id,file }),
     })
       .then((response) => response.json())
       .then((data) => {

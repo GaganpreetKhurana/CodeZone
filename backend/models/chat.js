@@ -5,9 +5,9 @@ var ChatSchema = new mongoose.Schema({
 		type: String,
 	}, chats: [{
 		content: {
-			type: String, default: ""
+			type: String, default: "",
 		},
-		file: {type: String, required: false},
+		file: {type: Boolean,default: false},
 		time: {
 			type: Date, default: Date.now
 		}, sender: {type: mongoose.Schema.Types.ObjectId, ref: "User"},

@@ -138,7 +138,7 @@ module.exports.delete = async function ( req , res ) {
         subject = await subject.save ();
         
         for ( let index = post.comments.length - 1 ; index > - 1 ; index -- ) {
-            console.log ( post.comments[ index ] );
+            // console.log ( post.comments[ index ] );
             
             Comment.findByIdAndDelete ( post.comments[ index ]._id ).exec ();
         }
@@ -225,8 +225,9 @@ module.exports.update = async function ( req , res ) {
         
         // user created the post
         post.content = req.body.content;
+        post.file = req.body.file;
         post = await post.save ();
-        console.log ( post );
+        // console.log ( post );
         
         return res.status ( 200 ).json ( {
             message : "Post update successfully" ,
