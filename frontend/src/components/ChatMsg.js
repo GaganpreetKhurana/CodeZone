@@ -1,35 +1,51 @@
 import React from "react";
-import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
 import Avatar from "@mui/material/Avatar";
+import { Grid } from "@mui/material";
 
 export default function ChatMsg(props) {
   const sideBool = props.side === "left" ? true : false;
   const message = props.messages;
   const sender = props.name;
   const avatar = props?.avatar;
+  const fileIsImage = props.fileIsImage;
   return (
-    <div>
+    <Grid item m={5}>
       {sideBool ? (
-        <div>
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar alt={sender} src={avatar} />
-            </ListItemAvatar>
-            <ListItemText primary={message} />
-          </ListItem>
-        </div>
+        <Grid container direction="row" justifyContent="flex-end">
+          <Grid item xs={10}>
+            <Avatar alt={sender} src={avatar} />
+          </Grid>
+          <Grid item xs={2}>
+            {fileIsImage ? (
+              <div>
+                <img alt="" src={message} width="30" height="30" />
+              </div>
+            ) : (
+              <div>
+                <ListItemText primary={message} />
+              </div>
+            )}
+          </Grid>
+        </Grid>
       ) : (
-        <div>
-          <ListItem>
-            <ListItemText primary={message} />
-            <ListItemAvatar>
-              <Avatar alt={sender} src={avatar} />
-            </ListItemAvatar>
-          </ListItem>
-        </div>
+        <Grid container direction="row" justifyContent="flex-end">
+          <Grid item xs={10}>
+            {fileIsImage ? (
+              <div>
+                <img alt="" src={message} width="30" height="30" />
+              </div>
+            ) : (
+              <div>
+                <ListItemText primary={message} />
+              </div>
+            )}
+          </Grid>
+          <Grid item xs={2}>
+            <Avatar alt={sender} src={avatar} />
+          </Grid>
+        </Grid>
       )}
-    </div>
+    </Grid>
   );
 }
