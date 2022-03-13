@@ -9,11 +9,11 @@ import { Typography } from "@mui/material";
 class ClassHeader extends Component {
   render() {
     const title = this.props.classTitle;
-    const subheader = this.props.subheader;
+    //const subheader = this.props.subheader;
     const description = this.props.description;
-    const creator = this.props.creator;
-    const enrolled = this.props.enrolled;
-    const classroomCode = this.props.classroomCode;
+    //const creator = this.props.creator;
+    //const enrolled = this.props.enrolled;
+    //const classroomCode = this.props.classroomCode;
 
     // return <div>{match.params.classroomID}</div>;
     return (
@@ -46,7 +46,7 @@ class ClassHeader extends Component {
                 align="center"
                 color="text.primary"
               >
-                {title} 
+                {title}
               </Typography>
               <Typography
                 variant="h5"
@@ -54,12 +54,7 @@ class ClassHeader extends Component {
                 color="text.secondary"
                 paragraph
               >
-                a{subheader}
-                b{description}
-                c{creator}
-                d{subheader}
-                e{enrolled}
-                f{classroomCode}
+                {description}
               </Typography>
             </Grid>
           </Grid>

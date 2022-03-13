@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import DiscussionPortal from "./DiscussionPortal";
 import NoticeTab from "./NoticeTab";
-// import ClassHeader from "./ClassHeader";
+import ClassHeader from "./ClassHeader";
 
 //Material UI
 import { Grid } from "@mui/material";
@@ -45,12 +45,12 @@ class Classroom extends Component {
     const { match } = this.props;
 
     // return <div>{match.params.classroomID}</div>;
-    // const classTitle = this.props.location.state.title;
-    // const subheader = this.props.location.state.subheader;
-    // const description = this.props.location.state.description;
-    // const creator = this.props.location.state.creator;
-    // const enrolled = this.props.location.state.enrolled;
-    // const classroomCode = this.props.location.state.classroomCode;
+    const classTitle = this.props.location.state.title;
+    const subheader = this.props.location.state.subheader;
+    const description = this.props.location.state.description;
+    const creator = this.props.location.state.creator;
+    const enrolled = this.props.location.state.enrolled;
+    const classroomCode = this.props.location.state.classroomCode;
 
     return (
       <Grid container direction="row" justifyContent="space-evenly">
@@ -72,14 +72,14 @@ class Classroom extends Component {
           alignItems="stretch"
         >
           <Grid item m={2}>
-            {/* <ClassHeader
+            <ClassHeader
                 classTitle={classTitle}
                 subheader={subheader}
                 description={description}
                 creator={creator}
                 enrolled={enrolled}
                 classroomCode={classroomCode}
-              /> */}
+              />
             <NoticeTab classroomId={match.params.classroomID} />{" "}
           </Grid>
         </Grid>
