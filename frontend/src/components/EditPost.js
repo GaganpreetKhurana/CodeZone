@@ -48,7 +48,7 @@ class EditPostPopUp extends Component {
   }
   handleSubmitForm = (e) => {
     e.preventDefault();
-    const { content,files ,file} = this.state;
+    const { content,files } = this.state;
     const {id} = this.props;
     if ( (content || files) && id) {
         if (!content.length) {
