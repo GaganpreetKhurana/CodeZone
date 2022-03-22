@@ -8,7 +8,7 @@ export default function ChatMsg(props) {
   const message = props.messages;
   const sender = props.name;
   const avatar = props?.avatar;
-  const fileIsImage = props.fileIsImage;
+  //const fileIsImage = props.fileIsImage;
   return (
     <Grid item m={5}>
       {sideBool ? (
@@ -17,7 +17,7 @@ export default function ChatMsg(props) {
             <Avatar alt={sender} src={avatar} />
           </Grid>
           <Grid item xs={2}>
-            {fileIsImage ? (
+            {message.startsWith("data:image") ? (
               <div>
                 <img alt="" src={message} width="30" height="30" />
               </div>
@@ -31,7 +31,7 @@ export default function ChatMsg(props) {
       ) : (
         <Grid container direction="row" justifyContent="flex-end">
           <Grid item xs={10}>
-            {fileIsImage ? (
+            {message.startsWith("data:image") ? (
               <div>
                 <img alt="" src={message} width="30" height="30" />
               </div>
