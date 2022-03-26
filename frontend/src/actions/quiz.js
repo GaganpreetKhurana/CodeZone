@@ -3,6 +3,8 @@ import {
 	QUIZ_CREATE_SUCCESS,
 	QUIZ_CREATE_FAILED,
 	QUIZ_CREATE_CLEAR_STATE,
+	QUIZ_FETCH_SUCCESS,
+	QUIZ_SUBMIT_SUCCESS,
 } from "./actionTypes";
 
 //execution
@@ -37,7 +39,7 @@ export function quizCreateFailed(errorMsg) {
 // }
 
 export function quizCreate(quizName,quizDescription,questionData,maxScore,classroom_id) {
-	console.log(quizName,quizDescription,questionData,maxScore,classroom_id);
+	// console.log(quizName,quizDescription,questionData,maxScore,classroom_id);
 	return (dispatch) => {
 		dispatch(startQuizCreate());
 		const url = "/api/quiz/create";
@@ -58,7 +60,7 @@ export function quizCreate(quizName,quizDescription,questionData,maxScore,classr
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					console.log(data);
+					// console.log(data);
 					dispatch(quizCreateSuccessful(data.data));
 					return;
 				}
@@ -73,23 +75,60 @@ export function clearQuizCreate() {
 	};
 }
 
-// export function finalSubmitCode(code, content, finalSubmit, submittedAt) {
-// 	return (dispatch) => {
-// 		const url = "/api/editor/submitCode";
-// 		fetch(url, {
-// 			method: "POST",
-// 			headers: {
-// 				"Content-Type": "application/x-www-form-urlencoded",
-// 				Authorization: `Bearer ${localStorage.getItem("token")}`,
-// 			},
-// 			body: getFormBody({ code, content, finalSubmit, submittedAt }),
-// 		})
-// 			.then((response) => response.json())
-// 			.then((data) => {
-// 				if (data.success) {
-// 					console.log(data.message);
-// 					return;
-// 				}
-// 			});
-// 	};
-// }
+export function fetchQuiz(quizID) {
+	return (dispatch) => {
+		const url = `/api/quiz/fetch/${quizID}`;
+		fetch(url, {
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			}
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					// console.log(data.message);
+					dispatch(quizFetchSuccessful(data.data))
+					return;
+				}
+			});
+	};
+}
+
+export function quizFetchSuccessful(data) {
+	return {
+		type: QUIZ_FETCH_SUCCESS,
+		quiz: data,
+	};
+}
+
+export function submitQuiz(submission) {
+	return (dispatch) => {
+		const url = `/api/quiz/submit/${submission.quiz}`;
+		fetch(url, {
+			method: "POST",
+			headers: {
+				'content-type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			},
+			body: JSON.stringify({
+				"answers": submission.answers
+			}),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					// console.log(data.message);
+					dispatch(quizSubmitSuccessful(data.message))
+					return;
+				}
+			});
+	};
+}
+
+export function quizSubmitSuccessful(msg) {
+	return {
+		type: QUIZ_SUBMIT_SUCCESS,
+		message: msg,
+	};
+}

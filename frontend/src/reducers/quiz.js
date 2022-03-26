@@ -3,6 +3,8 @@ import {
 	QUIZ_CREATE_START,
 	QUIZ_CREATE_FAILED,
 	QUIZ_CREATE_CLEAR_STATE,
+	QUIZ_FETCH_SUCCESS,
+	QUIZ_SUBMIT_SUCCESS,
 } from '../actions/actionTypes';
 
 const initialClassState = {
@@ -23,6 +25,24 @@ export default function auth(state = initialClassState, action) {
 				quiz:action.quiz,
 				quizCreateStarted: null,
 			};
+		case QUIZ_FETCH_SUCCESS:
+			// console.log("FETCH",action.quiz,console.log(action));
+			return {
+				...state,
+				success:true,
+				error: null,
+				quiz:action.quiz,
+				quizCreateStarted: null,
+			};
+		case QUIZ_SUBMIT_SUCCESS:
+			// console.log("SUBMIT");
+			return {
+				...state,
+				success:true,
+				error: null,
+				quiz: null,
+				quizCreateStarted: null,
+			};
 		case QUIZ_CREATE_FAILED:
 			return {
 				...state,
@@ -38,7 +58,7 @@ export default function auth(state = initialClassState, action) {
 				error: null,
 			}
 		case QUIZ_CREATE_CLEAR_STATE:
-			console.log("HHII")
+			// console.log("HHII")
 			return {
 				...state,
 				quiz: null,

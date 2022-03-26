@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
+import {fetchQuiz,submitQuiz} from "../actions/quiz";
 
 // Material UI
 import { Grid } from "@mui/material";
@@ -86,56 +87,50 @@ const CustomCard2 = ({ color, title, subtitle }) => (
 class QuizStudent extends Component {
   constructor(props) {
     super(props);
-
-    this.state = this.getInitialState();
+    
+    this.quizID = "623eb17550524d884712f9ae";
+    this.props.dispatch(fetchQuiz(this.quizID));
+    
     this.checkAnswer = this.checkAnswer.bind(this);
-  }
-
+    // console.log("WW$$#",this.state,this.props,"QQAAA");
+    this.state = this.getInitialState();
+  };
+  
+  
+  sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  };
   getInitialState() {
+    // console.log(this.props,"OOO");
+    let currentQuiz=this.props.quiz.quiz;
+    
     return {
-      questionData: [
-        {
-          question: "This is the capital of which country? Delhi",
-          answers: ["India", "Australia", "Cuba", "Algeria"],
-          correct: 0,
-          type: "mcq",
-          questionNumber: 0,
-          questionMarks: "10",
-        },
-        {
-          question: "This is the capital of which country? Bangkok",
-          answers: ["Argentina", "Thailand", "India", "United Kingdom"],
-          correct: 1,
-          type: "mcq",
-          questionNumber: 1,
-          questionMarks: "20",
-        },
-      ],
-      quizName: "Python Quiz",
-      quizDescription: "OOPS",
-      maxScore: 30,
-
+      questionData: currentQuiz.questions,
+      quizName: currentQuiz.title,
+      quizDescription: currentQuiz.description,
+      maxScore: currentQuiz.maxScoreQuiz,
+      quizID: currentQuiz.quizID,
       progress: 0,
       score: 0,
 
       studentResponse: {
         finalScore: 0,
-        response: []
+        response: {}
       }
     };
   }
 
   updateResponse = (index) => {
-    const newResponse = {
-      question: this.state.progress,
-      answer: index
-    };
+    // console.log(this.state,"W");
+    let currentQuestion=this.state.questionData[this.state.progress].questionNumber;
+    // console.log(currentQuestion.toString());
+    
     
     let studentResponse = this.state.studentResponse;
-    studentResponse.response.push(newResponse);
+    studentResponse.response[currentQuestion]=index;
     studentResponse.finalScore = this.state.score;
     this.setState({ studentResponse });
-    console.log(studentResponse)
+    // console.log(studentResponse)
   }
 
   checkAnswer(index) {
@@ -155,7 +150,16 @@ class QuizStudent extends Component {
     }
     this.updateResponse(index);
   }
-
+  
+  submit(){
+    let submission = {
+      quiz : this.state.quizID,
+      answers : this.state.studentResponse.response,
+    }
+    // console.log(submission.answers,"EE");
+    this.props.dispatch(submitQuiz(submission));
+    
+  }
   render() {
     var currentQuestion = this.state.questionData[this.state.progress];
     if (this.state.questionData.length > this.state.progress) {
@@ -258,6 +262,7 @@ class QuizStudent extends Component {
         </div>
       );
     } else {
+      this.submit();
       return (
         <div>
           <Grid container direction="column" height="100vh">
@@ -275,6 +280,7 @@ class QuizStudent extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    quiz: state.quiz,
   };
 }
 
