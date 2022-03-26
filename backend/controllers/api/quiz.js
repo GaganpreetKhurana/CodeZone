@@ -253,7 +253,7 @@ module.exports.view = async function(req, res){
 // update answer
 module.exports.updateAnswer = async function(req, res){
 	
-	console.log(req.params.quiz_id);
+	// console.log(req.params.quiz_id);
 	// get quiz
 	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id));
 	if( !quiz){
@@ -279,7 +279,7 @@ module.exports.updateAnswer = async function(req, res){
 			}
 		}
 		quiz = await quiz.save();
-		console.log(current_quiz);
+		// console.log(current_quiz);
 		request(
 			{
 				url: "https://127.0.0.1:8000/api/quiz/view::" + sanitizer.escape(req.params.quiz_id),
@@ -313,7 +313,7 @@ module.exports.updateAnswer = async function(req, res){
 // submit answer
 module.exports.submit = async function(req, res){
 	
-	console.log(req.params.quiz_id,"WW",req.body.answers,"QQQQQQQCDWWWWWWWWWWWWW");
+	// console.log(req.params.quiz_id,"WW",req.body.answers,"QQQQQQQCDWWWWWWWWWWWWW");
 	// get quiz
 	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id));
 	if( !quiz){
@@ -339,12 +339,12 @@ module.exports.submit = async function(req, res){
 		})
 		
 		total = 0;
-		console.log(newSubmission.answers)
-		console.log(typeof (newSubmission.answers))
-		console.log(newSubmission.answers)
+		// console.log(newSubmission.answers)
+		// console.log(typeof (newSubmission.answers))
+		// console.log(newSubmission.answers)
 		for(let i = 0; i < quiz.questions.length; i++){
 			let currentQuestion = await Question.findById(quiz.questions[i]);
-			console.log(quiz.questions[i],currentQuestion,newSubmission.answers[currentQuestion._id],currentQuestion.correctOption);
+			// console.log(quiz.questions[i],currentQuestion,newSubmission.answers[currentQuestion._id],currentQuestion.correctOption);
 			if (newSubmission.answers[currentQuestion._id]==currentQuestion.correctOption[0]){
 				total += currentQuestion.maxScore;
 			}
@@ -354,7 +354,7 @@ module.exports.submit = async function(req, res){
 		quiz.submissions.push(newSubmission);
 		
 		quiz = await quiz.save();
-		console.log(current_quiz);
+		// console.log(current_quiz);
 		
 	} else{
 		return res.status(401).json({
