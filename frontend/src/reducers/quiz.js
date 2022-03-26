@@ -23,6 +23,14 @@ export default function auth(state = initialClassState, action) {
 				quiz:action.quiz,
 				quizCreateStarted: null,
 			};
+		case QUIZ_FETCH_SUCCESS:
+			return {
+				...state,
+				success:true,
+				error: null,
+				quiz:action.quiz,
+				quizCreateStarted: null,
+			};
 		case QUIZ_CREATE_FAILED:
 			return {
 				...state,

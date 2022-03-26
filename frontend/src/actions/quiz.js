@@ -73,23 +73,29 @@ export function clearQuizCreate() {
 	};
 }
 
-// export function finalSubmitCode(code, content, finalSubmit, submittedAt) {
-// 	return (dispatch) => {
-// 		const url = "/api/editor/submitCode";
-// 		fetch(url, {
-// 			method: "POST",
-// 			headers: {
-// 				"Content-Type": "application/x-www-form-urlencoded",
-// 				Authorization: `Bearer ${localStorage.getItem("token")}`,
-// 			},
-// 			body: getFormBody({ code, content, finalSubmit, submittedAt }),
-// 		})
-// 			.then((response) => response.json())
-// 			.then((data) => {
-// 				if (data.success) {
-// 					console.log(data.message);
-// 					return;
-// 				}
-// 			});
-// 	};
-// }
+export function fetchQuiz(quizID) {
+	return (dispatch) => {
+		const url = "/api/quiz/student";
+		fetch(url, {
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			}
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					console.log(data.message);
+					dispatch(quizFetchSuccessful(data.data))
+					return;
+				}
+			});
+	};
+}
+
+export function quizFetchSuccessful(data) {
+	return {
+		type: QUIZ_FETCH_SUCCESS,
+		quiz: data,
+	};
+}

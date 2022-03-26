@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
+import {fetchQuiz} from "../actions/quiz"
 
 // Material UI
 import { Grid } from "@mui/material";
@@ -86,12 +87,16 @@ const CustomCard2 = ({ color, title, subtitle }) => (
 class QuizStudent extends Component {
   constructor(props) {
     super(props);
-
+    this.dispatch = useDispatch();
     this.state = this.getInitialState();
     this.checkAnswer = this.checkAnswer.bind(this);
-  }
-
+  },
+  
   getInitialState() {
+    const quizID = "";
+    dispatch(fetchQuiz(quizID));
+    console.log(state.quiz);
+    console.log(state);
     return {
       questionData: [
         {
