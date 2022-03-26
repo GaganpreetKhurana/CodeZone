@@ -1,5 +1,7 @@
 const Quiz = require("../../models/quiz")
 const Question = require("../../models/question")
+const Submission = require("../../models/submission")
+
 const Class = require("../../models/class")
 const sanitizer = require('sanitizer')
 var request = require("request");
@@ -172,11 +174,11 @@ module.exports.update = async function(req, res){
 // get quiz
 module.exports.view = async function(req, res){
 	
-	console.log(req.params.quiz_id,"RREEERR");
+	// console.log(req.params.quiz_id,"RREEERR");
 	// get quiz
 	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id));
 	if( !quiz){
-		console.log("TTR");
+		// console.log("TTR");
 		return res.status(404).json({
 			success: false, message: "Quiz not found!",
 		});
@@ -184,14 +186,14 @@ module.exports.view = async function(req, res){
 	// get subject
 	let subject = await Class.findById(quiz.class._id);
 	if( !subject){
-		console.log("TTX");
+		// console.log("TTX");
 		return res.status(404).json({
 			success: false, message: "Subject not found!",
 		});
 	}
 	
 	if(subject.students.includes(req.user._id)){
-		console.log("TT");
+		// console.log("TT");
 		// user is a student for this subject
 		let current_quiz = {};
 		current_quiz.class = quiz.class;
@@ -202,7 +204,7 @@ module.exports.view = async function(req, res){
 		
 		current_quiz.dateScheduled = quiz.dateScheduled;
 		current_quiz.questions = []
-		console.log(quiz,"TTTTWWWT");
+		// console.log(quiz,"TTTTWWWT");
 		for(let i = 0; i < quiz.questions.length; i++){
 			let currentQuestion = {};
 			let question = await Question.findById(quiz.questions[i]);
@@ -230,17 +232,17 @@ module.exports.view = async function(req, res){
 		// 		break;
 		// 	}
 		// }
-		console.log(current_quiz);
+		// console.log(current_quiz);
 		return res.status(200).json({
 			message: "Quiz retrival sucessfull!", success: true, data: current_quiz,
 		});
 	} else if(subject.teachers.includes(req.user._id)){
-		console.log("TTQQ");
+		// console.log("TTQQ");
 		return res.status(200).json({
 			message: "Quiz retrieval successfull!", success: true, data: quiz,
 		});
 	} else{
-		console.log("TTRRR");
+		// console.log("TTRRR");
 		return res.status(401).json({
 			success: false, message: "User is not in this class!",
 		});
@@ -311,7 +313,7 @@ module.exports.updateAnswer = async function(req, res){
 // submit answer
 module.exports.submit = async function(req, res){
 	
-	console.log(req.params.quiz_id);
+	console.log(req.params.quiz_id,req.body,"QQQQQQQCDWWWWWWWWWWWWW");
 	// get quiz
 	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id));
 	if( !quiz){
@@ -320,18 +322,34 @@ module.exports.submit = async function(req, res){
 		});
 	}
 	
+	// get subject
+	let subject = await Class.findById(quiz.class._id);
+	if( !subject){
+		// console.log("TTX");
+		return res.status(404).json({
+			success: false, message: "Subject not found!",
+		});
+	}
 	
 	if(subject.students.includes(req.user._id)){
-		marksScored = 0
-		for(let i = 0; i < quiz.questions.length; i ++){
-			for(let j = 0; j < quiz.questions[i].studentAnswers.length; j ++){
-				if(quiz.questions[i].studentAnswers[j].student.id == req.user._id){
-					if(quiz.questions[i].studentAnswers[j].optionSelected == quiz.questions[i].optionSelected){
-					}
-				}
+		let newSubmission = await Submission.create({
+			quiz: quiz,
+			answers: req.body.answers,
+			class: subject,
+		})
+		
+		total = 0;
+		for(let i = 0; i < quiz.questions.length; i++){
+			let currentQuestion = Question.findById(quiz.questions[i]);
+			console.log(newSubmission.answers[quiz.questions[i]],currentQuestion.correctOption[0]);
+			if (newSubmission.answers[quiz.questions[i]]==currentQuestion.correctOption[0]){
+				total += currentQuestion.maxScore;
 			}
-			
 		}
+		newSubmission.score=total;
+		newSubmission = await newSubmission.save();
+		quiz.submissions.push(newSubmission);
+		
 		quiz = await quiz.save();
 		console.log(current_quiz);
 		

@@ -22,6 +22,7 @@ var QuizSchema = new mongoose.Schema({
 	dateScheduled: {
 		type: Date, default: Date.now
 	},
+	submissions: {type: mongoose.Schema.Types.ObjectId, ref: "Submission"},
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
 }, {timestamps: true});
 

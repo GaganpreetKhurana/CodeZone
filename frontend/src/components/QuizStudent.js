@@ -87,34 +87,37 @@ const CustomCard2 = ({ color, title, subtitle }) => (
 class QuizStudent extends Component {
   constructor(props) {
     super(props);
-    console.log("XX");
     
     this.quizID = "623eb17550524d884712f9ae";
     this.props.dispatch(fetchQuiz(this.quizID));
-    // console.log(this.state.quiz);
-    console.log(this.state,this.props,"QQQ");
-    this.state = this.getInitialState();
+    
     this.checkAnswer = this.checkAnswer.bind(this);
-  }
+    console.log("WW$$#",this.state,this.props,"QQAAA");
+    this.state = this.getInitialState();
+  };
   
+  
+  sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  };
   getInitialState() {
-    // const quizID = "620c1ea1d6495d9094fe9d63";
-    // this.props.dispatch(fetchQuiz(quizID));
-    // console.log(this.state.quiz);
-    // console.log(this.state);
-    const quiz=this.props.quiz.quiz;
+    console.log(this.props,"OOO");
+    let currentQuiz=this.props.quiz.quiz;
+    if(!currentQuiz){
+      console.log(this.props,this.state,"RR");
+    }
     return {
-      questionData: quiz.questions,
-      quizName: quiz.title,
-      quizDescription: quiz.description,
-      maxScore: quiz.maxScoreQuiz,
-      quizID: quiz.quizID,
+      questionData: currentQuiz.questions,
+      quizName: currentQuiz.title,
+      quizDescription: currentQuiz.description,
+      maxScore: currentQuiz.maxScoreQuiz,
+      quizID: currentQuiz.quizID,
       progress: 0,
       score: 0,
 
       studentResponse: {
         finalScore: 0,
-        response: []
+        response: {}
       }
     };
   }
@@ -122,12 +125,11 @@ class QuizStudent extends Component {
   updateResponse = (index) => {
     console.log(this.state,"WW");
     let currentQuestion=this.state.questionData[this.state.progress].questionNumber;
-    const newResponse = {
-      currentQuestion : index,
-    };
+    // console.log(currentQuestion.toString());
+    
     
     let studentResponse = this.state.studentResponse;
-    studentResponse.response.push(newResponse);
+    studentResponse.response[currentQuestion]=index;
     studentResponse.finalScore = this.state.score;
     this.setState({ studentResponse });
     console.log(studentResponse)
@@ -151,7 +153,7 @@ class QuizStudent extends Component {
     this.updateResponse(index);
   }
   
-  submitQuiz = () =>{
+  submit(){
     let submission = {
       quiz : this.state.quizID,
       answers : this.state.studentResponse.response,
@@ -262,7 +264,7 @@ class QuizStudent extends Component {
         </div>
       );
     } else {
-      this.submitQuiz();
+      this.submit();
       return (
         <div>
           <Grid container direction="column" height="100vh">

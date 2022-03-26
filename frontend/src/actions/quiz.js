@@ -96,7 +96,6 @@ export function fetchQuiz(quizID) {
 }
 
 export function quizFetchSuccessful(data) {
-	console.log(data);
 	return {
 		type: QUIZ_FETCH_SUCCESS,
 		quiz: data,
