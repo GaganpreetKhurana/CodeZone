@@ -3,6 +3,7 @@ import {
 	QUIZ_CREATE_START,
 	QUIZ_CREATE_FAILED,
 	QUIZ_CREATE_CLEAR_STATE,
+	QUIZ_FETCH_SUCCESS,
 } from '../actions/actionTypes';
 
 const initialClassState = {
@@ -24,6 +25,7 @@ export default function auth(state = initialClassState, action) {
 				quizCreateStarted: null,
 			};
 		case QUIZ_FETCH_SUCCESS:
+			console.log("WWWW",action.quiz);
 			return {
 				...state,
 				success:true,

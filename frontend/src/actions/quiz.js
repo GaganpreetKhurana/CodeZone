@@ -3,6 +3,7 @@ import {
 	QUIZ_CREATE_SUCCESS,
 	QUIZ_CREATE_FAILED,
 	QUIZ_CREATE_CLEAR_STATE,
+	QUIZ_FETCH_SUCCESS,
 } from "./actionTypes";
 
 //execution
@@ -75,7 +76,7 @@ export function clearQuizCreate() {
 
 export function fetchQuiz(quizID) {
 	return (dispatch) => {
-		const url = "/api/quiz/student";
+		const url = `/api/quiz/fetch/${quizID}`;
 		fetch(url, {
 			method: "GET",
 			headers: {
@@ -94,6 +95,7 @@ export function fetchQuiz(quizID) {
 }
 
 export function quizFetchSuccessful(data) {
+	console.log(data);
 	return {
 		type: QUIZ_FETCH_SUCCESS,
 		quiz: data,

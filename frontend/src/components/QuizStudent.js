@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import {fetchQuiz} from "../actions/quiz"
+import {fetchQuiz} from "../actions/quiz";
 
 // Material UI
 import { Grid } from "@mui/material";
@@ -87,38 +87,27 @@ const CustomCard2 = ({ color, title, subtitle }) => (
 class QuizStudent extends Component {
   constructor(props) {
     super(props);
-    this.dispatch = useDispatch();
+    console.log("XX");
+    
+    this.quizID = "623eb17550524d884712f9ae";
+    this.props.dispatch(fetchQuiz(this.quizID));
+    // console.log(this.state.quiz);
+    console.log(this.state,this.props,"QQQ");
     this.state = this.getInitialState();
     this.checkAnswer = this.checkAnswer.bind(this);
-  },
+  }
   
   getInitialState() {
-    const quizID = "";
-    dispatch(fetchQuiz(quizID));
-    console.log(state.quiz);
-    console.log(state);
+    // const quizID = "620c1ea1d6495d9094fe9d63";
+    // this.props.dispatch(fetchQuiz(quizID));
+    // console.log(this.state.quiz);
+    // console.log(this.state);
+    const quiz=this.props.quiz.quiz;
     return {
-      questionData: [
-        {
-          question: "This is the capital of which country? Delhi",
-          answers: ["India", "Australia", "Cuba", "Algeria"],
-          correct: 0,
-          type: "mcq",
-          questionNumber: 0,
-          questionMarks: "10",
-        },
-        {
-          question: "This is the capital of which country? Bangkok",
-          answers: ["Argentina", "Thailand", "India", "United Kingdom"],
-          correct: 1,
-          type: "mcq",
-          questionNumber: 1,
-          questionMarks: "20",
-        },
-      ],
-      quizName: "Python Quiz",
-      quizDescription: "OOPS",
-      maxScore: 30,
+      questionData: quiz.questions,
+      quizName: quiz.title,
+      quizDescription: quiz.description,
+      maxScore: quiz.maxScoreQuiz,
 
       progress: 0,
       score: 0,
@@ -131,6 +120,7 @@ class QuizStudent extends Component {
   }
 
   updateResponse = (index) => {
+    console.log(this.state,"WW");
     const newResponse = {
       question: this.state.progress,
       answer: index
@@ -280,6 +270,7 @@ class QuizStudent extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    quiz: state.quiz,
   };
 }
 
