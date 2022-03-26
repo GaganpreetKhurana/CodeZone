@@ -121,9 +121,9 @@ class QuizStudent extends Component {
 
   updateResponse = (index) => {
     console.log(this.state,"WW");
-    let question=this.state.questionData[this.state.progress].questionNumber;
+    let currentQuestion=this.state.questionData[this.state.progress].questionNumber;
     const newResponse = {
-      question : index,
+      currentQuestion : index,
     };
     
     let studentResponse = this.state.studentResponse;

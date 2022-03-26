@@ -4,6 +4,7 @@ import {
 	QUIZ_CREATE_FAILED,
 	QUIZ_CREATE_CLEAR_STATE,
 	QUIZ_FETCH_SUCCESS,
+	QUIZ_SUBMIT_SUCCESS,
 } from "./actionTypes";
 
 //execution
@@ -99,5 +100,36 @@ export function quizFetchSuccessful(data) {
 	return {
 		type: QUIZ_FETCH_SUCCESS,
 		quiz: data,
+	};
+}
+
+export function submitQuiz(submission) {
+	return (dispatch) => {
+		const url = `/api/quiz/submit/${submission.quiz}`;
+		fetch(url, {
+			method: "POST",
+			headers: {
+				'content-type': 'application/json',
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			},
+			body: JSON.stringify({
+				"answers": submission.answers
+			}),
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					console.log(data.message);
+					dispatch(quizSubmitSuccessful(data.message))
+					return;
+				}
+			});
+	};
+}
+
+export function quizSubmitSuccessful(msg) {
+	return {
+		type: QUIZ_SUBMIT_SUCCESS,
+		message: msg,
 	};
 }
