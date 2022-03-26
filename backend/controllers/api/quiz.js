@@ -313,7 +313,7 @@ module.exports.updateAnswer = async function(req, res){
 // submit answer
 module.exports.submit = async function(req, res){
 	
-	console.log(req.params.quiz_id,req.body,"QQQQQQQCDWWWWWWWWWWWWW");
+	console.log(req.params.quiz_id,"WW",req.body.answers,"QQQQQQQCDWWWWWWWWWWWWW");
 	// get quiz
 	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id));
 	if( !quiz){
@@ -339,10 +339,13 @@ module.exports.submit = async function(req, res){
 		})
 		
 		total = 0;
+		console.log(newSubmission.answers)
+		console.log(typeof (newSubmission.answers))
+		console.log(newSubmission.answers)
 		for(let i = 0; i < quiz.questions.length; i++){
-			let currentQuestion = Question.findById(quiz.questions[i]);
-			console.log(newSubmission.answers[quiz.questions[i]],currentQuestion.correctOption[0]);
-			if (newSubmission.answers[quiz.questions[i]]==currentQuestion.correctOption[0]){
+			let currentQuestion = await Question.findById(quiz.questions[i]);
+			console.log(quiz.questions[i],currentQuestion,newSubmission.answers[currentQuestion._id],currentQuestion.correctOption);
+			if (newSubmission.answers[currentQuestion._id]==currentQuestion.correctOption[0]){
 				total += currentQuestion.maxScore;
 			}
 		}

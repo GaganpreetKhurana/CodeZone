@@ -123,7 +123,7 @@ class QuizStudent extends Component {
   }
 
   updateResponse = (index) => {
-    console.log(this.state,"WW");
+    console.log(this.state,"W");
     let currentQuestion=this.state.questionData[this.state.progress].questionNumber;
     // console.log(currentQuestion.toString());
     
@@ -158,7 +158,7 @@ class QuizStudent extends Component {
       quiz : this.state.quizID,
       answers : this.state.studentResponse.response,
     }
-    console.log(submission)
+    console.log(submission.answers,"EE");
     this.props.dispatch(submitQuiz(submission));
     
   }

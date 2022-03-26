@@ -5,7 +5,7 @@ var SubmissionSchema = new mongoose.Schema({
 	quiz: {
 		type: mongoose.Schema.Types.ObjectId, ref: "Quiz"
 	},
-	answers: [{}],
+	answers: {},
 	score: {
 		type: Number, default: 0
 	},
