@@ -198,7 +198,7 @@ module.exports.view = async function(req, res){
 		current_quiz.title = quiz.title;
 		current_quiz.description = quiz.description;
 		current_quiz.maxScoreQuiz = quiz.maxScoreQuiz;
-		
+		current_quiz.quizID=req.params.quiz_id;
 		
 		current_quiz.dateScheduled = quiz.dateScheduled;
 		current_quiz.questions = []

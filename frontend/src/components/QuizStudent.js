@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import {fetchQuiz} from "../actions/quiz";
+import {fetchQuiz,submitQuiz} from "../actions/quiz";
 
 // Material UI
 import { Grid } from "@mui/material";
@@ -108,7 +108,7 @@ class QuizStudent extends Component {
       quizName: quiz.title,
       quizDescription: quiz.description,
       maxScore: quiz.maxScoreQuiz,
-
+      quizID: quiz.quizID,
       progress: 0,
       score: 0,
 
@@ -121,9 +121,9 @@ class QuizStudent extends Component {
 
   updateResponse = (index) => {
     console.log(this.state,"WW");
+    let question=this.state.questionData[this.state.progress].questionNumber;
     const newResponse = {
-      question: this.state.progress,
-      answer: index
+      question : index,
     };
     
     let studentResponse = this.state.studentResponse;
@@ -150,7 +150,16 @@ class QuizStudent extends Component {
     }
     this.updateResponse(index);
   }
-
+  
+  submitQuiz = () =>{
+    let submission = {
+      quiz : this.state.quizID,
+      answers : this.state.studentResponse.response,
+    }
+    console.log(submission)
+    this.props.dispatch(submitQuiz(submission));
+    
+  }
   render() {
     var currentQuestion = this.state.questionData[this.state.progress];
     if (this.state.questionData.length > this.state.progress) {
@@ -253,6 +262,7 @@ class QuizStudent extends Component {
         </div>
       );
     } else {
+      this.submitQuiz();
       return (
         <div>
           <Grid container direction="column" height="100vh">
