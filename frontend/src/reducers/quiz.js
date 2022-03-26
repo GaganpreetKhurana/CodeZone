@@ -26,7 +26,7 @@ export default function auth(state = initialClassState, action) {
 				quizCreateStarted: null,
 			};
 		case QUIZ_FETCH_SUCCESS:
-			console.log("FETCH",action.quiz,console.log(action));
+			// console.log("FETCH",action.quiz,console.log(action));
 			return {
 				...state,
 				success:true,
@@ -35,7 +35,7 @@ export default function auth(state = initialClassState, action) {
 				quizCreateStarted: null,
 			};
 		case QUIZ_SUBMIT_SUCCESS:
-			console.log("SUBMIT");
+			// console.log("SUBMIT");
 			return {
 				...state,
 				success:true,
@@ -58,7 +58,7 @@ export default function auth(state = initialClassState, action) {
 				error: null,
 			}
 		case QUIZ_CREATE_CLEAR_STATE:
-			console.log("HHII")
+			// console.log("HHII")
 			return {
 				...state,
 				quiz: null,

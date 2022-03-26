@@ -92,7 +92,7 @@ class QuizStudent extends Component {
     this.props.dispatch(fetchQuiz(this.quizID));
     
     this.checkAnswer = this.checkAnswer.bind(this);
-    console.log("WW$$#",this.state,this.props,"QQAAA");
+    // console.log("WW$$#",this.state,this.props,"QQAAA");
     this.state = this.getInitialState();
   };
   
@@ -101,11 +101,9 @@ class QuizStudent extends Component {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
   };
   getInitialState() {
-    console.log(this.props,"OOO");
+    // console.log(this.props,"OOO");
     let currentQuiz=this.props.quiz.quiz;
-    if(!currentQuiz){
-      console.log(this.props,this.state,"RR");
-    }
+    
     return {
       questionData: currentQuiz.questions,
       quizName: currentQuiz.title,
@@ -123,7 +121,7 @@ class QuizStudent extends Component {
   }
 
   updateResponse = (index) => {
-    console.log(this.state,"W");
+    // console.log(this.state,"W");
     let currentQuestion=this.state.questionData[this.state.progress].questionNumber;
     // console.log(currentQuestion.toString());
     
@@ -132,7 +130,7 @@ class QuizStudent extends Component {
     studentResponse.response[currentQuestion]=index;
     studentResponse.finalScore = this.state.score;
     this.setState({ studentResponse });
-    console.log(studentResponse)
+    // console.log(studentResponse)
   }
 
   checkAnswer(index) {
@@ -158,7 +156,7 @@ class QuizStudent extends Component {
       quiz : this.state.quizID,
       answers : this.state.studentResponse.response,
     }
-    console.log(submission.answers,"EE");
+    // console.log(submission.answers,"EE");
     this.props.dispatch(submitQuiz(submission));
     
   }

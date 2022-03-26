@@ -39,7 +39,7 @@ export function quizCreateFailed(errorMsg) {
 // }
 
 export function quizCreate(quizName,quizDescription,questionData,maxScore,classroom_id) {
-	console.log(quizName,quizDescription,questionData,maxScore,classroom_id);
+	// console.log(quizName,quizDescription,questionData,maxScore,classroom_id);
 	return (dispatch) => {
 		dispatch(startQuizCreate());
 		const url = "/api/quiz/create";
@@ -60,7 +60,7 @@ export function quizCreate(quizName,quizDescription,questionData,maxScore,classr
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					console.log(data);
+					// console.log(data);
 					dispatch(quizCreateSuccessful(data.data));
 					return;
 				}
@@ -87,7 +87,7 @@ export function fetchQuiz(quizID) {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					console.log(data.message);
+					// console.log(data.message);
 					dispatch(quizFetchSuccessful(data.data))
 					return;
 				}
@@ -118,7 +118,7 @@ export function submitQuiz(submission) {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					console.log(data.message);
+					// console.log(data.message);
 					dispatch(quizSubmitSuccessful(data.message))
 					return;
 				}
