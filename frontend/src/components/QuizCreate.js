@@ -78,7 +78,7 @@ class QuizCreate extends React.Component {
       maxScore: this.state.maxScore,
     };
     // console.log(submitQuizData,"RR");
-    console.log(this.state,this.props);
+    // console.log(this.state,this.props);
     let classroom_id=this.props.classroom.ID;
     this.props.dispatch(quizCreate(submitQuizData.quizName,submitQuizData.quizDescription,submitQuizData.questionData,submitQuizData.maxScore,classroom_id));
   }
