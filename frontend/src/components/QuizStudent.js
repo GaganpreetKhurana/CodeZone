@@ -88,7 +88,7 @@ class QuizStudent extends Component {
   constructor(props) {
     super(props);
     
-    this.quizID = "623eb17550524d884712f9ae";
+    this.quizID = this.props.quiz._id;
     this.props.dispatch(fetchQuiz(this.quizID));
     
     this.checkAnswer = this.checkAnswer.bind(this);
