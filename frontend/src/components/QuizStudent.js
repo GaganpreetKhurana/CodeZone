@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import {fetchQuiz,submitQuiz} from "../actions/quiz";
+import {submitQuiz,clearQuiz} from "../actions/quiz";
 
 // Material UI
 import { Grid } from "@mui/material";
@@ -87,15 +87,18 @@ const CustomCard2 = ({ color, title, subtitle }) => (
 class QuizStudent extends Component {
   constructor(props) {
     super(props);
-    
-    this.quizID = this.props.quiz._id;
-    this.props.dispatch(fetchQuiz(this.quizID));
-    
+    console.log(this.props,this.state);
+    this.quizID = this.props.quiz_id;
+    // this.props.dispatch(fetchQuiz(this.quizID));
+    //
     this.checkAnswer = this.checkAnswer.bind(this);
     // console.log("WW$$#",this.state,this.props,"QQAAA");
     this.state = this.getInitialState();
   };
   
+  componentWillUnmount(){
+    this.props.dispatch(clearQuiz());
+  }
   
   sleep = (milliseconds) => {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
@@ -103,7 +106,7 @@ class QuizStudent extends Component {
   getInitialState() {
     // console.log(this.props,"OOO");
     let currentQuiz=this.props.quiz.quiz;
-    
+    console.log(this.state,this.props,"EE");
     return {
       questionData: currentQuiz.questions,
       quizName: currentQuiz.title,

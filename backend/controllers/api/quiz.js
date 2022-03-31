@@ -199,6 +199,7 @@ module.exports.view = async function(req, res){
 		current_quiz.class = quiz.class;
 		current_quiz.title = quiz.title;
 		current_quiz.description = quiz.description;
+		current_quiz.duration = quiz.duration;
 		current_quiz.maxScoreQuiz = quiz.maxScoreQuiz;
 		current_quiz.quizID=req.params.quiz_id;
 		

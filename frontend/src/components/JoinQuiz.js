@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { clearAuth } from "../actions/auth";
-import { clearQuiz ,fetchOpenQuiz } from "../actions/quiz";
+import { fetchOpenQuiz,fetchQuiz } from "../actions/quiz";
 
 
 import Button from '@mui/material/Button';
@@ -42,7 +42,6 @@ class JoinQuiz extends Component {
 	componentWillUnmount() {
 		//clear quiz details
 		clearInterval(this.timer);
-		this.props.dispatch(clearQuiz());
 		this.props.dispatch(clearAuth());
 	}
 	
@@ -64,6 +63,8 @@ class JoinQuiz extends Component {
 								<Table sx={{ minWidth: 450 }}>
 									<TableHead>
 										<TableRow>
+											<TableCell align="center">Title</TableCell>
+											<TableCell align="center">Description</TableCell>
 											<TableCell align="center">Scheduled At</TableCell>
 											<TableCell align="center">Duration</TableCell>
 											<TableCell align="center">Maximum Marks</TableCell>
@@ -76,9 +77,12 @@ class JoinQuiz extends Component {
 												key={row._id}
 												sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 											>
-												<TableCell component="th" scope="row" align="center">{row.scheduledAt.slice(0, 10)}</TableCell>
-												<TableCell align="center">{row.duration}</TableCell>
-												<TableCell align="center">{row.maxMarks ==="" ? '-' : row.maxMarks}</TableCell>
+												
+												<TableCell align="center">{row.title}</TableCell>
+												<TableCell align="center">{row.description}</TableCell>
+												<TableCell component="th" scope="row" align="center">{row.dateScheduled.slice(0, 10)}</TableCell>
+												<TableCell align="center">{row.duration?row.duration:null}</TableCell>
+												<TableCell align="center">{row.maxScoreQuizMarks ==="" ? '-' : row.maxScoreQuiz}</TableCell>
 												<TableCell align="center">
 													{user.id && <Link to="/" onClick={()=>{
 														//fetch this code-editor's details using row_id
@@ -95,14 +99,19 @@ class JoinQuiz extends Component {
 												key={row._id}
 												sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 											>
-												<TableCell component="th" scope="row" align="center">{row.scheduledAt.slice(0, 10)}</TableCell>
-												<TableCell align="center">{row.duration}</TableCell>
-												<TableCell align="center">{row.maxMarks ==="" ? '-' : row.maxMarks}</TableCell>
+												<TableCell align="center">{row.title}</TableCell>
+												<TableCell align="center">{row.description}</TableCell>
+												<TableCell component="th" scope="row" align="center">{row.dateScheduled.slice(0, 10)}</TableCell>
+												<TableCell align="center">{row.duration?row.duration:null}</TableCell>
+												<TableCell align="center">{row.maxScoreQuiz ==="" ? '-' : row.maxScoreQuiz}</TableCell>
 												<TableCell align="center">
 													{user.id && <Link to={{
 														pathname: "/QuizStudent",
-														param: row._id
-													}} >
+														quiz_id: row._id
+													}} onClick={()=>{
+														//fetch this code-editor's details using row_id
+														this.props.dispatch(fetchQuiz(row._id));
+													}}>
 														Link
 													</Link>
 													}

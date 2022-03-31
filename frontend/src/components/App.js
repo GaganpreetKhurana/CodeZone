@@ -131,7 +131,7 @@ class App extends React.Component {
               {auth.isLoggedIn && auth.user.role === "Teacher" && (
                 <Route path="/quizCreate" component={QuizCreate} />
               )}
-                {auth.isLoggedIn && auth.user.role === "Quiz" && (
+                {auth.isLoggedIn && auth.user.role === "Student" && (
                     <Route path="/QuizStudent" component={QuizStudent} />
                 )}
               <Route exact path="/" component={Home} />
