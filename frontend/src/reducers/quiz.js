@@ -5,6 +5,8 @@ import {
 	QUIZ_CREATE_CLEAR_STATE,
 	QUIZ_FETCH_SUCCESS,
 	QUIZ_SUBMIT_SUCCESS,
+	QUIZ_CLEAR,
+	QUIZ_FETCH_ALL_SUCCESS,
 } from '../actions/actionTypes';
 
 const initialClassState = {
@@ -12,6 +14,7 @@ const initialClassState = {
 	quizCreateStarted: null,
 	success: null,
 	error: null,
+	quizList: [],
 };
 
 export default function auth(state = initialClassState, action) {
@@ -24,6 +27,14 @@ export default function auth(state = initialClassState, action) {
 				error: null,
 				quiz:action.quiz,
 				quizCreateStarted: null,
+			};
+		case QUIZ_FETCH_ALL_SUCCESS:
+			return {
+				...state,
+				success:true,
+				error: null,
+				quizList:action.quizList,
+				quiz: null,
 			};
 		case QUIZ_FETCH_SUCCESS:
 			// console.log("FETCH",action.quiz,console.log(action));
@@ -65,6 +76,15 @@ export default function auth(state = initialClassState, action) {
 				quizCreateStarted: null,
 				success: null,
 				error: null,
+			}
+		case QUIZ_CLEAR:
+			return {
+				...state,
+				quiz: null,
+				quizCreateStarted: null,
+				success: null,
+				error: null,
+				quizList: []
 			}
 		default:
 			return state;

@@ -9,6 +9,8 @@ router.post('/update', auth.authenticateToken, quiz.update);
 router.get('/fetch/:quiz_id', auth.authenticateToken, quiz.view);
 router.post('/updateAnswer::quiz_id', auth.authenticateToken, quiz.updateAnswer);
 router.post('/submit/:quiz_id', auth.authenticateToken, quiz.submit);
+router.get('/fetchAll/:classroom_id', auth.authenticateToken, quiz.fetchAll);
+
 
 
 module.exports = router;

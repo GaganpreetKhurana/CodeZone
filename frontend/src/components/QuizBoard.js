@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
+import JoinQuiz from "./JoinQuiz";
 //Material UI
 import Card from "@mui/material/Card";
 import { FlexRow, Item } from "@mui-treasury/component-flex";
@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 class QuizBoard extends React.Component {
   render() {
     const { auth } = this.props;
-
+    
     return (
       <div>
         <Paper>
@@ -43,11 +43,7 @@ class QuizBoard extends React.Component {
             </FlexRow>
             <CardContent>
               {auth.user.role === "Student" && (
-                <Link to="/Quiz">
-                  <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                    Join Quiz
-                  </Button>
-                </Link>
+                  <JoinQuiz classroomId={this.props.classroom.ID} />
               )}
               {auth.user.role === "Teacher" && (
                 <Link to="/quizCreate">

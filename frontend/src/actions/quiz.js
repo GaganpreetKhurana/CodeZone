@@ -5,6 +5,8 @@ import {
 	QUIZ_CREATE_CLEAR_STATE,
 	QUIZ_FETCH_SUCCESS,
 	QUIZ_SUBMIT_SUCCESS,
+	QUIZ_CLEAR,
+	QUIZ_FETCH_ALL_SUCCESS
 } from "./actionTypes";
 
 //execution
@@ -101,7 +103,17 @@ export function quizFetchSuccessful(data) {
 		quiz: data,
 	};
 }
-
+export function quizFetchAllSuccessful(data) {
+	return {
+		type: QUIZ_FETCH_ALL_SUCCESS,
+		quizList: data,
+	};
+}
+export function clearQuiz(){
+	return {
+		type: QUIZ_CLEAR,
+	}
+}
 export function submitQuiz(submission) {
 	return (dispatch) => {
 		const url = `/api/quiz/submit/${submission.quiz}`;
@@ -130,5 +142,25 @@ export function quizSubmitSuccessful(msg) {
 	return {
 		type: QUIZ_SUBMIT_SUCCESS,
 		message: msg,
+	};
+}
+
+export function fetchOpenQuiz(classroomID) {
+	return (dispatch) => {
+		const url = `/api/quiz/fetchAll/${classroomID}`;
+		fetch(url, {
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			}
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					// console.log(data.message);
+					dispatch(quizFetchAllSuccessful(data.data))
+					return;
+				}
+			});
 	};
 }

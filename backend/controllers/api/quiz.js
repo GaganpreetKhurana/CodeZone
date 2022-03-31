@@ -199,6 +199,7 @@ module.exports.view = async function(req, res){
 		current_quiz.class = quiz.class;
 		current_quiz.title = quiz.title;
 		current_quiz.description = quiz.description;
+		current_quiz.duration = quiz.duration;
 		current_quiz.maxScoreQuiz = quiz.maxScoreQuiz;
 		current_quiz.quizID=req.params.quiz_id;
 		
@@ -362,4 +363,13 @@ module.exports.submit = async function(req, res){
 		});
 	}
 }
-	
+
+
+module.exports.fetchAll = async function(req, res){
+	let quizList = await Quiz.find({ class: sanitizer.escape(req.params.classroom_id)});
+	return res.status(200).json({
+		message: "All Open Quizzes",
+		data: quizList,
+		success: true,
+	})
+}
