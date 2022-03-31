@@ -12,7 +12,6 @@ import LabDashboard from "./LabDashboard";
 import Settings from "./Settings";
 import QuizStudent from "./QuizStudent";
 import QuizCreate from "./QuizCreate";
-
 import { Paper} from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { deepOrange } from '@mui/material/colors';
@@ -132,6 +131,9 @@ class App extends React.Component {
               {auth.isLoggedIn && auth.user.role === "Teacher" && (
                 <Route path="/quizCreate" component={QuizCreate} />
               )}
+                {auth.isLoggedIn && auth.user.role === "Student" && (
+                    <Route path="/QuizStudent" component={QuizStudent} />
+                )}
               <Route exact path="/" component={Home} />
                 <Route path="/CodeZone" component={Home} />
                 <Route path="/login" component={Login} />
