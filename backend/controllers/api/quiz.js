@@ -362,4 +362,13 @@ module.exports.submit = async function(req, res){
 		});
 	}
 }
-	
+
+
+module.exports.fetchAll = async function(req, res){
+	let quizList = await Quiz.find({ class: sanitizer.escape(req.params.classroom_id)});
+	return res.status(200).json({
+		message: "All Open Quizzes",
+		data: quizList,
+		success: true,
+	})
+}
