@@ -373,3 +373,48 @@ module.exports.fetchAll = async function(req, res){
 		success: true,
 	})
 }
+
+module.exports.fetchStudentResult = async function(req, res){
+	let subject = await Class.findById(sanitizer.escape(req.params.classroom_id))
+	if(!subject){
+		return res.status(404).json({
+			message: "Subject Not Found",
+			data: null,
+			success: false,
+		})
+	}
+	if(!classroom.students.includes ( req.user._id )){
+		return res.status(404).json({
+			message: "Not a student in this class",
+			data: null,
+			success: false,
+		})
+	}
+	let quizList = await Quiz.find({ class: sanitizer.escape(req.params.classroom_id)});
+	
+	let studentResult = []
+	for(let index=0, index<quizList.length;index++){
+		let submission = await Submission.find({quiz: quizList[index]._id})
+		let resultObject = {
+			quizID =quizList[index]._id
+			quizName = quizList[index].title,
+			quizDescription = quizList[index].dexcription,
+			maximumScore = quizList[index].maxScoreQuiz,
+			totalQuestions = quizList[index].questions.length,
+			dateScheduled = quizList[index].date
+			score = null,
+			submissionID =null
+		}
+		if (submission){
+			resultObject.score = submission.score
+			resultObject.submissionID = submission._id
+		}
+		studentResult.push(resultObject)
+	}
+	return res.status(200).json({
+		message: "Results of the student",
+		data: studentResult,
+		success: true,
+	})
+	
+}
