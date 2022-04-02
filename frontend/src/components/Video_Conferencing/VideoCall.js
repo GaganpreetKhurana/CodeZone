@@ -74,13 +74,14 @@ function VideoCall(props) {
 
   return (
     <Grid container direction="column" style={{ height: "100%" }}>
-        <Grid item style={{ height: "5%" }}>
+        
+      <Grid item style={{ height: "95%" }}>
+        {start && tracks && <Video tracks={tracks} users={users} />}
+      </Grid>
+      <Grid item style={{ height: "5%", marginLeft:'40%' }}>
         {ready && tracks && (
           <Controls tracks={tracks} setStart={setStart} setInCall={setInCall} />
         )}
-      </Grid>
-      <Grid item style={{ height: "95%" }}>
-        {start && tracks && <Video tracks={tracks} users={users} />}
       </Grid>
       
     </Grid>
