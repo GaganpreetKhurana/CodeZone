@@ -17,6 +17,7 @@ import { createTheme } from '@mui/material/styles';
 import { deepOrange } from '@mui/material/colors';
 import {ThemeProvider,CssBaseline} from '@mui/material';
 import CodeEditorScreen from "./CodeEditorScreen";
+import App2 from "./Video_Conferencing/App2";
 
 // @ts-ignore
 //to decode the token
@@ -109,6 +110,9 @@ class App extends React.Component {
               )}
               {auth.isLoggedIn && (
                 <Route path="/classroom/:classroomID" component={Classroom} />
+              )}
+              {auth.isLoggedIn && (
+                <Route path="/room/:roomID" component={App2} />
               )}
               {auth.isLoggedIn && (
                 <Route
