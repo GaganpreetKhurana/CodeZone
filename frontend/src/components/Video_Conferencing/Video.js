@@ -15,7 +15,7 @@ export default function Video(props) {
       <Grid item xs={gridSpacing}>
         <AgoraVideoPlayer
           videoTrack={tracks[1]}
-          style={{ height: "80vh", width: "100vw" }}
+          style={{ height: "100%", width: "100%" }}
         />
       </Grid>
       {users.length > 0 &&
@@ -26,7 +26,7 @@ export default function Video(props) {
                 <AgoraVideoPlayer
                   videoTrack={user.videoTrack}
                   key={user.uid}
-                  style={{ height: "80px", width: "100px" }}
+                  style={{ height: "100%", width: "100%" }}
                 />
               </Grid>
             );

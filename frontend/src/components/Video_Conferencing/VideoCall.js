@@ -73,7 +73,7 @@ function VideoCall(props) {
   console.log(start,tracks);
 
   return (
-    <Grid container direction="column" style={{ height: "100%" }}>
+    <Grid container direction="column" style={{ height: "83vh",width: "100vw" }}>
         
       <Grid item style={{ height: "95%" }}>
         {start && tracks && <Video tracks={tracks} users={users} />}
