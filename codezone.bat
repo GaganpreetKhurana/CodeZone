@@ -13,5 +13,7 @@ start nodemon index.js
 echo Starting Editor Server
 start nodemon server.js
 echo Starting Chat Server
-nodemon chatServer.js
+start nodemon chatServer.js
+echo Starting Video Server
+nodemon videoServer.js
 pause

@@ -393,17 +393,17 @@ module.exports.fetchStudentResult = async function(req, res){
 	let quizList = await Quiz.find({ class: sanitizer.escape(req.params.classroom_id)});
 	
 	let studentResult = []
-	for(let index=0, index<quizList.length;index++){
+	for(let index=0; index<quizList.length;index++){
 		let submission = await Submission.find({quiz: quizList[index]._id})
 		let resultObject = {
-			quizID =quizList[index]._id
-			quizName = quizList[index].title,
-			quizDescription = quizList[index].dexcription,
-			maximumScore = quizList[index].maxScoreQuiz,
-			totalQuestions = quizList[index].questions.length,
-			dateScheduled = quizList[index].date
-			score = null,
-			submissionID =null
+			quizID :quizList[index]._id,
+			quizName : quizList[index].title,
+			quizDescription : quizList[index].dexcription,
+			maximumScore : quizList[index].maxScoreQuiz,
+			totalQuestions : quizList[index].questions.length,
+			dateScheduled : quizList[index].date,
+			score : null,
+			submissionID :null
 		}
 		if (submission){
 			resultObject.score = submission.score
@@ -445,15 +445,15 @@ module.exports.fetchClassResult = async function(req, res){
 	}
 	
 	let result = {
-		quizID =quiz._id
-		quizName = quiz.title,
-		quizDescription = quiz.dexcription,
-		maximumScore = quiz.maxScoreQuiz,
-		totalQuestions = quiz.questions.length,
-		dateScheduled = quiz.date
-		studentSubmissions = {}
+		quizID :quiz._id,
+		quizName : quiz.title,
+		quizDescription : quiz.dexcription,
+		maximumScore : quiz.maxScoreQuiz,
+		totalQuestions : quiz.questions.length,
+		dateScheduled : quiz.date,
+		studentSubmissions : {}
 	}
-	for(let index=0, index<subject.students.length;index++){
+	for(let index=0; index<subject.students.length;index++){
 		let submission = await Submission.find({quiz: quiz._id,student: subject.students[index]})
 		result.studentSubmissions[subject.students[index]]=0
 		if(submission){
