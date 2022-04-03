@@ -373,3 +373,97 @@ module.exports.fetchAll = async function(req, res){
 		success: true,
 	})
 }
+
+module.exports.fetchStudentResult = async function(req, res){
+	let subject = await Class.findById(sanitizer.escape(req.params.classroom_id))
+	if(!subject){
+		return res.status(404).json({
+			message: "Subject Not Found",
+			data: null,
+			success: false,
+		})
+	}
+	if(!classroom.students.includes ( req.user._id )){
+		return res.status(403).json({
+			message: "Not a student in this class",
+			data: null,
+			success: false,
+		})
+	}
+	let quizList = await Quiz.find({ class: sanitizer.escape(req.params.classroom_id)});
+	
+	let studentResult = []
+	for(let index=0, index<quizList.length;index++){
+		let submission = await Submission.find({quiz: quizList[index]._id})
+		let resultObject = {
+			quizID =quizList[index]._id
+			quizName = quizList[index].title,
+			quizDescription = quizList[index].dexcription,
+			maximumScore = quizList[index].maxScoreQuiz,
+			totalQuestions = quizList[index].questions.length,
+			dateScheduled = quizList[index].date
+			score = null,
+			submissionID =null
+		}
+		if (submission){
+			resultObject.score = submission.score
+			resultObject.submissionID = submission._id
+		}
+		studentResult.push(resultObject)
+	}
+	return res.status(200).json({
+		message: "Results of the student",
+		data: studentResult,
+		success: true,
+	})
+	
+}
+
+module.exports.fetchClassResult = async function(req, res){
+	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id));
+	if(!quiz){
+		return res.status(404).json({
+			message: "Quiz Not Found",
+			data: null,
+			success: false,
+		})
+	}
+	let subject = await Class.findById(quiz.class)
+	if(!subject){
+		return res.status(404).json({
+			message: "Subject Not Found",
+			data: null,
+			success: false,
+		})
+	}
+	if(!classroom.teachers.includes ( req.user._id )){
+		return res.status(403).json({
+			message: "Not a teacher in this class",
+			data: null,
+			success: false,
+		})
+	}
+	
+	let result = {
+		quizID =quiz._id
+		quizName = quiz.title,
+		quizDescription = quiz.dexcription,
+		maximumScore = quiz.maxScoreQuiz,
+		totalQuestions = quiz.questions.length,
+		dateScheduled = quiz.date
+		studentSubmissions = {}
+	}
+	for(let index=0, index<subject.students.length;index++){
+		let submission = await Submission.find({quiz: quiz._id,student: subject.students[index]})
+		result.studentSubmissions[subject.students[index]]=0
+		if(submission){
+			result.studentSubmissions[subject.students[index]]=submission.score
+		}
+	}
+	return res.status(200).json({
+		message: "Results of the students",
+		data: result,
+		success: true,
+	})
+	
+}
