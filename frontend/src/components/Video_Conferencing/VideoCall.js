@@ -73,7 +73,7 @@ function VideoCall(props) {
   }, [channelName, client, ready, tracks]);
 
   return (
-    <Grid container spacing={2} direction="column">
+    <Grid container spacing={2} direction="column" style={{ height: "83vh",width: "100vw" }}>
       <Grid item style={{ height: "95%" }}>
         {start && tracks && <Video tracks={tracks} users={users} />}
       </Grid>

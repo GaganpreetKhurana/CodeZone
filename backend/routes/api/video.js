@@ -27,7 +27,7 @@ const generateAccessToken = (req, res) => {
   }
   let expireTime = req.query.expireTime;
   if (!expireTime || expireTime == "") {
-    expireTime = 3600000000;
+    expireTime = 3600000;
   }
   const currentTime = Math.floor(Date.now() / 1000);
   const privilegeExpireTime = currentTime + expireTime;
