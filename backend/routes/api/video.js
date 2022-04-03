@@ -39,7 +39,7 @@ const generateAccessToken = (req, res) => {
     role,
     privilegeExpireTime
   );
-  return res.status(500).json({ token: token, success: true });
+  return res.status(200).json({ token: token, success: true });
 };
 
 router.get("/access_token", nocache, generateAccessToken);
