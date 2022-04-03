@@ -16,12 +16,9 @@ function App2() {
         style={{ minHeight: "100vh", maxWidth: "100%" }}
       >
         {inCall ? (
-          <Grid
-            item
-            m={2}
-          >
+          <Grid item m={2}>
             <VideoCall setInCall={setInCall} />
-            </Grid>
+          </Grid>
         ) : (
           <Grid
             item
@@ -34,7 +31,10 @@ function App2() {
               transform: "translate(-50%, -50%)",
             }}
           >
-            <p style={{fontSize:'25px',fontWeight:'400'}}>Welcome to Online Class !!</p><br></br>
+            <p style={{ fontSize: "25px", fontWeight: "400" }}>
+              Welcome to Online Class !!
+            </p>
+            <br></br>
             <Button
               variant="contained"
               color="primary"

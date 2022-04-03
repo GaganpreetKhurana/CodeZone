@@ -18,7 +18,7 @@ function VideoCall(props) {
 
   useEffect(() => {
     let init = async (name) => {
-        // a user has to publish the stream to agora server so that when other clients join they can subscribe to other's users stream from server
+      // a user has to publish the stream to agora server so that when other clients join they can subscribe to other's users stream from server
       client.on("user-published", async (user, mediaType) => {
         //   subscribe to other users stream already present in that room
         await client.subscribe(user, mediaType);
@@ -56,34 +56,35 @@ function VideoCall(props) {
         console.log("errorrrrrrrrrrrrr");
       }
 
-    //publishing the stream
+      //publishing the stream
       if (tracks) await client.publish([tracks[0], tracks[1]]);
       setStart(true);
     };
 
     if (ready && tracks) {
       try {
-          //publishing our stream to the channel we joined
+        //publishing our stream to the channel we joined
         init(channelName);
       } catch (error) {
         console.log(error);
       }
     }
   }, [channelName, client, ready, tracks]);
-  console.log(start,tracks);
 
   return (
-    <Grid container direction="column" style={{ height: "83vh",width: "100vw" }}>
-        
+    <Grid
+      container
+      direction="column"
+      style={{ height: "83vh", width: "100vw" }}
+    >
       <Grid item style={{ height: "95%" }}>
         {start && tracks && <Video tracks={tracks} users={users} />}
       </Grid>
-      <Grid item style={{ height: "5%", marginLeft:'40%' }}>
+      <Grid item style={{ height: "5%", marginLeft: "40%" }}>
         {ready && tracks && (
           <Controls tracks={tracks} setStart={setStart} setInCall={setInCall} />
         )}
       </Grid>
-      
     </Grid>
   );
 }
