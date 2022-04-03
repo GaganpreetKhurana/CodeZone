@@ -1,30 +1,50 @@
 import { useState } from "react";
 import { Button } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import VideoCall from "./VideoCall";
 
 function App2() {
   const [inCall, setInCall] = useState(false);
 
   return (
-    <div className="App" style={{ height: "90vh"}}>
-      
-      {inCall ? (
-        <VideoCall setInCall={setInCall} />
-      ) : (
-        <div style={{ width: "100%",height: "100%", paddingLeft:"40%",paddingTop:"20%" }}>
-          Welcome to the Online Class !! <br></br>
-
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={() => setInCall(true)}
-          style={{marginLeft:'5%'}}
-        >
-          Join Call
-        </Button>
-        </div>
-      )}
-      
+    <div className="App" style={{ height: "100%" }}>
+      <Grid
+        container
+        spacing={24}
+        justify="center"
+        alignItems="column"
+        style={{ minHeight: "100vh", maxWidth: "100%" }}
+      >
+        {inCall ? (
+          <Grid
+            item
+            m={2}
+          >
+            <VideoCall setInCall={setInCall} />
+            </Grid>
+        ) : (
+          <Grid
+            item
+            xs={3}
+            align="center"
+            style={{
+              position: "absolute",
+              left: "50%",
+              top: "50%",
+              transform: "translate(-50%, -50%)",
+            }}
+          >
+            <p style={{fontSize:'25px',fontWeight:'400'}}>Welcome to Online Class !!</p><br></br>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => setInCall(true)}
+            >
+              Join Call
+            </Button>
+          </Grid>
+        )}
+      </Grid>
     </div>
   );
 }
