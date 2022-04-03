@@ -39,7 +39,9 @@ class ShareLinkPopUp extends Component {
     const { content } = this.state;
     const {classroom_id} = this.props;
     if (content && classroom_id) {
-      this.props.dispatch(updateMeetLink(content,classroom_id));
+      let classLink = `http://localhost:3000/room/${content}`
+      console.log(classLink);
+      this.props.dispatch(updateMeetLink(classLink,classroom_id));
     }
   };
 
@@ -54,20 +56,20 @@ class ShareLinkPopUp extends Component {
     return (
     <div>
         <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }} onClick={this.dialogOpen}>
-            Share Class Link
+            Create New Class Link
         </Button>
       <Dialog open={this.state.open} >
         <DialogTitle>
         {error && <div className="alert error-dailog">{error}</div>}
             {success && (
               <div className="alert success-dailog">
-                <p>Updated successfully!!</p>
+                <p>Class Link Shared successfully!!</p>
               </div>
             )}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-                Add Link to be Shared
+                Add Class Description
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -75,14 +77,14 @@ class ShareLinkPopUp extends Component {
                 autoFocus
                 margin="dense"
                 type="text"
-                placeholder={"Add Link"}
+                placeholder={"Add Class Description"}
                 required
                 onChange={this.handleCode}
                 fullWidth
                 variant="standard"
             />
             <Button onClick={this.handleSubmitForm}>
-                Share
+                Create
             </Button>
             <Button onClick={this.dialogClose}>
                 Cancel

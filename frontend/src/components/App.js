@@ -28,7 +28,21 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 class App extends React.Component {
 
   componentDidMount() {
-    //check if token already present else wwe would place it
+    fetch('/api/video/access_token', {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data?.success) {
+          if(data?.token){
+            localStorage.setItem("video_token", data?.token);
+          }
+        }
+      });
+
     const token = localStorage.getItem("token");
     if(token){
     const user = jwt_decode(token);

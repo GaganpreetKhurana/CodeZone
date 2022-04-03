@@ -71,7 +71,6 @@ function VideoCall(props) {
     }
     // eslint-disable-next-line
   }, [channelName, client, ready, tracks]);
-  console.log(start,tracks);
 
   return (
     <Grid container spacing={2} direction="column">
