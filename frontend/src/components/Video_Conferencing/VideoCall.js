@@ -69,14 +69,11 @@ function VideoCall(props) {
         console.log(error);
       }
     }
+    // eslint-disable-next-line
   }, [channelName, client, ready, tracks]);
 
   return (
-    <Grid
-      container
-      direction="column"
-      style={{ height: "83vh", width: "100vw" }}
-    >
+    <Grid container spacing={2} direction="column">
       <Grid item style={{ height: "95%" }}>
         {start && tracks && <Video tracks={tracks} users={users} />}
       </Grid>

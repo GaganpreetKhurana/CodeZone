@@ -5,7 +5,6 @@ import VideoCall from "./VideoCall";
 
 function App2() {
   const [inCall, setInCall] = useState(false);
-
   return (
     <div className="App" style={{ height: "100%" }}>
       <Grid
