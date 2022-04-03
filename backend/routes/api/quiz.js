@@ -11,6 +11,11 @@ router.post('/updateAnswer::quiz_id', auth.authenticateToken, quiz.updateAnswer)
 router.post('/submit/:quiz_id', auth.authenticateToken, quiz.submit);
 router.get('/fetchAll/:classroom_id', auth.authenticateToken, quiz.fetchAll);
 
+router.get('/result/student/:classroom_id', auth.authenticateToken, quiz.fetchStudentResult);
+router.get('/result/class/:quiz_id', auth.authenticateToken, quiz.fetchClassResult);
+
+
+
 
 
 module.exports = router;
