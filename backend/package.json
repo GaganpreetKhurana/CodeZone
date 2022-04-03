@@ -9,6 +9,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "agora-access-token": "^2.0.4",
         "bcrypt": "^5.0.1",
         "bcryptjs": "^2.4.3",
         "express": "^4.17.1",
