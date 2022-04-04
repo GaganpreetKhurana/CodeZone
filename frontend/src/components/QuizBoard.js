@@ -9,6 +9,7 @@ import CardContent from "@mui/material/CardContent";
 import { Paper, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import QuizResultStudent from "./QuizResults/QuizResultStudent";
+import QuizResultTeacher from "./QuizResults/QuizResultTeacher";
 
 class QuizBoard extends React.Component {
   render() {
@@ -57,7 +58,7 @@ class QuizBoard extends React.Component {
                 <QuizResultStudent/>
               )}
               {auth.user.role === "Teacher" && (
-                <div></div>
+                <QuizResultTeacher/>
               )}
             </CardContent>
           </Card>
