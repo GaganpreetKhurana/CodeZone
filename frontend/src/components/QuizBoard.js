@@ -8,6 +8,7 @@ import { FlexRow, Item } from "@mui-treasury/component-flex";
 import CardContent from "@mui/material/CardContent";
 import { Paper, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
+import QuizResultStudent from "./QuizResults/QuizResultStudent";
 
 class QuizBoard extends React.Component {
   render() {
@@ -43,7 +44,7 @@ class QuizBoard extends React.Component {
             </FlexRow>
             <CardContent>
               {auth.user.role === "Student" && (
-                  <JoinQuiz classroomId={this.props.classroom.ID} />
+                <JoinQuiz classroomId={this.props.classroom.ID} />
               )}
               {auth.user.role === "Teacher" && (
                 <Link to="/quizCreate">
@@ -52,9 +53,12 @@ class QuizBoard extends React.Component {
                   </Button>
                 </Link>
               )}
-              <Button fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-                Quiz Results
-              </Button>
+              {auth.user.role === "Student" && (
+                <QuizResultStudent/>
+              )}
+              {auth.user.role === "Teacher" && (
+                <div></div>
+              )}
             </CardContent>
           </Card>
         </Paper>
