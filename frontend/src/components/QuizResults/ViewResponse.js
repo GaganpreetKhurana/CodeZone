@@ -72,7 +72,7 @@ class ViewResponse extends Component {
                     <TableCell align="center">{question.option[1]}</TableCell>
                     <TableCell align="center">{question.option[2]}</TableCell>
                     <TableCell align="center">{question.option[3]}</TableCell>
-                    <TableCell align="center">{question.option[question.answers[question.ID]]}</TableCell>
+                    <TableCell align="center">{question.optionMarked}</TableCell>
                     <TableCell align="center">{question.maxScore}</TableCell>
                     <TableCell align="center">{question.score}</TableCell>
                   </TableRow>

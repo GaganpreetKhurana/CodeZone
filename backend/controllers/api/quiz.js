@@ -421,7 +421,6 @@ module.exports.fetchStudentResult = async function(req, res){
 		studentResult.push(resultObject);
 		
 	}
-	console.log(studentResult,"%%");
 	return res.status(200).json({
 		message: "Results of the student",
 		data: studentResult,
@@ -474,6 +473,53 @@ module.exports.fetchClassResult = async function(req, res){
 	return res.status(200).json({
 		message: "Results of the students",
 		data: result,
+		success: true,
+	})
+	
+}
+
+
+module.exports.fetchSubmission = async function(req, res){
+	console.log(req.params.submission_id,"FETCH SUBMISSION");
+	let submission = await Submission.findById(sanitizer.escape(req.params.submission_id))
+	if(!submission){
+		return res.status(404).json({
+			message: "Submission Not Found",
+			data: null,
+			success: false,
+		})
+	}
+	if(submission.student !=  req.user._id ){
+		return res.status(403).json({
+			message: "Not authorized to view submission",
+			data: null,
+			success: false,
+		})
+	}
+	let quiz = await Quiz.findById(submission.quiz);
+	
+	
+	let studentQuizSubmission = []
+	for(let index=0; index<quiz.questions.length;index++){
+		let question = await Question.findById(quiz.questions[index])
+		let submissionObject = {
+			quizID: submission.quiz,
+			submissionID : submission._id,
+			questionID :quiz.questions[index],
+			question : question.question,
+			options : question.options,
+			optionMarked : submission.answers[quiz.questions[index]],
+			correctOption : question.correctOption,
+			score: submission.score,
+			maxScore : question.maxScore,
+		}
+		studentQuizSubmission.push(submissionObject);
+		
+	}
+	console.log(studentQuizSubmission,"EEEERV");
+	return res.status(200).json({
+		message: "Submission of the student",
+		data: studentQuizSubmission,
 		success: true,
 	})
 	
