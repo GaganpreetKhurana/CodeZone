@@ -193,3 +193,23 @@ export function quizFetchResultSuccessful(data) {
 		quizList: data,
 	};
 }
+
+export function fetchClassQuizResult(quizID) {
+	return (dispatch) => {
+		const url = `/api/quiz/result/class/${quizID}`;
+		fetch(url, {
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			}
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					console.log(data.message,data.data);
+					dispatch(quizFetchResultSuccessful(data.data))
+					return;
+				}
+			});
+	};
+}

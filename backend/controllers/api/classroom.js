@@ -192,9 +192,10 @@ module.exports.dashboard = async function ( req , res ) {
         return res.status ( 200 ).json ( {
             success : true ,
             data : await Classes.findById ( sanitizer.escape ( req.params.classroom_id ) )
-                .select ( "teachers students posts announcements code ClassMeetLink" )
+                .select ( "teachers students posts announcements code ClassMeetLink quizzes" )
                 .populate ( "teachers students" , "name SID id email avatar" )
                 .populate ( "posts" , "content updatedAt user comments likes" )
+                .populate ( "quizzes", "title description maxScoreQuiz dateScheduled")
                 .populate ( {
                     path : "posts" ,
                     populate : {
