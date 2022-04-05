@@ -76,7 +76,6 @@ class QuizResultStudent extends Component {
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    console.log(row)
                     <TableCell align="center">{row.quizName}</TableCell>
                     <TableCell align="center">{row.quizDescription}</TableCell>
                     <TableCell align="center">{row.dateScheduled}</TableCell>
