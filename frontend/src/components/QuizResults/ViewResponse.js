@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { fetchQuizSubmission } from "../../actions/quiz";
+
 
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -27,9 +29,14 @@ class ViewResponse extends Component {
 
   componentDidMount() {
     //fetch quiz results
+    const { submissionID} = this.props;
+    console.log(submissionID)
+    this.props.dispatch(fetchQuizSubmission(submissionID));
   }
 
   render() {
+    let {submission} = this.props.quiz;
+    console.log(submission);
     return (
       <div>
         <Button fullWidth sx={{ mt: 1, mb: 1 }} onClick={this.dialogOpen}>
@@ -53,20 +60,23 @@ class ViewResponse extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
+                  { submission.map((question) =>(
                   <TableRow
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell align="center">Question</TableCell>
-                    <TableCell align="center">Option 1</TableCell>
-                    <TableCell align="center">Option 2</TableCell>
-                    <TableCell align="center">Option 3</TableCell>
-                    <TableCell align="center">Option 4</TableCell>
-                    <TableCell align="center">Response Marked</TableCell>
-                    <TableCell align="center">Maximum Marks</TableCell>
-                    <TableCell align="center">Marks Obtained</TableCell>
+                    <TableCell align="center">{question.question}</TableCell>
+                    
+                    <TableCell align="center">{question.option[0]}</TableCell>
+                    <TableCell align="center">{question.option[1]}</TableCell>
+                    <TableCell align="center">{question.option[2]}</TableCell>
+                    <TableCell align="center">{question.option[3]}</TableCell>
+                    <TableCell align="center">{question.option[question.answers[question.ID]]}</TableCell>
+                    <TableCell align="center">{question.maxScore}</TableCell>
+                    <TableCell align="center">{question.score}</TableCell>
                   </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -80,6 +90,7 @@ class ViewResponse extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    quiz: state.quiz,
   };
 }
 export default connect(mapStateToProps)(ViewResponse);

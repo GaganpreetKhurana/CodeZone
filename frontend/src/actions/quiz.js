@@ -8,6 +8,7 @@ import {
 	QUIZ_CLEAR,
 	QUIZ_FETCH_ALL_SUCCESS,
 	QUIZ_FETCH_RESULT,
+	QUIZ_SUBMISSION_FETCH_SUCCESS,
 } from "./actionTypes";
 
 //execution
@@ -211,5 +212,32 @@ export function fetchClassQuizResult(quizID) {
 					return;
 				}
 			});
+	};
+}
+
+export function fetchQuizSubmission(submissionID) {
+	return (dispatch) => {
+		const url = `/api/quiz/submission/${submissionID}`;
+		fetch(url, {
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			}
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					console.log(data.message,data.data);
+					dispatch(quizFetchSubmissionSuccessful(data.data))
+					return;
+				}
+			});
+	};
+}
+export function quizFetchSubmissionSuccessful(data) {
+	console.log(data);
+	return {
+		type: QUIZ_SUBMISSION_FETCH_SUCCESS,
+		submission: data,
 	};
 }

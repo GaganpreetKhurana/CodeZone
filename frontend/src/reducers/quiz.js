@@ -8,6 +8,7 @@ import {
 	QUIZ_CLEAR,
 	QUIZ_FETCH_ALL_SUCCESS,
 	QUIZ_FETCH_RESULT,
+	QUIZ_SUBMISSION_FETCH_SUCCESS,
 } from '../actions/actionTypes';
 
 const initialClassState = {
@@ -16,6 +17,7 @@ const initialClassState = {
 	success: null,
 	error: null,
 	quizList: [],
+	submission :[],
 };
 
 export default function auth(state = initialClassState, action) {
@@ -29,6 +31,13 @@ export default function auth(state = initialClassState, action) {
 				quiz:action.quiz,
 				quizCreateStarted: null,
 			};
+		case QUIZ_SUBMISSION_FETCH_SUCCESS:
+			return {
+				...state,
+				success: true,
+				error: null,
+				submission: action.submission,
+			}
 		case QUIZ_FETCH_ALL_SUCCESS:
 			return {
 				...state,
