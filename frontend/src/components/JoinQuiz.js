@@ -30,7 +30,7 @@ class JoinQuiz extends Component {
 	};
 	
 	//to clear the error if it comes on reload or whenever the user shifts from this page
-	componentDidMount() {
+	componentWillMount() {
 		//fetch quiz details for this classsroom
 		const { classroomId} = this.props;
 		this.props.dispatch(fetchOpenQuiz(classroomId));
@@ -110,6 +110,7 @@ class JoinQuiz extends Component {
 														quiz_id: row._id
 													}} onClick={()=>{
 														//fetch this code-editor's details using row_id
+														console.log(row._id,"qid");
 														this.props.dispatch(fetchQuiz(row._id));
 													}}>
 														Link

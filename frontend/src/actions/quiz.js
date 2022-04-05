@@ -32,7 +32,6 @@ export function quizCreateFailed(errorMsg) {
 	};
 }
 // function getFormBody(params) {
-// 	console.log(params);
 // 	let FormBody = [];
 // 	for (let property in params) {
 // 		let encodedKey = encodeURIComponent(property);
@@ -43,7 +42,6 @@ export function quizCreateFailed(errorMsg) {
 // }
 
 export function quizCreate(quizName,quizDescription,questionData,maxScore,classroom_id) {
-	// console.log(quizName,quizDescription,questionData,maxScore,classroom_id);
 	return (dispatch) => {
 		dispatch(startQuizCreate());
 		const url = "/api/quiz/create";
@@ -64,7 +62,6 @@ export function quizCreate(quizName,quizDescription,questionData,maxScore,classr
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					// console.log(data);
 					dispatch(quizCreateSuccessful(data.data));
 					return;
 				}
@@ -91,7 +88,6 @@ export function fetchQuiz(quizID) {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					// console.log(data.message);
 					dispatch(quizFetchSuccessful(data.data))
 					return;
 				}
@@ -132,7 +128,6 @@ export function submitQuiz(submission) {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					// console.log(data.message);
 					dispatch(quizSubmitSuccessful(data.message))
 					return;
 				}
@@ -159,7 +154,6 @@ export function fetchOpenQuiz(classroomID) {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					// console.log(data.message);
 					dispatch(quizFetchAllSuccessful(data.data))
 					return;
 				}
@@ -179,7 +173,6 @@ export function fetchQuizResult(classroomID) {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					console.log(data.message,data.data);
 					dispatch(quizFetchResultSuccessful(data.data))
 					return;
 				}
@@ -188,7 +181,7 @@ export function fetchQuizResult(classroomID) {
 }
 
 export function quizFetchResultSuccessful(data) {
-	console.log(data);
+
 	return {
 		type: QUIZ_FETCH_RESULT,
 		quizList: data,
@@ -207,7 +200,6 @@ export function fetchClassQuizResult(quizID) {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					console.log(data.message,data.data);
 					dispatch(quizFetchResultSuccessful(data.data))
 					return;
 				}
@@ -227,7 +219,6 @@ export function fetchQuizSubmission(submissionID) {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					console.log(data.message,data.data);
 					dispatch(quizFetchSubmissionSuccessful(data.data))
 					return;
 				}
@@ -235,7 +226,7 @@ export function fetchQuizSubmission(submissionID) {
 	};
 }
 export function quizFetchSubmissionSuccessful(data) {
-	console.log(data);
+	
 	return {
 		type: QUIZ_SUBMISSION_FETCH_SUCCESS,
 		submission: data,

@@ -42,7 +42,7 @@ export default function auth(state = initialClassroomState, action) {
         classesJoined: [],
       };
     case FECTH_CURRENT_CLASSROOM_DETAILS:
-      console.log(action,"RR")
+      
       return {
         ...state,
         students: action.students,

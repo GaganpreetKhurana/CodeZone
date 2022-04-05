@@ -27,16 +27,15 @@ class ViewResponse extends Component {
     this.setState({ open: false });
   };
 
-  componentDidMount() {
+  componentWillMount() {
     //fetch quiz results
     const { submissionID} = this.props;
-    console.log(submissionID)
     this.props.dispatch(fetchQuizSubmission(submissionID));
   }
 
   render() {
     let {submission} = this.props.quiz;
-    console.log(submission);
+    
     return (
       <div>
         <Button fullWidth sx={{ mt: 1, mb: 1 }} onClick={this.dialogOpen}>
@@ -54,6 +53,7 @@ class ViewResponse extends Component {
                     <TableCell align="center">Option 2</TableCell>
                     <TableCell align="center">Option 3</TableCell>
                     <TableCell align="center">Option 4</TableCell>
+                    <TableCell align="center">Correct Option</TableCell>
                     <TableCell align="center">Response Marked</TableCell>
                     <TableCell align="center">Maximum Marks</TableCell>
                     <TableCell align="center">Marks Obtained</TableCell>
@@ -67,11 +67,11 @@ class ViewResponse extends Component {
                     }}
                   >
                     <TableCell align="center">{question.question}</TableCell>
-                    
                     <TableCell align="center">{question.option[0]}</TableCell>
                     <TableCell align="center">{question.option[1]}</TableCell>
                     <TableCell align="center">{question.option[2]}</TableCell>
                     <TableCell align="center">{question.option[3]}</TableCell>
+                    <TableCell align="center">{question.correctOption}</TableCell>
                     <TableCell align="center">{question.optionMarked}</TableCell>
                     <TableCell align="center">{question.maxScore}</TableCell>
                     <TableCell align="center">{question.score}</TableCell>

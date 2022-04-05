@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import {submitQuiz,clearQuiz} from "../actions/quiz";
+import {submitQuiz,clearQuiz,fetchQuiz} from "../actions/quiz";
 
 // Material UI
 import { Grid } from "@mui/material";
@@ -85,16 +85,12 @@ const CustomCard2 = ({ color, title, subtitle }) => (
 );
 
 class QuizStudent extends Component {
-  constructor(props) {
-    super(props);
-    console.log(this.props,this.state);
-    this.quizID = this.props.quiz_id;
-    // this.props.dispatch(fetchQuiz(this.quizID));
-    //
+  componentWillMount() {
+    this.quizID = this.props.location.quiz_id;
     this.checkAnswer = this.checkAnswer.bind(this);
-    // console.log("WW$$#",this.state,this.props,"QQAAA");
     this.state = this.getInitialState();
   };
+  
   
   componentWillUnmount(){
     this.props.dispatch(clearQuiz());
@@ -104,9 +100,7 @@ class QuizStudent extends Component {
     return new Promise(resolve => setTimeout(resolve, milliseconds))
   };
   getInitialState() {
-    // console.log(this.props,"OOO");
     let currentQuiz=this.props.quiz.quiz;
-    console.log(this.state,this.props,"EE");
     return {
       questionData: currentQuiz.questions,
       quizName: currentQuiz.title,
@@ -124,16 +118,12 @@ class QuizStudent extends Component {
   }
 
   updateResponse = (index) => {
-    // console.log(this.state,"W");
     let currentQuestion=this.state.questionData[this.state.progress].questionNumber;
-    // console.log(currentQuestion.toString());
-    
-    
     let studentResponse = this.state.studentResponse;
     studentResponse.response[currentQuestion]=index;
     studentResponse.finalScore = this.state.score;
     this.setState({ studentResponse });
-    // console.log(studentResponse)
+    
   }
 
   checkAnswer(index) {
@@ -159,7 +149,6 @@ class QuizStudent extends Component {
       quiz : this.state.quizID,
       answers : this.state.studentResponse.response,
     }
-    // console.log(submission.answers,"EE");
     this.props.dispatch(submitQuiz(submission));
     
   }

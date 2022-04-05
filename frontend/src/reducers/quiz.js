@@ -18,6 +18,7 @@ const initialClassState = {
 	error: null,
 	quizList: [],
 	submission :[],
+	quizResult:[],
 };
 
 export default function auth(state = initialClassState, action) {
@@ -47,16 +48,14 @@ export default function auth(state = initialClassState, action) {
 				quiz: null,
 			};
 		case QUIZ_FETCH_RESULT:
-			console.log(action.quizList,action.message);
 			return {
 				...state,
 				success:true,
 				error: null,
-				quizList:action.quizList,
+				quizResult:action.quizList,
 				quiz: null,
 			};
 		case QUIZ_FETCH_SUCCESS:
-			// console.log("FETCH",action.quiz,console.log(action));
 			return {
 				...state,
 				success:true,
@@ -65,7 +64,6 @@ export default function auth(state = initialClassState, action) {
 				quizCreateStarted: null,
 			};
 		case QUIZ_SUBMIT_SUCCESS:
-			// console.log("SUBMIT");
 			return {
 				...state,
 				success:true,
@@ -88,7 +86,6 @@ export default function auth(state = initialClassState, action) {
 				error: null,
 			}
 		case QUIZ_CREATE_CLEAR_STATE:
-			// console.log("HHII")
 			return {
 				...state,
 				quiz: null,

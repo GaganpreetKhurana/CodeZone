@@ -31,7 +31,6 @@ class QuizResultStudent extends Component {
   componentDidMount() {
     //fetch quiz results
     const { classroomId} = this.props;
-    console.log(classroomId)
     this.props.dispatch(fetchQuizResult(classroomId));
     this.timer = setInterval(() => {
       this.props.dispatch(fetchQuizResult(classroomId));
@@ -42,8 +41,8 @@ class QuizResultStudent extends Component {
   }
 
   render() {
-    const { quizList } = this.props.quiz;
-    console.log(quizList);
+    const { quizResult } = this.props.quiz;
+    
     return (
       <div>
         <Button
@@ -70,7 +69,7 @@ class QuizResultStudent extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {quizList.map((row) => (
+                  {quizResult.map((row) => (
                   <TableRow
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
