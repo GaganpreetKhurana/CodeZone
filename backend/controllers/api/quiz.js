@@ -375,6 +375,7 @@ module.exports.fetchAll = async function(req, res){
 }
 
 module.exports.fetchStudentResult = async function(req, res){
+	
 	let subject = await Class.findById(sanitizer.escape(req.params.classroom_id))
 	if(!subject){
 		return res.status(404).json({
@@ -383,7 +384,7 @@ module.exports.fetchStudentResult = async function(req, res){
 			success: false,
 		})
 	}
-	if(!classroom.students.includes ( req.user._id )){
+	if(!subject.students.includes ( req.user._id )){
 		return res.status(403).json({
 			message: "Not a student in this class",
 			data: null,
@@ -392,25 +393,35 @@ module.exports.fetchStudentResult = async function(req, res){
 	}
 	let quizList = await Quiz.find({ class: sanitizer.escape(req.params.classroom_id)});
 	
+	if (!quizList){
+		console.log("EE");
+		return res.status(200).json({
+			message: "No Quiz Found",
+			data: null,
+			success: true,
+		})
+	}
 	let studentResult = []
 	for(let index=0; index<quizList.length;index++){
-		let submission = await Submission.find({quiz: quizList[index]._id})
+		let submission = await Submission.findOne({quiz: quizList[index]._id, student: req.user._id})
 		let resultObject = {
 			quizID :quizList[index]._id,
 			quizName : quizList[index].title,
-			quizDescription : quizList[index].dexcription,
+			quizDescription : quizList[index].description,
 			maximumScore : quizList[index].maxScoreQuiz,
-			totalQuestions : quizList[index].questions.length,
-			dateScheduled : quizList[index].date,
+			dateScheduled : quizList[index].dateScheduled,
 			score : null,
-			submissionID :null
+			submissionID :null,
+			totalQuestions : quizList[index].questions?quizList[index].questions.length:0,
 		}
 		if (submission){
 			resultObject.score = submission.score
 			resultObject.submissionID = submission._id
 		}
-		studentResult.push(resultObject)
+		studentResult.push(resultObject);
+		
 	}
+	console.log(studentResult,"%%");
 	return res.status(200).json({
 		message: "Results of the student",
 		data: studentResult,

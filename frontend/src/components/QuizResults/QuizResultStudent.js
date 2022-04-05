@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import ViewResponse from "./ViewResponse";
+import { fetchQuizResult } from "../../actions/quiz";
+
 
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -28,9 +30,20 @@ class QuizResultStudent extends Component {
 
   componentDidMount() {
     //fetch quiz results
+    const { classroomId} = this.props;
+    console.log(classroomId)
+    this.props.dispatch(fetchQuizResult(classroomId));
+    this.timer = setInterval(() => {
+      this.props.dispatch(fetchQuizResult(classroomId));
+    }, 10000);
+  }
+  componentWillUnmount() {
+    clearInterval(this.timer);
   }
 
   render() {
+    const { quizList } = this.props.quiz;
+    console.log(quizList);
     return (
       <div>
         <Button
@@ -57,19 +70,22 @@ class QuizResultStudent extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
+                  {quizList.map((row) => (
                   <TableRow
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell align="center">Title</TableCell>
-                    <TableCell align="center">Description</TableCell>
-                    <TableCell align="center">Scheduled At</TableCell>
-                    <TableCell align="center">Score</TableCell>
+                    console.log(row)
+                    <TableCell align="center">{row.quizName}</TableCell>
+                    <TableCell align="center">{row.quizDescription}</TableCell>
+                    <TableCell align="center">{row.dateScheduled}</TableCell>
+                    <TableCell align="center">{row.score}</TableCell>
                     <TableCell align="center">
-                      <ViewResponse />
+                      <ViewResponse submissionID={row.submissionID} />
                     </TableCell>
                   </TableRow>
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -83,6 +99,7 @@ class QuizResultStudent extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    quiz: state.quiz,
   };
 }
 export default connect(mapStateToProps)(QuizResultStudent);
