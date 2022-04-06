@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
-import { BarGraph } from "./BarGraph";
-import { Button } from "./Button";
-import { TextInput } from "./TextInput";
+import React, { useState } from "react";
 import {
-  StyledOutput,
-  StyledOutputLabel,
-  StyledOutputContainer,
-} from "./styles/StyledOutput";
-import { StyledBarGraph, StyledBar } from "./styles/StyledBarGraph";
+  // main component
+  Chart,
+  // graphs
+  Bars,
+  Dots,
+  Lines,
+  Ticks,
+  Layer,
+  Handlers,
+} from "rumble-charts";
 
-let input = new Array(7);
-
-export const GradeVisualizer = (props) => {
+const GradeResult = (props) => {
   const [grades, setGrades] = useState(new Array(7));
   const gradeValues = [10, 9, 8, 7, 6, 5, 0];
   const gradeLetters = ["A+", "A", "B+", "B", "C+", "C", "D", "F"];
@@ -90,49 +90,142 @@ export const GradeVisualizer = (props) => {
     noOfDGrades,
     noOfFGrades,
   ];
+    
   return (
     <div>
-      <BarGraph arr={gradeCurve} />
-      <br />
-
       <p>Lower Limit for A+: {marksA}</p>
       <button onClick={() => setmarksA(marksA + 1)}>Increase by 1</button>
       <button onClick={() => setmarksA(marksA - 1)}>Decrease by 1</button>
-
       {noOfAPGrades}
-
-      <StyledOutputContainer>
-        <StyledOutputLabel>Mean</StyledOutputLabel>
-        <StyledOutput>{mean}</StyledOutput>
-      </StyledOutputContainer>
-      <StyledOutputContainer>
-        <StyledOutputLabel>Standard Deviation</StyledOutputLabel>
-        <StyledOutput>{standardDeviation}</StyledOutput>
-      </StyledOutputContainer>
-      <StyledOutputContainer>
-        <StyledOutputLabel>Marks</StyledOutputLabel>
-        <StyledOutput>{displayScores}</StyledOutput>
-      </StyledOutputContainer>
-
+      Mean
+      {mean}
+      Standard Deviation
+      {standardDeviation}
+      Marks
+      {displayScores}
       <br />
-
-      <Button fn={setGrades} arr={input} />
-
       <div>
-        <TextInput gradeLabel="Marks" arr={input} index={0} />
+        {noOfAPGrades}
+        {noOfAGrades}
+        {noOfBPGrades}
+        {noOfBGrades}
+        {noOfCPGrades}
+        {noOfCGrades}
+        {noOfDGrades}
+        {noOfFGrades}
       </div>
-      <div>
-        <StyledOutputContainer>
-          <StyledOutput>{noOfAPGrades}</StyledOutput>
-          <StyledOutput>{noOfAGrades}</StyledOutput>
-          <StyledOutput>{noOfBPGrades}</StyledOutput>
-          <StyledOutput>{noOfBGrades}</StyledOutput>
-          <StyledOutput>{noOfCPGrades}</StyledOutput>
-          <StyledOutput>{noOfCGrades}</StyledOutput>
-          <StyledOutput>{noOfDGrades}</StyledOutput>
-          <StyledOutput>{noOfFGrades}</StyledOutput>
-        </StyledOutputContainer>
-      </div>
+      <Chart
+        series={[
+          {
+            data: [0,1,2,3,3,2,1,0],
+          },
+        ]}
+        viewBox="0 0 300 150"
+      >
+        <Handlers
+          distance="x"
+          onMouseLeave={function noRefCheck() {}}
+          onMouseMove={function noRefCheck() {}}
+        >
+          <Layer height="68%" position="middle center" width="100%">
+            <Bars
+              barAttributes={{
+                stroke: "#f5f5f6",
+                strokeLinejoin: "round",
+                strokeWidth: 21,
+                transform: "translate(0 12)",
+              }}
+              barWidth="0%"
+              colors={["#03a9f4"]}
+              groupPadding="1%"
+              innerPadding="0%"
+            />
+            <Lines
+              colors={["#007696"]}
+              interpolation="cardinal"
+              lineAttributes={{
+                strokeLinecap: "round",
+                strokeWidth: 5,
+              }}
+              lineWidth={0}
+            />
+            <Dots
+              className="dots"
+              colors={["#007696"]}
+              dotStyle={{
+                fillOpacity: 0,
+                transition: "all 250ms",
+              }}
+            />
+            <Ticks
+              axis="x"
+              labelAttributes={{
+                y: "2.5em",
+              }}
+              labelStyle={{
+                dominantBaseline: "text-after-edge",
+                fill: "#000",
+                fontFamily: "sans-serif",
+                fontSize: 10,
+                fontWeight: "normal",
+                textAnchor: "middle",
+              }}
+              ticks={[
+                {
+                  label: "JUL",
+                  x: 0,
+                },
+                {
+                  label: "AUG",
+                  x: 1,
+                },
+                {
+                  label: "SEP",
+                  x: 2,
+                },
+                {
+                  label: "OCT",
+                  x: 3,
+                },
+                {
+                  label: "NOV",
+                  x: 4,
+                },
+                {
+                  label: "DEC",
+                  x: 5,
+                },
+                {
+                  label: "JAN",
+                  x: 6,
+                },
+                {
+                  label: "FEB",
+                  x: 7,
+                },
+                {
+                  label: "MAR",
+                  x: 8,
+                },
+                {
+                  label: "APR",
+                  x: 9,
+                },
+                {
+                  label: "MAY",
+                  x: 10,
+                },
+                {
+                  label: "JUN",
+                  x: 11,
+                },
+              ]}
+            />
+          </Layer>
+        </Handlers>
+      </Chart>
     </div>
   );
 };
+
+export default GradeResult;
