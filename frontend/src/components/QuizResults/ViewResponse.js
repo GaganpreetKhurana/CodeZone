@@ -30,13 +30,12 @@ class ViewResponse extends Component {
   componentWillMount() {
     //fetch quiz results
     const submissionID = this.props.submissionID;
-    console.log(submissionID,this.props);
     this.props.dispatch(fetchQuizSubmission(submissionID));
   }
 
   render() {
     let {submission} = this.props.quiz;
-    console.log(submission);
+    
     return (
       <div>
         <Button fullWidth sx={{ mt: 1, mb: 1 }} onClick={this.dialogOpen}>

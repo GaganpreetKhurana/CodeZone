@@ -69,7 +69,7 @@ class QuizResultStudent extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {quizResult.map((row) => (
+                  {quizResult && quizResult.map((row) => (
                   <TableRow
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },

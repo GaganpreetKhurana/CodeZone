@@ -31,13 +31,11 @@ class ViewQuizResult extends Component {
   componentWillMount() {
     //fetch quiz results
     const {quizID} = this.props;
-    console.log(this.props,quizID,"quizId");
     this.props.dispatch(fetchClassQuizResult(quizID));
   }
 
   render() {
     let {quizResult} = this.props.quiz;
-    console.log(quizResult,this.props.quiz);
     return (
       <div>
         <Button fullWidth sx={{ mt: 1, mb: 1 }} onClick={this.dialogOpen}>
