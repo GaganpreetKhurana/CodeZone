@@ -1,7 +1,7 @@
 const Quiz = require("../../models/quiz")
 const Question = require("../../models/question")
 const Submission = require("../../models/submission")
-
+const User = require("../../models/user")
 const Class = require("../../models/class")
 const sanitizer = require('sanitizer')
 var request = require("request");
@@ -426,7 +426,7 @@ module.exports.fetchClassResult = async function(req, res){
 			success: false,
 		})
 	}
-	if(!classroom.teachers.includes ( req.user._id )){
+	if(!subject.teachers.includes ( req.user._id )){
 		return res.status(403).json({
 			message: "Not a teacher in this class",
 			data: null,
@@ -437,18 +437,27 @@ module.exports.fetchClassResult = async function(req, res){
 	let result = {
 		quizID :quiz._id,
 		quizName : quiz.title,
-		quizDescription : quiz.dexcription,
+		quizDescription : quiz.description,
 		maximumScore : quiz.maxScoreQuiz,
 		totalQuestions : quiz.questions.length,
-		dateScheduled : quiz.date,
-		studentSubmissions : {}
+		dateScheduled : quiz.dateScheduled,
+		students:[],
 	}
 	for(let index=0; index<subject.students.length;index++){
-		let submission = await Submission.find({quiz: quiz._id,student: subject.students[index]})
-		result.studentSubmissions[subject.students[index]]=0
-		if(submission){
-			result.studentSubmissions[subject.students[index]]=submission.score
+		let submission = await Submission.findOne({quiz: quiz._id,student: subject.students[index]})
+		let student = await User.findById(subject.students[index]);
+		let submissionObject = {
+			score:0,
+			submissionID:null,
+			studentName: student.name,
+			studentSID:student.SID,
+			studentID : subject.students[index],
 		}
+		if(submission){
+			submissionObject.score=submission.score;
+			submissionObject.submissionID = submission._id;
+		}
+		result.students.push(submissionObject);
 	}
 	return res.status(200).json({
 		message: "Results of the students",
@@ -468,16 +477,25 @@ module.exports.fetchSubmission = async function(req, res){
 			success: false,
 		})
 	}
-	if(submission.student !=  req.user._id ){
+	let quiz = await Quiz.findById(submission.quiz);
+	let subject = await Class.findById(quiz.class);
+	
+	
+	if(!subject){
+		return res.status(404).json({
+			message: "Subject Not Found",
+			data: null,
+			success: false,
+		})
+	}
+	
+	if(submission.student !=  req.user._id && !subject.teachers.includes ( req.user._id )){
 		return res.status(403).json({
 			message: "Not authorized to view submission",
 			data: null,
 			success: false,
 		})
 	}
-	let quiz = await Quiz.findById(submission.quiz);
-	
-	
 	let studentQuizSubmission = []
 	for(let index=0; index<quiz.questions.length;index++){
 		let question = await Question.findById(quiz.questions[index])
