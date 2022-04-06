@@ -328,7 +328,7 @@ module.exports.submit = async function(req, res){
 		total = 0;
 		for(let i = 0; i < quiz.questions.length; i++){
 			let currentQuestion = await Question.findById(quiz.questions[i]);
-			if (newSubmission.answers[currentQuestion._id]==currentQuestion.correctOption[0]){
+			if (newSubmission.answers[currentQuestion._id]==currentQuestion.correctOption[0].toString()){
 				total += currentQuestion.maxScore;
 			}
 		}
@@ -488,7 +488,7 @@ module.exports.fetchSubmission = async function(req, res){
 			question : question.question,
 			option : question.options,
 			optionMarked : submission.answers[quiz.questions[index]],
-			correctOption : question.options[question.correctOption],
+			correctOption : question.options[question.correctOption-1],
 			score: submission.score,
 			maxScore : question.maxScore,
 		}

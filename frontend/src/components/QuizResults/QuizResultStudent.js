@@ -28,7 +28,7 @@ class QuizResultStudent extends Component {
     this.setState({ open: false });
   };
 
-  componentDidMount() {
+  componentWillMount() {
     //fetch quiz results
     const { classroomId} = this.props;
     this.props.dispatch(fetchQuizResult(classroomId));

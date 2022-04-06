@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import {submitQuiz,clearQuiz,fetchQuiz} from "../actions/quiz";
+import {submitQuiz,clearQuiz} from "../actions/quiz";
 
 // Material UI
 import { Grid } from "@mui/material";
@@ -85,11 +85,12 @@ const CustomCard2 = ({ color, title, subtitle }) => (
 );
 
 class QuizStudent extends Component {
-  componentWillMount() {
+  constructor(props){
+    super(props);
     this.quizID = this.props.location.quiz_id;
     this.checkAnswer = this.checkAnswer.bind(this);
     this.state = this.getInitialState();
-  };
+  }
   
   
   componentWillUnmount(){
