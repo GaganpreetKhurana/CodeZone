@@ -7,6 +7,8 @@ import {
 	QUIZ_SUBMIT_SUCCESS,
 	QUIZ_CLEAR,
 	QUIZ_FETCH_ALL_SUCCESS,
+	QUIZ_FETCH_RESULT,
+	QUIZ_SUBMISSION_FETCH_SUCCESS,
 } from '../actions/actionTypes';
 
 const initialClassState = {
@@ -15,6 +17,8 @@ const initialClassState = {
 	success: null,
 	error: null,
 	quizList: [],
+	submission :[],
+	quizResult:[],
 };
 
 export default function auth(state = initialClassState, action) {
@@ -28,6 +32,13 @@ export default function auth(state = initialClassState, action) {
 				quiz:action.quiz,
 				quizCreateStarted: null,
 			};
+		case QUIZ_SUBMISSION_FETCH_SUCCESS:
+			return {
+				...state,
+				success: true,
+				error: null,
+				submission: action.submission,
+			}
 		case QUIZ_FETCH_ALL_SUCCESS:
 			return {
 				...state,
@@ -36,8 +47,15 @@ export default function auth(state = initialClassState, action) {
 				quizList:action.quizList,
 				quiz: null,
 			};
+		case QUIZ_FETCH_RESULT:
+			return {
+				...state,
+				success:true,
+				error: null,
+				quizResult:action.quizList,
+				quiz: null,
+			};
 		case QUIZ_FETCH_SUCCESS:
-			// console.log("FETCH",action.quiz,console.log(action));
 			return {
 				...state,
 				success:true,
@@ -46,7 +64,6 @@ export default function auth(state = initialClassState, action) {
 				quizCreateStarted: null,
 			};
 		case QUIZ_SUBMIT_SUCCESS:
-			// console.log("SUBMIT");
 			return {
 				...state,
 				success:true,
@@ -69,7 +86,6 @@ export default function auth(state = initialClassState, action) {
 				error: null,
 			}
 		case QUIZ_CREATE_CLEAR_STATE:
-			// console.log("HHII")
 			return {
 				...state,
 				quiz: null,

@@ -6,7 +6,9 @@ import {
 	QUIZ_FETCH_SUCCESS,
 	QUIZ_SUBMIT_SUCCESS,
 	QUIZ_CLEAR,
-	QUIZ_FETCH_ALL_SUCCESS
+	QUIZ_FETCH_ALL_SUCCESS,
+	QUIZ_FETCH_RESULT,
+	QUIZ_SUBMISSION_FETCH_SUCCESS,
 } from "./actionTypes";
 
 //execution
@@ -30,7 +32,6 @@ export function quizCreateFailed(errorMsg) {
 	};
 }
 // function getFormBody(params) {
-// 	console.log(params);
 // 	let FormBody = [];
 // 	for (let property in params) {
 // 		let encodedKey = encodeURIComponent(property);
@@ -41,7 +42,6 @@ export function quizCreateFailed(errorMsg) {
 // }
 
 export function quizCreate(quizName,quizDescription,questionData,maxScore,classroom_id) {
-	// console.log(quizName,quizDescription,questionData,maxScore,classroom_id);
 	return (dispatch) => {
 		dispatch(startQuizCreate());
 		const url = "/api/quiz/create";
@@ -62,7 +62,6 @@ export function quizCreate(quizName,quizDescription,questionData,maxScore,classr
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					// console.log(data);
 					dispatch(quizCreateSuccessful(data.data));
 					return;
 				}
@@ -89,7 +88,6 @@ export function fetchQuiz(quizID) {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					// console.log(data.message);
 					dispatch(quizFetchSuccessful(data.data))
 					return;
 				}
@@ -130,7 +128,6 @@ export function submitQuiz(submission) {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					// console.log(data.message);
 					dispatch(quizSubmitSuccessful(data.message))
 					return;
 				}
@@ -157,10 +154,81 @@ export function fetchOpenQuiz(classroomID) {
 			.then((response) => response.json())
 			.then((data) => {
 				if (data.success) {
-					// console.log(data.message);
 					dispatch(quizFetchAllSuccessful(data.data))
 					return;
 				}
 			});
+	};
+}
+
+export function fetchQuizResult(classroomID) {
+	return (dispatch) => {
+		const url = `/api/quiz/result/student/${classroomID}`;
+		fetch(url, {
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			}
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					dispatch(quizFetchResultSuccessful(data.data))
+					return;
+				}
+			});
+	};
+}
+
+export function quizFetchResultSuccessful(data) {
+
+	return {
+		type: QUIZ_FETCH_RESULT,
+		quizList: data,
+	};
+}
+
+export function fetchClassQuizResult(quizID) {
+	return (dispatch) => {
+		const url = `/api/quiz/result/class/${quizID}`;
+		fetch(url, {
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			}
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					dispatch(quizFetchResultSuccessful(data.data))
+					return;
+				}
+			});
+	};
+}
+
+export function fetchQuizSubmission(submissionID) {
+	return (dispatch) => {
+		const url = `/api/quiz/submission/${submissionID}`;
+		fetch(url, {
+			method: "GET",
+			headers: {
+				Authorization: `Bearer ${localStorage.getItem("token")}`,
+			}
+		})
+			.then((response) => response.json())
+			.then((data) => {
+				if (data.success) {
+					dispatch(quizFetchSubmissionSuccessful(data.data))
+					return;
+				}
+			});
+	};
+}
+export function quizFetchSubmissionSuccessful(data) {
+	
+	return {
+		type: QUIZ_SUBMISSION_FETCH_SUCCESS,
+		submission: data,
 	};
 }

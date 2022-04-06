@@ -1,7 +1,7 @@
 const Quiz = require("../../models/quiz")
 const Question = require("../../models/question")
 const Submission = require("../../models/submission")
-
+const User = require("../../models/user")
 const Class = require("../../models/class")
 const sanitizer = require('sanitizer')
 var request = require("request");
@@ -10,7 +10,6 @@ var request = require("request");
 // Create Quiz
 module.exports.create = async function(req, res){
 	
-	// console.log(req.body,"EE");
 	// get subject
 	let subject = await Class.findById(req.body.classroom_id);
 	if( !subject){
@@ -34,7 +33,6 @@ module.exports.create = async function(req, res){
 			maxScoreQuiz: req.body.maxScore,
 			
 		})
-		// console.log(newQuiz);
 		for (let i=0;i<req.body.questionData.length;i++){
 			let newQuestion = await Question.create({
 				class: subject,
@@ -45,7 +43,6 @@ module.exports.create = async function(req, res){
 				correctOption: [req.body.questionData[i].correct],
 				questionType: req.body.questionData[i].type,
 			})
-			// console.log(newQuestion);
 			newQuestion = await newQuestion.save();
 			newQuiz.questions.push(newQuestion);
 		}
@@ -54,7 +51,6 @@ module.exports.create = async function(req, res){
 		// if object created
 		if(newQuiz){
 			newQuiz = await newQuiz.save();
-			// console.log(newQuiz)
 			subject.quizzes.push(newQuiz);
 			subject = await subject.save();
 			
@@ -77,7 +73,6 @@ module.exports.create = async function(req, res){
 //to delete an quiz
 module.exports.delete = async function(req, res){
 	
-	console.log(req.params.quiz_id);
 	// get quiz
 	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id));
 	if( !quiz){
@@ -174,11 +169,9 @@ module.exports.update = async function(req, res){
 // get quiz
 module.exports.view = async function(req, res){
 	
-	// console.log(req.params.quiz_id,"RREEERR");
 	// get quiz
 	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id));
 	if( !quiz){
-		// console.log("TTR");
 		return res.status(404).json({
 			success: false, message: "Quiz not found!",
 		});
@@ -186,14 +179,13 @@ module.exports.view = async function(req, res){
 	// get subject
 	let subject = await Class.findById(quiz.class._id);
 	if( !subject){
-		// console.log("TTX");
 		return res.status(404).json({
 			success: false, message: "Subject not found!",
 		});
 	}
 	
 	if(subject.students.includes(req.user._id)){
-		// console.log("TT");
+		
 		// user is a student for this subject
 		let current_quiz = {};
 		current_quiz.class = quiz.class;
@@ -205,7 +197,6 @@ module.exports.view = async function(req, res){
 		
 		current_quiz.dateScheduled = quiz.dateScheduled;
 		current_quiz.questions = []
-		// console.log(quiz,"TTTTWWWT");
 		for(let i = 0; i < quiz.questions.length; i++){
 			let currentQuestion = {};
 			let question = await Question.findById(quiz.questions[i]);
@@ -233,17 +224,15 @@ module.exports.view = async function(req, res){
 		// 		break;
 		// 	}
 		// }
-		// console.log(current_quiz);
 		return res.status(200).json({
 			message: "Quiz retrival sucessfull!", success: true, data: current_quiz,
 		});
 	} else if(subject.teachers.includes(req.user._id)){
-		// console.log("TTQQ");
+
 		return res.status(200).json({
 			message: "Quiz retrieval successfull!", success: true, data: quiz,
 		});
 	} else{
-		// console.log("TTRRR");
 		return res.status(401).json({
 			success: false, message: "User is not in this class!",
 		});
@@ -254,7 +243,6 @@ module.exports.view = async function(req, res){
 // update answer
 module.exports.updateAnswer = async function(req, res){
 	
-	// console.log(req.params.quiz_id);
 	// get quiz
 	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id));
 	if( !quiz){
@@ -280,7 +268,6 @@ module.exports.updateAnswer = async function(req, res){
 			}
 		}
 		quiz = await quiz.save();
-		// console.log(current_quiz);
 		request(
 			{
 				url: "https://127.0.0.1:8000/api/quiz/view::" + sanitizer.escape(req.params.quiz_id),
@@ -314,7 +301,6 @@ module.exports.updateAnswer = async function(req, res){
 // submit answer
 module.exports.submit = async function(req, res){
 	
-	// console.log(req.params.quiz_id,"WW",req.body.answers,"QQQQQQQCDWWWWWWWWWWWWW");
 	// get quiz
 	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id));
 	if( !quiz){
@@ -326,7 +312,6 @@ module.exports.submit = async function(req, res){
 	// get subject
 	let subject = await Class.findById(quiz.class._id);
 	if( !subject){
-		// console.log("TTX");
 		return res.status(404).json({
 			success: false, message: "Subject not found!",
 		});
@@ -337,16 +322,13 @@ module.exports.submit = async function(req, res){
 			quiz: quiz,
 			answers: req.body.answers,
 			class: subject,
+			student: req.user._id,
 		})
 		
 		total = 0;
-		// console.log(newSubmission.answers)
-		// console.log(typeof (newSubmission.answers))
-		// console.log(newSubmission.answers)
 		for(let i = 0; i < quiz.questions.length; i++){
 			let currentQuestion = await Question.findById(quiz.questions[i]);
-			// console.log(quiz.questions[i],currentQuestion,newSubmission.answers[currentQuestion._id],currentQuestion.correctOption);
-			if (newSubmission.answers[currentQuestion._id]==currentQuestion.correctOption[0]){
+			if (newSubmission.answers[currentQuestion._id]==currentQuestion.correctOption[0].toString()){
 				total += currentQuestion.maxScore;
 			}
 		}
@@ -355,7 +337,6 @@ module.exports.submit = async function(req, res){
 		quiz.submissions.push(newSubmission);
 		
 		quiz = await quiz.save();
-		// console.log(current_quiz);
 		
 	} else{
 		return res.status(401).json({
@@ -375,6 +356,7 @@ module.exports.fetchAll = async function(req, res){
 }
 
 module.exports.fetchStudentResult = async function(req, res){
+	
 	let subject = await Class.findById(sanitizer.escape(req.params.classroom_id))
 	if(!subject){
 		return res.status(404).json({
@@ -383,7 +365,7 @@ module.exports.fetchStudentResult = async function(req, res){
 			success: false,
 		})
 	}
-	if(!classroom.students.includes ( req.user._id )){
+	if(!subject.students.includes ( req.user._id )){
 		return res.status(403).json({
 			message: "Not a student in this class",
 			data: null,
@@ -392,24 +374,32 @@ module.exports.fetchStudentResult = async function(req, res){
 	}
 	let quizList = await Quiz.find({ class: sanitizer.escape(req.params.classroom_id)});
 	
+	if (!quizList){
+		return res.status(200).json({
+			message: "No Quiz Found",
+			data: null,
+			success: true,
+		})
+	}
 	let studentResult = []
 	for(let index=0; index<quizList.length;index++){
-		let submission = await Submission.find({quiz: quizList[index]._id})
+		let submission = await Submission.findOne({quiz: quizList[index]._id, student: req.user._id})
 		let resultObject = {
 			quizID :quizList[index]._id,
 			quizName : quizList[index].title,
-			quizDescription : quizList[index].dexcription,
+			quizDescription : quizList[index].description,
 			maximumScore : quizList[index].maxScoreQuiz,
-			totalQuestions : quizList[index].questions.length,
-			dateScheduled : quizList[index].date,
+			dateScheduled : quizList[index].dateScheduled,
 			score : null,
-			submissionID :null
+			submissionID :null,
+			totalQuestions : quizList[index].questions?quizList[index].questions.length:0,
 		}
 		if (submission){
 			resultObject.score = submission.score
 			resultObject.submissionID = submission._id
 		}
-		studentResult.push(resultObject)
+		studentResult.push(resultObject);
+		
 	}
 	return res.status(200).json({
 		message: "Results of the student",
@@ -436,7 +426,7 @@ module.exports.fetchClassResult = async function(req, res){
 			success: false,
 		})
 	}
-	if(!classroom.teachers.includes ( req.user._id )){
+	if(!subject.teachers.includes ( req.user._id )){
 		return res.status(403).json({
 			message: "Not a teacher in this class",
 			data: null,
@@ -447,22 +437,85 @@ module.exports.fetchClassResult = async function(req, res){
 	let result = {
 		quizID :quiz._id,
 		quizName : quiz.title,
-		quizDescription : quiz.dexcription,
+		quizDescription : quiz.description,
 		maximumScore : quiz.maxScoreQuiz,
 		totalQuestions : quiz.questions.length,
-		dateScheduled : quiz.date,
-		studentSubmissions : {}
+		dateScheduled : quiz.dateScheduled,
+		students:[],
 	}
 	for(let index=0; index<subject.students.length;index++){
-		let submission = await Submission.find({quiz: quiz._id,student: subject.students[index]})
-		result.studentSubmissions[subject.students[index]]=0
-		if(submission){
-			result.studentSubmissions[subject.students[index]]=submission.score
+		let submission = await Submission.findOne({quiz: quiz._id,student: subject.students[index]})
+		let student = await User.findById(subject.students[index]);
+		let submissionObject = {
+			score:0,
+			submissionID:null,
+			studentName: student.name,
+			studentSID:student.SID,
+			studentID : subject.students[index],
 		}
+		if(submission){
+			submissionObject.score=submission.score;
+			submissionObject.submissionID = submission._id;
+		}
+		result.students.push(submissionObject);
 	}
 	return res.status(200).json({
 		message: "Results of the students",
 		data: result,
+		success: true,
+	})
+	
+}
+
+
+module.exports.fetchSubmission = async function(req, res){
+	let submission = await Submission.findById(sanitizer.escape(req.params.submission_id))
+	if(!submission){
+		return res.status(404).json({
+			message: "Submission Not Found",
+			data: null,
+			success: false,
+		})
+	}
+	let quiz = await Quiz.findById(submission.quiz);
+	let subject = await Class.findById(quiz.class);
+	
+	
+	if(!subject){
+		return res.status(404).json({
+			message: "Subject Not Found",
+			data: null,
+			success: false,
+		})
+	}
+	
+	if(submission.student !=  req.user._id && !subject.teachers.includes ( req.user._id )){
+		return res.status(403).json({
+			message: "Not authorized to view submission",
+			data: null,
+			success: false,
+		})
+	}
+	let studentQuizSubmission = []
+	for(let index=0; index<quiz.questions.length;index++){
+		let question = await Question.findById(quiz.questions[index])
+		let submissionObject = {
+			quizID: submission.quiz,
+			submissionID : submission._id,
+			questionID :quiz.questions[index],
+			question : question.question,
+			option : question.options,
+			optionMarked : submission.answers[quiz.questions[index]],
+			correctOption : question.options[question.correctOption-1],
+			score: submission.score,
+			maxScore : question.maxScore,
+		}
+		studentQuizSubmission.push(submissionObject);
+		
+	}
+	return res.status(200).json({
+		message: "Submission of the student",
+		data: studentQuizSubmission,
 		success: true,
 	})
 	

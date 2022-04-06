@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import ViewResponse from "./ViewResponse";
 
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -32,6 +31,7 @@ class QuizResultTeacher extends Component {
   }
 
   render() {
+    const {quizzes} = this.props.classroom;
     return (
       <div>
         <Button
@@ -52,21 +52,25 @@ class QuizResultTeacher extends Component {
                   <TableRow>
                     <TableCell align="center">Title</TableCell>
                     <TableCell align="center">Description</TableCell>
+                    <TableCell align="center">Total Marks</TableCell>
                     <TableCell align="center">Scheduled At</TableCell>
                     <TableCell align="center">View Class Result</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
+                  {quizzes.map((quiz) => (
                   <TableRow
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell align="center">Title</TableCell>
-                    <TableCell align="center">Description</TableCell>
-                    <TableCell align="center">Scheduled At</TableCell>
-                    <TableCell align="center"><ViewQuizResult/></TableCell>
+                    <TableCell align="center">{quiz.title}</TableCell>
+                    <TableCell align="center">{quiz.description}</TableCell>
+                    <TableCell align="center">{quiz.maxScoreQuiz}</TableCell>
+                    <TableCell align="center">{quiz.dateScheduled}</TableCell>
+                    <TableCell align="center"><ViewQuizResult quizID={quiz._id}/></TableCell>
                   </TableRow>
+                      ))}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -80,6 +84,7 @@ class QuizResultTeacher extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    classroom: state.classroom,
   };
 }
 export default connect(mapStateToProps)(QuizResultTeacher);

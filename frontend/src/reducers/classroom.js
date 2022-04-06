@@ -25,6 +25,7 @@ const initialClassroomState = {
   messageArray: [],
   unreadMessageCount:[],
   ID:"",
+  quizzes: [],
 };
 export default function auth(state = initialClassroomState, action) {
   switch (action.type) {
@@ -41,6 +42,7 @@ export default function auth(state = initialClassroomState, action) {
         classesJoined: [],
       };
     case FECTH_CURRENT_CLASSROOM_DETAILS:
+      
       return {
         ...state,
         students: action.students,
@@ -49,6 +51,7 @@ export default function auth(state = initialClassroomState, action) {
         posts: action.posts,
         ClassMeetLink: action.ClassMeetLink,
         ID:action.classroomId,
+        quizzes: action.quizzes,
       };
     case ADD_POST:
     case ADD_COMMENT:

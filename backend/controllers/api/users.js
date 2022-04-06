@@ -81,7 +81,7 @@ module.exports.login = async function (req, res) {
         SID: user.SID,
         email: user.email,
       }
-        return res.json(200, {
+        return res.status(200).json({
             message: "Here is the token",
             success: true,
             data: {
@@ -112,7 +112,7 @@ module.exports.login = async function (req, res) {
 module.exports.fetchUserDetails = async function (req,res){
   let user = await User.findById(req.params.id);
   if(user){
-    return res.json(200, {
+    return res.status(200).json({
       message: "User Details fetched successfully!!!",
       success: true,
       data: {
@@ -168,7 +168,7 @@ module.exports.updateProfile = async function (req, res) {
                   SID: user1.SID,
                   email: user1.email,
                 }
-                return res.json(200, {
+                return res.status(200).json({
                   message: "Profile updated Successfully",
                   success: true,
                   data: {
@@ -192,7 +192,7 @@ module.exports.updateProfile = async function (req, res) {
                   SID: user.SID,
                   email: user.email,
                 }
-                return res.json(422, {
+                return res.status(422).json({
                   message: "Error while saving... Try after sometime!!!",
                   data: {
                     token: jwt.sign(tokenDetails, "CODEZONE", {
@@ -233,7 +233,7 @@ module.exports.updateProfile = async function (req, res) {
             SID: user1.SID,
             email: user1.email,
           }
-          return res.json(200, {
+          return res.status(200).json({
             message: "Profile updated Successfully",
             success: true,
             data: {
@@ -260,7 +260,7 @@ module.exports.updateProfile = async function (req, res) {
         SID: user.SID,
         email: user.email,
       }
-      return res.json(422, {
+      return res.status(422).json({
         message: "Incorrect Old Password! Profile not updated",
         data: {
           token: jwt.sign(tokenDetails, "CODEZONE", {

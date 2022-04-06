@@ -105,6 +105,7 @@ export function createNewCodeEditor(userId, labId){
 
 //fetching classroom details posts/announcementd/studentlist etc
 function classroomDetails(details,classroom_id){
+  
   return {
       type : FECTH_CURRENT_CLASSROOM_DETAILS,
       students: details.students,
@@ -112,7 +113,8 @@ function classroomDetails(details,classroom_id){
       announcements: details.announcements,
       posts: details.posts,
       ClassMeetLink : details.ClassMeetLink,
-      classroomId: classroom_id
+      classroomId: classroom_id,
+      quizzes: details.quizzes,
   }
 }
 export function fetchClassroomDetails(classroom_id){
@@ -157,7 +159,6 @@ export function getEarlierMessages(room){
         .then((data) => {
           if (data.success) {
             dispatch(updateChatDetails(data.data));
-            console.log("updated");
             return;
           }
         });

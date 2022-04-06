@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import {fetchClassQuizResult} from "../../actions/quiz";
+import ViewResponse from "./ViewResponse";
+
 
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -25,11 +28,14 @@ class ViewQuizResult extends Component {
     this.setState({ open: false });
   };
 
-  componentDidMount() {
+  componentWillMount() {
     //fetch quiz results
+    const {quizID} = this.props;
+    this.props.dispatch(fetchClassQuizResult(quizID));
   }
 
   render() {
+    let {quizResult} = this.props.quiz;
     return (
       <div>
         <Button fullWidth sx={{ mt: 1, mb: 1 }} onClick={this.dialogOpen}>
@@ -42,21 +48,27 @@ class ViewQuizResult extends Component {
               <Table sx={{ minWidth: "75%" }}>
                 <TableHead>
                   <TableRow>
+                    <TableCell align="center">SID</TableCell>
                     <TableCell align="center">Student</TableCell>
-                    <TableCell align="center">Maximum Marks</TableCell>
                     <TableCell align="center">Marks Obtained</TableCell>
+                    <TableCell align="center">View Response</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
+                  {quizResult.students && quizResult.students.map((student) => (
                   <TableRow
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
-                    <TableCell align="center">Student</TableCell>
-                    <TableCell align="center">Maximum Marks</TableCell>
-                    <TableCell align="center">Marks Obtained</TableCell>
+                    <TableCell align="center">{student.studentSID}</TableCell>
+                    <TableCell align="center">{student.studentName}</TableCell>
+                    <TableCell align="center">{student.score}</TableCell>
+                    <TableCell align="center">
+                      <ViewResponse submissionID={student.submissionID} />
+                    </TableCell>
                   </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -70,6 +82,7 @@ class ViewQuizResult extends Component {
 function mapStateToProps(state) {
   return {
     auth: state.auth,
+    quiz:state.quiz,
   };
 }
 export default connect(mapStateToProps)(ViewQuizResult);

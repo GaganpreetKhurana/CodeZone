@@ -46,7 +46,6 @@ function a11yProps(index) {
 }
 
 export default function NoticeTab(props) {
-  console.log("Proppppps of notice board", props);
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 

@@ -55,10 +55,10 @@ class QuizBoard extends React.Component {
                 </Link>
               )}
               {auth.user.role === "Student" && (
-                <QuizResultStudent/>
+                <QuizResultStudent classroomId={this.props.classroom.ID}/>
               )}
               {auth.user.role === "Teacher" && (
-                <QuizResultTeacher/>
+                <QuizResultTeacher classroomId={this.props.classroom.ID}/>
               )}
             </CardContent>
           </Card>
