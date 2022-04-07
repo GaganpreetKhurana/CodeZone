@@ -117,7 +117,16 @@ const GradeResult = (props) => {
       <Chart
         series={[
           {
-            data: [0,1,2,3,3,2,1,0],
+            data: [
+              noOfAPGrades,
+              noOfAGrades,
+              noOfBPGrades,
+              noOfBGrades,
+              noOfCPGrades,
+              noOfCGrades,
+              noOfDGrades,
+              noOfFGrades,
+            ],
           },
         ]}
         viewBox="0 0 300 150"
@@ -172,53 +181,37 @@ const GradeResult = (props) => {
               }}
               ticks={[
                 {
-                  label: "JUL",
+                  label: "A+",
                   x: 0,
                 },
                 {
-                  label: "AUG",
+                  label: "A",
                   x: 1,
                 },
                 {
-                  label: "SEP",
+                  label: "B+",
                   x: 2,
                 },
                 {
-                  label: "OCT",
+                  label: "B",
                   x: 3,
                 },
                 {
-                  label: "NOV",
+                  label: "C+",
                   x: 4,
                 },
                 {
-                  label: "DEC",
+                  label: "C",
                   x: 5,
                 },
                 {
-                  label: "JAN",
+                  label: "D",
                   x: 6,
                 },
                 {
-                  label: "FEB",
+                  label: "F",
                   x: 7,
-                },
-                {
-                  label: "MAR",
-                  x: 8,
-                },
-                {
-                  label: "APR",
-                  x: 9,
-                },
-                {
-                  label: "MAY",
-                  x: 10,
-                },
-                {
-                  label: "JUN",
-                  x: 11,
-                },
+                }
               ]}
             />
           </Layer>
