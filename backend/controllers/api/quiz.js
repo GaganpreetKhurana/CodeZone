@@ -169,7 +169,12 @@ module.exports.update = async function(req, res){
 
 // get quiz
 module.exports.view = async function(req, res){
-	
+	console.log(req.params.quiz_id);
+	if(!sanitizer.escape(req.params.quiz_id)){
+		return res.status(404).json({
+			success: false, message: "Invalid quiz ID!",
+		});
+	}
 	// get quiz
 	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id));
 	if( !quiz){

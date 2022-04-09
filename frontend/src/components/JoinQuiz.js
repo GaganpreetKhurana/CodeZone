@@ -111,7 +111,7 @@ class JoinQuiz extends Component {
 													}} onClick={()=>{
 														//fetch this code-editor's details using row_id
 														console.log(row._id,"qid");
-														this.props.dispatch(fetchQuiz(row._id));
+														// this.props.dispatch(fetchQuiz(row._id));
 													}}>
 														Link
 													</Link>
