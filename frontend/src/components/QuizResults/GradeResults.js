@@ -11,6 +11,12 @@ import {
   Handlers,
 } from "rumble-charts";
 
+import { Grid } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import { Container } from "@mui/material";
+import { Box } from "@mui/system";
+import { Paper } from "@mui/material";
+
 const GradeResult = (props) => {
   const [grades, setGrades] = useState(new Array(7));
   const gradeValues = [10, 9, 8, 7, 6, 5, 0];
@@ -91,8 +97,134 @@ const GradeResult = (props) => {
     noOfFGrades,
   ];
     
+let series = [
+  {
+    data: [
+      noOfAPGrades,
+      noOfAGrades,
+      noOfBPGrades,
+      noOfBGrades,
+      noOfCPGrades,
+      noOfCGrades,
+      noOfDGrades,
+      noOfFGrades,
+    ],
+  },
+]; 
   return (
     <div>
+      <Box m={4}>
+        <Grid container component="main" sx={{ height: "100vh" }}>
+          <Grid
+            item
+            xs={false}
+            sm={3}
+            md={4}
+            sx={{
+              backgroundColor: (t) =>
+                t.palette.mode === "light"
+                  ? t.palette.grey[50]
+                  : t.palette.grey[900],
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          >
+            <Grid
+              sx={{
+                pt: 8,
+                pb: 6,
+              }}
+              m={4}
+              direction="column"
+              justifyContent="space-evenly"
+              alignItems="center"
+            >
+              <Grid item m={2}>
+                <Typography
+                  component="h3"
+                  variant="h6"
+                  align="center"
+                  color="text.primary"
+                >
+                  Grade Visualizer
+                </Typography>
+                <Typography
+                  variant="h7"
+                  align="center"
+                  color="text.secondary"
+                  paragraph
+                >
+                  Adjust the mark points for an ideal normal distribution
+                </Typography>
+              </Grid>
+              <Chart width={250} height={250} series={series}>
+                <Bars innerPadding={5} groupPadding={10} />
+                <Lines
+                  colors={["#007696"]}
+                  interpolation="cardinal"
+                  lineAttributes={{
+                    strokeLinecap: "round",
+                    strokeWidth: 5,
+                  }}
+                  lineWidth={0}
+                />
+                <Ticks
+                  axis="x"
+                  ticks={[
+                    {
+                      label: "A+",
+                      x: 0,
+                    },
+                    {
+                      label: "A",
+                      x: 1,
+                    },
+                    {
+                      label: "B+",
+                      x: 2,
+                    },
+                    {
+                      label: "B",
+                      x: 3,
+                    },
+                    {
+                      label: "C+",
+                      x: 4,
+                    },
+                    {
+                      label: "C",
+                      x: 5,
+                    },
+                    {
+                      label: "D",
+                      x: 6,
+                    },
+                    {
+                      label: "F",
+                      x: 7,
+                    },
+                  ]}
+                />
+              </Chart>
+              <Grid
+                container
+                direction="row"
+                justifyContent="space-evenly"
+                alignItems="center"
+              ></Grid>
+            </Grid>
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            sm={9}
+            md={8}
+            component={Paper}
+            elevation={6}
+            square
+          ></Grid>
+        </Grid>
+      </Box>
       <p>Lower Limit for A+: {marksA}</p>
       <button onClick={() => setmarksA(marksA + 1)}>Increase by 1</button>
       <button onClick={() => setmarksA(marksA - 1)}>Decrease by 1</button>
@@ -114,109 +246,100 @@ const GradeResult = (props) => {
         {noOfDGrades}
         {noOfFGrades}
       </div>
-      <Chart
-        series={[
-          {
-            data: [
-              noOfAPGrades,
-              noOfAGrades,
-              noOfBPGrades,
-              noOfBGrades,
-              noOfCPGrades,
-              noOfCGrades,
-              noOfDGrades,
-              noOfFGrades,
-            ],
-          },
-        ]}
-
-      >
-        <Handlers
-          distance="x"
-          onMouseLeave={function noRefCheck() {}}
-          onMouseMove={function noRefCheck() {}}
+      <Grid item m={2}>
+        <Chart
+          height={300}
+          series={[
+            {
+              data: [
+                noOfAPGrades,
+                noOfAGrades,
+                noOfBPGrades,
+                noOfBGrades,
+                noOfCPGrades,
+                noOfCGrades,
+                noOfDGrades,
+                noOfFGrades,
+              ],
+            },
+          ]}
         >
-          <Layer height="68%" position="middle center" width="100%">
-            <Bars
-              barAttributes={{
-                stroke: "#f5f5f6",
-                strokeLinejoin: "round",
-                strokeWidth: 21,
-                transform: "translate(0 12)",
-              }}
-              barWidth="0%"
-              colors={["#03a9f4"]}
-              groupPadding="1%"
-              innerPadding="0%"
-            />
-            <Lines
-              colors={["#007696"]}
-              interpolation="cardinal"
-              lineAttributes={{
-                strokeLinecap: "round",
-                strokeWidth: 5,
-              }}
-              lineWidth={0}
-            />
-            <Dots
-              className="dots"
-              colors={["#007696"]}
-              dotStyle={{
-                fillOpacity: 0,
-                transition: "all 250ms",
-              }}
-            />
-            <Ticks
-              axis="x"
-              labelAttributes={{
-                y: "2.5em",
-              }}
-              labelStyle={{
-                dominantBaseline: "text-after-edge",
-                fill: "#000",
-                fontFamily: "sans-serif",
-                fontSize: 10,
-                fontWeight: "normal",
-                textAnchor: "middle",
-              }}
-              ticks={[
-                {
-                  label: "A+",
-                  x: 0,
-                },
-                {
-                  label: "A",
-                  x: 1,
-                },
-                {
-                  label: "B+",
-                  x: 2,
-                },
-                {
-                  label: "B",
-                  x: 3,
-                },
-                {
-                  label: "C+",
-                  x: 4,
-                },
-                {
-                  label: "C",
-                  x: 5,
-                },
-                {
-                  label: "D",
-                  x: 6,
-                },
-                {
-                  label: "F",
-                  x: 7,
-                }
-              ]}
-            />
-          </Layer>
-        </Handlers>
-      </Chart>
+          <Handlers
+            distance="x"
+            onMouseLeave={function noRefCheck() {}}
+            onMouseMove={function noRefCheck() {}}
+          >
+            <Layer height="68%" position="middle center" width="100%">
+              <Bars
+                barAttributes={{
+                  stroke: "#f5f5f6",
+                  strokeLinejoin: "round",
+                  strokeWidth: 21,
+                  transform: "translate(0 12)",
+                }}
+                barWidth="0%"
+                colors={["#03a9f4"]}
+                groupPadding="1%"
+                innerPadding="0%"
+              />
+              <Lines
+                colors={["#007696"]}
+                interpolation="cardinal"
+                lineAttributes={{
+                  strokeLinecap: "round",
+                  strokeWidth: 5,
+                }}
+                lineWidth={0}
+              />
+              <Dots
+                className="dots"
+                colors={["#007696"]}
+                dotStyle={{
+                  fillOpacity: 0,
+                  transition: "all 250ms",
+                }}
+              />
+              <Ticks
+                axis="x"
+                ticks={[
+                  {
+                    label: "A+",
+                    x: 0,
+                  },
+                  {
+                    label: "A",
+                    x: 1,
+                  },
+                  {
+                    label: "B+",
+                    x: 2,
+                  },
+                  {
+                    label: "B",
+                    x: 3,
+                  },
+                  {
+                    label: "C+",
+                    x: 4,
+                  },
+                  {
+                    label: "C",
+                    x: 5,
+                  },
+                  {
+                    label: "D",
+                    x: 6,
+                  },
+                  {
+                    label: "F",
+                    x: 7,
+                  },
+                ]}
+              />
+            </Layer>
+          </Handlers>
+        </Chart>
+      </Grid>
     </div>
   );
 };
