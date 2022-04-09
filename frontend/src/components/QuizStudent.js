@@ -88,7 +88,7 @@ const CustomCard2 = ({ color, title, subtitle }) => (
 class QuizStudent extends Component {
   componentWillMount() {
     console.log(this.props.location.quiz_id,"QQID");
-    props.dispatch(fetchQuiz(this.props.location.quiz_id));
+    this.props.dispatch(fetchQuiz(this.props.location.quiz_id));
   
   }
   componentDidMount(){
