@@ -129,7 +129,7 @@ const GradeResult = (props) => {
             ],
           },
         ]}
-        viewBox="0 0 300 150"
+
       >
         <Handlers
           distance="x"
