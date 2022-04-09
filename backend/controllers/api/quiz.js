@@ -5,6 +5,7 @@ const User = require("../../models/user")
 const Class = require("../../models/class")
 const sanitizer = require('sanitizer')
 var request = require("request");
+var datetime = require('node-datetime');
 
 
 // Create Quiz
@@ -168,7 +169,12 @@ module.exports.update = async function(req, res){
 
 // get quiz
 module.exports.view = async function(req, res){
-	
+	console.log(req.params.quiz_id);
+	if(!sanitizer.escape(req.params.quiz_id)){
+		return res.status(404).json({
+			success: false, message: "Invalid quiz ID!",
+		});
+	}
 	// get quiz
 	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id));
 	if( !quiz){
@@ -194,8 +200,9 @@ module.exports.view = async function(req, res){
 		current_quiz.duration = quiz.duration;
 		current_quiz.maxScoreQuiz = quiz.maxScoreQuiz;
 		current_quiz.quizID=req.params.quiz_id;
-		
 		current_quiz.dateScheduled = quiz.dateScheduled;
+		current_quiz.endTime = new Date(current_quiz.dateScheduled.valueOf() + current_quiz.duration * 1000);
+		
 		current_quiz.questions = []
 		for(let i = 0; i < quiz.questions.length; i++){
 			let currentQuestion = {};
