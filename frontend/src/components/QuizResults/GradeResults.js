@@ -17,6 +17,13 @@ import { Box } from "@mui/system";
 import { Paper } from "@mui/material";
 import Slider from "@mui/material/Slider";
 
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+
 function valuetext(value) {
   return `${value} Marks`;
 }
@@ -245,7 +252,8 @@ const GradeResult = (props) => {
               color="text.secondary"
               paragraph
             >
-              Adjust the points to set the minimum marks for the respective grade
+              Drag the points to set the minimum marks for the respective
+              grade
             </Typography>
             <Box sx={{ width: 1 }}>
               <Slider
@@ -257,6 +265,84 @@ const GradeResult = (props) => {
                 disableSwap
               />
             </Box>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Grade</TableCell>
+                    <TableCell align="right">Minimum Marks</TableCell>
+                    <TableCell align="right">Maximum Marks</TableCell>
+                    <TableCell align="right">No of Students</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>A+</TableCell>
+                    <TableCell align="right">{marksA}</TableCell>
+                    <TableCell align="right">100</TableCell>
+                    <TableCell align="right">{noOfAPGrades}</TableCell>
+                  </TableRow>
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>A</TableCell>
+                    <TableCell align="right">{marksBP}</TableCell>
+                    <TableCell align="right">{marksA}</TableCell>
+                    <TableCell align="right">{noOfAGrades}</TableCell>
+                  </TableRow>
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>B+</TableCell>
+                    <TableCell align="right">{marksB}</TableCell>
+                    <TableCell align="right">{marksBP}</TableCell>
+                    <TableCell align="right">{noOfBPGrades}</TableCell>
+                  </TableRow>
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>B</TableCell>
+                    <TableCell align="right">{marksCP}</TableCell>
+                    <TableCell align="right">{marksB}</TableCell>
+                    <TableCell align="right">{noOfBGrades}</TableCell>
+                  </TableRow>
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>C+</TableCell>
+                    <TableCell align="right">{marksC}</TableCell>
+                    <TableCell align="right">{marksCP}</TableCell>
+                    <TableCell align="right">{noOfCPGrades}</TableCell>
+                  </TableRow>
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>C</TableCell>
+                    <TableCell align="right">{marksD}</TableCell>
+                    <TableCell align="right">{marksC}</TableCell>
+                    <TableCell align="right">{noOfCGrades}</TableCell>
+                  </TableRow>
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>D</TableCell>
+                    <TableCell align="right">{marksF}</TableCell>
+                    <TableCell align="right">{marksD}</TableCell>
+                    <TableCell align="right">{noOfDGrades}</TableCell>
+                  </TableRow>
+                  <TableRow
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell>F</TableCell>
+                    <TableCell align="right">0</TableCell>
+                    <TableCell align="right">{marksF}</TableCell>
+                    <TableCell align="right">{noOfFGrades}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </TableContainer>
           </Grid>
         </Grid>
       </Box>
