@@ -90,11 +90,29 @@ class QuizStudent extends Component {
     this.quizID = this.props.location.quiz_id;
     this.checkAnswer = this.checkAnswer.bind(this);
     this.state = this.getInitialState();
-  }
+    console.log(this.state.endTime,Date(this.state.endTime));
+    this.state.timeLeft = Date(this.state.endTime) - Date.now();
+    console.log(this.state.timeLeft);
+    this.state.timeLeft = this.state.timeLeft/1000+10;
+  
+    console.log(this.state.timeLeft);
+    this.decrementTimeLeft = setInterval(()=>{
+      if(this.state.timeLeft===1){
+        this.submit();
+        this.setState((prevState) => ({
+          timeLeft: prevState.timeLeft-1})
+        )}
+      }
+      this.setState((prevState) => ({
+        timeLeft: prevState.timeLeft-1})
+    )},1000);
+    console.log(this.state.timeLeft);
+  };
   
   
   componentWillUnmount(){
     this.props.dispatch(clearQuiz());
+    clearInterval(this.decrementTimeLeft);
   }
   
   sleep = (milliseconds) => {
@@ -103,14 +121,16 @@ class QuizStudent extends Component {
   getInitialState() {
     let currentQuiz=this.props.quiz.quiz;
     return {
-      questionData: currentQuiz.questions,
-      quizName: currentQuiz.title,
-      quizDescription: currentQuiz.description,
-      maxScore: currentQuiz.maxScoreQuiz,
-      quizID: currentQuiz.quizID,
+      questionData: !currentQuiz?[]:currentQuiz.questions,
+      quizName: !currentQuiz?"":currentQuiz.title,
+      quizDescription: !currentQuiz?"":currentQuiz.description,
+      maxScore: !currentQuiz?0:currentQuiz.maxScoreQuiz,
+      quizID: !currentQuiz?"":currentQuiz.quizID,
       progress: 0,
       score: 0,
-
+      startTime: !currentQuiz?Date.now():currentQuiz.dateScheduled,
+      endTime: !currentQuiz?Date.now():currentQuiz.endTime,
+      timeLeft : 0,
       studentResponse: {
         finalScore: 0,
         response: {}

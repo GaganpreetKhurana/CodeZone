@@ -196,7 +196,7 @@ module.exports.view = async function(req, res){
 		current_quiz.maxScoreQuiz = quiz.maxScoreQuiz;
 		current_quiz.quizID=req.params.quiz_id;
 		current_quiz.dateScheduled = quiz.dateScheduled;
-		current_quiz.endTime = new Date(current_quiz.dateScheduled.valueOf() +current_quiz.duration*1000);
+		current_quiz.endTime = new Date(current_quiz.dateScheduled.valueOf() + current_quiz.duration * 1000);
 		
 		current_quiz.questions = []
 		for(let i = 0; i < quiz.questions.length; i++){
