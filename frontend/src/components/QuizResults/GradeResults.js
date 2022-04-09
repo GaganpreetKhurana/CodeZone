@@ -13,9 +13,13 @@ import {
 
 import { Grid } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { Container } from "@mui/material";
 import { Box } from "@mui/system";
 import { Paper } from "@mui/material";
+import Slider from "@mui/material/Slider";
+
+function valuetext(value) {
+  return `${value} Marks`;
+}
 
 const GradeResult = (props) => {
   const [grades, setGrades] = useState(new Array(7));
@@ -86,31 +90,43 @@ const GradeResult = (props) => {
     }
   }
 
-  let gradeCurve = [
-    noOfAPGrades,
-    noOfAGrades,
-    noOfBPGrades,
-    noOfBGrades,
-    noOfCPGrades,
-    noOfCGrades,
-    noOfDGrades,
-    noOfFGrades,
+  let series = [
+    {
+      data: [
+        noOfAPGrades,
+        noOfAGrades,
+        noOfBPGrades,
+        noOfBGrades,
+        noOfCPGrades,
+        noOfCGrades,
+        noOfDGrades,
+        noOfFGrades,
+      ],
+    },
   ];
-    
-let series = [
-  {
-    data: [
-      noOfAPGrades,
-      noOfAGrades,
-      noOfBPGrades,
-      noOfBGrades,
-      noOfCPGrades,
-      noOfCGrades,
-      noOfDGrades,
-      noOfFGrades,
-    ],
-  },
-]; 
+
+  const minDistance = 1;
+
+  const [value, setValue] = React.useState([marksA, marksBP, marksB, marksCP ,marksC, marksD ,marksF]);
+
+  const handleChange = (event, newValue, activeThumb) => {
+    if (!Array.isArray(newValue)) {
+      return;
+    }
+
+    if (newValue[1] - newValue[0] < minDistance) {
+      if (activeThumb === 0) {
+        const clamped = Math.min(newValue[0], 100 - minDistance);
+        setValue([clamped, clamped + minDistance]);
+      } else {
+        const clamped = Math.max(newValue[1], minDistance);
+        setValue([clamped - minDistance, clamped]);
+      }
+    } else {
+      setValue(newValue);
+    }
+  };
+
   return (
     <div>
       <Box m={4}>
@@ -222,7 +238,26 @@ let series = [
             component={Paper}
             elevation={6}
             square
-          ></Grid>
+          >
+            <Typography
+              variant="h7"
+              align="center"
+              color="text.secondary"
+              paragraph
+            >
+              Adjust the points to set the minimum marks for the respective grade
+            </Typography>
+            <Box sx={{ width: 1 }}>
+              <Slider
+                getAriaLabel={() => "Grade Shift"}
+                value={value}
+                onChange={handleChange}
+                valueLabelDisplay="auto"
+                getAriaValueText={valuetext}
+                disableSwap
+              />
+            </Box>
+          </Grid>
         </Grid>
       </Box>
       <p>Lower Limit for A+: {marksA}</p>
@@ -246,100 +281,6 @@ let series = [
         {noOfDGrades}
         {noOfFGrades}
       </div>
-      <Grid item m={2}>
-        <Chart
-          height={300}
-          series={[
-            {
-              data: [
-                noOfAPGrades,
-                noOfAGrades,
-                noOfBPGrades,
-                noOfBGrades,
-                noOfCPGrades,
-                noOfCGrades,
-                noOfDGrades,
-                noOfFGrades,
-              ],
-            },
-          ]}
-        >
-          <Handlers
-            distance="x"
-            onMouseLeave={function noRefCheck() {}}
-            onMouseMove={function noRefCheck() {}}
-          >
-            <Layer height="68%" position="middle center" width="100%">
-              <Bars
-                barAttributes={{
-                  stroke: "#f5f5f6",
-                  strokeLinejoin: "round",
-                  strokeWidth: 21,
-                  transform: "translate(0 12)",
-                }}
-                barWidth="0%"
-                colors={["#03a9f4"]}
-                groupPadding="1%"
-                innerPadding="0%"
-              />
-              <Lines
-                colors={["#007696"]}
-                interpolation="cardinal"
-                lineAttributes={{
-                  strokeLinecap: "round",
-                  strokeWidth: 5,
-                }}
-                lineWidth={0}
-              />
-              <Dots
-                className="dots"
-                colors={["#007696"]}
-                dotStyle={{
-                  fillOpacity: 0,
-                  transition: "all 250ms",
-                }}
-              />
-              <Ticks
-                axis="x"
-                ticks={[
-                  {
-                    label: "A+",
-                    x: 0,
-                  },
-                  {
-                    label: "A",
-                    x: 1,
-                  },
-                  {
-                    label: "B+",
-                    x: 2,
-                  },
-                  {
-                    label: "B",
-                    x: 3,
-                  },
-                  {
-                    label: "C+",
-                    x: 4,
-                  },
-                  {
-                    label: "C",
-                    x: 5,
-                  },
-                  {
-                    label: "D",
-                    x: 6,
-                  },
-                  {
-                    label: "F",
-                    x: 7,
-                  },
-                ]}
-              />
-            </Layer>
-          </Handlers>
-        </Chart>
-      </Grid>
     </div>
   );
 };
