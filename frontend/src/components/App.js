@@ -18,6 +18,7 @@ import { deepOrange } from '@mui/material/colors';
 import {ThemeProvider,CssBaseline} from '@mui/material';
 import CodeEditorScreen from "./CodeEditorScreen";
 import App2 from "./Video_Conferencing/App2";
+import GradeResult from './QuizResults/GradeResults';
 
 // @ts-ignore
 //to decode the token
@@ -148,17 +149,18 @@ class App extends React.Component {
               {auth.isLoggedIn && auth.user.role === "Teacher" && (
                 <Route path="/quizCreate" component={QuizCreate} />
               )}
-                {auth.isLoggedIn && auth.user.role === "Student" && (
-                    <Route path="/QuizStudent" component={QuizStudent} />
-                )}
+              {auth.isLoggedIn && auth.user.role === "Student" && (
+                <Route path="/QuizStudent" component={QuizStudent} />
+              )}
               <Route exact path="/" component={Home} />
-                <Route path="/CodeZone" component={Home} />
-                <Route path="/login" component={Login} />
+              <Route path="/CodeZone" component={Home} />
+              <Route path="/login" component={Login} />
               <Route path="/signup" component={SignUp} />
               <Route path="/CodeEditorScreen" component={CodeEditorScreen} />
               {!auth.isLoggedIn && (
                 <Route path="/classroom/:classroomID" component={Home} />
               )}
+              <Route path="/grading" component={GradeResult} />
               <Route component={Page404} />
             </Switch>
           </Router>
