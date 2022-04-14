@@ -4,11 +4,8 @@ import {
   Chart,
   // graphs
   Bars,
-  Dots,
   Lines,
   Ticks,
-  Layer,
-  Handlers,
 } from "rumble-charts";
 
 import { Grid } from "@mui/material";
@@ -29,9 +26,6 @@ function valuetext(value) {
 }
 
 const GradeResult = (props) => {
-  const [grades, setGrades] = useState(new Array(7));
-  const gradeValues = [10, 9, 8, 7, 6, 5, 0];
-  const gradeLetters = ["A+", "A", "B+", "B", "C+", "C", "D", "F"];
   const studentScores = [30, 25, 50, 60, 70, 98, 74, 86];
 
   let datasetSize = studentScores.length;
@@ -57,6 +51,7 @@ const GradeResult = (props) => {
   let sum = copyOfScores.reduce((acc, curr) => acc + curr, 0);
 
   // Standered deviation
+  // eslint-disable-next-line
   const [standardDeviation, setstandardDeviation] = useState(
     Math.sqrt(sum / copyOfScores.length)
   );
@@ -112,13 +107,29 @@ const GradeResult = (props) => {
     },
   ];
 
+  // eslint-disable-next-line
   const minDistance = 1;
 
-  const [value, setValue] = React.useState([marksA, marksBP, marksB, marksCP ,marksC, marksD ,marksF]);
-
-    const handleChange = (event, newValue, activeThumb) => {
-      console.log(newValue)
-      setValue(newValue);
+  const [value, setValue] = React.useState([
+    marksA,
+    marksBP,
+    marksB,
+    marksCP,
+    marksC,
+    marksD,
+    marksF,
+  ]);
+  // eslint-disable-next-line
+  const handleChange = (event, newValue, activeThumb) => {
+    console.log(newValue);
+    setValue(newValue);
+    setmarksF(newValue[0]);
+    setmarksD(newValue[1]);
+    setmarksC(newValue[2]);
+    setmarksCP(newValue[3]);
+    setmarksB(newValue[4]);
+    setmarksBP(newValue[5]);
+    setmarksA(newValue[6]);
   };
 
   return (
@@ -239,8 +250,7 @@ const GradeResult = (props) => {
               color="text.secondary"
               paragraph
             >
-              Drag the points to set the minimum marks for the respective
-              grade
+              Drag the points to set the minimum marks for the respective grade
             </Typography>
             <Box sx={{ width: 1 }}>
               <Slider
