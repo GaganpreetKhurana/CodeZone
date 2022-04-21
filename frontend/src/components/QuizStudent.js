@@ -88,7 +88,8 @@ const CustomCard2 = ({ color, title, subtitle }) => (
 class QuizStudent extends Component {
   componentWillMount() {
     console.log(this.props.location.quiz_id,"QQID");
-    this.props.dispatch(fetchQuiz(this.props.location.quiz_id));
+    // this.props.dispatch(fetchQuiz(this.props.location.quiz_id));
+    console.log(this.props.quiz.quiz);
   
   }
   componentDidMount(){
@@ -135,7 +136,8 @@ class QuizStudent extends Component {
       }, 1000);
       console.log(this.state.timeLeft);
     }
-    this.forceUpdate();
+    // this.forceUpdate();
+    console.log(this.state,this.props);
   };
   
   

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from 'react-router-dom';
 import { clearAuth } from "../actions/auth";
-import { fetchOpenQuiz } from "../actions/quiz";
-
+import { fetchOpenQuiz, fetchQuiz } from "../actions/quiz";
+import {DelayLink} from "./DelayLink";
 
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -105,16 +105,20 @@ class JoinQuiz extends Component {
 												<TableCell align="center">{row.duration?row.duration:null}</TableCell>
 												<TableCell align="center">{row.maxScoreQuiz ==="" ? '-' : row.maxScoreQuiz}</TableCell>
 												<TableCell align="center">
-													{user.id && <Link to={{
+													{user.id && <DelayLink 
+
+                                                    delay = {3000}
+                                                    
+                                                    to={{
 														pathname: "/QuizStudent",
 														quiz_id: row._id
-													}} onClick={()=>{
+													}} onDelayStart={()=>{
 														//fetch this code-editor's details using row_id
 														console.log(row._id,"qid");
-														// this.props.dispatch(fetchQuiz(row._id));
+														this.props.dispatch(fetchQuiz(row._id));
 													}}>
 														Link
-													</Link>
+													</DelayLink>
 													}
 												</TableCell>
 											</TableRow>
