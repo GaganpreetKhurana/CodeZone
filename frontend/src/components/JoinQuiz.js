@@ -112,10 +112,15 @@ class JoinQuiz extends Component {
                                                     to={{
 														pathname: "/QuizStudent",
 														quiz_id: row._id
-													}} onDelayStart={()=>{
+													}} 
+													onDelayStart={()=>{
 														//fetch this code-editor's details using row_id
 														console.log(row._id,"qid");
 														this.props.dispatch(fetchQuiz(row._id));
+													}}
+													onDelayEnd={()=>{
+														//fetch this code-editor's details using row_id
+														console.log(row._id,"qidEND");
 													}}>
 														Link
 													</DelayLink>

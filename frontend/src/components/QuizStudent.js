@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import {submitQuiz,clearQuiz,fetchQuiz} from "../actions/quiz";
+import {submitQuiz,clearQuiz} from "../actions/quiz";
 
 // Material UI
 import { Grid } from "@mui/material";
@@ -86,17 +86,12 @@ const CustomCard2 = ({ color, title, subtitle }) => (
 );
 
 class QuizStudent extends Component {
-  componentWillMount() {
-    console.log(this.props.location.quiz_id,"QQID");
-    // this.props.dispatch(fetchQuiz(this.props.location.quiz_id));
-    console.log(this.props.quiz.quiz);
   
-  }
   componentDidMount(){
     
     let currentQuiz=this.props.quiz.quiz;
     this.checkAnswer = this.checkAnswer.bind(this);
-    console.log(currentQuiz,"RR");
+    this.submitted=false;
     this.setState({
       questionData: !currentQuiz?[]:currentQuiz.questions,
       quizName: !currentQuiz?"":currentQuiz.title,
@@ -113,13 +108,15 @@ class QuizStudent extends Component {
         response: {}
       }
     });
-    if(this.state){
-      console.log(this.state.endTime, Date(this.state.endTime));
-      this.state.timeLeft = Date(this.state.endTime) - Date.now();
-      console.log(this.state.timeLeft);
-      this.state.timeLeft = this.state.timeLeft / 1000 + 10;
-  
-      console.log(this.state.timeLeft);
+    
+    if(currentQuiz){
+      var timeLeft= new Date(currentQuiz.endTime) - new Date() - 19800000;
+      timeLeft/=1000;
+      timeLeft = parseInt(timeLeft);
+      timeLeft+=10;
+      this.setState({
+        timeLeft : timeLeft
+      });
       this.decrementTimeLeft = setInterval(() => {
         if(this.state.timeLeft === 1){
           this.submit();
@@ -134,10 +131,8 @@ class QuizStudent extends Component {
             })
         )
       }, 1000);
-      console.log(this.state.timeLeft);
     }
     // this.forceUpdate();
-    console.log(this.state,this.props);
   };
   
   
@@ -146,9 +141,6 @@ class QuizStudent extends Component {
     clearInterval(this.decrementTimeLeft);
   }
   
-  sleep = (milliseconds) => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
-  };
   
 
   updateResponse = (index) => {
@@ -179,24 +171,28 @@ class QuizStudent extends Component {
   }
   
   submit(){
+    if(!this.submitted){
+    console.log("Submit");
     let submission = {
       quiz : this.state.quizID,
       answers : this.state.studentResponse.response,
     }
     this.props.dispatch(submitQuiz(submission));
-    
+  }
+  this.submitted=true;
   }
   render() {
-    if (!this.state){
+    if (!this.props.quiz.quiz || !this.state){
       return (
           <div><CircularProgress/></div>
       )
     }
     var currentQuestion = this.state.questionData[this.state.progress];
-    if (this.state.questionData.length > this.state.progress) {
+    if (this.state.questionData.length > this.state.progress && this.state.timeLeft>0) {
       return (
         <div>
           <div>
+            <TypographyTitle>Time Left: {parseInt(this.state.timeLeft/3600)} : {parseInt((this.state.timeLeft%3600)/60)} : {parseInt((this.state.timeLeft%3600)%60)}</TypographyTitle>
             <Grid height="100vh" m={10}>
               <Card
                 sx={{
