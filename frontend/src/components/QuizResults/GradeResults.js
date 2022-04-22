@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import {
   // main component
   Chart,
@@ -26,8 +26,23 @@ function valuetext(value) {
 }
 
 const GradeResult = (props) => {
-  const studentScores = [30, 25, 50, 60, 70, 98, 74, 86];
-  
+  let [studentScores,setStudentScores] = React.useState([30, 25, 50, 60, 70, 98, 74, 86]);
+  let classroomId = "624c72aa1fef8adf60f624f9"; // hardcoded for now
+  useEffect(()=>{
+    fetch(`/api/classroom/fetchTotalMarks/${classroomId}`,
+        {headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+    },})
+        .then((response) => response.json())
+        .then((data) => {
+          if (data?.success) {
+            setStudentScores(data.data);
+          }
+        })
+        .catch((err)=>{
+          console.log(err);
+        });
+  },[classroomId]);
   let datasetSize = studentScores.length;
   let mean = 0;
   let sumOfScores = 0;
@@ -131,7 +146,7 @@ const GradeResult = (props) => {
     setmarksBP(newValue[5]);
     setmarksA(newValue[6]);
   };
-
+  console.log(studentScores,"QQQQ@@");
   return (
     <div>
       <Box m={4}>
