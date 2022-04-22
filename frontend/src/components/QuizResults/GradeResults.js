@@ -27,7 +27,7 @@ function valuetext(value) {
 
 const GradeResult = (props) => {
   const studentScores = [30, 25, 50, 60, 70, 98, 74, 86];
-
+  
   let datasetSize = studentScores.length;
   let mean = 0;
   let sumOfScores = 0;

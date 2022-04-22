@@ -28,6 +28,7 @@ module.exports.create = async function(req, res){
 		let newQuiz = await Quiz.create({
 			creator: req.user._id,
 			dateScheduled: req.body.dateScheduled,
+			durations: req.body.durations,
 			class: subject,
 			title: req.body.quizName,
 			description: req.body.quizDescription,
