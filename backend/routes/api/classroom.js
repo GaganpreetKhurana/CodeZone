@@ -15,6 +15,6 @@ router.get ( "/fetchExistingLabDetails/:classroomId" , auth.authenticateToken , 
 router.get ( "/createEditor/:userId/:labId" , auth.authenticateToken , labs.createEditor )
 router.get ( "/u" +
     "nreadMessageCount/:classroomId" , auth.authenticateToken , classroom.unreadMessageCount );
-
+router.get ( "/fetchTotalMarks/:classroomId" , auth.authenticateToken , classroom.fetchTotalMarks );
 
 module.exports = router;

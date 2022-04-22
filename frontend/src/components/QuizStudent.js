@@ -22,9 +22,9 @@ const CardActionAreaActionArea = styled(CardActionArea)(() => ({
 
 const StyledCard = styled(Card)(({color}) => ({
 	minWidth: "30vh",
-	minHeigth: "30vh",
+	minHeight: "30vh",
 	maxWidth: "30vh",
-	maxHeigth: "30vh",
+	maxHeight: "30vh",
 	borderRadius: 16,
 	boxShadow: "none",
 	"&:hover": {
@@ -34,9 +34,9 @@ const StyledCard = styled(Card)(({color}) => ({
 
 const StyledCard2 = styled(Card)(({color}) => ({
 	minWidth: "100hh",
-	minHeigth: "60vh",
+	minHeight: "60vh",
 	maxWidth: "100hh",
-	maxHeigth: "60vh",
+	maxHeight: "60vh",
 	borderRadius: 16,
 	boxShadow: "none",
 	"&:hover": {
@@ -103,6 +103,7 @@ class QuizStudent extends Component{
 			startTime: !currentQuiz ? Date.now() : currentQuiz.dateScheduled,
 			endTime: !currentQuiz ? Date.now() : currentQuiz.endTime,
 			timeLeft: 0,
+			timeLeftToStart: 0,
 			studentResponse: {
 				finalScore: 0,
 				response: {}
@@ -131,6 +132,22 @@ class QuizStudent extends Component{
 					})
 				)
 			}, 1000);
+			
+			var timeLeftToStart = new Date(currentQuiz.dateScheduled) - new Date() - 19800000;
+			timeLeftToStart /= 1000;
+			timeLeftToStart = parseInt(timeLeftToStart);
+			timeLeftToStart += 10;
+			
+			this.setState({
+				timeLeftToStart: timeLeftToStart
+			});
+			this.decrementTimeLeftToStart = setInterval(() => {
+				
+				this.setState((prevState) => ({
+						timeLeftToStart: prevState.timeLeftToStart - 1
+					})
+				)
+			}, 1000);
 		}
 		// this.forceUpdate();
 	};
@@ -139,6 +156,8 @@ class QuizStudent extends Component{
 	componentWillUnmount(){
 		this.props.dispatch(clearQuiz());
 		clearInterval(this.decrementTimeLeft);
+		clearInterval(this.decrementTimeLeftToStart);
+		
 	}
 	
 	
@@ -188,7 +207,18 @@ class QuizStudent extends Component{
 			)
 		}
 		var currentQuestion = this.state.questionData[this.state.progress];
-		if(this.state.questionData.length > this.state.progress && this.state.timeLeft > 0){
+		if(this.state.timeLeftToStart > 0){
+			return (
+				<div>
+					<TypographyTitle>QUIZ hasn't started yet!!</TypographyTitle>
+					
+					<TypographyTitle>Time
+						Left for quiz to
+						start: {parseInt(this.state.timeLeftToStart / 3600)} : {parseInt((this.state.timeLeftToStart % 3600) / 60)} : {parseInt((this.state.timeLeftToStart % 3600) % 60)}</TypographyTitle>
+				</div>
+			)
+			
+		} else if(this.state.questionData.length > this.state.progress && this.state.timeLeft > 0){
 			return (
 				<div>
 					<div>

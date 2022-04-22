@@ -2,6 +2,8 @@ const Classes = require ( "../../models/class" );
 const User = require ( "../../models/user" );
 const Chats = require ( "../../models/chat" );
 const sanitizer = require ( "sanitizer" );
+const Quiz = require("../../models/quiz")
+const Submission = require("../../models/submission")
 
 //to generate unique code for classroom
 async function createClassCode () {
@@ -369,4 +371,51 @@ module.exports.unreadMessageCount = async function ( req , res ) {
         
         
     }
+}
+
+module.exports.fetchTotalMarks =  async function(req,res){
+    var classroomId = sanitizer.escape ( req.params.classroomId );
+    let classroom = await Classes.findById ( classroomId );
+    
+    if(!classroom){
+        return res.status ( 404).json({
+            success : false,
+            message : "Subject Not Found!",
+            data : []
+        })
+    }
+    if(!classroom.teachers.includes(req.user._id)){
+        return res.status(403).json({
+            success : false,
+            message : "User not a teacher for this subject!",
+            data : []
+        })
+    }
+    var marksDictionary={};
+    
+    for(var quizIndex=0;quizIndex<classroom.quizzes.length;quizIndex++){
+        var currentQuiz = await Quiz.findById(classroom.quizzes[quizIndex]);
+        // console.log(quizIndex,currentQuiz)
+        if(currentQuiz){
+            for(var submissionIndex=0;submissionIndex<currentQuiz.submissions.length;submissionIndex++){
+                var currentSubmission = await Submission.findById(currentQuiz.submissions[submissionIndex]);
+                // console.log(submissionIndex,currentSubmission);
+                if(currentSubmission){
+                    if(!(currentSubmission.student in marksDictionary)){
+                        marksDictionary[currentSubmission.student]=0;
+                    }
+                    marksDictionary[currentSubmission.student]+=currentSubmission.score;
+                }
+            }
+        }
+    };
+    var marksArray=[];
+    for (let [student,marks] of Object.entries(marksDictionary)){
+        marksArray.push(marks);
+    }
+    return res.status(200).json({
+        success : true,
+        message : "Marks List!",
+        data : marksArray
+    })
 }
