@@ -26,8 +26,9 @@ function valuetext(value) {
 }
 
 const GradeResult = (props) => {
-  let [studentScores,setStudentScores] = React.useState([30, 25, 50, 60, 70, 98, 74, 86]);
-  let classroomId = "624c72aa1fef8adf60f624f9"; // hardcoded for now
+  let [studentScores,setStudentScores] = React.useState([]);
+  let classroomId = "62016aaddfa567c9bf4e36c8"; // hardcoded for now
+  const [dataLoaded, setdataLoaded] = useState(false);
   useEffect(()=>{
     fetch(`/api/classroom/fetchTotalMarks/${classroomId}`,
         {headers: {
@@ -37,17 +38,19 @@ const GradeResult = (props) => {
         .then((data) => {
           if (data?.success) {
             setStudentScores(data.data);
+            setdataLoaded(true);
+            console.log(dataLoaded)
           }
         })
         .catch((err)=>{
           console.log(err);
         });
-  },[classroomId]);
+  }, [classroomId, dataLoaded]);
   let datasetSize = studentScores.length;
   let mean = 0;
   let sumOfScores = 0;
   let copyOfScores = studentScores;
-  let displayScores = studentScores;
+  //let displayScores = studentScores;
 
   //Calculate mean of scores
   for (let i = 0; i < studentScores.length; i++) {
@@ -146,241 +149,230 @@ const GradeResult = (props) => {
     setmarksBP(newValue[5]);
     setmarksA(newValue[6]);
   };
-  console.log(studentScores,"QQQQ@@");
-  return (
-    <div>
-      <Box m={4}>
-        <Grid container component="main" sx={{ height: "100vh" }}>
-          <Grid
-            item
-            xs={false}
-            sm={3}
-            md={4}
-            sx={{
-              backgroundColor: (t) =>
-                t.palette.mode === "light"
-                  ? t.palette.grey[50]
-                  : t.palette.grey[900],
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
+  console.log(studentScores, "QQQQ@@");
+  if (dataLoaded === false) {
+    return (
+      <div>
+        loading
+      </div>
+    );
+  } else {
+    return (
+      <div>
+        {dataLoaded && <div>dataLoaded</div>}
+        <Box m={4}>
+          <Grid container component="main" sx={{ height: "100vh" }}>
             <Grid
+              item
+              xs={false}
+              sm={3}
+              md={4}
               sx={{
-                pt: 8,
-                pb: 6,
+                backgroundColor: (t) =>
+                  t.palette.mode === "light"
+                    ? t.palette.grey[50]
+                    : t.palette.grey[900],
+                backgroundSize: "cover",
+                backgroundPosition: "center",
               }}
-              m={4}
-              direction="column"
-              justifyContent="space-evenly"
-              alignItems="center"
             >
-              <Grid item m={2}>
-                <Typography
-                  component="h3"
-                  variant="h6"
-                  align="center"
-                  color="text.primary"
-                >
-                  Grade Visualizer
-                </Typography>
-                <Typography
-                  variant="h7"
-                  align="center"
-                  color="text.secondary"
-                  paragraph
-                >
-                  Adjust the mark points for an ideal normal distribution
-                </Typography>
-              </Grid>
-              <Chart width={250} height={250} series={series}>
-                <Bars innerPadding={5} groupPadding={10} />
-                <Lines
-                  colors={["#007696"]}
-                  interpolation="cardinal"
-                  lineAttributes={{
-                    strokeLinecap: "round",
-                    strokeWidth: 5,
-                  }}
-                  lineWidth={0}
-                />
-                <Ticks
-                  axis="x"
-                  ticks={[
-                    {
-                      label: "A+",
-                      x: 0,
-                    },
-                    {
-                      label: "A",
-                      x: 1,
-                    },
-                    {
-                      label: "B+",
-                      x: 2,
-                    },
-                    {
-                      label: "B",
-                      x: 3,
-                    },
-                    {
-                      label: "C+",
-                      x: 4,
-                    },
-                    {
-                      label: "C",
-                      x: 5,
-                    },
-                    {
-                      label: "D",
-                      x: 6,
-                    },
-                    {
-                      label: "F",
-                      x: 7,
-                    },
-                  ]}
-                />
-              </Chart>
               <Grid
-                container
-                direction="row"
+                sx={{
+                  pt: 8,
+                  pb: 6,
+                }}
+                m={4}
+                direction="column"
                 justifyContent="space-evenly"
                 alignItems="center"
-              ></Grid>
+              >
+                <Grid item m={2}>
+                  <Typography
+                    component="h3"
+                    variant="h6"
+                    align="center"
+                    color="text.primary"
+                  >
+                    Grade Visualizer
+                  </Typography>
+                  <Typography
+                    variant="h7"
+                    align="center"
+                    color="text.secondary"
+                    paragraph
+                  >
+                    Adjust the mark points for an ideal normal distribution
+                  </Typography>
+                </Grid>
+                <Chart width={250} height={250} series={series}>
+                  <Bars innerPadding={5} groupPadding={10} />
+                  <Lines
+                    colors={["#007696"]}
+                    interpolation="cardinal"
+                    lineAttributes={{
+                      strokeLinecap: "round",
+                      strokeWidth: 5,
+                    }}
+                    lineWidth={0}
+                  />
+                  <Ticks
+                    axis="x"
+                    ticks={[
+                      {
+                        label: "A+",
+                        x: 0,
+                      },
+                      {
+                        label: "A",
+                        x: 1,
+                      },
+                      {
+                        label: "B+",
+                        x: 2,
+                      },
+                      {
+                        label: "B",
+                        x: 3,
+                      },
+                      {
+                        label: "C+",
+                        x: 4,
+                      },
+                      {
+                        label: "C",
+                        x: 5,
+                      },
+                      {
+                        label: "D",
+                        x: 6,
+                      },
+                      {
+                        label: "F",
+                        x: 7,
+                      },
+                    ]}
+                  />
+                </Chart>
+                <Grid
+                  container
+                  direction="row"
+                  justifyContent="space-evenly"
+                  alignItems="center"
+                ></Grid>
+              </Grid>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={9}
+              md={8}
+              component={Paper}
+              elevation={6}
+              square
+            >
+              <Typography
+                variant="h7"
+                align="center"
+                color="text.secondary"
+                paragraph
+              >
+                Drag the points to set the minimum marks for the respective
+                grade
+              </Typography>
+              <Box sx={{ width: 1 }}>
+                <Slider
+                  getAriaLabel={() => "Grade Shift"}
+                  value={value}
+                  onChange={handleChange}
+                  valueLabelDisplay="auto"
+                  getAriaValueText={valuetext}
+                  disableSwap
+                />
+              </Box>
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Grade</TableCell>
+                      <TableCell align="right">Minimum Marks</TableCell>
+                      <TableCell align="right">Maximum Marks</TableCell>
+                      <TableCell align="right">No of Students</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>A+</TableCell>
+                      <TableCell align="right">{marksA}</TableCell>
+                      <TableCell align="right">100</TableCell>
+                      <TableCell align="right">{noOfAPGrades}</TableCell>
+                    </TableRow>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>A</TableCell>
+                      <TableCell align="right">{marksBP}</TableCell>
+                      <TableCell align="right">{marksA}</TableCell>
+                      <TableCell align="right">{noOfAGrades}</TableCell>
+                    </TableRow>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>B+</TableCell>
+                      <TableCell align="right">{marksB}</TableCell>
+                      <TableCell align="right">{marksBP}</TableCell>
+                      <TableCell align="right">{noOfBPGrades}</TableCell>
+                    </TableRow>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>B</TableCell>
+                      <TableCell align="right">{marksCP}</TableCell>
+                      <TableCell align="right">{marksB}</TableCell>
+                      <TableCell align="right">{noOfBGrades}</TableCell>
+                    </TableRow>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>C+</TableCell>
+                      <TableCell align="right">{marksC}</TableCell>
+                      <TableCell align="right">{marksCP}</TableCell>
+                      <TableCell align="right">{noOfCPGrades}</TableCell>
+                    </TableRow>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>C</TableCell>
+                      <TableCell align="right">{marksD}</TableCell>
+                      <TableCell align="right">{marksC}</TableCell>
+                      <TableCell align="right">{noOfCGrades}</TableCell>
+                    </TableRow>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>D</TableCell>
+                      <TableCell align="right">{marksF}</TableCell>
+                      <TableCell align="right">{marksD}</TableCell>
+                      <TableCell align="right">{noOfDGrades}</TableCell>
+                    </TableRow>
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    >
+                      <TableCell>F</TableCell>
+                      <TableCell align="right">0</TableCell>
+                      <TableCell align="right">{marksF}</TableCell>
+                      <TableCell align="right">{noOfFGrades}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </Grid>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            sm={9}
-            md={8}
-            component={Paper}
-            elevation={6}
-            square
-          >
-            <Typography
-              variant="h7"
-              align="center"
-              color="text.secondary"
-              paragraph
-            >
-              Drag the points to set the minimum marks for the respective grade
-            </Typography>
-            <Box sx={{ width: 1 }}>
-              <Slider
-                getAriaLabel={() => "Grade Shift"}
-                value={value}
-                onChange={handleChange}
-                valueLabelDisplay="auto"
-                getAriaValueText={valuetext}
-                disableSwap
-              />
-            </Box>
-            <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Grade</TableCell>
-                    <TableCell align="right">Minimum Marks</TableCell>
-                    <TableCell align="right">Maximum Marks</TableCell>
-                    <TableCell align="right">No of Students</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  <TableRow
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell>A+</TableCell>
-                    <TableCell align="right">{marksA}</TableCell>
-                    <TableCell align="right">100</TableCell>
-                    <TableCell align="right">{noOfAPGrades}</TableCell>
-                  </TableRow>
-                  <TableRow
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell>A</TableCell>
-                    <TableCell align="right">{marksBP}</TableCell>
-                    <TableCell align="right">{marksA}</TableCell>
-                    <TableCell align="right">{noOfAGrades}</TableCell>
-                  </TableRow>
-                  <TableRow
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell>B+</TableCell>
-                    <TableCell align="right">{marksB}</TableCell>
-                    <TableCell align="right">{marksBP}</TableCell>
-                    <TableCell align="right">{noOfBPGrades}</TableCell>
-                  </TableRow>
-                  <TableRow
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell>B</TableCell>
-                    <TableCell align="right">{marksCP}</TableCell>
-                    <TableCell align="right">{marksB}</TableCell>
-                    <TableCell align="right">{noOfBGrades}</TableCell>
-                  </TableRow>
-                  <TableRow
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell>C+</TableCell>
-                    <TableCell align="right">{marksC}</TableCell>
-                    <TableCell align="right">{marksCP}</TableCell>
-                    <TableCell align="right">{noOfCPGrades}</TableCell>
-                  </TableRow>
-                  <TableRow
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell>C</TableCell>
-                    <TableCell align="right">{marksD}</TableCell>
-                    <TableCell align="right">{marksC}</TableCell>
-                    <TableCell align="right">{noOfCGrades}</TableCell>
-                  </TableRow>
-                  <TableRow
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell>D</TableCell>
-                    <TableCell align="right">{marksF}</TableCell>
-                    <TableCell align="right">{marksD}</TableCell>
-                    <TableCell align="right">{noOfDGrades}</TableCell>
-                  </TableRow>
-                  <TableRow
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell>F</TableCell>
-                    <TableCell align="right">0</TableCell>
-                    <TableCell align="right">{marksF}</TableCell>
-                    <TableCell align="right">{noOfFGrades}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Grid>
-        </Grid>
-      </Box>
-      <p>Lower Limit for A+: {marksA}</p>
-      <button onClick={() => setmarksA(marksA + 1)}>Increase by 1</button>
-      <button onClick={() => setmarksA(marksA - 1)}>Decrease by 1</button>
-      {noOfAPGrades}
-      Mean
-      {mean}
-      Standard Deviation
-      {standardDeviation}
-      Marks
-      {displayScores}
-      <br />
-      <div>
-        {noOfAPGrades}
-        {noOfAGrades}
-        {noOfBPGrades}
-        {noOfBGrades}
-        {noOfCPGrades}
-        {noOfCGrades}
-        {noOfDGrades}
-        {noOfFGrades}
+        </Box>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default GradeResult;
