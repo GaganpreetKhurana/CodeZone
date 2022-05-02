@@ -7,6 +7,13 @@ import {quizCreate} from "../actions/quiz";
 import { Grid, Box, Card, Button, Paper } from "@mui/material";
 import TextField from "@mui/material/TextField";
 
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+
 class QuizCreate extends React.Component {
   constructor(props) {
     super(props);
@@ -68,6 +75,7 @@ class QuizCreate extends React.Component {
         maxScore: parseInt(this.state.maxScore) + parseInt(marks),
       },
     ); 
+    console.log(this.state.questionData);
   };
 
   handleSubmit = () => {
@@ -232,6 +240,58 @@ class QuizCreate extends React.Component {
               </Box>
             </Grid>
           </Card>
+          <Paper>
+            <Card m={4}>
+              <TableContainer>
+                <Table sx={{ minWidth: "75%" }}>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align="center">Question No</TableCell>
+                      <TableCell align="center">Question</TableCell>
+                      <TableCell align="center">Correct Option</TableCell>
+                      <TableCell align="center">Option 1</TableCell>
+                      <TableCell align="center">Option 2</TableCell>
+                      <TableCell align="center">Option 3</TableCell>
+                      <TableCell align="center">Option 4</TableCell>
+                      <TableCell align="center">Marks</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {this.state.questionData.map((question) => (
+                      <TableRow
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell align="center">
+                          {question.questionNumber}
+                        </TableCell>
+                        <TableCell align="center">
+                          {question.question}
+                        </TableCell>
+                        <TableCell align="center">{question.correct}</TableCell>
+                        <TableCell align="center">
+                          {question.answers[0]}
+                        </TableCell>
+                        <TableCell align="center">
+                          {question.answers[1]}
+                        </TableCell>
+                        <TableCell align="center">
+                          {question.answers[2]}
+                        </TableCell>
+                        <TableCell align="center">
+                          {question.answers[3]}
+                        </TableCell>
+                        <TableCell align="center">
+                          {question.questionMarks}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Card>
+          </Paper>
         </Grid>
       </div>
     );
