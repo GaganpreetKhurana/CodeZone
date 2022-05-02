@@ -94,7 +94,7 @@ class QuizCreate extends React.Component {
   render() {
     return (
       <div>
-        <Grid height="100vh" m={4}>
+        <Grid height="100vh" m={4} spacing={5}>
           <Card
             sx={{
               bgcolor: (theme) =>
@@ -240,8 +240,18 @@ class QuizCreate extends React.Component {
               </Box>
             </Grid>
           </Card>
-          <Paper>
-            <Card m={4}>
+          <Paper m={4}>
+            <Card
+              m={4}
+              sx={{
+                bgcolor: (theme) =>
+                  theme.palette.mode === "dark" ? "#272727" : "#fff",
+                boxShadow: (theme) =>
+                  theme.palette.mode === "dark"
+                    ? "unset"
+                    : "0 8px 16px 0 #BDC9D7",
+              }}
+            >
               <TableContainer>
                 <Table sx={{ minWidth: "75%" }}>
                   <TableHead>
