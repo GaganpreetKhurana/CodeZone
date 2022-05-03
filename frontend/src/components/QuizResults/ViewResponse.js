@@ -64,7 +64,7 @@ class ViewResponse extends Component {
                   <TableRow
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
-                    }}
+                    }}xx
                   >
                     <TableCell align="center">{question.question}</TableCell>
                     <TableCell align="center">{question.option[0]}</TableCell>

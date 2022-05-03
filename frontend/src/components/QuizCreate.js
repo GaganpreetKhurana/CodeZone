@@ -14,6 +14,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 
+
+
 class QuizCreate extends React.Component {
   constructor(props) {
     super(props);
@@ -29,10 +31,12 @@ class QuizCreate extends React.Component {
       option2: "",
       option3: "",
       option4: "",
-      questionNumber : 0,
-      questionMarks : 0,
+      questionNumber: 0,
+      questionMarks: 0,
       correct: null,
       type: "mcq",
+      quizDuration: 0,
+      dateScheduled: "2022-05-31T10:30",
     };
   }
 
@@ -84,6 +88,8 @@ class QuizCreate extends React.Component {
       quizDescription: this.state.quizDescription,
       questionData: this.state.questionData,
       maxScore: this.state.maxScore,
+      quizDuration: this.state.quizDuration,
+      dateScheduled: this.state.dateScheduled
     };
     // console.log(submitQuizData,"RR");
     // console.log(this.state,this.props);
@@ -130,6 +136,32 @@ class QuizCreate extends React.Component {
                   onChange={(event) =>
                     this.handleChange(event, "quizDescription")
                   }
+                />
+              </Grid>
+              <Grid item m={2} xs={12} sm={12}>
+                {" "}
+                <TextField
+                  id="quizDuration"
+                  label="Quiz Duration in (Minutes)"
+                  variant="filled"
+                  fullWidth="True"
+                  value={this.state.quizDuration}
+                  type="text"
+                  onChange={(event) => this.handleChange(event, "quizDuration")}
+                />
+              </Grid>
+              <Grid item m={2} xs={12} sm={12}>
+                <TextField
+                  id="datetime-local"
+                  label="Test Duration"
+                  variant="filled"
+                  fullWidth="True"
+                  value={this.state.dateScheduled}
+                  type="datetime-local"
+                  onChange={(event) =>
+                    this.handleChange(event, "dateScheduled")
+                  }
+                  defaultValue="2022-05-31T10:30"
                 />
               </Grid>
               <Grid item m={2} xs={12} sm={12}>
