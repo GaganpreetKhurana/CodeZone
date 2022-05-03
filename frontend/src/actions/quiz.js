@@ -41,7 +41,7 @@ export function quizCreateFailed(errorMsg) {
 // 	return FormBody.join("&");
 // }
 
-export function quizCreate(quizName,quizDescription,questionData,maxScore,classroom_id) {
+export function quizCreate(quizName,quizDescription,questionData,maxScore,classroom_id,duration,dateScheduled) {
 	return (dispatch) => {
 		dispatch(startQuizCreate());
 		const url = "/api/quiz/create";
@@ -56,7 +56,10 @@ export function quizCreate(quizName,quizDescription,questionData,maxScore,classr
 				"quizName": quizName,
 				"quizDescription": quizDescription,
 				"questionData":questionData,
-				"maxScore":maxScore
+				"maxScore":maxScore,
+				"duration": duration,
+				"dateScheduled": dateScheduled,
+
 			}),
 		})
 			.then((response) => response.json())

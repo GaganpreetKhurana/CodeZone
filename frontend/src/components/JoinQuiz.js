@@ -83,7 +83,7 @@ class JoinQuiz extends Component{
 												<TableCell component="th" scope="row"
 												           align="center">{row.dateScheduled.slice(0, 10)}</TableCell>
 												<TableCell
-													align="center">{row.duration ? row.duration : null}</TableCell>
+													align="center">{row.duration ? row.duration/60 : null} seconds</TableCell>
 												<TableCell
 													align="center">{row.maxScoreQuizMarks === "" ? '-' : row.maxScoreQuiz}</TableCell>
 												<TableCell align="center">

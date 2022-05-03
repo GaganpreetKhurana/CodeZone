@@ -10,7 +10,7 @@ var datetime = require('node-datetime');
 
 // Create Quiz
 module.exports.create = async function(req, res){
-	
+	// console.log(req.body);
 	// get subject
 	let subject = await Class.findById(req.body.classroom_id);
 	if( !subject){
@@ -28,7 +28,7 @@ module.exports.create = async function(req, res){
 		let newQuiz = await Quiz.create({
 			creator: req.user._id,
 			dateScheduled: req.body.dateScheduled,
-			durations: req.body.durations,
+			duration: req.body.duration,
 			class: subject,
 			title: req.body.quizName,
 			description: req.body.quizDescription,
@@ -49,13 +49,12 @@ module.exports.create = async function(req, res){
 			newQuiz.questions.push(newQuestion);
 		}
 		
-		
+
 		// if object created
 		if(newQuiz){
 			newQuiz = await newQuiz.save();
 			subject.quizzes.push(newQuiz);
 			subject = await subject.save();
-			
 			return res.status(201).json({
 				message: "Quiz created successfully", success: true, data: newQuiz
 			});
@@ -233,12 +232,12 @@ module.exports.view = async function(req, res){
 		// 	}
 		// }
 		return res.status(200).json({
-			message: "Quiz retrival sucessfull!", success: true, data: current_quiz,
+			message: "Quiz retrieval successful!", success: true, data: current_quiz,
 		});
 	} else if(subject.teachers.includes(req.user._id)){
 		
 		return res.status(200).json({
-			message: "Quiz retrieval successfull!", success: true, data: quiz,
+			message: "Quiz retrieval successful!", success: true, data: quiz,
 		});
 	} else{
 		return res.status(401).json({
