@@ -63,7 +63,8 @@ class QuizResultStudent extends Component {
                   <TableRow>
                     <TableCell align="center">Title</TableCell>
                     <TableCell align="center">Description</TableCell>
-                    <TableCell align="center">Scheduled At</TableCell>
+                    <TableCell align="center">Scheduled Date</TableCell>
+                    <TableCell align="center">Scheduled Time</TableCell>
                     <TableCell align="center">Score</TableCell>
                     <TableCell align="center">View Response</TableCell>
                   </TableRow>
@@ -77,7 +78,8 @@ class QuizResultStudent extends Component {
                   >
                     <TableCell align="center">{row.quizName}</TableCell>
                     <TableCell align="center">{row.quizDescription}</TableCell>
-                    <TableCell align="center">{row.dateScheduled}</TableCell>
+                    <TableCell align="center">{row.dateScheduled.slice(0,10)}</TableCell>
+                    <TableCell align="center">{row.dateScheduled.slice(11,-5)}</TableCell>
                     <TableCell align="center">{row.score}</TableCell>
                     <TableCell align="center">
                       <ViewResponse submissionID={row.submissionID} />

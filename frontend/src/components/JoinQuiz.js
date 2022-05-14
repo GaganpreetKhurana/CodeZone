@@ -31,7 +31,7 @@ class JoinQuiz extends Component{
 	
 	//to clear the error if it comes on reload or whenever the user shifts from this page
 	componentWillMount(){
-		//fetch quiz details for this classsroom
+		//fetch quiz details for this classroom
 		const {classroomId} = this.props;
 		this.props.dispatch(fetchOpenQuiz(classroomId));
 		this.timer = setInterval(() => {
@@ -46,6 +46,7 @@ class JoinQuiz extends Component{
 	}
 	
 	render(){
+		const {classroomId} = this.props;
 		const {user} = this.props.auth;
 		const {quizList} = this.props.quizDetails;
 		
@@ -86,7 +87,7 @@ class JoinQuiz extends Component{
 												<TableCell component="th" scope="row"
 												           align="center">{row.dateScheduled.slice(11,-5)}</TableCell>
 												<TableCell
-													align="center">{row.duration ? row.duration : null} minutes</TableCell>
+													align="center">{row.duration ? row.duration/60 : null} minutes</TableCell>
 												<TableCell
 													align="center">{row.maxScoreQuizMarks === "" ? '-' : row.maxScoreQuiz}</TableCell>
 												<TableCell align="center">
@@ -112,17 +113,18 @@ class JoinQuiz extends Component{
 												<TableCell component="th" scope="row"
 												           align="center">{row.dateScheduled.slice(11,-5)}</TableCell>
 												<TableCell
-													align="center">{row.duration ? row.duration : null} minutes</TableCell>
+													align="center">{row.duration ? row.duration/60 : null} minutes</TableCell>
 												<TableCell
 													align="center">{row.maxScoreQuiz === "" ? '-' : row.maxScoreQuiz}</TableCell>
 												<TableCell align="center">
 													{user.id && <DelayLink
 														
-														delay={3000}
+														delay={2000}
 														
 														to={{
-															pathname: "/QuizStudent",
-															quiz_id: row._id
+															pathname: `/QuizStudent/${row._id}`,
+															quiz_id: row._id,
+															classroom_id:classroomId,
 														}}
 														onDelayStart={() => {
 															//fetch this code-editor's details using row_id

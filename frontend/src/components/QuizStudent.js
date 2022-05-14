@@ -11,6 +11,9 @@ import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import CircularProgress from '@mui/material/CircularProgress';
+import Button from "@mui/material/Button";
+import {Link} from "react-router-dom";
+
 
 const CardActionAreaActionArea = styled(CardActionArea)(() => ({
 	borderRadius: 10,
@@ -154,7 +157,7 @@ class QuizStudent extends Component{
 	
 	
 	componentWillUnmount(){
-		this.props.dispatch(clearQuiz());
+		// this.props.dispatch(clearQuiz());
 		clearInterval(this.decrementTimeLeft);
 		clearInterval(this.decrementTimeLeftToStart);
 		
@@ -164,7 +167,7 @@ class QuizStudent extends Component{
 	updateResponse = (index) => {
 		let currentQuestion = this.state.questionData[this.state.progress].questionNumber;
 		let studentResponse = this.state.studentResponse;
-		studentResponse.response[currentQuestion] = index;
+		studentResponse.response[currentQuestion] = index + 1;
 		studentResponse.finalScore = this.state.score;
 		this.setState({studentResponse});
 		
@@ -207,6 +210,8 @@ class QuizStudent extends Component{
 			)
 		}
 		var currentQuestion = this.state.questionData[this.state.progress];
+		var classroom_id = this.props.location.classroom_id;
+		console.log(classroom_id,this.props,this);
 		if(this.state.timeLeftToStart > 0){
 			return (
 				<div>
@@ -329,6 +334,12 @@ class QuizStudent extends Component{
 							<CustomCard2 title={"Quiz Finished!"} color="#253145"/>
 						</Grid>
 					</Grid>
+					<Link to= {"/classroom/" + classroom_id}>
+						<Button variant="contained" justifyContent="center" alignItems="center" sx={{mt: 3, mb: 2}}>
+							Go Back To Classroom
+						</Button>
+					</Link>
+					
 				</div>
 			);
 		}

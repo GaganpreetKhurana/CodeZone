@@ -150,7 +150,7 @@ class App extends React.Component {
                 <Route path="/quizCreate" component={QuizCreate} />
               )}
               {auth.isLoggedIn && auth.user.role === "Student" && (
-                <Route path="/QuizStudent" component={QuizStudent} />
+                <Route path="/QuizStudent/:quiz_id" component={QuizStudent} />
               )}
               <Route exact path="/" component={Home} />
               <Route path="/CodeZone" component={Home} />
@@ -161,7 +161,7 @@ class App extends React.Component {
                 <Route path="/classroom/:classroomID" component={Home} />
               )}
                 {auth.isLoggedIn && auth.user.role === "Teacher" && (
-                    <Route path="/grading" component={GradeResult} />
+                    <Route path="/grading/:classroom_id" component={GradeResult} />
                 )}
               
               <Route component={Page404} />
