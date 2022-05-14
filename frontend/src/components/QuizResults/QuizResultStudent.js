@@ -28,6 +28,16 @@ class QuizResultStudent extends Component {
     this.setState({ open: false });
   };
 
+  quizFinished = (start,duration) => {
+    console.log(start,duration);
+		var timeLeft = new Date(start) - new Date() - 19800000;
+		timeLeft /= 1000;
+		timeLeft = parseInt(timeLeft);
+		timeLeft += 10;
+		timeLeft+= duration;
+    console.log(timeLeft)
+		return timeLeft<=0;
+	};
   componentWillMount() {
     //fetch quiz results
     const { classroomId} = this.props;
@@ -71,7 +81,7 @@ class QuizResultStudent extends Component {
                 </TableHead>
                 <TableBody>
                   {quizResult && quizResult.map((row) => (
-                  <TableRow
+                   this.quizFinished(row.dateScheduled,row.duration) && <TableRow
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}

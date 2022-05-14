@@ -324,6 +324,12 @@ module.exports.submit = async function(req, res){
 	}
 	
 	if(subject.students.includes(req.user._id)){
+		let checkForSubmission = await Quiz.find({student:req.user._id, quiz:quiz});
+		if(checkForSubmission){
+			return res.status(403).json({
+				success: false, message: "Already Submitted!",
+			});
+		}
 		let newSubmission = await Submission.create({
 			quiz: quiz,
 			answers: req.body.answers,
@@ -394,6 +400,7 @@ module.exports.fetchStudentResult = async function(req, res){
 			quizID: quizList[index]._id,
 			quizName: quizList[index].title,
 			quizDescription: quizList[index].description,
+			duration: quizList[index].duration,
 			maximumScore: quizList[index].maxScoreQuiz,
 			dateScheduled: quizList[index].dateScheduled,
 			score: null,
