@@ -88,13 +88,13 @@ class QuizCreate extends React.Component {
       quizDescription: this.state.quizDescription,
       questionData: this.state.questionData,
       maxScore: this.state.maxScore,
-      quizDuration: this.state.quizDuration,
-      dateScheduled: this.state.dateScheduled
+      quizDuration: this.state.quizDuration * 60,
+      dateScheduled: new Date (new Date(this.state.dateScheduled) -  19800000 + (2 *  19800000)),
     };
     // console.log(submitQuizData,"RR");
     // console.log(this.state,this.props);
     let classroom_id=this.props.classroom.ID;
-    this.props.dispatch(quizCreate(submitQuizData.quizName,submitQuizData.quizDescription,submitQuizData.questionData,submitQuizData.maxScore,classroom_id));
+    this.props.dispatch(quizCreate(submitQuizData.quizName,submitQuizData.quizDescription,submitQuizData.questionData,submitQuizData.maxScore,classroom_id, submitQuizData.quizDuration, submitQuizData.dateScheduled));
   }
 
   render() {

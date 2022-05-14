@@ -45,7 +45,7 @@ export default function auth(state = initialClassState, action) {
 				success:true,
 				error: null,
 				quizList:action.quizList,
-				quiz: null,
+				// quiz: null,
 			};
 		case QUIZ_FETCH_RESULT:
 			return {
@@ -53,7 +53,7 @@ export default function auth(state = initialClassState, action) {
 				success:true,
 				error: null,
 				quizResult:action.quizList,
-				quiz: null,
+				// quiz: null,
 			};
 		case QUIZ_FETCH_SUCCESS:
 			return {
@@ -77,6 +77,7 @@ export default function auth(state = initialClassState, action) {
 				success:false,
 				error: action.errorMsg,
 				quizCreateStarted: false,
+				
 			};
 		case QUIZ_CREATE_START:
 			return {

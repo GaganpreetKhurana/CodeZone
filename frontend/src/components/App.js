@@ -150,7 +150,7 @@ class App extends React.Component {
                 <Route path="/quizCreate" component={QuizCreate} />
               )}
               {auth.isLoggedIn && auth.user.role === "Student" && (
-                <Route path="/QuizStudent" component={QuizStudent} />
+                <Route path="/QuizStudent/:quiz_id" component={QuizStudent} />
               )}
               <Route exact path="/" component={Home} />
               <Route path="/CodeZone" component={Home} />
@@ -166,7 +166,6 @@ class App extends React.Component {
                   component={GradeResult}
                 />
               )}
-
               <Route component={Page404} />
             </Switch>
           </Router>

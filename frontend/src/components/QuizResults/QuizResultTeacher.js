@@ -32,6 +32,7 @@ class QuizResultTeacher extends Component {
 
   render() {
     const {quizzes} = this.props.classroom;
+    // console.log(quizzes);
     return (
       <div>
         <Button
@@ -53,7 +54,8 @@ class QuizResultTeacher extends Component {
                     <TableCell align="center">Title</TableCell>
                     <TableCell align="center">Description</TableCell>
                     <TableCell align="center">Total Marks</TableCell>
-                    <TableCell align="center">Scheduled At</TableCell>
+                    <TableCell align="center">Scheduled Date</TableCell>
+                    <TableCell align="center">Scheduled Time</TableCell>
                     <TableCell align="center">View Class Result</TableCell>
                   </TableRow>
                 </TableHead>
@@ -67,7 +69,8 @@ class QuizResultTeacher extends Component {
                     <TableCell align="center">{quiz.title}</TableCell>
                     <TableCell align="center">{quiz.description}</TableCell>
                     <TableCell align="center">{quiz.maxScoreQuiz}</TableCell>
-                    <TableCell align="center">{quiz.dateScheduled}</TableCell>
+                    <TableCell align="center">{quiz.dateScheduled.slice(0,10)}</TableCell>
+                    <TableCell align="center">{quiz.dateScheduled.slice(11,-5)}</TableCell>
                     <TableCell align="center"><ViewQuizResult quizID={quiz._id}/></TableCell>
                   </TableRow>
                       ))}

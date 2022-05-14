@@ -28,6 +28,16 @@ class QuizResultStudent extends Component {
     this.setState({ open: false });
   };
 
+  quizFinished = (start,duration) => {
+    console.log(start,duration);
+		var timeLeft = new Date(start) - new Date() - 19800000;
+		timeLeft /= 1000;
+		timeLeft = parseInt(timeLeft);
+		timeLeft += 10;
+		timeLeft+= duration;
+    console.log(timeLeft)
+		return timeLeft<=0;
+	};
   componentWillMount() {
     //fetch quiz results
     const { classroomId} = this.props;
@@ -54,7 +64,7 @@ class QuizResultStudent extends Component {
           Quiz Results
         </Button>
         <Dialog open={this.state.open} onClose={this.dialogClose}>
-          <DialogTitle>No Quiz Results For this class yet!!</DialogTitle>
+          <DialogTitle>No Quiz Results For this class yet!!!</DialogTitle>
           <DialogTitle>Quiz Results</DialogTitle>
           <DialogActions>
             <TableContainer>
@@ -63,21 +73,23 @@ class QuizResultStudent extends Component {
                   <TableRow>
                     <TableCell align="center">Title</TableCell>
                     <TableCell align="center">Description</TableCell>
-                    <TableCell align="center">Scheduled At</TableCell>
+                    <TableCell align="center">Scheduled Date</TableCell>
+                    <TableCell align="center">Scheduled Time</TableCell>
                     <TableCell align="center">Score</TableCell>
                     <TableCell align="center">View Response</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {quizResult && quizResult.map((row) => (
-                  <TableRow
+                   this.quizFinished(row.dateScheduled,row.duration) && <TableRow
                     sx={{
                       "&:last-child td, &:last-child th": { border: 0 },
                     }}
                   >
                     <TableCell align="center">{row.quizName}</TableCell>
                     <TableCell align="center">{row.quizDescription}</TableCell>
-                    <TableCell align="center">{row.dateScheduled}</TableCell>
+                    <TableCell align="center">{row.dateScheduled.slice(0,10)}</TableCell>
+                    <TableCell align="center">{row.dateScheduled.slice(11,-5)}</TableCell>
                     <TableCell align="center">{row.score}</TableCell>
                     <TableCell align="center">
                       <ViewResponse submissionID={row.submissionID} />
