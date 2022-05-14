@@ -14,6 +14,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { Link } from "react-router-dom";
 
 class ViewQuizResult extends Component {
   state = {
@@ -35,7 +36,20 @@ class ViewQuizResult extends Component {
   }
 
   render() {
-    let {quizResult} = this.props.quiz;
+    let { quizResult } = this.props.quiz;
+    console.log(quizResult);
+    let marksArray = []
+    if (
+      typeof quizResult !== "undefined" &&
+      typeof quizResult.students !== "undefined"
+    ) {
+      for (let i = 0; i < quizResult.students.length; i++) {
+        let tmp = quizResult.students[i].score;
+        console.log(tmp);
+        marksArray.push(tmp);
+      }
+    }
+    console.log(marksArray)
     return (
       <div>
         <Button fullWidth sx={{ mt: 1, mb: 1 }} onClick={this.dialogOpen}>
@@ -43,6 +57,14 @@ class ViewQuizResult extends Component {
         </Button>
         <Dialog fullScreen open={this.state.open} onClose={this.dialogClose}>
           <DialogTitle>Class Quiz Result</DialogTitle>
+          <Link
+            to={{
+              pathname: "/grading",
+              state: { payload: marksArray },
+            }}
+          >
+            <Button>Visualize Grading</Button>
+          </Link>
           <DialogActions>
             <TableContainer>
               <Table sx={{ minWidth: "75%" }}>
@@ -55,20 +77,25 @@ class ViewQuizResult extends Component {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {quizResult.students && quizResult.students.map((student) => (
-                  <TableRow
-                    sx={{
-                      "&:last-child td, &:last-child th": { border: 0 },
-                    }}
-                  >
-                    <TableCell align="center">{student.studentSID}</TableCell>
-                    <TableCell align="center">{student.studentName}</TableCell>
-                    <TableCell align="center">{student.score}</TableCell>
-                    <TableCell align="center">
-                      <ViewResponse submissionID={student.submissionID} />
-                    </TableCell>
-                  </TableRow>
-                  ))}
+                  {quizResult.students &&
+                    quizResult.students.map((student) => (
+                      <TableRow
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 },
+                        }}
+                      >
+                        <TableCell align="center">
+                          {student.studentSID}
+                        </TableCell>
+                        <TableCell align="center">
+                          {student.studentName}
+                        </TableCell>
+                        <TableCell align="center">{student.score}</TableCell>
+                        <TableCell align="center">
+                          <ViewResponse submissionID={student.submissionID} />
+                        </TableCell>
+                      </TableRow>
+                    ))}
                 </TableBody>
               </Table>
             </TableContainer>
