@@ -32,6 +32,7 @@ class QuizResultTeacher extends Component {
 
   render() {
     const {quizzes} = this.props.classroom;
+    // console.log(quizzes);
     return (
       <div>
         <Button

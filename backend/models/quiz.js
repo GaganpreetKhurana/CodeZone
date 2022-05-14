@@ -25,6 +25,7 @@ var QuizSchema = new mongoose.Schema({
 	duration : { type: Number , default: 3600},
 	submissions: [{type: mongoose.Schema.Types.ObjectId, ref: "Submission"}],
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+	tabSwitches : {},
 }, {timestamps: true});
 
 const Quiz = mongoose.model("Quiz", QuizSchema);

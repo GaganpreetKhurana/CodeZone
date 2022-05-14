@@ -211,7 +211,7 @@ class QuizStudent extends Component{
 		}
 		var currentQuestion = this.state.questionData[this.state.progress];
 		var classroom_id = this.props.location.classroom_id;
-		console.log(classroom_id,this.props,this);
+		// console.log(classroom_id,this.props,this);
 		if(this.state.timeLeftToStart > 0){
 			return (
 				<div>
