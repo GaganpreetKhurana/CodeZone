@@ -65,7 +65,8 @@ class JoinQuiz extends Component{
 										<TableRow>
 											<TableCell align="center">Title</TableCell>
 											<TableCell align="center">Description</TableCell>
-											<TableCell align="center">Scheduled At</TableCell>
+											<TableCell align="center">Scheduled Data</TableCell>
+											<TableCell align="center">Scheduled Time</TableCell>
 											<TableCell align="center">Duration</TableCell>
 											<TableCell align="center">Maximum Marks</TableCell>
 											<TableCell align="center">Link to Join</TableCell>
@@ -82,8 +83,10 @@ class JoinQuiz extends Component{
 												<TableCell align="center">{row.description}</TableCell>
 												<TableCell component="th" scope="row"
 												           align="center">{row.dateScheduled.slice(0, 10)}</TableCell>
+												<TableCell component="th" scope="row"
+												           align="center">{row.dateScheduled.slice(11,-5)}</TableCell>
 												<TableCell
-													align="center">{row.duration ? row.duration/60 : null} seconds</TableCell>
+													align="center">{row.duration ? row.duration : null} minutes</TableCell>
 												<TableCell
 													align="center">{row.maxScoreQuizMarks === "" ? '-' : row.maxScoreQuiz}</TableCell>
 												<TableCell align="center">
@@ -106,8 +109,10 @@ class JoinQuiz extends Component{
 												<TableCell align="center">{row.description}</TableCell>
 												<TableCell component="th" scope="row"
 												           align="center">{row.dateScheduled.slice(0, 10)}</TableCell>
+												<TableCell component="th" scope="row"
+												           align="center">{row.dateScheduled.slice(11,-5)}</TableCell>
 												<TableCell
-													align="center">{row.duration ? row.duration : null}</TableCell>
+													align="center">{row.duration ? row.duration : null} minutes</TableCell>
 												<TableCell
 													align="center">{row.maxScoreQuiz === "" ? '-' : row.maxScoreQuiz}</TableCell>
 												<TableCell align="center">
