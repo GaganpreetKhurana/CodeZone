@@ -13,7 +13,8 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
+import { Snackbar } from "@mui/material";
+import { Alert } from "@mui/material";
 
 
 class QuizCreate extends React.Component {
@@ -37,6 +38,7 @@ class QuizCreate extends React.Component {
       type: "mcq",
       quizDuration: 0,
       dateScheduled: "2022-05-31T10:30",
+      alert: "False"
     };
   }
 
@@ -93,8 +95,12 @@ class QuizCreate extends React.Component {
     };
     // console.log(submitQuizData,"RR");
     // console.log(this.state,this.props);
-    let classroom_id=this.props.classroom.ID;
-    this.props.dispatch(quizCreate(submitQuizData.quizName,submitQuizData.quizDescription,submitQuizData.questionData,submitQuizData.maxScore,classroom_id, submitQuizData.quizDuration, submitQuizData.dateScheduled));
+    let classroom_id = this.props.classroom.ID;
+    this.props.dispatch(quizCreate(submitQuizData.quizName, submitQuizData.quizDescription, submitQuizData.questionData, submitQuizData.maxScore, classroom_id, submitQuizData.quizDuration, submitQuizData.dateScheduled));
+    this.setState({ alert: "True" },);
+    setTimeout(() => {
+      this.setState({ alert: "False" });
+    }, 3000);
   }
 
   render() {
@@ -333,6 +339,13 @@ class QuizCreate extends React.Component {
                 </Table>
               </TableContainer>
             </Card>
+            {this.state.alert === "True" && (
+              <Snackbar open={true} autoHideDuration={2000}>
+                <Alert severity="success" sx={{ width: "100%" }}>
+                  "Quiz Submitted"
+                </Alert>
+              </Snackbar>
+            )}
           </Paper>
         </Grid>
       </div>
