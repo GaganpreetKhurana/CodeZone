@@ -549,6 +549,7 @@ module.exports.fetchSubmission = async function(req, res){
 }
 
 module.exports.tabSwitch = async function(req, res){
+	console.log("quiz tabSwitch req came");
 	let quiz = await Quiz.findById(sanitizer.escape(req.params.quiz_id))
 	if( !quiz){
 		return res.status(404).json({
