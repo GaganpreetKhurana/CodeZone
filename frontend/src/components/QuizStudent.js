@@ -24,10 +24,8 @@ const CardActionAreaActionArea = styled(CardActionArea)(() => ({
 }));
 
 const StyledCard = styled(Card)(({color}) => ({
-	minWidth: "30vh",
-	minHeight: "30vh",
-	maxWidth: "30vh",
-	maxHeight: "30vh",
+	minWidth: "130px",
+	minHeight: "80px",
 	borderRadius: 16,
 	boxShadow: "none",
 	"&:hover": {
@@ -36,10 +34,7 @@ const StyledCard = styled(Card)(({color}) => ({
 }));
 
 const StyledCard2 = styled(Card)(({color}) => ({
-	minWidth: "100hh",
-	minHeight: "60vh",
-	maxWidth: "100hh",
-	maxHeight: "60vh",
+	
 	borderRadius: 16,
 	boxShadow: "none",
 	"&:hover": {
@@ -65,7 +60,6 @@ const TypographySubtitle = styled(Typography)(() => ({
 	fontFamily: "Montserrat",
 	color: "#fff",
 	opacity: 0.87,
-	fontWeight: 500,
 	fontSize: 18,
 }));
 
@@ -227,9 +221,9 @@ class QuizStudent extends Component{
 			return (
 				<div>
 					<div>
-						<TypographyTitle>Time
+						<TypographyTitle style={{marginLeft:'35%',marginTop:'5%'}}>Time
 							Left: {parseInt(this.state.timeLeft / 3600)} : {parseInt((this.state.timeLeft % 3600) / 60)} : {parseInt((this.state.timeLeft % 3600) % 60)}</TypographyTitle>
-						<Grid height="100vh" m={10}>
+						<Grid height="80vh" m={4}>
 							<Card
 								sx={{
 									bgcolor: (theme) =>
@@ -240,8 +234,8 @@ class QuizStudent extends Component{
 											: "0 8px 16px 0 #BDC9D7",
 								}}
 							>
-								{this.state.quizName}
-								{this.state.quizDescription}
+								<TypographyTitle style={{marginLeft:'33%'}}>{this.state.quizName}</TypographyTitle>
+								
 								<Grid
 									item
 									container
