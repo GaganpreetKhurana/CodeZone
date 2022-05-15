@@ -81,7 +81,6 @@ const CustomCard2 = ({ color, title, subtitle }) => (
 );
 
 class QuizStudent extends Component {
-		
   componentDidMount() {
     document.addEventListener(
       "copy",
@@ -103,8 +102,8 @@ class QuizStudent extends Component {
       },
       false
     );
-	window.addEventListener("focus", this.onFocus);
-    window.addEventListener("blur",this.onBlur);
+    window.addEventListener("focus", this.onFocus);
+    window.addEventListener("blur", this.onBlur);
     let currentQuiz = this.props.quiz.quiz;
     this.checkAnswer = this.checkAnswer.bind(this);
     this.submitted = false;
@@ -167,31 +166,30 @@ class QuizStudent extends Component {
 
   componentWillUnmount() {
     // this.props.dispatch(clearQuiz());
-	window.removeEventListener("focus", this.onFocus)
+    window.removeEventListener("focus", this.onFocus);
     clearInterval(this.decrementTimeLeft);
     clearInterval(this.decrementTimeLeftToStart);
   }
   onFocus = () => {
-	console.log("Tab is in focus");
-};
+    console.log("Tab is in focus");
+  };
 
-// User has switched away from the tab (AKA tab is hidden)
-onBlur = () => {
-	console.log("Tab is blurred");
-	if(this.state.quizID){
-		const url = `/api/quiz/tabSwitch/${this.state.quizID}`;
+  // User has switched away from the tab (AKA tab is hidden)
+  onBlur = () => {
+    console.log("Tab is blurred");
+    if (this.state.quizID) {
+      const url = `/api/quiz/tabSwitch/${this.state.quizID}`;
       fetch(url, {
         headers: {
-           Authorization: `Bearer ${localStorage.getItem('token')}`,
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       })
         .then((response) => response.json())
         .then((data) => {
           return;
         });
-	}
-	
-};
+    }
+  };
   updateResponse = (index) => {
     let currentQuestion =
       this.state.questionData[this.state.progress].questionNumber;
