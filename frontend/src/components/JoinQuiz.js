@@ -70,7 +70,7 @@ class JoinQuiz extends Component{
 					<DialogActions>
 						{quizList.length !== 0 &&
 							<TableContainer>
-								<Table sx={{minWidth: 450}}>
+								<Table sx={{minWidth: 650}}>
 									<TableHead>
 										<TableRow>
 											<TableCell align="center">Title</TableCell>

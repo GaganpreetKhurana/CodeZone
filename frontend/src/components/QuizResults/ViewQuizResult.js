@@ -49,6 +49,7 @@ class ViewQuizResult extends Component {
         marksArray.push(tmp);
       }
     }
+    console.log("QuizResult",quizResult);
     console.log(marksArray)
     return (
       <div>

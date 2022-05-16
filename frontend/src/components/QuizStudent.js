@@ -166,7 +166,8 @@ class QuizStudent extends Component {
 
   componentWillUnmount() {
     // this.props.dispatch(clearQuiz());
-    window.removeEventListener("focus", this.onFocus);
+    window.removeEventListener("focus");
+    window.removeEventListener("blur");
     clearInterval(this.decrementTimeLeft);
     clearInterval(this.decrementTimeLeftToStart);
   }

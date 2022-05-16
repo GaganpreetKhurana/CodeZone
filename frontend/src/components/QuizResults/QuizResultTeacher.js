@@ -44,7 +44,6 @@ class QuizResultTeacher extends Component {
           Quiz Results
         </Button>
         <Dialog open={this.state.open} onClose={this.dialogClose}>
-          <DialogTitle>No Quiz Results For this class yet!!</DialogTitle>
           <DialogTitle>Quiz Results</DialogTitle>
           <DialogActions>
             <TableContainer>
