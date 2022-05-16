@@ -28,14 +28,14 @@ class JoinQuiz extends Component{
 	dialogClose = () => {
 		this.setState({open: false});
 	};
-
-	quizNotFinished = (start,duration) => {
+	
+	quizNotFinished = (start, duration) => {
 		var timeLeft = new Date(start) - new Date() - 19800000;
 		timeLeft /= 1000;
 		timeLeft = parseInt(timeLeft);
 		timeLeft += 10;
-		timeLeft+= duration;
-		return timeLeft>0;
+		timeLeft += duration;
+		return timeLeft > 0;
 	};
 	
 	//to clear the error if it comes on reload or whenever the user shifts from this page
@@ -94,9 +94,9 @@ class JoinQuiz extends Component{
 												<TableCell component="th" scope="row"
 												           align="center">{row.dateScheduled.slice(0, 10)}</TableCell>
 												<TableCell component="th" scope="row"
-												           align="center">{row.dateScheduled.slice(11,-5)}</TableCell>
+												           align="center">{row.dateScheduled.slice(11, -5)}</TableCell>
 												<TableCell
-													align="center">{row.duration ? row.duration/60 : null} minutes</TableCell>
+													align="center">{row.duration ? row.duration / 60 : null} minutes</TableCell>
 												<TableCell
 													align="center">{row.maxScoreQuizMarks === "" ? '-' : row.maxScoreQuiz}</TableCell>
 												<TableCell align="center">
@@ -111,7 +111,7 @@ class JoinQuiz extends Component{
 											</TableRow>
 										))}
 										{user.role === "Student" && quizList.map((row) => (
-											  this.quizNotFinished(row.dateScheduled,row.duration) && <TableRow 
+											this.quizNotFinished(row.dateScheduled, row.duration) && <TableRow
 												key={row._id}
 												sx={{'&:last-child td, &:last-child th': {border: 0}}}
 											>
@@ -120,9 +120,9 @@ class JoinQuiz extends Component{
 												<TableCell component="th" scope="row"
 												           align="center">{row.dateScheduled.slice(0, 10)}</TableCell>
 												<TableCell component="th" scope="row"
-												           align="center">{row.dateScheduled.slice(11,-5)}</TableCell>
+												           align="center">{row.dateScheduled.slice(11, -5)}</TableCell>
 												<TableCell
-													align="center">{row.duration ? row.duration/60 : null} minutes</TableCell>
+													align="center">{row.duration ? row.duration / 60 : null} minutes</TableCell>
 												<TableCell
 													align="center">{row.maxScoreQuiz === "" ? '-' : row.maxScoreQuiz}</TableCell>
 												<TableCell align="center">
@@ -133,7 +133,7 @@ class JoinQuiz extends Component{
 														to={{
 															pathname: `/QuizStudent/${row._id}`,
 															quiz_id: row._id,
-															classroom_id:classroomId,
+															classroom_id: classroomId,
 														}}
 														onDelayStart={() => {
 															//fetch this code-editor's details using row_id

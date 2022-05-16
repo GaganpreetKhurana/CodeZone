@@ -5,7 +5,6 @@ const User = require("../../models/user")
 const Class = require("../../models/class")
 const sanitizer = require('sanitizer')
 var request = require("request");
-var datetime = require('node-datetime');
 
 
 // Create Quiz
@@ -34,7 +33,7 @@ module.exports.create = async function(req, res){
 			description: req.body.quizDescription,
 			maxScoreQuiz: req.body.maxScore,
 			tabSwitches: {
-				default : 0,
+				default: 0,
 			},
 			
 		})
@@ -43,16 +42,17 @@ module.exports.create = async function(req, res){
 				class: subject,
 				question: req.body.questionData[i].question,
 				creator: req.user._id,
-				maxScore: req.body.questionData[i].maxScore,
+				maxScore: req.body.questionData[i].questionMarks,
 				options: req.body.questionData[i].answers,
 				correctOption: [req.body.questionData[i].correct],
 				questionType: req.body.questionData[i].type,
 			})
 			newQuestion = await newQuestion.save();
 			newQuiz.questions.push(newQuestion);
+			// console.log(newQuestion,req.body.questionData[i])
 		}
 		
-
+		
 		// if object created
 		if(newQuiz){
 			newQuiz = await newQuiz.save();
@@ -196,6 +196,9 @@ module.exports.view = async function(req, res){
 	if(subject.students.includes(req.user._id)){
 		
 		// user is a student for this subject
+		let checkForSubmission = await Submission.findOne({student: req.user._id, quiz: quiz});
+		// console.log(checkForSubmission);
+		
 		let current_quiz = {};
 		current_quiz.class = quiz.class;
 		current_quiz.title = quiz.title;
@@ -205,7 +208,9 @@ module.exports.view = async function(req, res){
 		current_quiz.quizID = req.params.quiz_id;
 		current_quiz.dateScheduled = quiz.dateScheduled;
 		current_quiz.endTime = new Date(current_quiz.dateScheduled.valueOf() + current_quiz.duration * 1000);
-		
+		if(checkForSubmission){
+			current_quiz.submitted = true;
+		}
 		current_quiz.questions = []
 		for(let i = 0; i < quiz.questions.length; i++){
 			let currentQuestion = {};
@@ -327,7 +332,7 @@ module.exports.submit = async function(req, res){
 	}
 	
 	if(subject.students.includes(req.user._id)){
-		let checkForSubmission = await Submission.findOne({student:req.user._id, quiz:quiz});
+		let checkForSubmission = await Submission.findOne({student: req.user._id, quiz: quiz});
 		// console.log(checkForSubmission);
 		if(checkForSubmission){
 			return res.status(403).json({
@@ -344,10 +349,10 @@ module.exports.submit = async function(req, res){
 		total = 0;
 		for(let i = 0; i < quiz.questions.length; i++){
 			let currentQuestion = await Question.findById(quiz.questions[i]);
-			// console.log(newSubmission.answers[currentQuestion._id],currentQuestion.correctOption[0],newSubmission.answers[currentQuestion._id]===currentQuestion.correctOption[0]);
+			console.log(newSubmission.answers[currentQuestion._id], currentQuestion.correctOption[0], newSubmission.answers[currentQuestion._id] === currentQuestion.correctOption[0]);
 			if(newSubmission.answers[currentQuestion._id] === currentQuestion.correctOption[0]){
 				total += currentQuestion.maxScore;
-				// console.log(total,currentQuestion.maxScore);
+				console.log(total, currentQuestion.maxScore);
 			}
 		}
 		newSubmission.score = total;
@@ -472,11 +477,11 @@ module.exports.fetchClassResult = async function(req, res){
 			studentSID: student.SID,
 			studentID: subject.students[index],
 		}
-		if(!(subject.students[index] in quiz.tabSwitches)){
-			quiz.tabSwitches[subject.students[index]]=0;
+		if( !(subject.students[index] in quiz.tabSwitches)){
+			quiz.tabSwitches[subject.students[index]] = 0;
 		}
 		// console.log(quiz.tabSwitches,subject.students[index])
-		submissionObject.tabSwitches=quiz.tabSwitches[subject.students[index]]
+		submissionObject.tabSwitches = quiz.tabSwitches[subject.students[index]]
 		// console.log(submission);
 		if(submission){
 			submissionObject.score = submission.score;
@@ -496,6 +501,13 @@ module.exports.fetchClassResult = async function(req, res){
 
 
 module.exports.fetchSubmission = async function(req, res){
+	if(sanitizer.escape(req.params.submission_id) === "null"){
+		return res.status(404).json({
+			message: "Submission Not Found",
+			data: null,
+			success: false,
+		})
+	}
 	let submission = await Submission.findById(sanitizer.escape(req.params.submission_id))
 	if( !submission){
 		return res.status(404).json({
@@ -559,8 +571,8 @@ module.exports.tabSwitch = async function(req, res){
 		})
 	}
 	// console.log(quiz.tabSwitches)
-	if(!(req.user._id in quiz.tabSwitches)){
-		quiz.tabSwitches[req.user._id]=0;
+	if( !(req.user._id in quiz.tabSwitches)){
+		quiz.tabSwitches[req.user._id] = 0;
 	}
 	quiz.tabSwitches[req.user._id] = quiz.tabSwitches[req.user._id] + 1;
 	quiz.markModified("tabSwitches")
