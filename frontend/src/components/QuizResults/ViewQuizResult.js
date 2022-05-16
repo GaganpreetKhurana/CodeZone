@@ -50,7 +50,6 @@ class ViewQuizResult extends Component{
 			}
 		}
 		console.log("QuizResult",quizResult);
-		console.log(marksArray)
 		return (
 			<div>
 				<Button fullWidth sx={{mt: 1, mb: 1}} onClick={this.dialogOpen}>
@@ -74,6 +73,7 @@ class ViewQuizResult extends Component{
 										<TableCell align="center">SID</TableCell>
 										<TableCell align="center">Student</TableCell>
 										<TableCell align="center">Marks Obtained</TableCell>
+										<TableCell align="center">Tab Switches</TableCell>
 										<TableCell align="center">View Response</TableCell>
 									</TableRow>
 								</TableHead>
@@ -92,6 +92,7 @@ class ViewQuizResult extends Component{
 													{student.studentName}
 												</TableCell>
 												<TableCell align="center">{student.score}</TableCell>
+												<TableCell align="center">{student.tabSwitches>0 ? 2 : 0}</TableCell>
 												<TableCell align="center">
 													<ViewResponse submissionID={student.submissionID}/>
 												</TableCell>

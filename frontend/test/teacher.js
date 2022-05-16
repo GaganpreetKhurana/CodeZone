@@ -3,9 +3,9 @@ const webdriver = require("selenium-webdriver");
 const { By } = require("selenium-webdriver");
 const ltCapabilities = require("../capabilities");
 
-const subject = "Python";
-const description = "ESN-302";
-const batch = "ECE 3rd Year";
+const subject = "Pytho";
+const description = "ESN-30";
+const batch = "ECE 3rd Yea";
 const user = "teacher@gmail.com";
 const password = "teacher";
 
