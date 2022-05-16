@@ -159,7 +159,7 @@ class QuizCreate extends React.Component {
               <Grid item m={2} xs={12} sm={12}>
                 <TextField
                   id="datetime-local"
-                  label="Test Duration"
+                  label="Test Date & Time"
                   variant="filled"
                   fullWidth="True"
                   value={this.state.dateScheduled}

@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { connect } from "react-redux";
-import { clearQuiz, submitQuiz } from "../actions/quiz";
+import { submitQuiz } from "../actions/quiz";
+
 
 // Material UI
 import { Grid } from "@mui/material";
@@ -106,7 +107,7 @@ class QuizStudent extends Component {
     window.addEventListener("blur", this.onBlur);
     let currentQuiz = this.props.quiz.quiz;
     this.checkAnswer = this.checkAnswer.bind(this);
-    this.submitted = false;
+    this.submitted = !currentQuiz?false:currentQuiz.submitted;
     this.setState({
       questionData: !currentQuiz ? [] : currentQuiz.questions,
       quizName: !currentQuiz ? "" : currentQuiz.title,
@@ -255,7 +256,7 @@ class QuizStudent extends Component {
       );
     } else if (
       this.state.questionData.length > this.state.progress &&
-      this.state.timeLeft > 0
+      this.state.timeLeft > 0 && !this.submitted
     ) {
       return (
         <div>
@@ -369,7 +370,7 @@ class QuizStudent extends Component {
           <Grid container direction="column" height="100vh">
             <Grid item m={15} container justifyContent="center"></Grid>
             <Grid item container justifyContent="center" alignItems="center">
-              <CustomCard2 title={"Quiz Finished!"} color="#253145" />
+              <CustomCard2 title={"Quiz Submitted!"} color="#253145" />
             </Grid>
           </Grid>
           <Link to={"/classroom/" + classroom_id}>
@@ -387,6 +388,7 @@ class QuizStudent extends Component {
     }
   }
 }
+
 
 function mapStateToProps(state) {
   return {
