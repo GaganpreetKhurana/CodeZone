@@ -4,8 +4,8 @@ var QuizSchema = new mongoose.Schema({
 	class: {
 		type: mongoose.Schema.Types.ObjectId, ref: "Class"
 	},
-	title : { type:String , default: "QUIZ"},
-	description : { type:String , default: ""},
+	title: {type: String, default: "QUIZ"},
+	description: {type: String, default: ""},
 	questions: [{
 		type: mongoose.Schema.Types.ObjectId, ref: "Question"
 	}],
@@ -22,10 +22,10 @@ var QuizSchema = new mongoose.Schema({
 	dateScheduled: {
 		type: Date, default: Date.now
 	},
-	duration : { type: Number , default: 3600},
+	duration: {type: Number, default: 3600},
 	submissions: [{type: mongoose.Schema.Types.ObjectId, ref: "Submission"}],
 	creator: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
-	tabSwitches : {},
+	tabSwitches: {},
 }, {timestamps: true});
 
 const Quiz = mongoose.model("Quiz", QuizSchema);
