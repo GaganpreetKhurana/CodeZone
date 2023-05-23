@@ -47,7 +47,7 @@
     "request": "^2.88.2",
     "rumble-charts": "^4.0.0",
     "selenium-webdriver": "^4.1.1",
-    "socket.io-client": "^4.0.1",
+    "socket.io-client": "^4.6.1",
     "uuid": "^8.3.2",
     "web-vitals": "^1.1.2",
     "xlsx": "^0.17.5"
